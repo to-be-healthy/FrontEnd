@@ -1,6 +1,7 @@
+import '@app/GlobalStyle';
+
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import '@app/GlobalStyle';
 import styled from 'styled-components';
 
 const inter = Inter({ subsets: ['latin'] });
@@ -11,18 +12,20 @@ export const metadata: Metadata = {
 };
 
 const StyleDiv = styled.div`
- height:10px;
-
- 
- width:10px;
+  height: 10px;
+  width: 10px;
 `;
+
+const hello: any = {};
+console.log(hello);
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang='en'>
       <body className={inter.className}>
         {children}
 

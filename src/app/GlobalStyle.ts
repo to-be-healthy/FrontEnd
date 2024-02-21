@@ -1,8 +1,7 @@
-'use client';
-
 import { createGlobalStyle } from 'styled-components';
-import defaultTheme from '@/styles/theme/defaultTheme';
 import reset from 'styled-reset';
+
+import defaultTheme from '@/styles/theme/defaultTheme';
 
 const GlobalStyle = createGlobalStyle`
     ${reset}
