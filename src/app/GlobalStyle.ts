@@ -1,3 +1,5 @@
+'use client';
+
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
@@ -12,8 +14,8 @@ const GlobalStyle = createGlobalStyle`
         outline: none;
         -webkit-tap-highlight-color: transparent;
         -webkit-touch-callout: none;
-        -ms-overflow-style: none; // IE and Edge
-        scrollbar-width: none; // Firefox
+        -ms-overflow-style: none;
+        scrollbar-width: none;
 
         &::before,
         &::after {
@@ -37,7 +39,7 @@ const GlobalStyle = createGlobalStyle`
 
     input,
     button {
-        -webkit-appearance: none;
+        appearance: none;
     }
 
     input::-webkit-contacts-auto-fill-button {
@@ -69,7 +71,7 @@ const GlobalStyle = createGlobalStyle`
     input[type='file']::file-selector-button,
     button {
         color: initial;
-    } // override safari default blue
+    }
 
     html,
     body,

@@ -24,7 +24,7 @@
     },
     "ecmaVersion": 12,
     "sourceType": "module",
-    "project": true
+    "project": ["tsconfig.json"]
   },
   "plugins": ["react", "@typescript-eslint", "prettier", "simple-import-sort"],
   "rules": {
