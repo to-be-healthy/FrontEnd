@@ -12,18 +12,13 @@ export const metadata: Metadata = {
 };
 
 const StyleDiv = styled.div`
-  height: 10px;
   width: 10px;
+  height: 10px;
 `;
-
-const hello: any = {};
-console.log(hello);
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang='en'>
       <body className={inter.className}>
