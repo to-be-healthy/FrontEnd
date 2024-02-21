@@ -4,6 +4,7 @@
     "es2021": true,
     "node": true
   },
+  "root": true,
   "settings": {
     "react": {
       "version": "detect"
@@ -13,8 +14,8 @@
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+    "plugin:@typescript-eslint/recommended-type-checked",
+    "plugin:@typescript-eslint/stylistic-type-checked"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
@@ -23,7 +24,7 @@
     },
     "ecmaVersion": 12,
     "sourceType": "module",
-    "project": "./tsconfig.json"
+    "project": true
   },
   "plugins": ["react", "@typescript-eslint", "prettier", "simple-import-sort"],
   "rules": {
