@@ -1,13 +1,7 @@
 module.exports = {
   plugins: ['stylelint-order'],
   extends: ['stylelint-config-standard'],
-
-  overrides: [
-    {
-      files: ['**/*.tsx'],
-      customSyntax: 'postcss-styled-syntax',
-    },
-  ],
+  customSyntax: 'postcss-styled-syntax',
   rules: {
     'selector-pseudo-element-no-unknown': null, //알려지지 않은 의사 요소 선택자(pseudo-element selectors)를 금지
     'at-rule-no-unknown': null, //CSS의 @규칙(at-rules) 중 알려지지 않은 규칙을 사용하는 것을 금지
