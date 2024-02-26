@@ -5,6 +5,8 @@ import { Inter } from 'next/font/google';
 
 import StyledComponentsRegistry from '@/lib/registry';
 
+import { ReactQueryClientProvider } from './ReactQueryClientProvier';
+
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
@@ -16,10 +18,12 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang='en'>
-      <body className={inter.className}>
-        <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
-      </body>
-    </html>
+    <ReactQueryClientProvider>
+      <html lang='en'>
+        <body className={inter.className}>
+          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+        </body>
+      </html>
+    </ReactQueryClientProvider>
   );
 }
