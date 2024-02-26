@@ -7,7 +7,7 @@ export default function Page() {
     <main>
       <Tabs.Root defaultValue='normal'>
         <Tabs.List>
-          <Tabs.Trigger value='normal'>회원</Tabs.Trigger>
+          <Tabs.Trigger value='normal'>회원!</Tabs.Trigger>
           <Tabs.Trigger value='trainer'>트레이너</Tabs.Trigger>
         </Tabs.List>
         <div>
