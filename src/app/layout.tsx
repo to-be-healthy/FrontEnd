@@ -1,8 +1,7 @@
-import '@/app/GlobalStyle';
-
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
+import GlobalStyle from '@/app/GlobalStyle';
 import StyledComponentsRegistry from '@/lib/registry';
 
 import { ReactQueryClientProvider } from './ReactQueryClientProvier';
@@ -19,11 +18,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <ReactQueryClientProvider>
-      <html lang='en'>
-        <body className={inter.className}>
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
-        </body>
-      </html>
+      <StyledComponentsRegistry>
+        <GlobalStyle />
+        <html lang='en'>
+          <body className={inter.className}>{children}</body>
+        </html>
+      </StyledComponentsRegistry>
     </ReactQueryClientProvider>
   );
 }

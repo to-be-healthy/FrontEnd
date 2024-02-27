@@ -3,8 +3,6 @@
 import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
-import defaultTheme from '@/styles/theme/defaultTheme';
-
 const GlobalStyle = createGlobalStyle`
     ${reset}
     * {   
@@ -81,9 +79,7 @@ const GlobalStyle = createGlobalStyle`
         font-family: Poppins, Arial, PingFangSC-Regular, 'Microsoft YaHei', sans-serif;
     }
 
-    body{
-        background-color: ${defaultTheme.color.MAIN_BG};
-    }
+    
 
     
 `;
