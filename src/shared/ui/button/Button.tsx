@@ -32,12 +32,14 @@ const Button = ({
   color = '#000',
   bgColor = '#ddd',
   borderRadius = '5px',
+  onClick,
 }: Props) => {
   return (
     <StyledButton
       className={className}
       type={type}
       disabled={disabled}
+      onClick={onClick}
       color={color}
       $bgColor={bgColor}
       $borderRadius={borderRadius}>

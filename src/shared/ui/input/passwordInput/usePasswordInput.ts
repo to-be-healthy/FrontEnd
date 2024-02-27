@@ -3,11 +3,11 @@ import { useState } from 'react';
 const usePasswordInput = () => {
   const [isShowPassword, setIsShowPassword] = useState(true);
 
-  const changeHandler = () => {
+  const clickHandler = () => {
     setIsShowPassword((prev) => !prev);
   };
 
-  return { isShowPassword, changeHandler };
+  return { isShowPassword, clickHandler };
 };
 
 export default usePasswordInput;

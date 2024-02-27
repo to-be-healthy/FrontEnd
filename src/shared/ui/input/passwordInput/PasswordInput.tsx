@@ -51,7 +51,7 @@ interface Props {
 
 const PasswordInput = forwardRef<HTMLInputElement, Props>(
   ({ value, onChange, placeholder }: Props, inputRef) => {
-    const { isShowPassword, changeHandler } = usePasswordInput();
+    const { isShowPassword, clickHandler } = usePasswordInput();
 
     return (
       <StyledPasswordWrap>
@@ -62,7 +62,7 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>(
           onChange={onChange}
           placeholder={placeholder}
         />
-        <StyledButton onClick={changeHandler}>
+        <StyledButton onClick={clickHandler}>
           {isShowPassword ? <StyledHidePassIcon /> : <StyledShowPassIcon />}
         </StyledButton>
       </StyledPasswordWrap>
