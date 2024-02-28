@@ -1,6 +1,28 @@
 'use client';
 
+import styled from 'styled-components';
+
+import Select from '@/shared/ui/select';
 import * as Tabs from '@/shared/ui/tabs';
+
+const TRAINER_LIST = ['김진영 트레이너', '박혜민 트레이너'];
+
+const SelectTrigger = styled(Select.Trigger)`
+  width: 360px;
+  padding: 10px;
+  border: 1px solid gray;
+`;
+
+const SelectContent = styled(Select.Content)`
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  border: 1px solid gray;
+`;
+
+const SelectItem = styled(Select.Item)`
+  background-color: white;
+`;
 
 export default function Page() {
   return (
@@ -15,6 +37,27 @@ export default function Page() {
           <Tabs.Content value='trainer'>트레이너 로그인 UI</Tabs.Content>
         </div>
       </Tabs.Root>
+      <h2>트레이너 선택하기</h2>
+      <Select>
+        <SelectTrigger>
+          {({ selectedIndex }) => {
+            const text =
+              selectedIndex !== null
+                ? TRAINER_LIST[selectedIndex]
+                : '트레이너를 선택해주세요.';
+            return <span>{text}</span>;
+          }}
+        </SelectTrigger>
+        <SelectContent>
+          {TRAINER_LIST.map((item) => {
+            return (
+              <SelectItem value={item} key={item}>
+                {item}
+              </SelectItem>
+            );
+          })}
+        </SelectContent>
+      </Select>
     </main>
   );
 }
