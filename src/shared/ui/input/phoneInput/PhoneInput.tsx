@@ -29,13 +29,13 @@ const StyledButton = styled(Button)`
 interface Props {
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onClick: () => void;
+  onButtonClick: () => void;
   disabled?: boolean;
   placeholder?: string;
 }
 
 const PhoneInput = forwardRef<HTMLInputElement, Props>(
-  ({ value, onChange, onClick, disabled, placeholder }: Props, inputRef) => {
+  ({ value, onChange, onButtonClick, disabled, placeholder }: Props, inputRef) => {
     return (
       <StyledPhoneWrap>
         <Input
@@ -46,7 +46,7 @@ const PhoneInput = forwardRef<HTMLInputElement, Props>(
           onChange={onChange}
           placeholder={placeholder}
         />
-        <StyledButton onClick={onClick}>인증요청</StyledButton>
+        <StyledButton onClick={onButtonClick}>인증요청</StyledButton>
       </StyledPhoneWrap>
     );
   }

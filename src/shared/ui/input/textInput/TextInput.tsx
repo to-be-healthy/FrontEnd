@@ -11,7 +11,7 @@ const StyledInput = styled.input`
 
 interface Props {
   disabled?: boolean;
-  value: string | number;
+  value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
 }

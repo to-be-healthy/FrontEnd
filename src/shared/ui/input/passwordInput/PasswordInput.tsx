@@ -35,11 +35,11 @@ const IconStyles = css`
   }
 `;
 
-const StyledShowPassIcon = styled(ShowPasswordIcon)`
+const StyledShowPassswordIcon = styled(ShowPasswordIcon)`
   ${IconStyles}
 `;
 
-const StyledHidePassIcon = styled(HidePasswordIcon)`
+const StyledHidePasswordIcon = styled(HidePasswordIcon)`
   ${IconStyles}
 `;
 
@@ -51,7 +51,7 @@ interface Props {
 
 const PasswordInput = forwardRef<HTMLInputElement, Props>(
   ({ value, onChange, placeholder }: Props, inputRef) => {
-    const { isShowPassword, clickHandler } = usePasswordInput();
+    const { isShowPassword, handlePasswordIconClick } = usePasswordInput();
 
     return (
       <StyledPasswordWrap>
@@ -62,8 +62,8 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>(
           onChange={onChange}
           placeholder={placeholder}
         />
-        <StyledButton onClick={clickHandler}>
-          {isShowPassword ? <StyledHidePassIcon /> : <StyledShowPassIcon />}
+        <StyledButton onClick={handlePasswordIconClick}>
+          {isShowPassword ? <StyledHidePasswordIcon /> : <StyledShowPassswordIcon />}
         </StyledButton>
       </StyledPasswordWrap>
     );

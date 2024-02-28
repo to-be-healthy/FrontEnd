@@ -1,27 +1,20 @@
 import { ReactNode } from 'react';
 import styled from 'styled-components';
 
-export const StyledButton = styled.button<{
-  color: string;
-  $bgColor: string;
-  $borderRadius: string;
-}>`
+export const StyledButton = styled.button`
   width: 100%;
   height: 100%;
-  color: ${(props) => props.color};
-  background-color: ${(props) => props.$bgColor};
-  border-radius: ${(props) => props.$borderRadius};
+  color: #000;
+  background-color: #ddd;
+  border-radius: 5px;
 `;
 
 interface Props {
   className?: string;
   type?: 'submit' | 'reset' | 'button';
-  children: ReactNode | string;
+  children: ReactNode;
   disabled?: boolean;
   onClick: () => void;
-  color?: string;
-  bgColor?: string;
-  borderRadius?: string;
 }
 
 const Button = ({
@@ -29,20 +22,10 @@ const Button = ({
   type = 'button',
   children,
   disabled = false,
-  color = '#000',
-  bgColor = '#ddd',
-  borderRadius = '5px',
   onClick,
 }: Props) => {
   return (
-    <StyledButton
-      className={className}
-      type={type}
-      disabled={disabled}
-      onClick={onClick}
-      color={color}
-      $bgColor={bgColor}
-      $borderRadius={borderRadius}>
+    <StyledButton className={className} type={type} disabled={disabled} onClick={onClick}>
       {children}
     </StyledButton>
   );
