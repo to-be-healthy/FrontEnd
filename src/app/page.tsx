@@ -24,7 +24,27 @@ const SelectItem = styled(Select.Item)`
   background-color: white;
 `;
 
+interface TestResponse {
+  postId: number;
+  postName: string;
+}
+
+const getTest = async () => {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/api/test`);
+
+  if (!res.ok) {
+    throw new Error('Failed to fetch data');
+  }
+
+  return res.json() as Promise<TestResponse>;
+};
+
 export default function Page() {
+  const handleFetch = async () => {
+    const result = await getTest();
+    console.log(result);
+  };
+
   return (
     <main>
       <Tabs.Root defaultValue='normal'>
@@ -58,6 +78,7 @@ export default function Page() {
           })}
         </SelectContent>
       </Select>
+      <button onClick={handleFetch}>MOCK CLICK</button>
     </main>
   );
 }

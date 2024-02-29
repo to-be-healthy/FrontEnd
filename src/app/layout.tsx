@@ -1,10 +1,11 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import GlobalStyle from '@/app/GlobalStyle';
 import StyledComponentsRegistry from '@/lib/registry';
+import { MSWComponent } from '@/mocks/MSWComponent';
 
-import { ReactQueryClientProvider } from './ReactQueryClientProvier';
+import GlobalStyle from './GlobalStyle';
+import { ReactQueryClientProvider } from './ReactQueryClientProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -17,13 +18,16 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ReactQueryClientProvider>
-      <StyledComponentsRegistry>
-        <GlobalStyle />
-        <html lang='en'>
-          <body className={inter.className}>{children}</body>
-        </html>
-      </StyledComponentsRegistry>
-    </ReactQueryClientProvider>
+    <html lang='ko'>
+      <body className={inter.className}>
+        <ReactQueryClientProvider>
+          <StyledComponentsRegistry>
+            <GlobalStyle />
+            <MSWComponent />
+            {children}
+          </StyledComponentsRegistry>
+        </ReactQueryClientProvider>
+      </body>
+    </html>
   );
 }

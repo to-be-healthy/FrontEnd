@@ -32,6 +32,7 @@
     "simple-import-sort/imports": "error", // import 구문 순서 엉망이면 에러 냄.
     "simple-import-sort/exports": "error", // export 구문도 순서 엉망이면 에러 냄.
     "@typescript-eslint/no-unused-vars": "error", // 안 쓰는 변수 그대로 두면 에러 냄.
-    "@typescript-eslint/no-explicit-any": "warn" // any 쓰면 경고 냄.
+    "@typescript-eslint/no-explicit-any": "warn", // any 쓰면 경고 냄.
+    "@typescript-eslint/no-misused-promises": "off"
   }
 }
