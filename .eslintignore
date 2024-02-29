@@ -1,2 +1,3 @@
 next.config.mjs
 stylelint.config.js
+public/mockServiceWorker.js
