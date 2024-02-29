@@ -2,6 +2,7 @@
 
 import styled from 'styled-components';
 
+import { Dialog } from '@/shared/ui/dialog';
 import Select from '@/shared/ui/select';
 import * as Tabs from '@/shared/ui/tabs';
 
@@ -38,6 +39,23 @@ const getTest = async () => {
 
   return res.json() as Promise<TestResponse>;
 };
+const DialogContent = styled(Dialog.Content)`
+  position: relative;
+  width: 300px;
+  height: 300px;
+  background-color: #fff;
+`;
+
+const DialogHeading = styled(Dialog.Heading)`
+  margin-bottom: 10px;
+`;
+
+const DialogClose = styled(Dialog.Close)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+`;
 
 export default function Page() {
   const handleFetch = async () => {
@@ -79,6 +97,15 @@ export default function Page() {
         </SelectContent>
       </Select>
       <button onClick={handleFetch}>MOCK CLICK</button>
+
+      <Dialog>
+        <Dialog.Trigger>My trigger</Dialog.Trigger>
+        <DialogContent className='Dialog'>
+          <DialogHeading>My dialog heading</DialogHeading>
+          <Dialog.Description>My dialog description</Dialog.Description>
+          <DialogClose>X</DialogClose>
+        </DialogContent>
+      </Dialog>
     </main>
   );
 }

@@ -80,7 +80,11 @@ const GlobalStyle = createGlobalStyle`
     }
 
     
-
+    .dialog-overlay {
+        display: grid;
+        place-items: center;
+        background: rgb(0 0 0 / 80%);
+    }
     
 `;
 
