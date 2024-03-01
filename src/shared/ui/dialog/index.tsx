@@ -7,7 +7,7 @@ import Heading from './Heading';
 import Trigger from './Trigger';
 import { DialogContext, DialogOptions, useDialog } from './useDialog';
 
-export function Dialog({
+export default function Dialog({
   children,
   ...options
 }: {
