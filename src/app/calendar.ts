@@ -2,7 +2,6 @@ import Calendar from 'react-calendar';
 import styled from 'styled-components';
 
 export const StyledCalendar = styled(Calendar)`
-  /* 컴포넌트 전체에 적용되는 스타일 */
   &.react-calendar {
     margin: 50px;
     border: 1px solid #ddd;
@@ -13,26 +12,18 @@ export const StyledCalendar = styled(Calendar)`
     text-decoration: none;
   }
 
-  /* stylelint-disable-next-line selector-class-pattern */
   .react-calendar__navigation button {
     font-size: 18px;
   }
-  /* stylelint-disable-next-line selector-class-pattern */
+
   .react-calendar__month-view__weekdays__weekday {
     font-size: 14px;
-
-    /* 타일 스타일 커스텀 */
     border-radius: 10px;
 
     abbr {
       font-weight: 300;
       text-decoration: none;
     }
-  }
-  /* stylelint-disable-next-line selector-class-pattern */
-  .react-calendar__month-view__days__day {
-    padding: 13px;
-    font-size: 15px;
   }
 
   .react-calendar__tile--active:enabled:hover,
@@ -72,13 +63,13 @@ export const StyledCalendar = styled(Calendar)`
       background: transparent;
     }
   }
-  /* stylelint-disable-next-line no-duplicate-selectors */
-  /* stylelint-disable-next-line selector-class-pattern */
+
   .react-calendar__month-view__days__day {
     position: relative;
     width: 40px;
     height: 40px;
-    padding: 3px;
+    padding: 13px;
+    font-size: 15px;
 
     .dot {
       position: absolute;
