@@ -3,6 +3,8 @@ module.exports = {
   extends: ['stylelint-config-standard'],
   customSyntax: 'postcss-styled-syntax',
   rules: {
+    'no-invalid-double-slash-comments': null,
+    'selector-class-pattern': null,
     'selector-pseudo-element-no-unknown': null, //알려지지 않은 의사 요소 선택자(pseudo-element selectors)를 금지
     'at-rule-no-unknown': null, //CSS의 @규칙(at-rules) 중 알려지지 않은 규칙을 사용하는 것을 금지
     'declaration-empty-line-before': null, //선언 전에 빈 줄을 요구하거나 금지

@@ -1,10 +1,16 @@
 'use client';
 
+import 'react-calendar/dist/Calendar.css';
+
+import { useState } from 'react';
+import Calendar from 'react-calendar';
 import styled from 'styled-components';
 
-import { Dialog } from '@/shared/ui/dialog';
+import Dialog from '@/shared/ui/dialog';
 import Select from '@/shared/ui/select';
 import * as Tabs from '@/shared/ui/tabs';
+
+import { StyledCalendar } from './calendar';
 
 const TRAINER_LIST = ['김진영 트레이너', '박혜민 트레이너'];
 
@@ -25,10 +31,28 @@ const SelectItem = styled(Select.Item)`
   background-color: white;
 `;
 
+const DialogContent = styled(Dialog.Content)`
+  position: relative;
+  width: 500px;
+  height: 500px;
+  background-color: #fff;
+`;
+
+const DialogClose = styled(Dialog.Close)`
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 30px;
+`;
+
 interface TestResponse {
   postId: number;
   postName: string;
 }
+
+type ValuePiece = Date | null;
+
+type Value = ValuePiece | [ValuePiece, ValuePiece];
 
 const getTest = async () => {
   const res = await fetch(`${process.env.NEXT_PUBLIC_AUTH_URL}/api/test`);
@@ -39,25 +63,9 @@ const getTest = async () => {
 
   return res.json() as Promise<TestResponse>;
 };
-const DialogContent = styled(Dialog.Content)`
-  position: relative;
-  width: 300px;
-  height: 300px;
-  background-color: #fff;
-`;
-
-const DialogHeading = styled(Dialog.Heading)`
-  margin-bottom: 10px;
-`;
-
-const DialogClose = styled(Dialog.Close)`
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  font-size: 30px;
-`;
 
 export default function Page() {
+  const [value, onChange] = useState<Value>(new Date());
   const handleFetch = async () => {
     const result = await getTest();
     console.log(result);
@@ -76,6 +84,7 @@ export default function Page() {
         </div>
       </Tabs.Root>
       <h2>트레이너 선택하기</h2>
+
       <Select>
         <SelectTrigger>
           {({ selectedIndex }) => {
@@ -99,13 +108,25 @@ export default function Page() {
       <button onClick={handleFetch}>MOCK CLICK</button>
 
       <Dialog>
-        <Dialog.Trigger>My trigger</Dialog.Trigger>
+        <Dialog.Trigger>calendar</Dialog.Trigger>
         <DialogContent className='Dialog'>
-          <DialogHeading>My dialog heading</DialogHeading>
-          <Dialog.Description>My dialog description</Dialog.Description>
+          <Dialog.Description>
+            <StyledCalendar
+              locale='en'
+              onChange={onChange}
+              value={value}
+              calendarType='gregory'
+              tileContent={({ date, view }) =>
+                view === 'month' && date.getDay() === 2 ? (
+                  <span className='dot'>1300kcal</span>
+                ) : null
+              }
+            />
+          </Dialog.Description>
           <DialogClose>X</DialogClose>
         </DialogContent>
       </Dialog>
+      <Calendar locale='en' onChange={onChange} value={value} calendarType='gregory' />
     </main>
   );
 }

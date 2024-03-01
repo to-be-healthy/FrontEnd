@@ -1,0 +1,83 @@
+import Calendar from 'react-calendar';
+import styled from 'styled-components';
+
+export const StyledCalendar = styled(Calendar)`
+  &.react-calendar {
+    margin: 50px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+
+  abbr[title] {
+    text-decoration: none;
+  }
+
+  .react-calendar__navigation button {
+    font-size: 18px;
+  }
+
+  .react-calendar__month-view__weekdays__weekday {
+    font-size: 14px;
+    border-radius: 10px;
+
+    abbr {
+      font-weight: 300;
+      text-decoration: none;
+    }
+  }
+
+  .react-calendar__tile--active:enabled:hover,
+  .react-calendar__tile--active:enabled:focus {
+    background: transparent;
+  }
+
+  .react-calendar__tile:enabled:hover,
+  .react-calendar__tile:enabled:focus {
+    background-color: transparent;
+  }
+
+  //오늘날짜
+  .react-calendar__tile--now {
+    background-color: transparent;
+
+    abbr {
+      padding: 1px 7px;
+      background-color: #ffff76;
+    }
+  }
+
+  .react-calendar__tile--active {
+    color: #fff;
+    background: transparent;
+
+    abbr {
+      padding: 1px 7px;
+      color: #fff;
+      background: #006edc;
+      border-radius: 20%;
+    }
+  }
+
+  .react-calendar__navigation {
+    button:enabled:focus {
+      background: transparent;
+    }
+  }
+
+  .react-calendar__month-view__days__day {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    padding: 13px;
+    font-size: 15px;
+
+    .dot {
+      position: absolute;
+      bottom: -3px;
+      left: 50%;
+      font-size: 8px;
+      color: #2e2b2b;
+      transform: translate(-50%, 0);
+    }
+  }
+`;
