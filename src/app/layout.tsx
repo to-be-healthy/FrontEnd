@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
@@ -8,6 +9,8 @@ import GlobalStyle from './GlobalStyle';
 import { ReactQueryClientProvider } from './ReactQueryClientProvider';
 
 const inter = Inter({ subsets: ['latin'] });
+
+const gaId = process.env.GA_ID ?? '';
 
 export const metadata: Metadata = {
   title: 'NextPwa',
@@ -30,6 +33,7 @@ export default function RootLayout({
           </StyledComponentsRegistry>
         </ReactQueryClientProvider>
       </body>
+      <GoogleAnalytics gaId={gaId} />
     </html>
   );
 }
