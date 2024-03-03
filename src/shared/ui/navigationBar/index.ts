@@ -1,2 +1,2 @@
-export { MembersNavigationBar } from './MembersNavigationBar';
+export { MemberNavigationBar } from './MemberNavigationBar';
 export { TrainerNavigationBar } from './TrainerNavigationBar';
