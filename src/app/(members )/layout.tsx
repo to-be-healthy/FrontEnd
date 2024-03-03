@@ -1,3 +1,5 @@
+'use client';
+
 import { MemberNavigationBar } from '@/shared/ui/navigationBar';
 
 interface ComponentProps {

@@ -1,19 +1,19 @@
-import Link from 'next/link';
+import { NavLink } from './NavLink';
 
 export const TrainerNavigationBar = () => {
   return (
     <ul>
       <li>
-        <Link href='/'>홈</Link>
+        <NavLink href='/'>홈</NavLink>
       </li>
       <li>
-        <Link href='/manage'>회원관리</Link>
+        <NavLink href='/manage'>회원관리</NavLink>
       </li>
       <li>
-        <Link href='/schedule'>스케쥴관리</Link>
+        <NavLink href='/schedule'>스케쥴관리</NavLink>
       </li>
       <li>
-        <Link href='/mypage'>내정보</Link>
+        <NavLink href='/mypage'>내정보</NavLink>
       </li>
     </ul>
   );

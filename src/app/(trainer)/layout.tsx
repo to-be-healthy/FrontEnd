@@ -1,3 +1,5 @@
+'use client';
+
 import { TrainerNavigationBar } from '@/shared/ui/navigationBar';
 
 interface ComponentProps {
