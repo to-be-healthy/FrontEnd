@@ -2,7 +2,6 @@
 
 import { ChangeEvent, useRef, useState } from 'react';
 
-import AuthLayout from '@/app/(auth)/layout';
 import Button from '@/shared/ui/button/Button';
 import PasswordInput from '@/shared/ui/input/passwordInput/PasswordInput';
 import PhoneInput from '@/shared/ui/input/phoneInput/PhoneInput';
@@ -23,7 +22,7 @@ const SignUp = () => {
   const ref = useRef(null);
 
   return (
-    <AuthLayout>
+    <>
       <PasswordInput ref={ref} value={value1} onChange={handleInputChange} />
       <TextInput value={value1} onChange={handleInputChange} />
       <PhoneInput
@@ -33,7 +32,7 @@ const SignUp = () => {
         onButtonClick={handleButtonClick}
       />
       <Button onClick={handleButtonClick}>버튼</Button>
-    </AuthLayout>
+    </>
   );
 };
 
