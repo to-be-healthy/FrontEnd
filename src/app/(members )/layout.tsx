@@ -6,7 +6,7 @@ interface ComponentProps {
   children: React.ReactNode;
 }
 
-const AuthLayout = ({ children }: ComponentProps) => {
+const MemberLayout = ({ children }: ComponentProps) => {
   return (
     <div>
       {children}
@@ -15,4 +15,4 @@ const AuthLayout = ({ children }: ComponentProps) => {
   );
 };
 
-export default AuthLayout;
+export default MemberLayout;
