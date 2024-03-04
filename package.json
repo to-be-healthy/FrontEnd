@@ -21,6 +21,7 @@
     "react": "^18",
     "react-calendar": "^4.8.0",
     "react-dom": "^18",
+    "react-hook-form": "^7.50.1",
     "styled-components": "^6.1.8",
     "styled-reset": "^4.5.2",
     "zustand": "^4.5.1"
