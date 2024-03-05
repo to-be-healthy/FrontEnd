@@ -1,11 +1,9 @@
-import { ChangeEvent, forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import styled, { css } from 'styled-components';
 
 import HidePasswordIcon from '@/assets/hidePasswordIcon.svg';
 import ShowPasswordIcon from '@/assets/showPasswordIcon.svg';
 import Button from '@/shared/ui/button/Button';
-
-import usePasswordInput from './usePasswordInput';
 
 const StyledPasswordWrap = styled.div`
   position: relative;
@@ -43,25 +41,21 @@ const StyledHidePasswordIcon = styled(HidePasswordIcon)`
   ${IconStyles}
 `;
 
-interface Props {
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  hasClear?: boolean;
 }
 
-const PasswordInput = forwardRef<HTMLInputElement, Props>(
-  ({ value, onChange, placeholder }: Props, inputRef) => {
-    const { isShowPassword, handlePasswordIconClick } = usePasswordInput();
+export const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
+  ({ ...props }: InputProps, inputRef) => {
+    const [isShowPassword, setIsShowPassword] = useState(true);
+
+    const handlePasswordIconClick = () => {
+      setIsShowPassword((prev) => !prev);
+    };
 
     return (
       <StyledPasswordWrap>
-        <Input
-          ref={inputRef}
-          type={isShowPassword ? 'password' : 'text'}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-        />
+        <Input ref={inputRef} type={isShowPassword ? 'password' : 'text'} {...props} />
         <StyledButton onClick={handlePasswordIconClick}>
           {isShowPassword ? <StyledHidePasswordIcon /> : <StyledShowPassswordIcon />}
         </StyledButton>
@@ -71,5 +65,3 @@ const PasswordInput = forwardRef<HTMLInputElement, Props>(
 );
 
 PasswordInput.displayName = 'PasswordInput';
-
-export default PasswordInput;

@@ -1,4 +1,4 @@
-import { ChangeEvent, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 import Button from '@/shared/ui/button/Button';
@@ -26,26 +26,15 @@ const StyledButton = styled(Button)`
   border-radius: 5px;
 `;
 
-interface Props {
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onButtonClick: () => void;
-  disabled?: boolean;
-  placeholder?: string;
 }
 
-const PhoneInput = forwardRef<HTMLInputElement, Props>(
-  ({ value, onChange, onButtonClick, disabled, placeholder }: Props, inputRef) => {
+export const PhoneInput = forwardRef<HTMLInputElement, InputProps>(
+  ({ onButtonClick, ...props }: InputProps, inputRef) => {
     return (
       <StyledPhoneWrap>
-        <Input
-          type='tel'
-          ref={inputRef}
-          disabled={disabled}
-          value={value}
-          onChange={onChange}
-          placeholder={placeholder}
-        />
+        <Input type='tel' ref={inputRef} {...props} />
         <StyledButton onClick={onButtonClick}>인증요청</StyledButton>
       </StyledPhoneWrap>
     );
@@ -53,5 +42,3 @@ const PhoneInput = forwardRef<HTMLInputElement, Props>(
 );
 
 PhoneInput.displayName = 'PhoneInput';
-
-export default PhoneInput;
