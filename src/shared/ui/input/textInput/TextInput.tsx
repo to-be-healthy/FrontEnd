@@ -1,4 +1,4 @@
-import { ChangeEvent, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 const StyledInput = styled.input`
@@ -9,28 +9,16 @@ const StyledInput = styled.input`
   border-radius: 5px;
 `;
 
-interface Props {
-  disabled?: boolean;
-  value: string;
-  onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
+interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+  defaultValue?: string;
 }
 
-const TextInput = forwardRef<HTMLInputElement, Props>(
-  ({ disabled = false, value, onChange, placeholder }: Props, inputRef) => {
+export const TextInput = forwardRef<HTMLInputElement, InputProps>(
+  ({ defaultValue, ...props }: InputProps, inputRef) => {
     return (
-      <StyledInput
-        type='text'
-        ref={inputRef}
-        disabled={disabled}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-      />
+      <StyledInput type='text' defaultValue={defaultValue} ref={inputRef} {...props} />
     );
   }
 );
 
 TextInput.displayName = 'TextInput';
-
-export default TextInput;

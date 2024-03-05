@@ -3,9 +3,9 @@
 import { ChangeEvent, useRef, useState } from 'react';
 
 import Button from '@/shared/ui/button/Button';
-import PasswordInput from '@/shared/ui/input/passwordInput/PasswordInput';
-import PhoneInput from '@/shared/ui/input/phoneInput/PhoneInput';
-import TextInput from '@/shared/ui/input/textInput/TextInput';
+import { PasswordInput } from '@/shared/ui/input/passwordInput';
+import { PhoneInput } from '@/shared/ui/input/phoneInput';
+import { TextInput } from '@/shared/ui/input/textInput';
 
 const SignUp = () => {
   const [value1, setValue1] = useState('');
