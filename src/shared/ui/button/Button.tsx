@@ -1,11 +1,11 @@
-import { ReactNode } from 'react';
+import { forwardRef } from 'react';
 import styled from 'styled-components';
 
 export const StyledButton = styled.button`
   width: 100%;
   height: 100%;
   color: #000;
-  background-color: #ddd;
+  background-color: #4b92d4;
   border-radius: 5px;
 
   &:disabled {
@@ -14,26 +14,12 @@ export const StyledButton = styled.button`
   }
 `;
 
-interface Props {
-  className?: string;
-  type?: 'submit' | 'reset' | 'button';
-  children: ReactNode;
-  disabled?: boolean;
-  onClick?: () => void;
-}
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({
-  className,
-  type = 'button',
-  children,
-  disabled = false,
-  onClick,
-}: Props) => {
-  return (
-    <StyledButton className={className} type={type} disabled={disabled} onClick={onClick}>
-      {children}
-    </StyledButton>
-  );
-};
+const Button = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+  return <StyledButton ref={ref} {...props} />;
+});
+
+Button.displayName = 'Button';
 
 export default Button;
