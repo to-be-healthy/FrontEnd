@@ -14,7 +14,7 @@ interface Props {
   type?: 'submit' | 'reset' | 'button';
   children: ReactNode;
   disabled?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const Button = ({

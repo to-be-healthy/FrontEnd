@@ -30,15 +30,15 @@ interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onButtonClick: () => void;
 }
 
-export const PhoneInput = forwardRef<HTMLInputElement, InputProps>(
+export const EmailInput = forwardRef<HTMLInputElement, InputProps>(
   ({ onButtonClick, ...props }: InputProps, inputRef) => {
     return (
       <StyledPhoneWrap>
-        <Input type='tel' ref={inputRef} {...props} />
+        <Input type='email' ref={inputRef} {...props} />
         <StyledButton onClick={onButtonClick}>인증요청</StyledButton>
       </StyledPhoneWrap>
     );
   }
 );
 
-PhoneInput.displayName = 'PhoneInput';
+EmailInput.displayName = 'EmailInput';
