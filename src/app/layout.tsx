@@ -2,11 +2,13 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 
-import StyledComponentsRegistry from '@/lib/registry';
-import { MSWComponent } from '@/mocks/MSWComponent';
-
-import GlobalStyle from './GlobalStyle';
-import { ReactQueryClientProvider } from './ReactQueryClientProvider';
+import {
+  AuthSession,
+  MSWComponent,
+  QueryProvider,
+  StyledComponentsRegistry,
+} from './_providers';
+import { GlobalStyle } from './_styles';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -25,13 +27,13 @@ export default function RootLayout({
   return (
     <html lang='ko'>
       <body className={inter.className}>
-        <ReactQueryClientProvider>
+        <QueryProvider>
           <StyledComponentsRegistry>
             <GlobalStyle />
             <MSWComponent />
-            {children}
+            <AuthSession>{children}</AuthSession>
           </StyledComponentsRegistry>
-        </ReactQueryClientProvider>
+        </QueryProvider>
       </body>
       <GoogleAnalytics gaId={gaId} />
     </html>
