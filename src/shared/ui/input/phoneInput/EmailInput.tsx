@@ -1,7 +1,9 @@
-import { forwardRef } from 'react';
+import { Dispatch, forwardRef, SetStateAction, useEffect } from 'react';
 import styled from 'styled-components';
 
+import useTimer from '@/shared/hooks/isShowTimer';
 import Button from '@/shared/ui/button/Button';
+import { formatSeconds } from '@/shared/utils/formatSeconds';
 import { flexbox } from '@/styles/mixins/flexbox';
 
 const StyledPhoneWrap = styled.div`
@@ -15,6 +17,11 @@ const Input = styled.input`
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 5px;
+
+  &:disabled {
+    cursor: no-drop;
+    background-color: #c7c9c9;
+  }
 `;
 
 const StyledButton = styled(Button)`
@@ -28,14 +35,50 @@ const StyledButton = styled(Button)`
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   onButtonClick: () => void;
+  isShowTimer: boolean;
+  setIsShowTimer: Dispatch<SetStateAction<boolean>>;
+  isShowEmailVerifiedCodeInput: boolean;
+  isEmailVerified: boolean;
 }
 
 export const EmailInput = forwardRef<HTMLInputElement, InputProps>(
-  ({ onButtonClick, ...props }: InputProps, inputRef) => {
+  (
+    {
+      onButtonClick,
+      isShowTimer,
+      setIsShowTimer,
+      isShowEmailVerifiedCodeInput,
+      isEmailVerified,
+      ...props
+    }: InputProps,
+    inputRef
+  ) => {
+    const timer = useTimer(30, isShowTimer);
+    const { minutes, seconds } = formatSeconds(timer);
+
+    useEffect(() => {
+      if (timer === 0) {
+        setIsShowTimer(false);
+      }
+    }, [timer]);
+
     return (
       <StyledPhoneWrap>
-        <Input type='email' ref={inputRef} {...props} />
-        <StyledButton onClick={onButtonClick}>인증요청</StyledButton>
+        <Input
+          type='email'
+          disabled={isEmailVerified || isShowEmailVerifiedCodeInput}
+          ref={inputRef}
+          {...props}
+        />
+        {!isEmailVerified && (
+          <StyledButton onClick={onButtonClick} disabled={isShowTimer}>
+            {isShowEmailVerifiedCodeInput
+              ? isShowTimer
+                ? `${minutes}:${seconds}`
+                : '재요청'
+              : '인증요청'}
+          </StyledButton>
+        )}
       </StyledPhoneWrap>
     );
   }

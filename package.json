@@ -10,14 +10,14 @@
     "lint:style": "stylelint './src/**/**.tsx' --fix",
     "type-check": "tsc -p tsconfig.prod.json",
     "mock": "npx tsx watch ./src/mocks/server.ts",
-    "test": "jest",
-    "test:watch": "jest --watch"
+    "test": "jest"
   },
   "dependencies": {
     "@floating-ui/react": "^0.26.9",
     "@next/third-parties": "^14.1.1",
     "@tanstack/react-query": "^5.20.5",
     "@testing-library/user-event": "^14.5.2",
+    "axios": "^1.6.7",
     "cors": "^2.8.5",
     "next": "14.1.0",
     "next-pwa": "^5.6.0",

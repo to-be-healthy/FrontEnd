@@ -7,6 +7,11 @@ export const StyledButton = styled.button`
   color: #000;
   background-color: #ddd;
   border-radius: 5px;
+
+  &:disabled {
+    cursor: no-drop;
+    background-color: gray;
+  }
 `;
 
 interface Props {

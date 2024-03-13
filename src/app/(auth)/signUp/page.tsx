@@ -1,9 +1,21 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 'use client';
 
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import styled from 'styled-components';
 
+import {
+  checkVerificationCode,
+  isIdAvailable,
+  sendEmailVerificationCode,
+  signUp,
+} from '@/shared/axios/axiosPublic';
 import Button from '@/shared/ui/button/Button';
 import { PasswordInput } from '@/shared/ui/input/passwordInput';
 import { EmailInput } from '@/shared/ui/input/phoneInput';
@@ -14,67 +26,154 @@ const ErrorMsg = styled.p`
 `;
 
 interface IFormInput {
-  nickname: string;
+  id: string;
+  name: string;
   password: string;
   passwordConfirm: string;
-  email: number;
-  emailVerifiedCode: number;
+  email: string;
+  emailVerifiedCode: string;
+  signUp: string;
 }
 
-const emailRegEx = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+interface returnType {
+  data: string;
+  message: string;
+  statusCode: string;
+}
+
+const emailRegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+const idRegExp = /[0-9a-zA-Z]/g;
 
 const SignUp = () => {
-  const [isEmailVerified] = useState(false);
-  const [isShowEmailVerifiedCodeInput, setIsShowEmailVerifiedCodeInput] = useState(false);
+  const [isIdVerified, setIsIdVerified] = useState(false); //아이디 중복 확인 완료 여부
+  const [isEmailVerified, setIsEmailVerified] = useState(false); //이메일 인증 완료 여부
+  const [isShowEmailVerifiedCodeInput, setIsShowEmailVerifiedCodeInput] = useState(false); //이메일 인증요청 클릭시 하단 input 표시여부
+  const [isShowTimer, setIsShowTimer] = useState(false); //이메일 인증요청 클릭시 타이머 표시 여부
+  const [successMsg, setSuccessMsg] = useState({
+    id: '',
+    email: '',
+  });
   const {
     register,
     formState: { errors },
     handleSubmit,
     getValues,
     setError,
+    clearErrors,
+    watch,
   } = useForm<IFormInput>();
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    if (isEmailVerified) {
-      console.log(data);
+
+  const router = useRouter();
+  const verificationCode = watch('emailVerifiedCode');
+
+  //회원가입
+  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+    if (isIdVerified && isEmailVerified) {
+      clearErrors('id');
+      clearErrors('email');
+      try {
+        const res = await signUp(data, 'MEMBER');
+        //res.status 200일때
+        if (res) {
+          router.push('/');
+        }
+      } catch (error) {
+        setError('signUp', { message: '회원가입에 실패했습니다' });
+      }
     } else {
-      setError('email', {
-        message: '이메일 인증을 해주세요',
-      });
+      if (!isIdVerified) {
+        setError('id', { message: '아이디 인증을 해주세요' });
+      } else if (!isEmailVerified) {
+        setError('email', { message: '이메일 인증을 해주세요' });
+      }
     }
   };
 
-  const handleSendVerificationCode = () => {
+  //아이디 중복확인
+  const handleIsIdAvailable = async () => {
+    const { id } = getValues();
+
+    if (id.trim() !== '' && idRegExp.test(id)) {
+      clearErrors('id');
+      try {
+        const res = await isIdAvailable(id);
+        if (res) {
+          setIsIdVerified(true);
+          setSuccessMsg((prev) => ({ ...prev, id: '사용할 수 있는 아이디입니다.' }));
+        }
+      } catch (error: any) {
+        setError('id', { message: `${error}` });
+      }
+    } else {
+      setError('id', { message: '아이디는 소문자,대문자,숫자만 입력할 수 있습니다' });
+    }
+  };
+
+  //이메일 인증코드 발송
+  const handleSendVerificationCode = async () => {
     const { email } = getValues();
-
-    if (emailRegEx.test(String(email))) {
-      setError('email', {
-        message: '',
-      });
-      fetch(`/api/auth/send-auth-mail?email=${email}`, {
-        method: 'GET',
-      })
-        .then((res) => {
+    if (emailRegExp.test(email)) {
+      clearErrors('email');
+      try {
+        const res: returnType = await sendEmailVerificationCode(email);
+        if (res) {
+          alert(res.message);
           setIsShowEmailVerifiedCodeInput(true);
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+          setIsShowTimer(true);
+        }
+      } catch (error: any) {
+        setError('email', { message: `${error}` });
+      }
     } else {
-      setError('email', {
-        message: '이메일 형식이 아닙니다',
-      });
+      setError('email', { message: '이메일 형식이 아닙니다' });
     }
   };
 
-  //인증번호 입력 후 확인되면 setIsEmailVerified(true)
+  //인증번호 입력
+  const handleCheckVerificationCode = async () => {
+    const { email } = getValues();
+    try {
+      const res = await checkVerificationCode(email, verificationCode);
+      if (res) {
+        setIsEmailVerified(true);
+        setIsShowEmailVerifiedCodeInput(false);
+        setSuccessMsg((prev) => ({ ...prev, email: '이메일 인증에 성공했습니다' }));
+      }
+    } catch (error: any) {
+      setError('email', { message: `${error}` });
+    }
+  };
+
+  useEffect(() => {
+    clearErrors('email');
+
+    if (String(verificationCode).length === 6) {
+      handleCheckVerificationCode();
+    }
+  }, [verificationCode]);
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <TextInput
+          disabled={isIdVerified}
+          {...register('id', {
+            required: {
+              value: true,
+              message: '아이디를 입력해주세요',
+            },
+          })}
+        />
+        {!isIdVerified && <Button onClick={handleIsIdAvailable}>중복확인</Button>}
+        {errors.id && <ErrorMsg role='alert'>{errors.id.message}</ErrorMsg>}
+        {successMsg && <p>{successMsg.id}</p>}
+
         <EmailInput
           onButtonClick={handleSendVerificationCode}
-          disabled={isEmailVerified}
+          isShowTimer={isShowTimer}
+          setIsShowTimer={setIsShowTimer}
+          isShowEmailVerifiedCodeInput={isShowEmailVerifiedCodeInput}
+          isEmailVerified={isEmailVerified}
           {...register('email', {
             required: {
               value: true,
@@ -96,18 +195,18 @@ const SignUp = () => {
             })}
           />
         )}
-
         {errors.email && <ErrorMsg role='alert'>{errors.email.message}</ErrorMsg>}
+        {successMsg && <p>{successMsg.email}</p>}
 
         <TextInput
-          {...register('nickname', {
+          {...register('name', {
             required: {
               value: true,
-              message: '닉네임을 입력해주세요',
+              message: '이름을 입력해주세요',
             },
           })}
         />
-        {errors.nickname && <ErrorMsg role='alert'>{errors.nickname.message}</ErrorMsg>}
+        {errors.name && <ErrorMsg role='alert'>{errors.name.message}</ErrorMsg>}
 
         <PasswordInput
           {...register('password', {
@@ -138,6 +237,8 @@ const SignUp = () => {
         {errors.passwordConfirm && (
           <ErrorMsg role='alert'>{errors.passwordConfirm.message}</ErrorMsg>
         )}
+
+        {errors.signUp && <ErrorMsg role='alert'>{errors.signUp.message}</ErrorMsg>}
 
         <Button type='submit'>가입</Button>
       </form>
