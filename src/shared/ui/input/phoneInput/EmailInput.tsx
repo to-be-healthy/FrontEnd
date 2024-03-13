@@ -1,7 +1,7 @@
 import { Dispatch, forwardRef, SetStateAction, useEffect } from 'react';
 import styled from 'styled-components';
 
-import useTimer from '@/shared/hooks/isShowTimer';
+import { useTimer } from '@/shared/hooks';
 import Button from '@/shared/ui/button/Button';
 import { formatSeconds } from '@/shared/utils/formatSeconds';
 import { flexbox } from '@/styles/mixins/flexbox';
@@ -53,7 +53,7 @@ export const EmailInput = forwardRef<HTMLInputElement, InputProps>(
     }: InputProps,
     inputRef
   ) => {
-    const timer = useTimer(30, isShowTimer);
+    const timer = useTimer(180, isShowTimer);
     const { minutes, seconds } = formatSeconds(timer);
 
     useEffect(() => {
