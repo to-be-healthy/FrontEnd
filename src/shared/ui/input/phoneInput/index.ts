@@ -1,1 +1,1 @@
-export { PhoneInput } from './PhoneInput';
+export { EmailInput } from './EmailInput';

@@ -2,6 +2,14 @@
 import withPWA from 'next-pwa';
 
 const nextConfig = {
+  async rewrites() {
+    return [
+      {
+        source: '/:path*',
+        destination: `${process.env.BASE_URL}/:path*`,
+      },
+    ];
+  },
   ...withPWA({
     dest: 'public',
     register: true,

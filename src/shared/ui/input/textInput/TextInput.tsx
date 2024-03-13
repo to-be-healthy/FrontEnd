@@ -7,6 +7,11 @@ const StyledInput = styled.input`
   padding: 8px;
   border: 1px solid #ddd;
   border-radius: 5px;
+
+  &:disabled {
+    cursor: no-drop;
+    background-color: gray;
+  }
 `;
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
