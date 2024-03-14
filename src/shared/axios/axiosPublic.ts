@@ -6,7 +6,8 @@ import axios from 'axios';
 
 export const isIdAvailable = async (userId: string) => {
   try {
-    const res = await axios.get(`/api/auth/validation/userId?userId=${userId}`);
+    const res = await axios.get(`/api/v1/auth/validation/userId?userId=${userId}`);
+    // const res = await axios.get(`/api/auth/validation/userId?userId=${userId}`);
     return res.data;
   } catch (error: any) {
     throw new Error(error.response.data.message);
@@ -15,7 +16,8 @@ export const isIdAvailable = async (userId: string) => {
 
 export const sendEmailVerificationCode = async (email: string) => {
   try {
-    const res = await axios.post(`/api/auth/send-email-verification?email=${email}`);
+    const res = await axios.post(`/api/v1/auth/send-email-verification?email=${email}`);
+    // const res = await axios.post(`/api/auth/send-email-verification?email=${email}`);
     return res.data;
   } catch (error: any) {
     throw new Error(error.response.data.message);
@@ -25,7 +27,8 @@ export const sendEmailVerificationCode = async (email: string) => {
 export const checkVerificationCode = async (email: any, authNumber: any) => {
   try {
     const res = await axios.post(
-      `/api/auth/email-verification?authNumber=${authNumber}&&email=${email}`
+      `/api/v1/auth/email-verification?authNumber=${authNumber}&&email=${email}`
+      // `/api/auth/email-verification?authNumber=${authNumber}&&email=${email}`
     );
     return res.data;
   } catch (error: any) {
@@ -35,7 +38,8 @@ export const checkVerificationCode = async (email: any, authNumber: any) => {
 
 export const signUp = async (params: any, memberType: string) => {
   try {
-    const res = await axios.post(`/api/auth/join`, {
+    const res = await axios.post(`/api/v1/auth/join`, {
+      // const res = await axios.post(`/api/auth/join`, {
       userId: params.id,
       email: params.email,
       password: params.password,
