@@ -2,6 +2,8 @@
 
 import 'react-calendar/dist/Calendar.css';
 
+import { useRouter } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
 import { useState } from 'react';
 import Calendar from 'react-calendar';
 import styled from 'styled-components';
@@ -65,11 +67,21 @@ const getTest = async () => {
 };
 
 export const HomePage = () => {
+  const router = useRouter();
+  const session = useSession();
+  console.log(session);
+
   const [value, onChange] = useState<Value>(new Date());
 
   const handleFetch = async () => {
     const result = await getTest();
     console.log(result);
+  };
+
+  const handleLogout = async () => {
+    await signOut({ redirect: false }).then(() => {
+      router.replace('/');
+    });
   };
 
   return (
@@ -128,6 +140,7 @@ export const HomePage = () => {
         </DialogContent>
       </Dialog>
       <Calendar locale='en' onChange={onChange} value={value} calendarType='gregory' />
+      <button onClick={handleLogout}>로그아웃</button>
     </main>
   );
 };
