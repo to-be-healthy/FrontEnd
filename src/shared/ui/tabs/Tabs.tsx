@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useId, useRef } from 'react';
 
-import { useControllableState } from '@/shared/hooks/use-controllable-state';
+import { useControllableState } from '@/shared/hooks';
 import { createContextScope, Scope } from '@/shared/utils/context';
 import type * as Radix from '@/shared/utils/primitive';
 import { Primitive } from '@/shared/utils/primitive';
