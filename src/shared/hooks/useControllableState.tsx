@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { useCallbackRef } from '@/shared/hooks/use-callback-ref';
+import { useCallbackRef } from '@/shared/hooks';
 
 interface UseControllableStateParams<T> {
   prop?: T | undefined;

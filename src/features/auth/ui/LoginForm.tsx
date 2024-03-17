@@ -6,8 +6,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { styled } from 'styled-components';
 
 import Button from '@/shared/ui/button/Button';
-import { PasswordInput } from '@/shared/ui/input/passwordInput';
-import { TextInput } from '@/shared/ui/input/textInput';
+import { PasswordInput, TextInput } from '@/shared/ui/input';
 
 const FormWrapper = styled.form`
   display: flex;
