@@ -6,7 +6,7 @@
 
 import { screen } from '@testing-library/react';
 
-import { TextInput } from '@/shared/ui/input/textInput';
+import { TextInput } from '@/shared/ui/input';
 import render from '@/shared/utils/render';
 
 it('props로 넘긴 defaultValue가 노출된다', async () => {
