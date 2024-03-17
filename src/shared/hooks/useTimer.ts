@@ -19,4 +19,4 @@ const useTimer = (initialState: number, isShow: boolean) => {
   return timeValue;
 };
 
-export default useTimer;
+export { useTimer };
