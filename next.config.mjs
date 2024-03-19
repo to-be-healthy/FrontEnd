@@ -5,12 +5,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        // source: '/:path*',
-        // destination: `${process.env.BASE_URL}/:path*`,
-
-        // TODO - 추후 백엔드 API에 버전 표시 적용 후
         source: '/api/v1/:path*',
-        destination: `${process.env.BASE_URL}/api/v1/:path*`,
+        destination: `${process.env.NEXT_PUBLIC_AUTH_URL}/api/v1/:path*`,
       },
     ];
   },

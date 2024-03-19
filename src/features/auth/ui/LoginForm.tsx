@@ -51,6 +51,8 @@ export const LoginForm = () => {
       redirect: false,
     });
 
+    console.log(res);
+
     if (res?.error) {
       // 로그인 실패
       console.log('실패', res);
