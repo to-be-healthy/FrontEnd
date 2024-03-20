@@ -1,6 +1,7 @@
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
+
+import { pretendard } from '@/shared/config';
 
 import {
   AuthSession,
@@ -9,8 +10,6 @@ import {
   StyledComponentsRegistry,
 } from './_providers';
 import { GlobalStyle } from './_styles';
-
-const inter = Inter({ subsets: ['latin'] });
 
 const gaId = process.env.GA_ID ?? '';
 
@@ -26,7 +25,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang='ko'>
-      <body className={inter.className}>
+      <body className={pretendard.className}>
         <QueryProvider>
           <StyledComponentsRegistry>
             <GlobalStyle />

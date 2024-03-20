@@ -9,6 +9,7 @@ declare module 'next-auth' {
     email?: string | null;
     id?: string;
     accessToken?: string;
+    refreshToken?: string;
     // Any other attributes you need from either your User table columns or additional fields during a session callback
   }
 
@@ -21,17 +22,17 @@ declare module 'next-auth' {
     refreshToken?: string;
     accessToken: string;
     error?: string;
-    user?: User;
+    user?: Token;
   }
 }
 
 declare module 'next-auth/jwt' {
   /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
   interface JWT {
-    refreshTokenExpires?: number;
-    accessTokenExpires?: number;
-    refreshToken?: string;
     accessToken: string;
+    refreshToken?: string;
+    sub: string;
+    id?: string;
     exp?: number;
     iat?: number;
     jti?: string;
