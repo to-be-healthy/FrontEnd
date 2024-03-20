@@ -2,7 +2,7 @@
 
 import styled from 'styled-components';
 
-import SignUpForm from '@/features/auth/ui/SignUpForm';
+import { SignUpStep2 } from '@/features/auth/ui';
 
 import { AuthLayout } from './AuthLayout';
 
@@ -11,6 +11,7 @@ export const Container = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  height: 100%;
   padding: 30px 20px;
 `;
 
@@ -18,8 +19,17 @@ const SignUpPage = () => {
   return (
     <AuthLayout>
       <Container>
-        <h2>회원가입</h2>
-        <SignUpForm />
+        {/* step 1 */}
+        {/* <SignUpStep1 /> */}
+
+        {/* step 2 */}
+        <SignUpStep2 />
+
+        {/* <SignUpForm /> */}
+
+        {/* step 3 */}
+
+        {/* step 4 */}
       </Container>
     </AuthLayout>
   );
