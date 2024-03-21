@@ -1,4 +1,4 @@
-import '@/app/_styles/index.css';
+import '@/app/_styles/global.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';

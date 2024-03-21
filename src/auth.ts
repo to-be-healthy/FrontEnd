@@ -21,7 +21,6 @@ export const config = {
         });
         const user = data as User;
 
-        console.log(user);
         if (statusCode === 'OK') {
           return {
             email: user.email,
