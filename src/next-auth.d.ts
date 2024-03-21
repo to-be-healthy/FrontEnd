@@ -1,40 +1,30 @@
 import { DefaultSession, DefaultUser } from 'next-auth';
 
 declare module 'next-auth' {
-  /**
-   * Leveraged by session callback's user object (AdapterUser extends User)
-   */
-  export interface User extends DefaultUser {
-    /** Define any user-specific variables here to make them available to other code inferences */
-    email?: string | null;
-    id?: string;
+  interface User extends DefaultUser {
     accessToken?: string;
     refreshToken?: string;
-    // Any other attributes you need from either your User table columns or additional fields during a session callback
+    userId?: string;
+    // role?: string; // 예정
   }
 
-  /**
-   * Returned by `useSession`, `getSession` and received as a prop on the `SessionProvider` React Context
-   */
-  export interface Session extends DefaultSession {
-    refreshTokenExpires?: number;
-    accessTokenExpires?: string;
+  interface Session extends DefaultSession {
     refreshToken?: string;
     accessToken: string;
-    error?: string;
-    user?: Token;
   }
 }
 
 declare module 'next-auth/jwt' {
-  /** Returned by the `jwt` callback and `getToken`, when using JWT sessions */
   interface JWT {
-    accessToken: string;
-    refreshToken?: string;
     sub: string;
-    id?: string;
-    exp?: number;
     iat?: number;
+    exp?: number;
     jti?: string;
+    user?: {
+      accessToken: string;
+      refreshToken?: string;
+      id?: string;
+      userId?: string;
+    };
   }
 }

@@ -1,7 +1,6 @@
+import { Slot } from '@radix-ui/react-slot';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-
-import { Slot } from '@/shared/utils/slot';
 
 const NODES = [
   'a',

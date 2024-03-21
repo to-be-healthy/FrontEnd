@@ -1,1 +1,0 @@
-export { pretendard } from './fonts';

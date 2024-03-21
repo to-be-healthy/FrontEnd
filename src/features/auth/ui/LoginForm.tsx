@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import Button from '@/shared/ui/button/Button';
+import { Button } from '@/shared/ui/button';
 import { PasswordInput, TextInput } from '@/shared/ui/input';
 
 interface LoginForm {

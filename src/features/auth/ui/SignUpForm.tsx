@@ -15,7 +15,7 @@ import {
   sendEmailVerificationCode,
   signUp,
 } from '@/shared/axios/axiosPublic';
-import Button from '@/shared/ui/button/Button';
+import { Button } from '@/shared/ui/button';
 import { EmailInput } from '@/shared/ui/input';
 import { PasswordInput, TextInput } from '@/shared/ui/input';
 

@@ -1,7 +1,7 @@
 import { Dispatch, forwardRef, SetStateAction, useEffect } from 'react';
 
 import { useTimer } from '@/shared/hooks';
-import Button from '@/shared/ui/button/Button';
+import { Button } from '@/shared/ui/button';
 import { formatSeconds } from '@/shared/utils/formatSeconds';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {

@@ -2,7 +2,7 @@
 
 // import { useState } from 'react';
 
-import Button from '@/shared/ui/button/Button';
+import { Button } from '@/shared/ui/button';
 
 export const SignUpStep2 = () => {
   // const [clickedButton, setClickedButton] = useState<number | null>(null);

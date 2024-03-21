@@ -3,8 +3,6 @@ import '@/app/_styles/global.css';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 
-import { pretendard } from '@/shared/config';
-
 import { AuthSession, MSWComponent, QueryProvider } from './_providers';
 
 const gaId = process.env.GA_ID ?? '';
@@ -21,7 +19,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang='ko'>
-      <body className={pretendard.className}>
+      <body>
         <QueryProvider>
           <MSWComponent />
           <AuthSession>{children}</AuthSession>

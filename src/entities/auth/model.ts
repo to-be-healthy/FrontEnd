@@ -3,7 +3,7 @@ export interface SignInRequest {
   password: string;
 }
 
-export interface Tokens {
+export interface SignInResponse {
   accessToken: string;
   refreshToken: string;
 }
