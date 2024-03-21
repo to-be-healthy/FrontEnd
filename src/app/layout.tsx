@@ -1,15 +1,11 @@
+import '@/app/_styles/index.css';
+
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 
 import { pretendard } from '@/shared/config';
 
-import {
-  AuthSession,
-  MSWComponent,
-  QueryProvider,
-  StyledComponentsRegistry,
-} from './_providers';
-import { GlobalStyle } from './_styles';
+import { AuthSession, MSWComponent, QueryProvider } from './_providers';
 
 const gaId = process.env.GA_ID ?? '';
 
@@ -27,11 +23,8 @@ export default function RootLayout({
     <html lang='ko'>
       <body className={pretendard.className}>
         <QueryProvider>
-          <StyledComponentsRegistry>
-            <GlobalStyle />
-            <MSWComponent />
-            <AuthSession>{children}</AuthSession>
-          </StyledComponentsRegistry>
+          <MSWComponent />
+          <AuthSession>{children}</AuthSession>
         </QueryProvider>
       </body>
       <GoogleAnalytics gaId={gaId} />

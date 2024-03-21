@@ -1,7 +1,6 @@
 module.exports = {
-  plugins: ['stylelint-order'],
   extends: ['stylelint-config-standard'],
-  customSyntax: 'postcss-styled-syntax',
+  plugins: ['stylelint-order'],
   rules: {
     'no-invalid-double-slash-comments': null,
     'selector-class-pattern': null,
@@ -272,7 +271,6 @@ module.exports = {
           'text-anchor',
           'word-spacing',
           'writing-mode',
-
           'fill',
           'fill-opacity',
           'fill-rule',
@@ -284,7 +282,6 @@ module.exports = {
           'stroke-miterlimit',
           'stroke-opacity',
           'stroke-width',
-
           'color-interpolation',
           'color-interpolation-filters',
           'color-profile',

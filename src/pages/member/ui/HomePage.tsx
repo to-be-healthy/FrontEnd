@@ -1,11 +1,9 @@
 import MemberLayout from './MemberLayout';
 
-const HomePage = () => {
+export const HomePage = () => {
   return (
     <MemberLayout>
       <div>member HomePage</div>
     </MemberLayout>
   );
 };
-
-export { HomePage };

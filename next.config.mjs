@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 import withPWA from 'next-pwa';
+import path from 'path';
 
 const nextConfig = {
   async rewrites() {
@@ -15,9 +16,7 @@ const nextConfig = {
     register: true,
     skipWaiting: true,
   }),
-  compiler: {
-    styledComponents: true,
-  },
+
   webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.svg$/,
