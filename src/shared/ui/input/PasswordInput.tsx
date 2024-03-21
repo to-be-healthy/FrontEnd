@@ -2,7 +2,7 @@ import { forwardRef, useState } from 'react';
 
 // import HidePasswordIcon from '@/assets/hidePasswordIcon.svg';
 // import ShowPasswordIcon from '@/assets/showPasswordIcon.svg';
-import Button from '@/shared/ui/button/Button';
+import { Button } from '@/shared/ui/button';
 
 // const IconStyles = css`
 //   path {

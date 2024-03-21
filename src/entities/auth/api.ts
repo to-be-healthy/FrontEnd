@@ -3,10 +3,10 @@ import { getSession } from 'next-auth/react';
 
 import { BaseResponse } from '@/shared/api';
 
-import { SignInRequest, Tokens } from './model';
+import { SignInRequest, SignInResponse } from './model';
 
 export const requestSignIn = async (credential: SignInRequest) => {
-  const result: AxiosResponse<BaseResponse<Tokens>> = await axios.post(
+  const result: AxiosResponse<BaseResponse<SignInResponse>> = await axios.post(
     `${process.env.NEXT_PUBLIC_AUTH_URL}/api/v1/auth/login`,
     credential
   );
@@ -20,7 +20,7 @@ export const requestRefreshToken = async () => {
   if (!refreshToken || !userId)
     throw new Error('리프레시 토큰이나 유저 정보가 없습니다.');
 
-  const result: BaseResponse<Tokens> = await axios.post(
+  const result: BaseResponse<SignInResponse> = await axios.post(
     `${process.env.NEXT_PUBLIC_AUTH_URL}/api/v1/auth/efresh-token?userId=${userId}&refreshToken=${refreshToken}`
   );
   return result;

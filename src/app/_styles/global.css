@@ -1,3 +1,167 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+
+    /* design tokens */
+    --primary-50: #e2f1ff;
+    --primary-100: #badcff;
+    --primary-200: #8ec7ff;
+    --primary-300: #5fb1ff;
+    --primary-400: #3ba0ff;
+    --primary-500: #1990ff;
+    --primary-600: #1f82f0;
+    --primary-700: #206fdc;
+    --primary-800: #205eca;
+    --primary-900: #1f3eaa;
+    --gray-100: #f2f3f5;
+    --gray-200: #dee1e6;
+    --gray-300: #cbcfd3;
+    --gray-400: #a7a9ae;
+    --gray-500: #86888d;
+    --gray-600: #5f6165;
+    --gray-700: #4c4e52;
+    --gray-800: #2e3134;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 400;
+    src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff')
+      format('woff');
+  }
+
+  html {
+    font-family:
+      Pretendard,
+      ui-sans-serif,
+      system-ui,
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      Roboto,
+      'Helvetica Neue',
+      Arial,
+      'Noto Sans',
+      sans-serif,
+      'Apple Color Emoji',
+      'Segoe UI Emoji',
+      'Segoe UI Symbol',
+      'Noto Color Emoji';
+  }
+}
+
+@layer components {
+  .typography-heading-1 {
+    @apply text-[26px]/[32px] font-bold;
+  }
+
+  .typography-heading-2 {
+    @apply text-[22px]/[28px] font-bold;
+  }
+
+  .typography-heading-3 {
+    @apply text-[20px]/[24px] font-bold;
+  }
+
+  .typography-heading-4 {
+    @apply text-[17px]/[24px] font-bold;
+  }
+
+  .typography-heading-5 {
+    @apply text-[13px]/[28px] font-bold;
+  }
+
+  .typography-title-1 {
+    @apply text-[24px]/[24px] font-bold;
+  }
+
+  .typography-title-2 {
+    @apply text-[16px]/[24px] font-bold;
+  }
+
+  .typography-title-3 {
+    @apply text-[16px]/[24px] font-semibold;
+  }
+
+  .typography-title-4 {
+    @apply text-[15px]/[20px] font-semibold;
+  }
+
+  .typography-title-5 {
+    @apply text-[14px]/[20px] font-semibold;
+  }
+
+  .typography-body-1 {
+    @apply text-[16px]/[24px] font-medium;
+  }
+
+  .typography-body-2 {
+    @apply text-[14px]/[20px] font-normal;
+  }
+
+  .typography-body-3 {
+    @apply text-[13px]/[20px] font-normal;
+  }
+
+  .typography-body-4 {
+    @apply text-[12px]/[20px] font-normal;
+  }
+}

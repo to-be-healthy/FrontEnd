@@ -1,7 +1,7 @@
 import NextAuth, { NextAuthConfig, User } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 
-import { requestSignIn } from './entities/auth/api';
+import { requestSignIn } from '@/entities/auth/api';
 
 export const config = {
   pages: {
@@ -11,7 +11,6 @@ export const config = {
   session: {
     strategy: 'jwt',
   },
-  jwt: {},
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
@@ -23,10 +22,10 @@ export const config = {
 
         if (statusCode === 'OK') {
           return {
-            email: user.email,
-            name: user.name,
             accessToken: user.accessToken,
             refreshToken: user.refreshToken,
+            userId: user.userId,
+            // role: user.role // 추가 예정
           };
         }
 
@@ -35,24 +34,14 @@ export const config = {
     }),
   ],
   callbacks: {
-    /**
-     * JWT Callback
-     * 웹 토큰이 실행 혹은 업데이트될때마다 콜백이 실행
-     * 반환된 값은 암호화되어 쿠키에 저장됨
-     * 초기 로그인시 User 정보를 가공해 반환
-     */
     jwt: ({ token, user }) => {
-      return { ...token, ...user };
+      if (user) {
+        return { ...token, ...user };
+      }
+      return token;
     },
-    /**
-     * Session Callback
-     * ClientSide에서 NextAuth에 세션을 체크할때마다 실행
-     * 반환된 값은 useSession을 통해 ClientSide에서 사용할 수 있음
-     * JWT 토큰의 정보를 Session에 유지 시킨다.
-     */
     session: ({ session, token }) => {
-      session.user = token;
-      return session;
+      return { ...session, ...token };
     },
   },
 } satisfies NextAuthConfig;

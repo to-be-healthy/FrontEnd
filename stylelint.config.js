@@ -1,7 +1,7 @@
 module.exports = {
   extends: ['stylelint-config-standard'],
-  customSyntax: 'postcss-styled-syntax',
   plugins: ['stylelint-order'],
+  customSyntax: 'postcss-styled-syntax',
   rules: {
     'no-invalid-double-slash-comments': null,
     'selector-class-pattern': null,
