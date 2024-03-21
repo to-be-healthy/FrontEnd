@@ -1,26 +1,9 @@
-import styled from 'styled-components';
-
-import { flexbox } from '@/styles/mixins/flexbox';
-
-import { NavLink } from './NavLink';
-
-const Nav = styled.nav`
-  position: fixed;
-  bottom: 0;
-  width: 360px;
-  height: 50px;
-
-  ul {
-    width: 100%;
-    height: 100%;
-    ${flexbox('space-between', 'center')}
-  }
-`;
+// import { NavLink } from '../NavLink';
 
 export const TrainerNavigationBar = () => {
   return (
-    <Nav>
-      <ul>
+    <nav>
+      {/* <ul>
         <li>
           <NavLink href='/'>홈</NavLink>
         </li>
@@ -33,7 +16,7 @@ export const TrainerNavigationBar = () => {
         <li>
           <NavLink href='/mypage'>내정보</NavLink>
         </li>
-      </ul>
-    </Nav>
+      </ul> */}
+    </nav>
   );
 };

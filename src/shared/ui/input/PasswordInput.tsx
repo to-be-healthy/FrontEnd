@@ -1,46 +1,22 @@
 import { forwardRef, useState } from 'react';
-import styled, { css } from 'styled-components';
 
-import HidePasswordIcon from '@/assets/hidePasswordIcon.svg';
-import ShowPasswordIcon from '@/assets/showPasswordIcon.svg';
+// import HidePasswordIcon from '@/assets/hidePasswordIcon.svg';
+// import ShowPasswordIcon from '@/assets/showPasswordIcon.svg';
 import Button from '@/shared/ui/button/Button';
 
-const StyledPasswordWrap = styled.div`
-  position: relative;
-  padding: 8px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-`;
+// const IconStyles = css`
+//   path {
+//     stroke: #252222;
+//   }
+// `;
 
-const Input = styled.input`
-  width: 100%;
-  height: 100%;
-`;
+// const StyledShowPassswordIcon = styled(ShowPasswordIcon)`
+//   ${IconStyles}
+// `;
 
-const StyledButton = styled(Button)`
-  position: absolute;
-  top: 50%;
-  right: 10px;
-  width: 24px;
-  height: 24px;
-
-  background-color: transparent;
-  transform: translate(0, -50%);
-`;
-
-const IconStyles = css`
-  path {
-    stroke: #252222;
-  }
-`;
-
-const StyledShowPassswordIcon = styled(ShowPasswordIcon)`
-  ${IconStyles}
-`;
-
-const StyledHidePasswordIcon = styled(HidePasswordIcon)`
-  ${IconStyles}
-`;
+// const StyledHidePasswordIcon = styled(HidePasswordIcon)`
+//   ${IconStyles}
+// `;
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   hasClear?: boolean;
@@ -55,12 +31,13 @@ export const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
     };
 
     return (
-      <StyledPasswordWrap>
-        <Input ref={inputRef} type={isShowPassword ? 'password' : 'text'} {...props} />
-        <StyledButton onClick={handlePasswordIconClick}>
-          {isShowPassword ? <StyledHidePasswordIcon /> : <StyledShowPassswordIcon />}
-        </StyledButton>
-      </StyledPasswordWrap>
+      <div>
+        <input ref={inputRef} type={isShowPassword ? 'password' : 'text'} {...props} />
+        <Button onClick={handlePasswordIconClick}>
+          {isShowPassword ? '숨김' : '보임'}
+          {/* {isShowPassword ? <StyledHidePasswordIcon /> : <StyledShowPassswordIcon />} */}
+        </Button>
+      </div>
     );
   }
 );

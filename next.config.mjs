@@ -15,9 +15,7 @@ const nextConfig = {
     register: true,
     skipWaiting: true,
   }),
-  compiler: {
-    styledComponents: true,
-  },
+
   webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.svg$/,

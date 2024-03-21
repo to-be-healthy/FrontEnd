@@ -3,29 +3,9 @@
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { styled } from 'styled-components';
 
 import Button from '@/shared/ui/button/Button';
 import { PasswordInput, TextInput } from '@/shared/ui/input';
-
-const FormWrapper = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  padding: 20px 0;
-`;
-
-const LoginButton = styled.button`
-  padding: 10px 20px;
-  color: white;
-  background-color: #97b1ea;
-  border-radius: 5px;
-
-  &:hover {
-    background-color: #b2c8f7;
-  }
-`;
 
 interface LoginForm {
   username: string;
@@ -64,7 +44,7 @@ export const LoginForm = () => {
   };
 
   return (
-    <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <TextInput
         placeholder='아이디'
         {...register('username', {
@@ -81,8 +61,8 @@ export const LoginForm = () => {
       />
       {errors.password && <span style={{ color: 'red' }}>Password is required</span>}
       <Button type='submit' asChild>
-        <LoginButton>로그인</LoginButton>
+        <button>로그인</button>
       </Button>
-    </FormWrapper>
+    </form>
   );
 };

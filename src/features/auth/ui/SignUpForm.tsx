@@ -8,7 +8,6 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import styled from 'styled-components';
 
 import {
   checkVerificationCode,
@@ -19,18 +18,6 @@ import {
 import Button from '@/shared/ui/button/Button';
 import { EmailInput } from '@/shared/ui/input';
 import { PasswordInput, TextInput } from '@/shared/ui/input';
-import { flexbox } from '@/styles/mixins/flexbox';
-
-const IdInputWrap = styled.div`
-  ${flexbox('center', 'center')}
-  button {
-    width: 100px;
-  }
-`;
-
-const ErrorMsg = styled.p`
-  color: red;
-`;
 
 interface IFormInput {
   id: string;
@@ -51,7 +38,7 @@ interface returnType {
 const emailRegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 const idRegExp = /[0-9a-zA-Z]/g;
 
-const SignUpForm = () => {
+export const SignUpForm = () => {
   const [isIdVerified, setIsIdVerified] = useState(false); //아이디 중복 확인 완료 여부
   const [isEmailVerified, setIsEmailVerified] = useState(false); //이메일 인증 완료 여부
   const [isShowEmailVerifiedCodeInput, setIsShowEmailVerifiedCodeInput] = useState(false); //이메일 인증요청 클릭시 하단 input 표시여부
@@ -160,99 +147,98 @@ const SignUpForm = () => {
   }, [verificationCode]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <IdInputWrap>
-        <TextInput
-          disabled={isIdVerified}
-          {...register('id', {
+    <>
+      <h2>회원가입</h2>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div>
+          <TextInput
+            disabled={isIdVerified}
+            {...register('id', {
+              required: {
+                value: true,
+                message: '아이디를 입력해주세요',
+              },
+            })}
+          />
+          {!isIdVerified && <Button onClick={handleIsIdAvailable}>중복확인</Button>}
+        </div>
+        {errors.id && <p role='alert'>{errors.id.message}</p>}
+        {successMsg && <p>{successMsg.id}</p>}
+
+        <EmailInput
+          onButtonClick={handleSendVerificationCode}
+          isShowTimer={isShowTimer}
+          setIsShowTimer={setIsShowTimer}
+          isShowEmailVerifiedCodeInput={isShowEmailVerifiedCodeInput}
+          isEmailVerified={isEmailVerified}
+          {...register('email', {
             required: {
               value: true,
-              message: '아이디를 입력해주세요',
+              message: '이메일을 입력해주세요',
+            },
+            pattern: {
+              value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+              message: '이메일 형식이 아닙니다',
             },
           })}
         />
-        {!isIdVerified && <Button onClick={handleIsIdAvailable}>중복확인</Button>}
-      </IdInputWrap>
-      {errors.id && <ErrorMsg role='alert'>{errors.id.message}</ErrorMsg>}
-      {successMsg && <p>{successMsg.id}</p>}
+        {isShowEmailVerifiedCodeInput && (
+          <TextInput
+            {...register('emailVerifiedCode', {
+              required: {
+                value: true,
+                message: '인증번호를 입력해주세요',
+              },
+            })}
+          />
+        )}
+        {errors.email && <p role='alert'>{errors.email.message}</p>}
+        {successMsg && <p>{successMsg.email}</p>}
 
-      <EmailInput
-        onButtonClick={handleSendVerificationCode}
-        isShowTimer={isShowTimer}
-        setIsShowTimer={setIsShowTimer}
-        isShowEmailVerifiedCodeInput={isShowEmailVerifiedCodeInput}
-        isEmailVerified={isEmailVerified}
-        {...register('email', {
-          required: {
-            value: true,
-            message: '이메일을 입력해주세요',
-          },
-          pattern: {
-            value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
-            message: '이메일 형식이 아닙니다',
-          },
-        })}
-      />
-      {isShowEmailVerifiedCodeInput && (
-        <TextInput
-          {...register('emailVerifiedCode', {
+        <div>
+          <TextInput
+            {...register('name', {
+              required: {
+                value: true,
+                message: '이름을 입력해주세요',
+              },
+            })}
+          />
+        </div>
+        {errors.name && <p role='alert'>{errors.name.message}</p>}
+
+        <PasswordInput
+          {...register('password', {
             required: {
               value: true,
-              message: '인증번호를 입력해주세요',
+              message: '비밀번호를 입력해주세요',
+            },
+            minLength: {
+              value: 8,
+              message: '비밀번호는 8글자 이상이여야 합니다',
             },
           })}
         />
-      )}
-      {errors.email && <ErrorMsg role='alert'>{errors.email.message}</ErrorMsg>}
-      {successMsg && <p>{successMsg.email}</p>}
+        {errors.password && <p role='alert'>{errors.password.message}</p>}
 
-      <div>
-        <TextInput
-          {...register('name', {
+        <PasswordInput
+          {...register('passwordConfirm', {
             required: {
               value: true,
-              message: '이름을 입력해주세요',
+              message: '비밀번호를 확인해주세요',
+            },
+            validate: (value) => {
+              const { password } = getValues();
+              return password === value || '비밀번호가 일치하지 않습니다';
             },
           })}
         />
-      </div>
-      {errors.name && <ErrorMsg role='alert'>{errors.name.message}</ErrorMsg>}
+        {errors.passwordConfirm && <p role='alert'>{errors.passwordConfirm.message}</p>}
 
-      <PasswordInput
-        {...register('password', {
-          required: {
-            value: true,
-            message: '비밀번호를 입력해주세요',
-          },
-          minLength: {
-            value: 8,
-            message: '비밀번호는 8글자 이상이여야 합니다',
-          },
-        })}
-      />
-      {errors.password && <ErrorMsg role='alert'>{errors.password.message}</ErrorMsg>}
+        {errors.signUp && <p role='alert'>{errors.signUp.message}</p>}
 
-      <PasswordInput
-        {...register('passwordConfirm', {
-          required: {
-            value: true,
-            message: '비밀번호를 확인해주세요',
-          },
-          validate: (value) => {
-            const { password } = getValues();
-            return password === value || '비밀번호가 일치하지 않습니다';
-          },
-        })}
-      />
-      {errors.passwordConfirm && (
-        <ErrorMsg role='alert'>{errors.passwordConfirm.message}</ErrorMsg>
-      )}
-
-      {errors.signUp && <ErrorMsg role='alert'>{errors.signUp.message}</ErrorMsg>}
-
-      <Button type='submit'>가입</Button>
-    </form>
+        <Button type='submit'>가입</Button>
+      </form>
+    </>
   );
 };
-
-export default SignUpForm;
