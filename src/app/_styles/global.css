@@ -165,3 +165,9 @@
     @apply text-[12px]/[20px] font-normal;
   }
 }
+
+@layer components {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+}
