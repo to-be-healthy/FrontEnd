@@ -24,15 +24,15 @@ const SelectMemberTypePage = () => {
       </div>
       <div className='flex w-full flex-col gap-y-3'>
         <Button
-          className='rounded[12px] h-20 bg-gray-100 p-0 px-[42px] py-[10px]  hover:bg-gray-200'
+          className='rounded[12px] h-20 bg-gray-100 p-0 px-[42px] py-[10px]  hover:border-2 hover:border-blue-500 hover:bg-white'
           onClick={() => {
-            router.push('/?type=trainer');
+            router.push('/onboarding?type=trainer');
           }}>
           <p className='typography-heading-4 font-bold text-black'>트레이너로 시작</p>
         </Button>
         <Button
-          className=' rounded[12px] h-20 bg-gray-100 p-0 px-[42px] py-[10px]  hover:bg-gray-200'
-          onClick={() => router.push('/?type=member')}>
+          className=' rounded[12px] h-20 bg-gray-100 p-0 px-[42px] py-[10px]  hover:border-2 hover:border-blue-500 hover:bg-white'
+          onClick={() => router.push('/onboarding?type=member')}>
           <p className='typography-heading-4 font-bold text-black'>회원으로 시작</p>
         </Button>
       </div>
@@ -40,7 +40,7 @@ const SelectMemberTypePage = () => {
   );
 };
 
-const SelectLoginMethodPage = () => {
+const SelectLoginMethodPage = ({ type }: { type: string }) => {
   const router = useRouter();
 
   return (
@@ -107,7 +107,7 @@ const SelectLoginMethodPage = () => {
           variant='link'
           className='typography-title-5 mt-5 font-semibold text-gray-500 hover:no-underline'
           onClick={() => {
-            router.push('/signin');
+            router.push(`/signin?type=${type}`);
           }}>
           아이디 로그인
         </Button>
@@ -126,7 +126,7 @@ export const OnboardingPage = () => {
   return (
     <AuthLayout>
       {!type && <SelectMemberTypePage />}
-      {type && <SelectLoginMethodPage />}
+      {type && <SelectLoginMethodPage type={type} />}
     </AuthLayout>
   );
 };

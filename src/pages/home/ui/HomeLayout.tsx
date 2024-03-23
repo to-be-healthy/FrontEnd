@@ -2,7 +2,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-const AuthLayout = ({ children }: Props) => {
+const HomeLayout = ({ children }: Props) => {
   return (
     <div
       className={
@@ -14,4 +14,4 @@ const AuthLayout = ({ children }: Props) => {
   );
 };
 
-export default AuthLayout;
+export default HomeLayout;

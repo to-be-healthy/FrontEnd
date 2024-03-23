@@ -6,7 +6,7 @@ import { auth } from '@/auth';
 export const middleware = async (request: NextRequest) => {
   const session = await auth();
   if (!session) {
-    return NextResponse.redirect(new URL('/signin', request.url));
+    return NextResponse.redirect(new URL('/onboarding', request.url));
   }
 };
 

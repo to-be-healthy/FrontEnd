@@ -19,8 +19,8 @@ module.exports = {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {
-          DEFAULT: 'hsl(var(--primary))',
-          foreground: 'hsl(var(--primary-foreground))',
+          DEFAULT: 'var(--primary-500)',
+          foreground: 'var(--primary-foreground)',
           50: 'var(--primary-50)',
           100: 'var(--primary-100)',
           200: 'var(--primary-200)',
@@ -56,11 +56,14 @@ module.exports = {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        point: {
+          DEFAULT: 'var(--point-color)',
+        },
       },
       borderRadius: {
-        lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        lg: 'var(--radius-l)',
+        md: 'var(--radius-m)',
+        sm: 'var(--radius-s)',
       },
       keyframes: {
         rolling: {
