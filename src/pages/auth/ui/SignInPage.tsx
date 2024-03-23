@@ -107,10 +107,10 @@ export const SignInPage = () => {
             )}
           </div>
           <div className='mt-[18px] flex w-full flex-col gap-y-2.5'>
-            <Button type='submit' size='full' className='text-base'>
+            <Button type='submit' size='full'>
               로그인
             </Button>
-            <Button variant='outline' size='full' className='text-base'>
+            <Button variant='outline' size='full' onClick={() => router.push('/signup')}>
               회원가입
             </Button>
           </div>
@@ -118,17 +118,13 @@ export const SignInPage = () => {
         <ul className='mt-9 flex gap-x-3'>
           <li
             className='typography-body-3 cursor-pointer text-gray-500'
-            onClick={() => {
-              router.push('/find/pw');
-            }}>
+            onClick={() => router.push('/find/pw')}>
             비밀번호 찾기
           </li>
           <Separator orientation='vertical' />
           <li
             className='typography-body-3 cursor-pointer text-gray-500'
-            onClick={() => {
-              router.push('/find/id');
-            }}>
+            onClick={() => router.push('/find/id')}>
             아이디 찾기
           </li>
         </ul>
