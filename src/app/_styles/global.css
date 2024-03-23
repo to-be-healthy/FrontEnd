@@ -26,6 +26,10 @@
     --radius: 0.5rem;
 
     /* design tokens */
+    --radius-s: 4px;
+    --radius-m: 8px;
+    --radius-l: 12px;
+
     --primary-50: #e2f1ff;
     --primary-100: #badcff;
     --primary-200: #8ec7ff;
@@ -44,6 +48,8 @@
     --gray-600: #5f6165;
     --gray-700: #4c4e52;
     --gray-800: #2e3134;
+
+    --point-color: #ff4668;
   }
 
   .dark {
