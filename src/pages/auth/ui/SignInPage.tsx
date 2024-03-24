@@ -45,19 +45,13 @@ export const SignInPage = () => {
       return;
     }
 
-    // 로그인 성공
     router.replace('/');
   };
 
   return (
     <AuthLayout>
       <header className='flex h-14 items-center justify-between px-5 py-4'>
-        <Button
-          variant='ghost'
-          size='icon'
-          onClick={() => {
-            router.back();
-          }}>
+        <Button variant='ghost' size='icon' onClick={() => router.back()}>
           <IconBack />
         </Button>
       </header>
