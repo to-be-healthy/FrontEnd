@@ -1,5 +1,7 @@
 'use client';
 
+import Image from 'next/image';
+
 import IconAlarm from '@/shared/assets/images/icon_alarm.svg';
 import { Button } from '@/shared/ui/button';
 import { ScrollArea, ScrollBar } from '@/shared/ui/scroll-area';
@@ -36,6 +38,8 @@ const TODAY_CLASSES = [
   },
 ];
 
+const MEMBER_COUNT = 20;
+
 export const TrainerHomePage = () => {
   return (
     <HomeLayout>
@@ -48,9 +52,9 @@ export const TrainerHomePage = () => {
           <IconAlarm />
         </Button>
       </header>
-      <div className='mb-3 flex w-full flex-col gap-y-5 bg-white py-6'>
+      <div className=' flex w-full flex-col gap-y-5 bg-white py-6'>
         <div className='typography-heading-2 flex gap-x-2 px-5'>
-          <span>오늘의 수업</span>
+          <p>오늘의 수업</p>
           <span className='text-primary-500'>{TODAY_CLASSES.length}</span>
         </div>
         <ScrollArea className='w-full whitespace-nowrap'>
@@ -73,16 +77,50 @@ export const TrainerHomePage = () => {
           <ScrollBar orientation='horizontal' className='hidden' />
         </ScrollArea>
       </div>
-      <div className='flex w-full flex-col items-center'>
-        <div>
-          {/* 회원 카드 */}
-          <div>회원</div>
-          {/* 수업 카드 */}
-          <div>수업</div>
-          {/* 루틴 카드 */}
-          <div>루틴</div>
-          {/* 급여 카드 */}
-          <div>급여</div>
+      <div className='mt-[19px] flex w-full flex-col items-center'>
+        <div className='mt-[] flex flex-wrap items-center justify-center gap-[10px]'>
+          <div className='typography-heading-4 relative flex h-[140px] w-[155px] flex-col gap-y-[10px] rounded-[12px] bg-white p-[16px]'>
+            <p className='flex gap-x-[4px]'>
+              회원<span className='text-primary-500'>{MEMBER_COUNT}</span>
+            </p>
+            <p className='typography-body-4 whitespace-pre-wrap font-normal text-gray-500'>{`간편한 회원 관리와\n운동 일지 공유`}</p>
+            <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
+              <Image
+                src='/images/icon_profile_coin_shadow.png'
+                fill
+                alt='Slide image of money'
+              />
+            </div>
+          </div>
+          <div className='typography-heading-4 relative flex h-[140px] w-[155px] flex-col gap-y-[10px] rounded-[12px] bg-white p-[16px]'>
+            <p>수업</p>
+            <p className='typography-body-4 whitespace-pre-wrap font-normal text-gray-500'>{`PT 일정을\n한눈에 조회!`}</p>
+            <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
+              <Image
+                src='/images/icon_calendar_shadow.png'
+                fill
+                alt='Slide image of money'
+              />
+            </div>
+          </div>
+          <div className='typography-heading-4 relative flex h-[140px] w-[155px] flex-col gap-y-[10px] rounded-[12px] bg-white p-[16px]'>
+            <p>루틴</p>
+            <p className='typography-body-4 whitespace-pre-wrap font-normal text-gray-500'>{`운동 패턴을\n루틴으로 관리`}</p>
+            <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
+              <Image
+                src='/images/icon_dumbel_yellow.png'
+                fill
+                alt='Slide image of money'
+              />
+            </div>
+          </div>
+          <div className='typography-heading-4 relative flex h-[140px] w-[155px] flex-col gap-y-[10px] rounded-[12px] bg-white p-[16px]'>
+            <p>급여</p>
+            <p className='typography-body-4 whitespace-pre-wrap font-normal text-gray-500'>{`쉽고 정확한\n급여 계산`}</p>{' '}
+            <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
+              <Image src='/images/icon_pay_shadow.png' fill alt='Slide image of money' />
+            </div>
+          </div>
         </div>
       </div>
       <nav></nav>
