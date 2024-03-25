@@ -14,13 +14,13 @@ export const config = {
   providers: [
     CredentialsProvider({
       async authorize(credentials) {
-        const { statusCode, data } = await requestSignIn({
+        const { status, data } = await requestSignIn({
           userId: credentials.username as string,
           password: credentials.password as string,
         });
         const user = data as User;
 
-        if (statusCode === 'OK') {
+        if (status === 200) {
           return {
             accessToken: user.accessToken,
             refreshToken: user.refreshToken,

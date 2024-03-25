@@ -20,7 +20,7 @@ const SelectMemberTypePage = () => {
     <div className='flex h-full flex-col items-center justify-around px-5'>
       <div className='flex flex-col items-center gap-y-9'>
         <Logo />
-        <h1 className='typography-heading-1 whitespace-pre-wrap break-words text-center'>{`안녕하세요!\n건강해짐입니다!`}</h1>
+        <h1 className='typography-heading-1 whitespace-pre-wrap break-keep text-center'>{`안녕하세요!\n건강해짐입니다!`}</h1>
       </div>
       <div className='typography-heading-4 flex w-full flex-col gap-y-3'>
         <Button
@@ -49,7 +49,7 @@ const SelectLoginMethodPage = ({ type }: { type: string }) => {
         </Button>
       </header>
       <div className={'mt-[60px] flex flex-col items-center gap-y-9'}>
-        <h1 className='typography-heading-1 whitespace-pre-wrap break-words text-center'>
+        <h1 className='typography-heading-1 whitespace-pre-wrap break-keep text-center'>
           {`차별화된 PT 서비스를\n경험해보세요!`}
         </h1>
         <RollingBanner>
@@ -80,7 +80,7 @@ const SelectLoginMethodPage = ({ type }: { type: string }) => {
             />
             <p className='typography-body-1 text-white'>회원관리</p>
           </div>
-          <div className='mx-[5px] flex w-[120px] flex-col  items-center gap-y-[14px] rounded-[12px] bg-[#FFBFDB] px-4 py-[17px]'>
+          <div className='mx-[5px] flex w-[120px] flex-col items-center gap-y-[14px] rounded-[12px] bg-[#FFBFDB] px-4 py-[17px]'>
             <Image
               src='/images/icon_dumbell.png'
               width={80}
@@ -92,7 +92,7 @@ const SelectLoginMethodPage = ({ type }: { type: string }) => {
         </RollingBanner>
       </div>
       <div className={'flex flex-col items-center justify-center px-5 py-12'}>
-        <div className='typography-title-4 flex w-full flex-col gap-y-2.5'>
+        <div className='typography-title-2 flex w-full flex-col gap-y-2.5'>
           <Button
             asChild
             className='h-[48px] gap-x-2 rounded-xl bg-[#FEE500] p-[10px] text-black'>
@@ -121,11 +121,19 @@ const SelectLoginMethodPage = ({ type }: { type: string }) => {
         <Button
           asChild
           variant='link'
-          className='typography-title-5 mt-5 font-semibold text-gray-500 hover:no-underline'>
+          className='typography-title-3 mt-5 font-semibold text-gray-500 hover:no-underline'>
           <Link href={`/signin?type=${type}`}>아이디 로그인</Link>
         </Button>
-        <p className='w-2/3 break-words text-center text-[11px] font-normal text-gray-400'>
-          로그인 시 개인정보 처리방침 및 서비스 이용약관에 동의함으로 간주합니다.
+        <p className='w-2/3 break-keep text-center text-[11px] font-normal text-gray-400'>
+          로그인 시{' '}
+          <Link href='#' className='underline'>
+            개인정보 처리방침
+          </Link>{' '}
+          및{' '}
+          <Link href='#' className='underline'>
+            서비스 이용약관에
+          </Link>{' '}
+          동의함으로 간주합니다.
         </p>
       </div>
     </>

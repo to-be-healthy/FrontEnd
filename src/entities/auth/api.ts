@@ -10,7 +10,7 @@ export const requestSignIn = async (credential: SignInRequest) => {
     `${process.env.NEXT_PUBLIC_AUTH_URL}/api/v1/auth/login`,
     credential
   );
-  return result.data;
+  return result;
 };
 
 export const requestRefreshToken = async () => {
