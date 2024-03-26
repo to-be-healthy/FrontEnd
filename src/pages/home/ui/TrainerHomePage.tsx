@@ -3,13 +3,13 @@
 import Image from 'next/image';
 
 import IconAlarm from '@/shared/assets/images/icon_alarm.svg';
-import { Button } from '@/shared/ui/button';
+import { Card, CardContent, CardHeader, Layout } from '@/shared/ui';
+import { Button } from '@/shared/ui';
 import { ScrollArea, ScrollBar } from '@/shared/ui/scroll-area';
 import Select from '@/shared/ui/select';
 import { cn } from '@/shared/utils/tw-utils';
 
-import HomeLayout from './HomeLayout';
-
+// TODO) 스케줄 관리 entity
 const TODAY_CLASSES = [
   {
     name: '박지윤',
@@ -38,11 +38,12 @@ const TODAY_CLASSES = [
   },
 ];
 
+// TODO) 회원 관리 entity
 const MEMBER_COUNT = 20;
 
 export const TrainerHomePage = () => {
   return (
-    <HomeLayout>
+    <Layout type='trainer'>
       <header className='flex h-14 items-center justify-between bg-white px-5 py-4'>
         <Select>
           <Select.Trigger className='typography-title-2'>건강해짐 홍대점</Select.Trigger>
@@ -77,53 +78,71 @@ export const TrainerHomePage = () => {
           <ScrollBar orientation='horizontal' className='hidden' />
         </ScrollArea>
       </div>
-      <div className='mt-[19px] flex w-full flex-col items-center'>
-        <div className='mt-[] flex flex-wrap items-center justify-center gap-[10px]'>
-          <div className='typography-heading-4 relative flex h-[140px] w-[155px] flex-col gap-y-[10px] rounded-[12px] bg-white p-[16px]'>
-            <p className='flex gap-x-[4px]'>
-              회원<span className='text-primary-500'>{MEMBER_COUNT}</span>
-            </p>
-            <p className='typography-body-4 whitespace-pre-wrap font-normal text-gray-500'>{`간편한 회원 관리와\n운동 일지 공유`}</p>
-            <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
-              <Image
-                src='/images/icon_profile_coin_shadow.png'
-                fill
-                alt='Slide image of money'
-              />
-            </div>
-          </div>
-          <div className='typography-heading-4 relative flex h-[140px] w-[155px] flex-col gap-y-[10px] rounded-[12px] bg-white p-[16px]'>
-            <p>수업</p>
-            <p className='typography-body-4 whitespace-pre-wrap font-normal text-gray-500'>{`PT 일정을\n한눈에 조회!`}</p>
-            <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
-              <Image
-                src='/images/icon_calendar_shadow.png'
-                fill
-                alt='Slide image of money'
-              />
-            </div>
-          </div>
-          <div className='typography-heading-4 relative flex h-[140px] w-[155px] flex-col gap-y-[10px] rounded-[12px] bg-white p-[16px]'>
-            <p>루틴</p>
-            <p className='typography-body-4 whitespace-pre-wrap font-normal text-gray-500'>{`운동 패턴을\n루틴으로 관리`}</p>
-            <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
-              <Image
-                src='/images/icon_dumbel_yellow.png'
-                fill
-                alt='Slide image of money'
-              />
-            </div>
-          </div>
-          <div className='typography-heading-4 relative flex h-[140px] w-[155px] flex-col gap-y-[10px] rounded-[12px] bg-white p-[16px]'>
-            <p>급여</p>
-            <p className='typography-body-4 whitespace-pre-wrap font-normal text-gray-500'>{`쉽고 정확한\n급여 계산`}</p>{' '}
-            <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
-              <Image src='/images/icon_pay_shadow.png' fill alt='Slide image of money' />
-            </div>
-          </div>
+      <div className='mt-[19px] flex flex-col items-center px-[20px]'>
+        <div className='grid grid-cols-2 gap-[10px]'>
+          <Card className='h-[140px] w-[155px]'>
+            <CardHeader>
+              <p className='flex gap-x-[4px]'>
+                회원<span className='text-primary-500'>{MEMBER_COUNT}</span>
+              </p>
+            </CardHeader>
+            <CardContent>
+              <p>{`간편한 회원 관리와\n운동 일지 공유`}</p>
+              <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
+                <Image
+                  src='/images/icon_profile_coin_shadow.png'
+                  fill
+                  sizes='auto'
+                  priority
+                  alt='Card image of account'
+                />
+              </div>
+            </CardContent>
+          </Card>
+          <Card className='h-[140px] w-[155px]'>
+            <CardHeader>수업</CardHeader>
+            <CardContent>
+              <p>{`PT 일정을\n한눈에 조회!`}</p>
+              <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
+                <Image
+                  src='/images/icon_calendar_shadow.png'
+                  fill
+                  sizes='auto'
+                  alt='Calendar image for classes'
+                />
+              </div>
+            </CardContent>
+          </Card>
+          <Card className='h-[140px] w-[155px]'>
+            <CardHeader>루틴</CardHeader>
+            <CardContent>
+              <p>{`운동 패턴을\n루틴으로 관리`}</p>
+              <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
+                <Image
+                  src='/images/icon_dumbel_yellow.png'
+                  fill
+                  sizes='auto'
+                  alt='Card image of dumbel'
+                />
+              </div>
+            </CardContent>
+          </Card>
+          <Card className='h-[140px] w-[155px]'>
+            <CardHeader>급여</CardHeader>
+            <CardContent>
+              <p>{`쉽고 정확한\n급여 계산`}</p>
+              <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
+                <Image
+                  src='/images/icon_pay_shadow.png'
+                  fill
+                  sizes='auto'
+                  alt='Card image of salary'
+                />
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
-      <nav></nav>
-    </HomeLayout>
+    </Layout>
   );
 };

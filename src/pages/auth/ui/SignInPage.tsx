@@ -45,7 +45,9 @@ export const SignInPage = () => {
       return;
     }
 
-    router.replace('/');
+    // TODO
+    const USER_TYPE = 'trainer'; // or member
+    router.replace(`/${USER_TYPE}`);
   };
 
   return (

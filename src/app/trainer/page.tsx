@@ -2,8 +2,8 @@
 
 import { TrainerHomePage } from '@/pages/home/ui';
 
-const Home = () => {
+const Page = () => {
   return <TrainerHomePage />;
 };
 
-export default Home;
+export default Page;

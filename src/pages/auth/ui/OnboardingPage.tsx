@@ -26,12 +26,12 @@ const SelectMemberTypePage = () => {
         <Button
           className='h-20 bg-gray-100 p-0 px-[42px] py-[10px] font-bold text-black'
           asChild>
-          <Link href='/onboarding?type=trainer'>트레이너로 시작</Link>
+          <Link href='?type=trainer'>트레이너로 시작</Link>
         </Button>
         <Button
           className='h-20 bg-gray-100 p-0 px-[42px] py-[10px] font-bold text-black'
           asChild>
-          <Link href='/onboarding?type=member'>회원으로 시작</Link>
+          <Link href='?type=member'>회원으로 시작</Link>
         </Button>
       </div>
     </div>

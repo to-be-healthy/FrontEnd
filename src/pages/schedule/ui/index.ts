@@ -1,0 +1,1 @@
+export { TrainerSchedulePage } from './TrainerSchedulePage';
