@@ -1,55 +1,26 @@
-import { Dispatch, forwardRef, SetStateAction, useEffect } from 'react';
+import { forwardRef } from 'react';
 
-import { useTimer } from '@/shared/hooks';
-import { Button } from '@/shared/ui/button';
-import { formatSeconds } from '@/shared/utils/formatSeconds';
+import { cn } from '@/shared/utils/tw-utils';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  onButtonClick: () => void;
-  isShowTimer: boolean;
-  setIsShowTimer: Dispatch<SetStateAction<boolean>>;
-  isShowEmailVerifiedCodeInput: boolean;
   isEmailVerified: boolean;
+  className?: string;
 }
 
 export const EmailInput = forwardRef<HTMLInputElement, InputProps>(
-  (
-    {
-      onButtonClick,
-      isShowTimer,
-      setIsShowTimer,
-      isShowEmailVerifiedCodeInput,
-      isEmailVerified,
-      ...props
-    }: InputProps,
-    inputRef
-  ) => {
-    const timer = useTimer(180, isShowTimer);
-    const { minutes, seconds } = formatSeconds(timer);
-
-    useEffect(() => {
-      if (timer === 0) {
-        setIsShowTimer(false);
-      }
-    }, [timer]);
-
+  ({ isEmailVerified, className, ...props }: InputProps, inputRef) => {
     return (
-      <div>
+      <div className='h-[44px] w-full'>
         <input
           type='email'
-          disabled={isEmailVerified || isShowEmailVerifiedCodeInput}
+          className={cn(
+            'typography-body-3 placeholder:typography-body-3 diabled:bg-gray-100 h-full w-full rounded-md border border-solid border-gray-200 p-6 text-gray-800 outline-none placeholder:text-gray-500 autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] focus:visible focus:border focus:border-primary-500 disabled:shadow-gray-100',
+            className
+          )}
+          disabled={isEmailVerified}
           ref={inputRef}
           {...props}
         />
-        {!isEmailVerified && (
-          <Button onClick={onButtonClick} disabled={isShowTimer}>
-            {isShowEmailVerifiedCodeInput
-              ? isShowTimer
-                ? `${minutes}:${seconds}`
-                : '재요청'
-              : '인증요청'}
-          </Button>
-        )}
       </div>
     );
   }

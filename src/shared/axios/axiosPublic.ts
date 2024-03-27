@@ -1,53 +1,40 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
+
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 import axios from 'axios';
 
-export const isIdAvailable = async (userId: string) => {
-  try {
-    const res = await axios.get(`/api/v1/auth/validation/userId?userId=${userId}`);
-    // const res = await axios.get(`/api/auth/validation/userId?userId=${userId}`);
-    return res.data;
-  } catch (error: any) {
-    throw new Error(error.response.data.message);
-  }
+export const idVailable = async (userId: string) => {
+  //userId 카멜케이스로
+  const res = await axios.get(`/auth/v1/validation/user-id?userId=${userId}`);
+  return res.data;
 };
 
 export const sendEmailVerificationCode = async (email: string) => {
-  try {
-    const res = await axios.post(`/api/v1/auth/send-email-verification?email=${email}`);
-    // const res = await axios.post(`/api/auth/send-email-verification?email=${email}`);
-    return res.data;
-  } catch (error: any) {
-    throw new Error(error.response.data.message);
-  }
+  const res = await axios.post(`/auth/v1/validation/send-email?email=${email}`);
+  return res.data;
 };
 
-export const checkVerificationCode = async (email: any, authNumber: any) => {
-  try {
-    const res = await axios.post(
-      `/api/v1/auth/email-verification?authNumber=${authNumber}&&email=${email}`
-      // `/api/auth/email-verification?authNumber=${authNumber}&&email=${email}`
-    );
-    return res.data;
-  } catch (error: any) {
-    throw new Error(error.response.data.message);
-  }
+export const checkVerificationCode = async (email: string, emailKey: string) => {
+  const res = await axios.post(
+    `/auth/v1/validation/confirm-email?email=${email}&&emailKey=${emailKey}`
+  );
+  return res.data;
 };
 
 export const signUp = async (params: any, memberType: string) => {
-  try {
-    const res = await axios.post(`/api/v1/auth/join`, {
-      // const res = await axios.post(`/api/auth/join`, {
-      userId: params.id,
-      email: params.email,
-      password: params.password,
-      name: params.name,
-      memberType: memberType,
-    });
-    return res.data;
-  } catch (error: any) {
-    throw new Error(error.response.data.message);
-  }
+  const res = await axios.post(`/auth/v1/join`, {
+    userId: params.id,
+    email: params.email,
+    password: params.password,
+    passwordConfirm: params.password,
+    name: params.name,
+    memberType: memberType,
+    trainerId: params.trainerId ? params.trainerId : '',
+  });
+  console.log(res);
+  return res.data;
 };

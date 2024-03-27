@@ -32,6 +32,19 @@ module.exports = {
           800: 'var(--primary-800)',
           900: 'var(--primary-900)',
         },
+        gray: {
+          DEFAULT: 'hsl(var(--gray))',
+          50: 'var(--gray-50)',
+          100: 'var(--gray-100)',
+          200: 'var(--gray-200)',
+          300: 'var(--gray-300)',
+          400: 'var(--gray-400)',
+          500: 'var(--gray-500)',
+          600: 'var(--gray-600)',
+          700: 'var(--gray-700)',
+          800: 'var(--gray-800)',
+          900: 'var(--gray-900)',
+        },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
           foreground: 'hsl(var(--secondary-foreground))',
@@ -59,6 +72,17 @@ module.exports = {
         point: {
           DEFAULT: 'var(--point-color)',
         },
+      },
+      spacing: {
+        1: '4px',
+        2: '6px',
+        3: '8px',
+        4: '10px',
+        5: '12px',
+        6: '16px',
+        7: '20px',
+        8: '24px',
+        12: '48px',
       },
       borderRadius: {
         lg: 'var(--radius-l)',
