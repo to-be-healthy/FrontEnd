@@ -88,7 +88,6 @@ export const SignUpForm = () => {
 
   //회원가입
   const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    console.log('회원가입 api');
     if (!isEmailVerified) setError('email', { message: '이메일 인증을 해주세요' });
     if (!isIdVerified) setError('id', { message: '아이디 중복확인을 해주세요' });
     try {
