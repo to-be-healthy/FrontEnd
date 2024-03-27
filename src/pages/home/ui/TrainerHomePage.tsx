@@ -1,13 +1,21 @@
 'use client';
 
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
+import { useAuthAction } from '@/entities/auth';
 import IconAlarm from '@/shared/assets/images/icon_alarm.svg';
-import { Card, CardContent, CardHeader, Layout } from '@/shared/ui';
-import { Button } from '@/shared/ui';
-import { ScrollArea, ScrollBar } from '@/shared/ui/scroll-area';
-import Select from '@/shared/ui/select';
-import { cn } from '@/shared/utils/tw-utils';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Layout,
+  ScrollArea,
+  ScrollBar,
+  Select,
+} from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 // TODO) 스케줄 관리 entity
 const TODAY_CLASSES = [
@@ -42,6 +50,9 @@ const TODAY_CLASSES = [
 const MEMBER_COUNT = 20;
 
 export const TrainerHomePage = () => {
+  const { deleteUserInfo } = useAuthAction();
+  const router = useRouter();
+
   return (
     <Layout type='trainer'>
       <header className='flex h-14 items-center justify-between bg-white px-5 py-4'>
@@ -49,7 +60,13 @@ export const TrainerHomePage = () => {
           <Select.Trigger className='typography-title-2'>건강해짐 홍대점</Select.Trigger>
           <Select.Content>건강해짐 홍대점</Select.Content>
         </Select>
-        <Button variant='ghost'>
+        {/* 임시로 로그아웃 기능 적용 */}
+        <Button
+          variant='ghost'
+          onClick={() => {
+            deleteUserInfo();
+            router.push('/');
+          }}>
           <IconAlarm />
         </Button>
       </header>

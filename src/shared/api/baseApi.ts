@@ -1,5 +1,6 @@
 import axios, { type CreateAxiosDefaults } from 'axios';
-import { getSession } from 'next-auth/react';
+
+import { auth } from '@/entities/auth';
 
 const BASE_SERVER_URL =
   process.env.NEXT_PUBLIC_AUTH_URL ?? 'https://api.to-be-healthy.site';
@@ -12,10 +13,10 @@ const apiClient = () => {
   const instance = axios.create(defaultOptions);
 
   instance.interceptors.request.use(
-    async (request) => {
-      const session = await getSession();
-      if (session) {
-        request.headers.Authorization = `Bearer ${session.accessToken}`;
+    (request) => {
+      const { tokens } = auth();
+      if (tokens) {
+        request.headers.Authorization = `Bearer ${tokens.accessToken}`;
         request.headers['Content-Type'] = 'application/json';
       }
       return request;

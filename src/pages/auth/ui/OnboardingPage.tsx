@@ -2,16 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { redirect, useRouter } from 'next/navigation';
 import { useSearchParams } from 'next/navigation';
 
-import GoogleLogo from '@/shared/assets/images/google_logo.svg';
+import { SocialSignIn } from '@/features/auth/ui';
 import IconBack from '@/shared/assets/images/icon_back.svg';
-import KakaoLogo from '@/shared/assets/images/kakao_logo.svg';
 import Logo from '@/shared/assets/images/logo.svg';
-import NaverLogo from '@/shared/assets/images/naver_logo.svg';
-import { Button } from '@/shared/ui/button';
-import { RollingBanner } from '@/shared/ui/rolling-banner';
+import { Button, RollingBanner } from '@/shared/ui';
 
 import AuthLayout from './AuthLayout';
 
@@ -38,8 +35,12 @@ const SelectMemberTypePage = () => {
   );
 };
 
-const SelectLoginMethodPage = ({ type }: { type: string }) => {
+const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
   const router = useRouter();
+
+  if (memberType !== 'trainer' && memberType !== 'member') {
+    return redirect('/');
+  }
 
   return (
     <>
@@ -92,37 +93,12 @@ const SelectLoginMethodPage = ({ type }: { type: string }) => {
         </RollingBanner>
       </div>
       <div className={'flex flex-col items-center justify-center px-5 py-12'}>
-        <div className='typography-title-2 flex w-full flex-col gap-y-2.5'>
-          <Button
-            asChild
-            className='h-[48px] gap-x-2 rounded-xl bg-[#FEE500] p-[10px] text-black'>
-            <Link href='#'>
-              <KakaoLogo />
-              카카오로 시작하기
-            </Link>
-          </Button>
-          <Button
-            asChild
-            className='h-[48px] gap-x-2 rounded-xl bg-[#03C75A] p-[10px] text-white'>
-            <Link href='#'>
-              <NaverLogo />
-              네이버로 시작하기
-            </Link>
-          </Button>
-          <Button
-            asChild
-            className='h-[48px] gap-x-2 rounded-xl border border-gray-600 bg-white p-[10px] text-gray-600'>
-            <Link href='#'>
-              <GoogleLogo />
-              Google로 시작하기
-            </Link>
-          </Button>
-        </div>
+        <SocialSignIn memberType={memberType} />
         <Button
           asChild
           variant='link'
           className='typography-title-3 mt-5 font-semibold text-gray-500 hover:no-underline'>
-          <Link href={`/signin?type=${type}`}>아이디 로그인</Link>
+          <Link href={`/signin?type=${memberType}`}>아이디 로그인</Link>
         </Button>
         <p className='w-2/3 break-keep text-center text-[11px] font-normal text-gray-400'>
           로그인 시{' '}
@@ -147,7 +123,7 @@ export const OnboardingPage = () => {
   return (
     <AuthLayout>
       {!type && <SelectMemberTypePage />}
-      {type && <SelectLoginMethodPage type={type} />}
+      {type && <SelectLoginMethodPage memberType={type} />}
     </AuthLayout>
   );
 };

@@ -1,15 +1,12 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
-import { auth } from '@/auth';
-
-export const middleware = async (request: NextRequest) => {
-  const session = await auth();
-  if (!session) {
-    return NextResponse.redirect(new URL('/onboarding', request.url));
-  }
+export const middleware = (request: NextRequest) => {
+  const { pathname, search } = request.nextUrl;
+  const provider = pathname.split('/')[1];
+  return NextResponse.redirect(new URL(`/callback/${provider}${search}`, request.url));
 };
 
 export const config = {
-  matcher: ['/', '/member/:path*', '/trainer/:path*'],
+  matcher: ['/:path/callback'],
 };

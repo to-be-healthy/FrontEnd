@@ -7,7 +7,7 @@ const isMockEnabled =
 export const MSWComponent = () => {
   useEffect(() => {
     if (isMockEnabled) {
-      import('@/mocks');
+      import('@/shared/lib/mocks');
     }
   }, []);
 
