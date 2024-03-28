@@ -1,9 +1,9 @@
 import { PropsWithChildren } from 'react';
 
-import { MemberNavigationBar, TrainerNavigationBar } from '@/shared/ui/navigationBar';
+import { MemberNavigation, TrainerNavigation } from '@/shared/ui';
 
 interface Props {
-  type: 'member' | 'trainer';
+  type: 'member' | 'trainer' | null;
 }
 
 export const Layout = ({ type, children }: PropsWithChildren<Props>) => {
@@ -15,8 +15,8 @@ export const Layout = ({ type, children }: PropsWithChildren<Props>) => {
       }>
       <div className='flex h-full w-[390px] flex-col justify-between bg-gray-100'>
         <div className='overflow-y-auto'>{children}</div>
-        {type === 'trainer' && <TrainerNavigationBar />}
-        {type === 'member' && <MemberNavigationBar />}
+        {type === 'trainer' && <TrainerNavigation />}
+        {type === 'member' && <MemberNavigation />}
       </div>
     </div>
   );

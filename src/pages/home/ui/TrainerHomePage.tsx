@@ -13,7 +13,6 @@ import {
   Layout,
   ScrollArea,
   ScrollBar,
-  Select,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
@@ -55,11 +54,11 @@ export const TrainerHomePage = () => {
 
   return (
     <Layout type='trainer'>
-      <header className='flex h-14 items-center justify-between bg-white px-5 py-4'>
-        <Select>
-          <Select.Trigger className='typography-title-2'>건강해짐 홍대점</Select.Trigger>
-          <Select.Content>건강해짐 홍대점</Select.Content>
-        </Select>
+      <header className='flex h-14 items-center justify-between bg-white px-[20px] py-[16px]'>
+        {/* Select 컴포넌트 필요 */}
+        <select className='typography-title-2'>
+          <option value='1'>건강해짐 홍대점</option>
+        </select>
         {/* 임시로 로그아웃 기능 적용 */}
         <Button
           variant='ghost'
@@ -97,7 +96,9 @@ export const TrainerHomePage = () => {
       </div>
       <div className='mt-[19px] flex flex-col items-center px-[20px]'>
         <div className='grid grid-cols-2 gap-[10px]'>
-          <Card className='h-[140px] w-[155px]'>
+          <Card
+            className='h-[140px] w-[155px] cursor-pointer'
+            onClick={() => router.push('/trainer/manage')}>
             <CardHeader>
               <p className='flex gap-x-[4px]'>
                 회원<span className='text-primary-500'>{MEMBER_COUNT}</span>

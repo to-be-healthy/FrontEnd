@@ -44,7 +44,7 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
 
   return (
     <>
-      <header className='flex h-14 items-center justify-between px-5 py-4'>
+      <header className='flex h-14 items-center justify-between px-[20px] py-[16px]'>
         <Button variant='ghost' size='icon' onClick={() => router.back()}>
           <IconBack />
         </Button>

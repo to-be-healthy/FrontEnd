@@ -14,8 +14,8 @@ import {
   requestSignUp,
   sendEmailVerificationCode,
 } from '@/entities/auth/api';
-import BackIcon from '@/shared/assets/images/back.svg';
-import CloseIcon from '@/shared/assets/images/close.svg';
+import BackIcon from '@/shared/assets/images/icon_back.svg';
+import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import SendEmailIcon from '@/shared/assets/images/icon_send_email.svg';
 import {
   AlertDialog,

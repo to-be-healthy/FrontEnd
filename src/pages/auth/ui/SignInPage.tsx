@@ -2,12 +2,10 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { SignInForm } from '@/features/auth/ui/SignInForm';
-import IconClose from '@/shared/assets/images/close.svg';
+import { SignInForm } from '@/features/auth/ui';
+import IconClose from '@/shared/assets/images/icon_close.svg';
 import Logo from '@/shared/assets/images/logo.svg';
-import { Button } from '@/shared/ui/button';
-// TODO) input-shadcn -> 인풋 컴포넌트에 적용 후 파일 제거
-import { Separator } from '@/shared/ui/separator';
+import { Button, Separator } from '@/shared/ui';
 
 import AuthLayout from './AuthLayout';
 
