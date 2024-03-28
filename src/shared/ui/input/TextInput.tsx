@@ -1,15 +1,14 @@
 import { FormEvent, forwardRef } from 'react';
 
 import TextDeleteIcon from '@/shared/assets/images/icon_text_delete.svg';
-import { Button } from '@/shared/ui/button';
+import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils/tw-utils';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   defaultValue?: string;
   className?: string;
-  inputClassName?: string;
-  value: string;
-  clearValueButton: (e: FormEvent<HTMLButtonElement>) => void;
+  containerClassName?: string;
+  clearValueButton?: (e: FormEvent<HTMLButtonElement>) => void;
   isEmailVerified?: boolean;
 }
 
@@ -18,7 +17,7 @@ export const TextInput = forwardRef<HTMLInputElement, InputProps>(
     {
       defaultValue,
       className,
-      inputClassName,
+      containerClassName,
       value,
       clearValueButton,
       isEmailVerified,
@@ -27,11 +26,11 @@ export const TextInput = forwardRef<HTMLInputElement, InputProps>(
     inputRef
   ) => {
     return (
-      <div className={cn('relative', className)}>
+      <div className={cn('relative', containerClassName)}>
         <input
           className={cn(
             'typography-body-3 placeholder:typography-body-3 h-full w-full rounded-md border border-solid border-gray-200 p-6 text-gray-800 outline-none placeholder:text-gray-500 autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] focus:visible focus:border focus:border-primary-500 disabled:bg-gray-100 disabled:shadow-gray-100',
-            inputClassName
+            className
           )}
           type='text'
           defaultValue={defaultValue}

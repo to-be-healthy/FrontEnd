@@ -1,5 +1,4 @@
 module.exports = {
-  // ignoreFiles: ['**/*.tsx'],
   extends: ['stylelint-config-standard'],
   plugins: ['stylelint-order'],
   customSyntax: 'postcss-styled-syntax',

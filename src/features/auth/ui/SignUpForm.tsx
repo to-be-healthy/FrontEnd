@@ -1,21 +1,22 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 'use client';
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { FormEvent, useEffect, useState } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import React, { FormEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
+import {
+  checkVailableId,
+  checkVerificationCode,
+  requestSignUp,
+  sendEmailVerificationCode,
+} from '@/entities/auth/api';
 import BackIcon from '@/shared/assets/images/back.svg';
 import CloseIcon from '@/shared/assets/images/close.svg';
-import {
-  checkVerificationCode,
-  idVailable,
-  sendEmailVerificationCode,
-  signUp,
-} from '@/shared/axios/axiosPublic';
+import SendEmailIcon from '@/shared/assets/images/icon_send_email.svg';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,13 +27,15 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from '@/shared/ui/alert-dialog';
-import { Button } from '@/shared/ui/button';
-import { EmailInput } from '@/shared/ui/input';
-import { PasswordInput, TextInput } from '@/shared/ui/input';
+  Button,
+  EmailInput,
+  PasswordInput,
+  TextInput,
+  useToast,
+} from '@/shared/ui';
 
-interface IFormInput {
-  id: string;
+interface signUpForm {
+  userId: string;
   name: string;
   password: string;
   passwordConfirm: string;
@@ -41,17 +44,13 @@ interface IFormInput {
   signUp: string;
 }
 
-interface returnType {
-  data: string;
-  message: string;
-  timestamp: string;
-}
-
 const excludeSpaceRegExp = /^\S*$/;
 const nameRegExp = /^[가-힣a-zA-Z]+$/;
 const emailRegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 const idRegExp = /^[0-9a-zA-Z]{4,}$/;
 const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+const trainerId = ''; //초대가입
 
 export const SignUpForm = () => {
   const [step, setStep] = useState(1);
@@ -62,73 +61,46 @@ export const SignUpForm = () => {
     register,
     formState: { errors },
     handleSubmit,
-    getValues,
     setError,
     clearErrors,
     setValue,
     watch,
-  } = useForm<IFormInput>({
+  } = useForm<signUpForm>({
     mode: 'onChange',
   });
 
+  const params = useSearchParams();
+  const type = params?.get('type');
+  const { toast } = useToast();
   const router = useRouter();
+
   const nameValue = watch('name');
   const emailValue = watch('email');
   const verificationCodeValue = watch('emailVerifiedCode');
-  const idValue = watch('id');
+  const userIdValue = watch('userId');
   const passwordValue = watch('password');
   const passwordConfirmValue = watch('passwordConfirm');
-
-  useEffect(() => {
-    if (isIdVerified) {
-      setIsIdVerified(false);
-      setIdSuccessMsg('');
-    }
-  }, [idValue]);
-
-  //회원가입
-  const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-    if (!isEmailVerified) setError('email', { message: '이메일 인증을 해주세요' });
-    if (!isIdVerified) setError('id', { message: '아이디 중복확인을 해주세요' });
-    try {
-      const res: returnType = await signUp(data, 'MEMBER');
-      if (res) {
-        setStep((prev) => prev + 1);
-      }
-    } catch (error: any) {
-      setError('signUp', { message: `${error.response.data.message}` });
-    }
-  };
-
-  //아이디 중복확인
-  const handleIsIdAvailable = async (e: FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIdSuccessMsg('');
-    if (idValue && idRegExp.test(idValue)) {
-      try {
-        const res: returnType = await idVailable(idValue);
-
-        if (res) {
-          setIsIdVerified(true);
-          setIdSuccessMsg(res.message);
-        }
-      } catch (error: any) {
-        setError('id', { message: `${error.response.data.message}` });
-      }
-    } else {
-      setError('id', { message: '아이디는 소문자,대문자,숫자만 입력할 수 있습니다' });
-    }
-  };
 
   //이메일 인증코드 발송
   const handleSendVerificationCode = async (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const { email } = getValues();
     setValue('emailVerifiedCode', '');
 
+    toast({
+      description: (
+        <div className='flex items-center justify-center'>
+          <SendEmailIcon />
+          <p className='typography-title-1 ml-[16px] text-[#fff]'>
+            이메일로 인증번호를 발송중이에요!
+          </p>
+        </div>
+      ),
+      duration: 2000,
+    });
+
     try {
-      const res: returnType = await sendEmailVerificationCode(email);
-      if (res) {
+      const res = await sendEmailVerificationCode(emailValue);
+      if (res?.data) {
         if (step < 3) {
           setStep((prev) => prev + 1);
         }
@@ -141,11 +113,8 @@ export const SignUpForm = () => {
   //인증번호 입력
   const handleCheckVerificationCode = async () => {
     try {
-      const res: returnType = await checkVerificationCode(
-        emailValue,
-        verificationCodeValue
-      );
-      if (res) {
+      const res = await checkVerificationCode(emailValue, verificationCodeValue);
+      if (res?.data) {
         setIsEmailVerified(true);
         setStep((prev) => prev + 1);
       }
@@ -154,10 +123,43 @@ export const SignUpForm = () => {
     }
   };
 
-  const clickNext = (e: FormEvent<HTMLButtonElement>) => {
+  //아이디 중복확인
+  const handleIsIdAvailable = async (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIdSuccessMsg('');
-    setStep((prev) => prev + 1);
+    if (!(userIdValue && idRegExp.test(userIdValue))) {
+      setError('userId', { message: '아이디는 소문자,대문자,숫자만 입력할 수 있습니다' });
+    }
+
+    try {
+      const res = await checkVailableId(userIdValue);
+      if (res?.data) {
+        setIsIdVerified(true);
+        setIdSuccessMsg(res.message);
+      }
+    } catch (error: any) {
+      setError('userId', { message: `${error.response.data.message}` });
+    }
+  };
+
+  //회원가입
+  const onSubmit: SubmitHandler<signUpForm> = async (data) => {
+    if (!isEmailVerified) setError('email', { message: '이메일 인증을 해주세요' });
+    if (!isIdVerified) setError('userId', { message: '아이디 중복확인을 해주세요' });
+    if (!type) return;
+
+    try {
+      const res = await requestSignUp({
+        ...data,
+        memberType: type.toUpperCase(),
+        trainerId: trainerId,
+      });
+      if (res?.data?.id) {
+        setStep((prev) => prev + 1);
+      }
+    } catch (error: any) {
+      setError('signUp', { message: `${error.response.data.message}` });
+    }
   };
 
   //input disabled
@@ -181,13 +183,13 @@ export const SignUpForm = () => {
     }
   };
 
-  //뒤로가기
+  //뒤로가기 클릭시
   const clickBack = () => {
     if (step === 1) {
-      router.push('/signin');
+      router.push(`/signin?type=${type}`);
     } else if (step === 3) {
-      setIsEmailVerified(false);
       setStep((prev) => prev - 1);
+      setIsEmailVerified(false);
     } else if (step === 4) {
       setStep((prev) => prev - 2);
       setIsEmailVerified(false);
@@ -197,15 +199,22 @@ export const SignUpForm = () => {
     }
   };
 
+  //다음 클릭시
+  const clickNext = (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIdSuccessMsg('');
+    setStep((prev) => prev + 1);
+  };
+
   //input x버튼 클릭시 value값 clear
   const clearFieldValue = (
-    fieldName: keyof IFormInput,
+    fieldName: keyof signUpForm,
     e: FormEvent<HTMLButtonElement>
   ) => {
     e.preventDefault();
     setValue(fieldName, '');
 
-    if (fieldName === 'id') {
+    if (fieldName === 'userId') {
       setIsIdVerified(false);
       setIdSuccessMsg('');
     }
@@ -216,12 +225,19 @@ export const SignUpForm = () => {
     clearErrors();
   }, [
     nameValue,
-    idValue,
+    userIdValue,
     emailValue,
     verificationCodeValue,
     passwordValue,
     passwordConfirmValue,
   ]);
+
+  useEffect(() => {
+    if (isIdVerified) {
+      setIsIdVerified(false);
+      setIdSuccessMsg('');
+    }
+  }, [userIdValue]);
 
   return (
     <section className='h-[100vh]'>
@@ -314,6 +330,10 @@ export const SignUpForm = () => {
                       <PasswordInput
                         id='password'
                         className={errors.password && 'border-point focus:border-point'}
+                        value={passwordValue}
+                        clearValueButton={(e: FormEvent<HTMLButtonElement>) =>
+                          clearFieldValue('password', e)
+                        }
                         placeholder='영문+숫자 조합 8자리 이상'
                         {...register('password', {
                           minLength: {
@@ -345,6 +365,10 @@ export const SignUpForm = () => {
                           errors.passwordConfirm && 'border-point focus:border-point'
                         }
                         placeholder='비밀번호를 한번 더 입력해주세요.'
+                        value={passwordConfirmValue}
+                        clearValueButton={(e: FormEvent<HTMLButtonElement>) =>
+                          clearFieldValue('passwordConfirm', e)
+                        }
                         {...register('passwordConfirm', {
                           validate: (value) =>
                             value === passwordValue ||
@@ -367,15 +391,15 @@ export const SignUpForm = () => {
                     </label>
                     <div className='flex items-center justify-between'>
                       <TextInput
-                        id='id'
-                        className='h-[44px] w-[calc(100%-76px-6px)]'
-                        inputClassName={errors.id && 'border-point focus:border-point'}
+                        id='userId'
+                        containerClassName='h-[44px] w-[calc(100%-76px-6px)]'
+                        className={errors.userId && 'border-point focus:border-point'}
                         placeholder='아이디를 입력해주세요'
-                        value={idValue}
+                        value={userIdValue}
                         clearValueButton={(e: FormEvent<HTMLButtonElement>) =>
-                          clearFieldValue('id', e)
+                          clearFieldValue('userId', e)
                         }
-                        {...register('id', {
+                        {...register('userId', {
                           pattern: {
                             value: idRegExp,
                             message: '영문, 숫자 4자리 이상 입력해주세요.',
@@ -389,9 +413,9 @@ export const SignUpForm = () => {
                       </Button>
                     </div>
 
-                    {errors.id && (
+                    {errors.userId && (
                       <p className='typography-body-4 mt-[8px] text-[#FF4668]'>
-                        {errors.id.message}
+                        {errors.userId.message}
                       </p>
                     )}
                     {idSuccessMsg && (
@@ -412,8 +436,8 @@ export const SignUpForm = () => {
                     <div className='flex items-center justify-between'>
                       <TextInput
                         id='emailVerifiedCode'
-                        className='h-[44px] w-[calc(100%-76px-6px)]'
-                        inputClassName={
+                        containerClassName='h-[44px] w-[calc(100%-76px-6px)]'
+                        className={
                           errors.emailVerifiedCode && 'border-point focus:border-point'
                         }
                         placeholder='인증번호 6자리를 입력해주세요.'
@@ -429,7 +453,7 @@ export const SignUpForm = () => {
                           },
                         })}
                       />
-                      <Button //버튼 글씨 크기
+                      <Button
                         className='typography-heading-5 h-[44px] w-[76px] rounded-md'
                         onClick={handleSendVerificationCode}
                         disabled={step > 3 && isEmailVerified}>
@@ -455,6 +479,10 @@ export const SignUpForm = () => {
                       className={errors.email && 'border-point focus:border-point'}
                       placeholder='사용 가능한 이메일을 입력해주세요'
                       isEmailVerified={isEmailVerified}
+                      value={emailValue}
+                      clearValueButton={(e: FormEvent<HTMLButtonElement>) =>
+                        clearFieldValue('email', e)
+                      }
                       {...register('email', {
                         pattern: {
                           value: emailRegExp,
@@ -478,8 +506,8 @@ export const SignUpForm = () => {
                     </label>
                     <TextInput
                       id='name'
-                      className='h-[44px] w-full'
-                      inputClassName={errors.name && 'border-point focus:border-point'}
+                      containerClassName='h-[44px] w-full'
+                      className={errors.name && 'border-point focus:border-point'}
                       placeholder='실명'
                       value={nameValue}
                       clearValueButton={(e: FormEvent<HTMLButtonElement>) =>
@@ -504,7 +532,11 @@ export const SignUpForm = () => {
                   </div>
                 )}
 
-                {errors.signUp && <p>{errors.signUp.message}</p>}
+                {errors.signUp && (
+                  <p className='typography-body-4 mt-[8px] text-[#FF4668]'>
+                    {errors.signUp.message}
+                  </p>
+                )}
               </form>
             </div>
           </div>

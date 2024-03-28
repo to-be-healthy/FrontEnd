@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -21,6 +21,8 @@ interface LoginForm {
 
 export const SignInPage = () => {
   const router = useRouter();
+  const params = useSearchParams();
+  const type = params?.get('type');
 
   const {
     register,
@@ -110,7 +112,10 @@ export const SignInPage = () => {
             <Button type='submit' size='full'>
               로그인
             </Button>
-            <Button variant='outline' size='full' onClick={() => router.push('/signup')}>
+            <Button
+              variant='outline'
+              size='full'
+              onClick={() => router.push(`/signup?type=${type}`)}>
               회원가입
             </Button>
           </div>
