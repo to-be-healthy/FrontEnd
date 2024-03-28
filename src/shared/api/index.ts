@@ -1,2 +1,2 @@
 export { api } from './baseApi';
-export { type BaseResponse } from './types';
+export type { BaseError, BaseResponse } from './types';

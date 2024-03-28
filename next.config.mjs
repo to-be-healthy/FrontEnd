@@ -5,7 +5,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/:path*',
+        source: '/api/:path*',
         destination: `${process.env.NEXT_PUBLIC_AUTH_URL}/:path*`,
       },
     ];
@@ -15,7 +15,6 @@ const nextConfig = {
     register: true,
     skipWaiting: true,
   }),
-
   webpack: (config, { isServer }) => {
     config.module.rules.push({
       test: /\.svg$/,

@@ -3,7 +3,7 @@ import '@/app/_styles/global.css';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 
-import { AuthSession, MSWComponent, QueryProvider } from './_providers';
+import { MSWComponent, QueryProvider } from './_providers';
 
 const gaId = process.env.GA_ID ?? '';
 
@@ -22,7 +22,7 @@ export default function RootLayout({
       <body>
         <QueryProvider>
           <MSWComponent />
-          <AuthSession>{children}</AuthSession>
+          {children}
         </QueryProvider>
       </body>
       <GoogleAnalytics gaId={gaId} />

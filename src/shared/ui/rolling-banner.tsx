@@ -2,7 +2,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const RollingBanner = ({ children }: Props) => {
+const RollingBanner = ({ children }: Props) => {
   return (
     <div className='relative w-full overflow-hidden'>
       <div className='absolute flex w-fit animate-rolling flex-nowrap'>{children}</div>
@@ -12,3 +12,5 @@ export const RollingBanner = ({ children }: Props) => {
     </div>
   );
 };
+
+export { RollingBanner };
