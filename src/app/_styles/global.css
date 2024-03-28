@@ -114,65 +114,57 @@
   }
 }
 
-@layer components {
+@layer utilities {
   .typography-heading-1 {
-    @apply text-[26px]/[32px] font-bold;
+    @apply text-[24px]/[130%] font-bold;
   }
 
   .typography-heading-2 {
-    @apply text-[22px]/[28px] font-bold;
+    @apply text-[22px]/[130%] font-bold;
   }
 
   .typography-heading-3 {
-    @apply text-[20px]/[24px] font-bold;
+    @apply text-[20px]/[130%] font-bold;
   }
 
   .typography-heading-4 {
-    @apply text-[17px]/[24px] font-bold;
+    @apply text-[18px]/[130%] font-bold;
   }
 
   .typography-heading-5 {
-    @apply text-[13px]/[28px] font-bold;
+    @apply text-[13px]/[150%] font-semibold;
   }
 
   .typography-title-1 {
-    @apply text-[24px]/[24px] font-bold;
+    @apply text-[16px]/[140%] font-bold;
   }
 
   .typography-title-2 {
-    @apply text-[16px]/[24px] font-bold;
+    @apply text-[15px]/[140%] font-semibold;
   }
 
   .typography-title-3 {
-    @apply text-[16px]/[24px] font-semibold;
-  }
-
-  .typography-title-4 {
-    @apply text-[15px]/[20px] font-semibold;
-  }
-
-  .typography-title-5 {
-    @apply text-[14px]/[20px] font-semibold;
+    @apply text-[14px]/[150%] font-semibold;
   }
 
   .typography-body-1 {
-    @apply text-[16px]/[24px] font-medium;
+    @apply text-[16px]/[150%] font-normal;
   }
 
   .typography-body-2 {
-    @apply text-[14px]/[20px] font-normal;
+    @apply text-[14px]/[150%] font-normal;
   }
 
   .typography-body-3 {
-    @apply text-[13px]/[20px] font-normal;
+    @apply text-[13px]/[150%] font-normal;
   }
 
   .typography-body-4 {
-    @apply text-[12px]/[20px] font-normal;
+    @apply text-[12px]/[150%] font-normal;
   }
 }
 
-@layer components {
+@layer utilities {
   .flex-center {
     @apply flex items-center justify-center;
   }

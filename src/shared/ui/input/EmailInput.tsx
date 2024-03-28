@@ -1,53 +1,42 @@
-import { Dispatch, forwardRef, SetStateAction, useEffect } from 'react';
+import { FormEvent, forwardRef } from 'react';
 
-import { useTimer } from '@/shared/hooks';
-import { Button } from '@/shared/ui/button';
-import { formatSeconds } from '@/shared/utils/formatSeconds';
+import TextDeleteIcon from '@/shared/assets/images/icon_text_delete.svg';
+import { Button } from '@/shared/ui';
+import { cn } from '@/shared/utils/tw-utils';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  onButtonClick: () => void;
-  isShowTimer: boolean;
-  setIsShowTimer: Dispatch<SetStateAction<boolean>>;
-  isShowEmailVerifiedCodeInput: boolean;
   isEmailVerified: boolean;
+  className?: string;
+  clearValueButton?: (e: FormEvent<HTMLButtonElement>) => void;
 }
 
 export const EmailInput = forwardRef<HTMLInputElement, InputProps>(
   (
-    {
-      onButtonClick,
-      isShowTimer,
-      setIsShowTimer,
-      isShowEmailVerifiedCodeInput,
-      isEmailVerified,
-      ...props
-    }: InputProps,
+    { isEmailVerified, className, value, clearValueButton, ...props }: InputProps,
     inputRef
   ) => {
-    const timer = useTimer(180, isShowTimer);
-    const { minutes, seconds } = formatSeconds(timer);
-
-    useEffect(() => {
-      if (timer === 0) {
-        setIsShowTimer(false);
-      }
-    }, [timer]);
-
     return (
-      <div>
+      <div className='relative h-[44px] w-full'>
         <input
           type='email'
-          disabled={isEmailVerified || isShowEmailVerifiedCodeInput}
+          className={cn(
+            'typography-body-3 placeholder:typography-body-3 diabled:bg-gray-100 h-full w-full rounded-md border border-solid border-gray-200 p-6 text-gray-800 outline-none placeholder:text-gray-500 autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] focus:visible focus:border focus:border-primary-500 disabled:shadow-gray-100',
+            className
+          )}
+          disabled={isEmailVerified}
           ref={inputRef}
           {...props}
         />
         {!isEmailVerified && (
-          <Button onClick={onButtonClick} disabled={isShowTimer}>
-            {isShowEmailVerifiedCodeInput
-              ? isShowTimer
-                ? `${minutes}:${seconds}`
-                : '재요청'
-              : '인증요청'}
+          <Button
+            className={cn(
+              'absolute right-[16px] top-[50%] hidden h-auto w-auto translate-y-[-50%] bg-transparent p-0',
+              {
+                block: value !== '' && value !== undefined,
+              }
+            )}
+            onClick={clearValueButton}>
+            <TextDeleteIcon />
           </Button>
         )}
       </div>
