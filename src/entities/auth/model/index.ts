@@ -5,5 +5,6 @@ export type {
   SignInResponse,
   SignUpRequest,
   SignUpResponse,
+  SocialSignInRequest,
   UserInfo,
 } from './types';

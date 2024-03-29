@@ -4,11 +4,11 @@ import axios, { AxiosResponse } from 'axios';
 import { BaseError, BaseResponse } from '@/shared/api';
 
 import {
-  Provider,
   SignInRequest,
   SignInResponse,
   SignUpRequest,
   SignUpResponse,
+  SocialSignInRequest,
 } from './model';
 
 export const useSignInMutation = () => {
@@ -23,18 +23,11 @@ export const useSignInMutation = () => {
   });
 };
 
-// TODO) 소셜 로그인 진행 중
-interface SocialSignInRequest {
-  code: string;
-  memberType: string;
-}
-// TODO) 소셜 로그인 진행 중
-export const useSocialSignInMutation = (provider: Provider) => {
-  console.log(provider);
-  return useMutation<BaseResponse<SocialSignInRequest>, BaseError, SocialSignInRequest>({
-    mutationFn: async (payload) => {
-      const result = await axios.post<BaseResponse<SocialSignInRequest>>(
-        '/api/auth/v1/access-token/google',
+export const useSocialSignInMutation = () => {
+  return useMutation<BaseResponse<SignInResponse>, BaseError, SocialSignInRequest>({
+    mutationFn: async ({ provider, ...payload }) => {
+      const result = await axios.post<BaseResponse<SignInResponse>>(
+        `/api/auth/v1/access-token/${provider}`,
         payload
       );
       return result.data;

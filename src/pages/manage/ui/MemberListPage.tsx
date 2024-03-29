@@ -58,7 +58,6 @@ const MemberListPage = () => {
       </header>
       <div className='flex w-full px-[20px] py-[16px]'>
         <div className='flex w-full justify-between rounded-md bg-gray-200 px-[16px] py-[10px]'>
-          {/* TODO) 상세 디자인 요청 중 */}
           <input type='text' className='w-full bg-transparent px-5' />
           <Button variant='ghost' size='icon' className='h-[20px] w-[20px]'>
             <IconSearch />

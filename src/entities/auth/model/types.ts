@@ -38,11 +38,19 @@ interface SignUpResponse {
   memberType: string;
 }
 
+interface SocialSignInRequest {
+  provider: Provider;
+  code: string;
+  memberType: string;
+  state: string;
+}
+
 export type {
   Provider,
   SignInRequest,
   SignInResponse,
   SignUpRequest,
   SignUpResponse,
+  SocialSignInRequest,
   UserInfo,
 };
