@@ -19,6 +19,7 @@ export { MemberNavigation, TrainerNavigation } from './navigation';
 export { RollingBanner } from './rolling-banner';
 export { ScrollArea, ScrollBar } from './scroll-area';
 export { Separator } from './separator';
+export { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
 export { Toast } from './toast';
 export { Toaster } from './toaster';
 export { useToast } from './use-toast';
