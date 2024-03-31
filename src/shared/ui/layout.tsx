@@ -1,6 +1,6 @@
 import { PropsWithChildren } from 'react';
 
-import { MemberNavigation, TrainerNavigation } from '@/shared/ui';
+import { StudentNavigation, TrainerNavigation } from '@/shared/ui';
 
 import { cn } from '../utils';
 
@@ -19,7 +19,7 @@ export const Layout = ({ type, className, children }: PropsWithChildren<Props>) 
       <div className='flex h-full w-[390px] flex-col justify-between bg-gray-100'>
         <div className={cn('h-full overflow-y-auto', className)}>{children}</div>
         {type === 'trainer' && <TrainerNavigation />}
-        {type === 'student' && <MemberNavigation />}
+        {type === 'student' && <StudentNavigation />}
       </div>
     </div>
   );

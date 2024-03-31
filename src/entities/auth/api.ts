@@ -1,43 +1,8 @@
-import { useMutation } from '@tanstack/react-query';
 import axios, { AxiosResponse } from 'axios';
 
-import { BaseError, BaseResponse } from '@/shared/api';
+import { BaseResponse } from '@/shared/api';
 
-import { kakaoRedirectUri } from '.';
-import {
-  SignInRequest,
-  SignInResponse,
-  SignUpRequest,
-  SignUpResponse,
-  SocialSignInRequest,
-} from './model';
-
-export const useSignInMutation = () => {
-  return useMutation<BaseResponse<SignInResponse>, BaseError, SignInRequest>({
-    mutationFn: async (payload) => {
-      const result = await axios.post<BaseResponse<SignInResponse>>(
-        '/api/auth/v1/login',
-        payload
-      );
-      return result.data;
-    },
-  });
-};
-
-export const useSocialSignInMutation = () => {
-  return useMutation<BaseResponse<SignInResponse>, BaseError, SocialSignInRequest>({
-    mutationFn: async ({ provider, ...payload }) => {
-      if (provider === 'kakao') {
-        Object.assign(payload, { redirectUrl: kakaoRedirectUri });
-      }
-      const result = await axios.post<BaseResponse<SignInResponse>>(
-        `/api/auth/v1/access-token/${provider}`,
-        payload
-      );
-      return result.data;
-    },
-  });
-};
+import { SignUpRequest, SignUpResponse } from './model';
 
 export const checkVailableId = async (userId: string) => {
   const result: AxiosResponse<BaseResponse<boolean>> = await axios.get(

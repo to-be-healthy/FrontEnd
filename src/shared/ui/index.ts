@@ -15,7 +15,7 @@ export { Card, CardContent, CardFooter, CardHeader } from './card';
 export { EmailInput, PasswordInput, TextInput } from './input';
 export { Input } from './input-shadcn';
 export { Layout } from './layout';
-export { MemberNavigation, TrainerNavigation } from './navigation';
+export { StudentNavigation, TrainerNavigation } from './navigation';
 export { RollingBanner } from './rolling-banner';
 export { ScrollArea, ScrollBar } from './scroll-area';
 export { Separator } from './separator';

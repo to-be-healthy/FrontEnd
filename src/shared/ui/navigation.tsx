@@ -71,7 +71,7 @@ const TrainerNavigation = () => {
   );
 };
 
-const MemberNavigation = () => {
+const StudentNavigation = () => {
   const pathname = usePathname();
   return (
     <nav className='bg-white'>
@@ -113,4 +113,4 @@ const MemberNavigation = () => {
   );
 };
 
-export { MemberNavigation, TrainerNavigation };
+export { StudentNavigation, TrainerNavigation };

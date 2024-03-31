@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { useSocialSignInMutation } from '@/entities/auth/api';
+import { useSocialSignInMutation } from '@/entities/auth';
 import { Provider, useAuthAction } from '@/entities/auth/model';
 
 interface Props {
