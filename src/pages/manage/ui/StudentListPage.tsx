@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
 import IconArrowDownUp from '@/shared/assets/images/icon_arrow_down_up.svg';
 import IconBack from '@/shared/assets/images/icon_back.svg';
@@ -9,12 +10,20 @@ import IconPlus from '@/shared/assets/images/icon_plus.svg';
 import IconSearch from '@/shared/assets/images/icon_search.svg';
 import { Button, Layout } from '@/shared/ui';
 
-const MEMBER_LIST = null;
+interface Student {
+  name: string;
+  age: number | null;
+  ticket_state: string | null;
+  total_class: number | null;
+  remain_class: number | null;
+  ranking: number;
+}
 
-// const MEMBER_LIST = [
+const STUDENT_LIST: Student[] = [];
+
+// const STUDENT_LIST: Student[] = [
 //   {
 //     name: '박지윤',
-//     gender: 'W',
 //     age: 20,
 //     ticket_state: '1개월 후 만료',
 //     total_class: 20,
@@ -23,7 +32,6 @@ const MEMBER_LIST = null;
 //   },
 //   {
 //     name: '김진영',
-//     gender: 'M',
 //     age: 20,
 //     ticket_state: '1개월 후 만료',
 //     total_class: 20,
@@ -32,12 +40,16 @@ const MEMBER_LIST = null;
 //   },
 // ];
 
-const MemberListPage = () => {
+const StudentListPage = () => {
   const router = useRouter();
+  const [sort] = useState<keyof typeof sortCondition>('default');
 
-  console.log(MEMBER_LIST);
+  const sortCondition = {
+    default: () => 0,
+    ranking: (a: Student, b: Student) => b.ranking - a.ranking,
+  };
 
-  const addMember = () => {
+  const addStudent = () => {
     console.log('Add member');
   };
 
@@ -45,14 +57,16 @@ const MemberListPage = () => {
     console.log('정렬 순서');
   };
 
+  const sortedStudentList = STUDENT_LIST.sort(sortCondition[sort]);
+
   return (
     <Layout type={null} className='flex flex-col'>
       <header className='typography-heading-4 flex h-14 items-center justify-between px-[20px] py-[16px]'>
-        <Button variant='ghost' size='icon' onClick={() => router.back()}>
+        <Button variant='ghost' size='icon' onClick={() => router.replace('/trainer')}>
           <IconBack />
         </Button>
         <h2 className='font-semibold'>나의 회원</h2>
-        <Button variant='ghost' size='icon' onClick={addMember}>
+        <Button variant='ghost' size='icon' onClick={addStudent}>
           <IconPlus />
         </Button>
       </header>
@@ -67,7 +81,11 @@ const MemberListPage = () => {
       <div className='mt-[4px] flex flex-grow flex-col px-[20px]'>
         <div className='mb-[10px] flex items-center justify-between'>
           <p className='typography-body-2'>
-            총 <span className='typography-title-3 text-primary-500'>0</span>명
+            총{' '}
+            <span className='typography-title-3 text-primary-500'>
+              {sortedStudentList.length ?? 0}
+            </span>
+            명
           </p>
           <div>
             <Button
@@ -80,7 +98,7 @@ const MemberListPage = () => {
           </div>
         </div>
         <div className='mb-[30%] flex h-full flex-col items-center justify-center'>
-          {!MEMBER_LIST && (
+          {sortedStudentList.length === 0 && (
             <div className='flex flex-col items-center gap-y-[36px]'>
               <div className='flex flex-col items-center gap-y-[12px]'>
                 <IconCircleAlert />
@@ -90,17 +108,23 @@ const MemberListPage = () => {
               </div>
               <Button
                 variant='default'
-                className='typography-title-3 flex items-center gap-x-[4px] px-[24px] py-[8px]'>
-                <IconPlus fill='white' width={16} height={16} />
+                className='typography-title-3 flex h-[48px] w-[146px] items-center gap-x-[4px] px-[24px] py-[8px]'>
+                <IconPlus fill='white' />
                 회원 등록하기
               </Button>
             </div>
           )}
-          {MEMBER_LIST && <div>hi</div>}
+          {sortedStudentList.length > 0 && (
+            <div className='flex h-full w-full flex-col'>
+              <div className='flex h-[20px] w-full items-center rounded-lg bg-white px-[16px] py-[20px]'>
+                진행 중
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </Layout>
   );
 };
 
-export { MemberListPage };
+export { StudentListPage };

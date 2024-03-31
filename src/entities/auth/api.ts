@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 
 import { BaseError, BaseResponse } from '@/shared/api';
 
+import { kakaoRedirectUri } from '.';
 import {
   SignInRequest,
   SignInResponse,
@@ -26,6 +27,9 @@ export const useSignInMutation = () => {
 export const useSocialSignInMutation = () => {
   return useMutation<BaseResponse<SignInResponse>, BaseError, SocialSignInRequest>({
     mutationFn: async ({ provider, ...payload }) => {
+      if (provider === 'kakao') {
+        Object.assign(payload, { redirectUrl: kakaoRedirectUri });
+      }
       const result = await axios.post<BaseResponse<SignInResponse>>(
         `/api/auth/v1/access-token/${provider}`,
         payload

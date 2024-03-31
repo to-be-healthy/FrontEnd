@@ -14,11 +14,11 @@ export const SignInPage = () => {
   const router = useRouter();
 
   const memberType = params?.get('type');
-  if (memberType !== 'trainer' && memberType !== 'member') {
+  if (memberType !== 'trainer' && memberType !== 'student') {
     throw new Error('잘못된 접근입니다.');
   }
 
-  const title = memberType === 'member' ? '회원 로그인' : '트레이너 로그인';
+  const title = memberType === 'student' ? '회원 로그인' : '트레이너 로그인';
 
   return (
     <AuthLayout>

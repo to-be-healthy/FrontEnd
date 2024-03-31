@@ -5,17 +5,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useAuthAction, useSignInMutation } from '@/entities/auth';
 import { Button, Input } from '@/shared/ui';
 
-interface LoginForm {
-  userId: string;
-  password: string;
-  trainer: string;
-}
+import { LoginForm } from '../model';
 
-interface Props {
-  memberType: 'trainer' | 'member';
-}
-
-export const SignInForm = ({ memberType }: Props) => {
+export const SignInForm = ({ memberType }: { memberType: 'trainer' | 'student' }) => {
   const router = useRouter();
   const { mutate } = useSignInMutation();
   const { setUserInfo } = useAuthAction();
@@ -51,6 +43,7 @@ export const SignInForm = ({ memberType }: Props) => {
         <Input
           id='id'
           type='text'
+          inputMode='text'
           placeholder='아이디를 입력해주세요.'
           className={errors.userId && 'border-point focus:border-point'}
           {...register('userId', {
@@ -69,6 +62,7 @@ export const SignInForm = ({ memberType }: Props) => {
         <Input
           id='password'
           type='password'
+          inputMode='text'
           className={errors.password && 'border-point focus:border-point'}
           placeholder='비밀번호를 입력해주세요.'
           {...register('password', {

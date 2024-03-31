@@ -11,7 +11,7 @@ import NaverLogo from '@/shared/assets/images/naver_logo.svg';
 import { Button } from '@/shared/ui';
 
 interface Props {
-  memberType: 'trainer' | 'member';
+  memberType: 'trainer' | 'student';
 }
 
 export const SocialSignIn = ({ memberType }: Props) => {

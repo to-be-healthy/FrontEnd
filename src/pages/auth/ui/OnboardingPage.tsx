@@ -28,7 +28,7 @@ const SelectMemberTypePage = () => {
         <Button
           className='h-20 bg-gray-100 p-0 px-[42px] py-[10px] font-bold text-black'
           asChild>
-          <Link href='?type=member'>회원으로 시작</Link>
+          <Link href='?type=student'>회원으로 시작</Link>
         </Button>
       </div>
     </div>
@@ -38,7 +38,7 @@ const SelectMemberTypePage = () => {
 const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
   const router = useRouter();
 
-  if (memberType !== 'trainer' && memberType !== 'member') {
+  if (memberType !== 'trainer' && memberType !== 'student') {
     return redirect('/');
   }
 

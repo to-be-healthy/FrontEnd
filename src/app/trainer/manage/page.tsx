@@ -1,6 +1,6 @@
-import { MemberListPage } from '@/pages/manage/ui';
+import { StudentListPage } from '@/pages/manage/ui';
 
 const Page = () => {
-  return <MemberListPage />;
+  return <StudentListPage />;
 };
 export default Page;

@@ -5,7 +5,7 @@ import { MemberNavigation, TrainerNavigation } from '@/shared/ui';
 import { cn } from '../utils';
 
 interface Props {
-  type: 'member' | 'trainer' | null;
+  type: 'student' | 'trainer' | null;
   className?: string;
 }
 
@@ -19,7 +19,7 @@ export const Layout = ({ type, className, children }: PropsWithChildren<Props>) 
       <div className='flex h-full w-[390px] flex-col justify-between bg-gray-100'>
         <div className={cn('h-full overflow-y-auto', className)}>{children}</div>
         {type === 'trainer' && <TrainerNavigation />}
-        {type === 'member' && <MemberNavigation />}
+        {type === 'student' && <MemberNavigation />}
       </div>
     </div>
   );
