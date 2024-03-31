@@ -9,6 +9,7 @@ interface SignInResponse {
   refreshToken: string;
   memberType: 'STUDENT' | 'TRAINER';
   userId: string;
+  gymId: string | null;
 }
 
 interface UserInfo {
@@ -16,6 +17,7 @@ interface UserInfo {
   memberType: string | null;
   refreshToken: string | null;
   accessToken: string | null;
+  gymId: string | null;
 }
 
 type Provider = 'kakao' | 'naver' | 'google';

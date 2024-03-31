@@ -6,9 +6,9 @@ import { usePathname } from 'next/navigation';
 import IconAccountFilled from '@/shared/assets/images/nav_account_filled.svg';
 import IconAccountOutlined from '@/shared/assets/images/nav_account_outlined.svg';
 import IconCalendarFilled from '@/shared/assets/images/nav_calendar_filled.svg';
-import IconCalendarOutlined from '@/shared/assets/images/nav_calendar_Outlined.svg';
+import IconCalendarOutlined from '@/shared/assets/images/nav_calendar_outlined.svg';
 import IconHomeFilled from '@/shared/assets/images/nav_home_filled.svg';
-import IconHomeOutlined from '@/shared/assets/images/nav_home_Outlined.svg';
+import IconHomeOutlined from '@/shared/assets/images/nav_home_outlined.svg';
 import { cn } from '@/shared/utils/tw-utils';
 
 const TrainerNavigation = () => {
