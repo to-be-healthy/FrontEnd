@@ -14,8 +14,8 @@ import {
   requestSignUp,
   sendEmailVerificationCode,
 } from '@/entities/auth/api';
-import BackIcon from '@/shared/assets/images/back.svg';
-import CloseIcon from '@/shared/assets/images/close.svg';
+import BackIcon from '@/shared/assets/images/icon_back.svg';
+import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import SendEmailIcon from '@/shared/assets/images/icon_send_email.svg';
 import {
   AlertDialog,
@@ -436,6 +436,8 @@ export const SignUpForm = () => {
                     <div className='flex items-center justify-between'>
                       <TextInput
                         id='emailVerifiedCode'
+                        inputMode='numeric'
+                        pattern='[0-9]*'
                         containerClassName='h-[44px] w-[calc(100%-76px-6px)]'
                         className={
                           errors.emailVerifiedCode && 'border-point focus:border-point'
@@ -476,6 +478,7 @@ export const SignUpForm = () => {
                     </label>
                     <EmailInput
                       id='email'
+                      inputMode='email'
                       className={errors.email && 'border-point focus:border-point'}
                       placeholder='사용 가능한 이메일을 입력해주세요'
                       isEmailVerified={isEmailVerified}
@@ -506,6 +509,7 @@ export const SignUpForm = () => {
                     </label>
                     <TextInput
                       id='name'
+                      inputMode='text'
                       containerClassName='h-[44px] w-full'
                       className={errors.name && 'border-point focus:border-point'}
                       placeholder='실명'

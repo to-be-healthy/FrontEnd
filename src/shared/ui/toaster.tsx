@@ -11,8 +11,7 @@ import {
   ToastViewport,
 } from '@/shared/ui/toast';
 import { useToast } from '@/shared/ui/use-toast';
-
-import { cn } from '../utils/tw-utils';
+import { cn } from '@/shared/utils';
 
 interface toastType {
   swipeDirection?: SwipeDirection;

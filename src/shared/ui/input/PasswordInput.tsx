@@ -1,10 +1,12 @@
+'use client';
+
 import { FormEvent, forwardRef, useState } from 'react';
 
 import HidePasswordIcon from '@/shared/assets/images/icon_hide_password.svg';
 import ShowPasswordIcon from '@/shared/assets/images/icon_show_password.svg';
 import TextDeleteIcon from '@/shared/assets/images/icon_text_delete.svg';
-import { Button } from '@/shared/ui/button';
-import { cn } from '@/shared/utils/tw-utils';
+import { Button } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   hasClear?: boolean;

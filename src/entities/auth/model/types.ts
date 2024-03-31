@@ -7,7 +7,7 @@ interface SignInRequest {
 interface SignInResponse {
   accessToken: string;
   refreshToken: string;
-  memberType: 'MEMBER' | 'TRAINER';
+  memberType: 'STUDENT' | 'TRAINER';
   userId: string;
 }
 
@@ -38,11 +38,20 @@ interface SignUpResponse {
   memberType: string;
 }
 
+interface SocialSignInRequest {
+  provider: Provider;
+  code: string;
+  memberType: string;
+  state: string;
+  redirectUrl?: string;
+}
+
 export type {
   Provider,
   SignInRequest,
   SignInResponse,
   SignUpRequest,
   SignUpResponse,
+  SocialSignInRequest,
   UserInfo,
 };

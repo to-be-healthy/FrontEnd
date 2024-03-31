@@ -2,12 +2,10 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { SignInForm } from '@/features/auth/ui/SignInForm';
-import IconClose from '@/shared/assets/images/close.svg';
+import { SignInForm } from '@/features/auth/ui';
+import IconClose from '@/shared/assets/images/icon_close.svg';
 import Logo from '@/shared/assets/images/logo.svg';
-import { Button } from '@/shared/ui/button';
-// TODO) input-shadcn -> 인풋 컴포넌트에 적용 후 파일 제거
-import { Separator } from '@/shared/ui/separator';
+import { Button, Separator } from '@/shared/ui';
 
 import AuthLayout from './AuthLayout';
 
@@ -16,11 +14,11 @@ export const SignInPage = () => {
   const router = useRouter();
 
   const memberType = params?.get('type');
-  if (memberType !== 'trainer' && memberType !== 'member') {
+  if (memberType !== 'trainer' && memberType !== 'student') {
     throw new Error('잘못된 접근입니다.');
   }
 
-  const title = memberType === 'member' ? '회원 로그인' : '트레이너 로그인';
+  const title = memberType === 'student' ? '회원 로그인' : '트레이너 로그인';
 
   return (
     <AuthLayout>

@@ -11,7 +11,7 @@ import IconHomeFilled from '@/shared/assets/images/nav_home_filled.svg';
 import IconHomeOutlined from '@/shared/assets/images/nav_home_Outlined.svg';
 import { cn } from '@/shared/utils/tw-utils';
 
-export const TrainerNavigationBar = () => {
+const TrainerNavigation = () => {
   const pathname = usePathname();
   return (
     <nav className='bg-white'>
@@ -70,3 +70,47 @@ export const TrainerNavigationBar = () => {
     </nav>
   );
 };
+
+const StudentNavigation = () => {
+  const pathname = usePathname();
+  return (
+    <nav className='bg-white'>
+      <ul className='flex items-center justify-between px-[36px] py-[18px]'>
+        <li>
+          <Link
+            href='/trainer'
+            className='flex flex-col items-center justify-between gap-y-[6px]'>
+            {pathname === '/trainer' ? <IconHomeFilled /> : <IconHomeOutlined />}
+            <span
+              className={cn(
+                'text-[10px] font-semibold',
+                pathname === '/trainer' ? 'text-black' : 'text-gray-700'
+              )}>
+              홈
+            </span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href='/trainer/mypage'
+            className='flex flex-col items-center justify-between gap-y-[6px]'>
+            {pathname === '/trainer/mypage' ? (
+              <IconAccountFilled />
+            ) : (
+              <IconAccountOutlined />
+            )}
+            <span
+              className={cn(
+                'text-[10px] font-semibold',
+                pathname === '/trainer/mypage' ? 'text-black' : 'text-gray-700'
+              )}>
+              마이
+            </span>
+          </Link>
+        </li>
+      </ul>
+    </nav>
+  );
+};
+
+export { StudentNavigation, TrainerNavigation };

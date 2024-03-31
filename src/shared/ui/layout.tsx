@@ -1,12 +1,15 @@
 import { PropsWithChildren } from 'react';
 
-import { MemberNavigationBar, TrainerNavigationBar } from '@/shared/ui/navigationBar';
+import { StudentNavigation, TrainerNavigation } from '@/shared/ui';
+
+import { cn } from '../utils';
 
 interface Props {
-  type: 'member' | 'trainer';
+  type: 'student' | 'trainer' | null;
+  className?: string;
 }
 
-export const Layout = ({ type, children }: PropsWithChildren<Props>) => {
+export const Layout = ({ type, className, children }: PropsWithChildren<Props>) => {
   return (
     <div
       className={
@@ -14,9 +17,9 @@ export const Layout = ({ type, children }: PropsWithChildren<Props>) => {
         'flex h-screen w-screen items-center justify-center bg-[#383838]'
       }>
       <div className='flex h-full w-[390px] flex-col justify-between bg-gray-100'>
-        <div className='overflow-y-auto'>{children}</div>
-        {type === 'trainer' && <TrainerNavigationBar />}
-        {type === 'member' && <MemberNavigationBar />}
+        <div className={cn('h-full overflow-y-auto', className)}>{children}</div>
+        {type === 'trainer' && <TrainerNavigation />}
+        {type === 'student' && <StudentNavigation />}
       </div>
     </div>
   );

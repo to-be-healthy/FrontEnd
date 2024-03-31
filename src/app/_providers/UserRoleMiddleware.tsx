@@ -9,7 +9,7 @@ export const UserRoleMiddleware = ({
   memberType,
   children,
 }: {
-  memberType: 'MEMBER' | 'TRAINER';
+  memberType: 'STUDENT' | 'TRAINER';
   children: React.ReactNode;
 }) => {
   const [role, setRole] = useState<string | null>();
