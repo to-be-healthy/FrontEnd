@@ -13,7 +13,6 @@
     "test": "jest"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.26.9",
     "@next/third-parties": "^14.1.1",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-dialog": "^1.0.5",
