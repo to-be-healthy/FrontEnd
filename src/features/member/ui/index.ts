@@ -1,0 +1,1 @@
+export { SelectGym } from './SelectGym';

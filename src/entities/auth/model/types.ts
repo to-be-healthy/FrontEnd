@@ -9,7 +9,7 @@ interface SignInResponse {
   refreshToken: string;
   memberType: 'STUDENT' | 'TRAINER';
   userId: string;
-  gymId: string | null;
+  gymId: number | null;
 }
 
 interface UserInfo {
@@ -17,7 +17,7 @@ interface UserInfo {
   memberType: string | null;
   refreshToken: string | null;
   accessToken: string | null;
-  gymId: string | null;
+  gymId: number | null;
 }
 
 type Provider = 'kakao' | 'naver' | 'google';
@@ -48,7 +48,19 @@ interface SocialSignInRequest {
   redirectUrl?: string;
 }
 
+interface GymList {
+  gymId: number;
+  name: string;
+}
+
+interface CheckVerificationCodeRequest {
+  email: string;
+  emailKey: string;
+}
+
 export type {
+  CheckVerificationCodeRequest,
+  GymList,
   Provider,
   SignInRequest,
   SignInResponse,

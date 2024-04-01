@@ -1,9 +1,9 @@
-import { SignUpSelectGymPage } from '@/pages/auth/ui';
+import { SelectGymPage } from '@/pages/member/ui';
 
 const SelectGym = () => {
   return (
     <div>
-      <SignUpSelectGymPage />
+      <SelectGymPage />
     </div>
   );
 };

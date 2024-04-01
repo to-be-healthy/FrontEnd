@@ -1,14 +1,13 @@
 'use client';
 
 import { SignUpForm } from '@/features/auth/ui';
-
-import AuthLayout from './AuthLayout';
+import { Layout } from '@/shared/ui';
 
 const SignUpPage = () => {
   return (
-    <AuthLayout>
+    <Layout type={null}>
       <SignUpForm />
-    </AuthLayout>
+    </Layout>
   );
 };
 

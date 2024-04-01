@@ -3,8 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { useSocialSignInMutation } from '@/entities/auth';
-import { Provider, useAuthAction } from '@/entities/auth/model';
+import { authMutation, Provider, useAuthAction } from '@/entities/auth';
 
 interface Props {
   params: { provider: Provider };
@@ -17,7 +16,7 @@ export default function Page({ params }: Props) {
   const state = searchParams?.get('state');
 
   const router = useRouter();
-  const { mutate } = useSocialSignInMutation();
+  const { mutate } = authMutation.useSocialSignIn();
   const { setUserInfo } = useAuthAction();
 
   useEffect(() => {

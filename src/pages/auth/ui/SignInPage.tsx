@@ -5,9 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { SignInForm } from '@/features/auth/ui';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import Logo from '@/shared/assets/images/logo.svg';
-import { Button, Separator } from '@/shared/ui';
-
-import AuthLayout from './AuthLayout';
+import { Button, Layout, Separator } from '@/shared/ui';
+// TODO) input-shadcn -> 인풋 컴포넌트에 적용 후 파일 제거
 
 export const SignInPage = () => {
   const params = useSearchParams();
@@ -18,10 +17,10 @@ export const SignInPage = () => {
     throw new Error('잘못된 접근입니다.');
   }
 
-  const title = memberType === 'student' ? '회원 로그인' : '트레이너 로그인';
+  const title = memberType === 'student' ? '로그인' : '트레이너 로그인';
 
   return (
-    <AuthLayout>
+    <Layout type={null}>
       <header className='flex items-center justify-between px-5 py-4'>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
         <p className='typography-heading-4 flex h-full items-center'>{title}</p>
@@ -48,6 +47,6 @@ export const SignInPage = () => {
           </li>
         </ul>
       </div>
-    </AuthLayout>
+    </Layout>
   );
 };

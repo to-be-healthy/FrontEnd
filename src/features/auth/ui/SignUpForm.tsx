@@ -1,5 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 'use client';
 
 import Image from 'next/image';
@@ -8,14 +10,10 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import React, { FormEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import {
-  checkVailableId,
-  checkVerificationCode,
-  requestSignUp,
-  sendEmailVerificationCode,
-} from '@/entities/auth/api';
+import { authMutation } from '@/entities/auth';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
+import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import SendEmailIcon from '@/shared/assets/images/icon_send_email.svg';
 import {
   AlertDialog,
@@ -34,21 +32,13 @@ import {
   useToast,
 } from '@/shared/ui';
 
-interface signUpForm {
-  userId: string;
-  name: string;
-  password: string;
-  passwordConfirm: string;
-  email: string;
-  emailVerifiedCode: string;
-  signUp: string;
-}
+import { signUpForm } from '../model';
 
-const excludeSpaceRegExp = /^\S*$/;
-const nameRegExp = /^[가-힣a-zA-Z]+$/;
-const emailRegExp = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
-const idRegExp = /^[0-9a-zA-Z]{4,}$/;
-const passwordRegExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+const EXCLUDE_SPACE_REGEXP = /^\S*$/;
+const NAME_REGEXP = /^[가-힣a-zA-Z]+$/;
+const EMAIL_REGEXP = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+const ID_REGEXP = /^[0-9a-zA-Z]{4,}$/;
+const PASSWORD_REGEXP = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
 
 const trainerId = ''; //초대가입
 
@@ -71,8 +61,8 @@ export const SignUpForm = () => {
 
   const params = useSearchParams();
   const type = params?.get('type');
-  const { toast } = useToast();
   const router = useRouter();
+  const { toast } = useToast();
 
   const nameValue = watch('name');
   const emailValue = watch('email');
@@ -81,85 +71,113 @@ export const SignUpForm = () => {
   const passwordValue = watch('password');
   const passwordConfirmValue = watch('passwordConfirm');
 
+  const { mutate: checkAvailableIdMutate, isPending } =
+    authMutation.useCheckVailableId();
+  const { mutate: sendVerificationCodeMutate } =
+    authMutation.useSendVerificationCode();
+  const { mutate: checkVerificationCodeMutate } =
+    authMutation.useCheckVerificationCode();
+  const { mutate: signUpMutation } = authMutation.useSignUp();
+
   //이메일 인증코드 발송
-  const handleSendVerificationCode = async (e: FormEvent<HTMLButtonElement>) => {
+  const handleSendVerificationCode = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setValue('emailVerifiedCode', '');
 
-    toast({
-      description: (
-        <div className='flex items-center justify-center'>
-          <SendEmailIcon />
-          <p className='typography-title-1 ml-[16px] text-[#fff]'>
-            이메일로 인증번호를 발송중이에요!
-          </p>
-        </div>
-      ),
-      duration: 2000,
-    });
-
-    try {
-      const res = await sendEmailVerificationCode(emailValue);
-      if (res?.data) {
+    sendVerificationCodeMutate(emailValue, {
+      onSuccess: ({ message }) => {
+        toast({
+          description: (
+            <div className='flex items-center justify-center'>
+              <SendEmailIcon />
+              <p className='typography-title-1 ml-[16px] text-[#fff]'>{message}</p>
+            </div>
+          ),
+          duration: 2000,
+        });
         if (step < 3) {
           setStep((prev) => prev + 1);
         }
-      }
-    } catch (error: any) {
-      setError('email', { message: `${error.response.data.message}` });
-    }
+      },
+      onError: (error) => {
+        setError('email', { message: `${error?.response?.data.message}` });
+      },
+    });
   };
 
   //인증번호 입력
-  const handleCheckVerificationCode = async () => {
-    try {
-      const res = await checkVerificationCode(emailValue, verificationCodeValue);
-      if (res?.data) {
-        setIsEmailVerified(true);
-        setStep((prev) => prev + 1);
+  const handleCheckVerificationCode = () => {
+    checkVerificationCodeMutate(
+      {
+        email: emailValue,
+        emailKey: verificationCodeValue,
+      },
+      {
+        onSuccess: () => {
+          setIsEmailVerified(true);
+          setStep((prev) => prev + 1);
+        },
+        onError: (error) => {
+          setError('emailVerifiedCode', { message: `${error.response?.data.message}` });
+        },
       }
-    } catch (error: any) {
-      setError('emailVerifiedCode', { message: `${error.response.data.message}` });
-    }
+    );
   };
 
   //아이디 중복확인
-  const handleIsIdAvailable = async (e: FormEvent<HTMLButtonElement>) => {
+  const handleIsIdAvailable = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIdSuccessMsg('');
-    if (!(userIdValue && idRegExp.test(userIdValue))) {
-      setError('userId', { message: '아이디는 소문자,대문자,숫자만 입력할 수 있습니다' });
+    if (!(userIdValue && ID_REGEXP.test(userIdValue))) {
+      return setError('userId', {
+        message: '아이디는 소문자,대문자,숫자만 입력할 수 있습니다',
+      });
     }
 
-    try {
-      const res = await checkVailableId(userIdValue);
-      if (res?.data) {
+    checkAvailableIdMutate(userIdValue, {
+      onSuccess: ({ message }) => {
         setIsIdVerified(true);
-        setIdSuccessMsg(res.message);
-      }
-    } catch (error: any) {
-      setError('userId', { message: `${error.response.data.message}` });
-    }
+        setIdSuccessMsg(message);
+      },
+
+      onError: (error) => {
+        setError('userId', { message: `${error.response?.data.message}` });
+      },
+    });
   };
 
   //회원가입
-  const onSubmit: SubmitHandler<signUpForm> = async (data) => {
-    if (!isEmailVerified) setError('email', { message: '이메일 인증을 해주세요' });
-    if (!isIdVerified) setError('userId', { message: '아이디 중복확인을 해주세요' });
+  const onSubmit: SubmitHandler<signUpForm> = (data) => {
+    if (!isEmailVerified) return setError('email', { message: '이메일 인증을 해주세요' });
+    if (!isIdVerified)
+      return setError('userId', { message: '아이디 중복확인을 해주세요' });
     if (!type) return;
 
-    try {
-      const res = await requestSignUp({
+    signUpMutation(
+      {
         ...data,
         memberType: type.toUpperCase(),
-        trainerId: trainerId,
-      });
-      if (res?.data?.id) {
-        setStep((prev) => prev + 1);
+        trainerId: trainerId ? trainerId : '', //초대가입
+      },
+      {
+        onSuccess: () => {
+          setStep((prev) => prev + 1);
+        },
+        onError: (error) => {
+          toast({
+            description: (
+              <div className='flex items-center justify-center'>
+                <ErrorIcon />
+                <p className='typography-title-1 ml-[16px] text-[#fff]'>
+                  {`${error.response?.data.message}`}
+                </p>
+              </div>
+            ),
+            duration: 2000,
+          });
+        },
       }
-    } catch (error: any) {
-      setError('signUp', { message: `${error.response.data.message}` });
-    }
+    );
   };
 
   //input disabled
@@ -168,11 +186,11 @@ export const SignUpForm = () => {
       case 1:
         return !nameValue || nameValue?.length < 2;
       case 2:
-        return (!emailValue && !isEmailVerified) || !emailRegExp.test(emailValue);
+        return (!emailValue && !isEmailVerified) || !EMAIL_REGEXP.test(emailValue);
       case 3:
         return (
           verificationCodeValue?.length < 6 ||
-          !excludeSpaceRegExp.test(verificationCodeValue)
+          !EXCLUDE_SPACE_REGEXP.test(verificationCodeValue)
         );
       case 4:
         return !isIdVerified;
@@ -186,7 +204,7 @@ export const SignUpForm = () => {
   //뒤로가기 클릭시
   const clickBack = () => {
     if (step === 1) {
-      router.push(`/signin?type=${type}`);
+      router.push(`/sign-in?type=${type}`);
     } else if (step === 3) {
       setStep((prev) => prev - 1);
       setIsEmailVerified(false);
@@ -260,7 +278,7 @@ export const SignUpForm = () => {
           <div className='w-full'>
             <Button asChild>
               <Link
-                href='/selectgym'
+                href={`/sign-in?type=${type}`}
                 className='h-[57px] w-full rounded-lg bg-primary-500 text-white'>
                 확인
               </Link>
@@ -271,15 +289,17 @@ export const SignUpForm = () => {
         <div className='flex h-full w-full flex-col items-center justify-between'>
           <div className='flex w-full flex-col overflow-auto'>
             <header className='mb-[58px] flex items-center justify-between p-[20px] pb-0'>
-              <Button className='bg-white p-0' onClick={clickBack}>
+              <Button className='bg-transparent p-0' onClick={clickBack}>
                 <BackIcon />
               </Button>
-              <h2 className='typography-heading-4 font-semibold'>회원가입</h2>
+              <h2 className='typography-heading-4 font-semibold'>
+                {type === 'trainer' && '트레이너'} 회원가입
+              </h2>
               <AlertDialog>
                 <AlertDialogTrigger asChild>
                   <Button
                     variant='outline'
-                    className='border-none p-0 hover:bg-transparent'>
+                    className='border-none bg-transparent p-0 hover:bg-transparent'>
                     <CloseIcon />
                   </Button>
                 </AlertDialogTrigger>
@@ -296,7 +316,7 @@ export const SignUpForm = () => {
                     <AlertDialogAction
                       asChild
                       className='mt-0 h-[48px] rounded-md bg-[#E2F1FF] text-primary-500'>
-                      <Link href='/signin'>확인</Link>
+                      <Link href={`/sign-in?type=${type}`}>확인</Link>
                     </AlertDialogAction>
                     <AlertDialogCancel className='mt-0 h-[48px] rounded-md bg-primary-500 text-[#fff]'>
                       취소
@@ -341,7 +361,7 @@ export const SignUpForm = () => {
                             message: '비밀번호는 8글자 이상이여야 합니다',
                           },
                           pattern: {
-                            value: passwordRegExp,
+                            value: PASSWORD_REGEXP,
                             message: '영문+숫자 조합 8자리 이상 입력해주세요.',
                           },
                         })}
@@ -401,14 +421,15 @@ export const SignUpForm = () => {
                         }
                         {...register('userId', {
                           pattern: {
-                            value: idRegExp,
+                            value: ID_REGEXP,
                             message: '영문, 숫자 4자리 이상 입력해주세요.',
                           },
                         })}
                       />
                       <Button
                         className='typography-heading-5 h-[44px] w-[76px] rounded-md'
-                        onClick={handleIsIdAvailable}>
+                        onClick={handleIsIdAvailable}
+                        disabled={isPending}>
                         중복확인
                       </Button>
                     </div>
@@ -435,6 +456,7 @@ export const SignUpForm = () => {
                     </label>
                     <div className='flex items-center justify-between'>
                       <TextInput
+                        type='number'
                         id='emailVerifiedCode'
                         inputMode='numeric'
                         pattern='[0-9]*'
@@ -450,13 +472,13 @@ export const SignUpForm = () => {
                         }
                         {...register('emailVerifiedCode', {
                           pattern: {
-                            value: excludeSpaceRegExp,
+                            value: EXCLUDE_SPACE_REGEXP,
                             message: '공백 문자를 포함할 수 없습니다',
                           },
                         })}
                       />
                       <Button
-                        className='typography-heading-5 h-[44px] w-[76px] rounded-md'
+                        className='typography-heading-5 h-[44px] w-[76px] rounded-md bg-gray-700'
                         onClick={handleSendVerificationCode}
                         disabled={step > 3 && isEmailVerified}>
                         재전송
@@ -488,7 +510,7 @@ export const SignUpForm = () => {
                       }
                       {...register('email', {
                         pattern: {
-                          value: emailRegExp,
+                          value: EMAIL_REGEXP,
                           message: '이메일 형식이 아닙니다',
                         },
                       })}
@@ -523,7 +545,7 @@ export const SignUpForm = () => {
                           message: '이름은 최소 2자 이상 입력해주세요.',
                         },
                         pattern: {
-                          value: nameRegExp,
+                          value: NAME_REGEXP,
                           message: '한글 또는 영문만 입력해주세요',
                         },
                       })}

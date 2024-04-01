@@ -13,7 +13,7 @@ export const UserRoleMiddleware = ({
   children: React.ReactNode;
 }) => {
   const [role, setRole] = useState<string | null>();
-  const [gymId, setGymId] = useState<string | null>();
+  const [gymId, setGymId] = useState<number | null>();
 
   useEffect(() => {
     const { memberType: currentType, gymId: currentGymId } = auth();
@@ -29,7 +29,7 @@ export const UserRoleMiddleware = ({
     return redirect(`/${role.toLowerCase()}`);
 
   // 헬스장 미선택 시
-  if (gymId === null) return redirect('/selectgym');
+  if (gymId === null) return redirect('/select-gym');
 
   if (typeof role === 'string' && role === memberType) return children;
 
