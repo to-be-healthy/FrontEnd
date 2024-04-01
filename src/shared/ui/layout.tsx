@@ -1,5 +1,6 @@
 import { PropsWithChildren } from 'react';
 
+import { Toaster } from '@/shared/ui';
 import { StudentNavigation, TrainerNavigation } from '@/shared/ui';
 
 import { cn } from '../utils';
@@ -14,12 +15,14 @@ export const Layout = ({ type, className, children }: PropsWithChildren<Props>) 
     <div
       className={
         // TODO) 모바일뷰 개발 편의성 임시 레이아웃 설정 - 추후 w-screen 제거
-        'flex h-screen w-screen items-center justify-center bg-[#383838]'
+        'flex h-screen items-center justify-center bg-[#383838]'
+        // 'flex h-screen w-screen items-center justify-center bg-[#383838]'
       }>
       <div className='flex h-full w-[390px] flex-col justify-between bg-gray-100'>
         <div className={cn('h-full overflow-y-auto', className)}>{children}</div>
         {type === 'trainer' && <TrainerNavigation />}
         {type === 'student' && <StudentNavigation />}
+        <Toaster />
       </div>
     </div>
   );

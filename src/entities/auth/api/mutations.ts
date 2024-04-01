@@ -3,6 +3,11 @@ import axios from 'axios';
 
 import { googleRedirectUri, kakaoRedirectUri } from '@/entities/auth';
 import { SignInRequest, SignInResponse, SocialSignInRequest } from '@/entities/auth';
+import {
+  CheckVerificationCodeRequest,
+  SignUpRequest,
+  SignUpResponse,
+} from '@/entities/auth/model/types';
 import { BaseError, BaseResponse } from '@/shared/api';
 
 const useSignInMutation = () => {
@@ -36,4 +41,56 @@ const useSocialSignInMutation = () => {
   });
 };
 
-export { useSignInMutation, useSocialSignInMutation };
+const useCheckVailableIdMutation = () => {
+  return useMutation<BaseResponse<boolean>, BaseError, string>({
+    mutationFn: async (userId) => {
+      const result = await axios.get<BaseResponse<boolean>>(
+        `/api/auth/v1/validation/user-id?userId=${userId}`
+      );
+      return result.data;
+    },
+  });
+};
+
+const useSendVerificationCodeMutation = () => {
+  return useMutation<BaseResponse<string>, BaseError, string>({
+    mutationFn: async (email) => {
+      const result = await axios.post<BaseResponse<string>>(
+        `/api/auth/v1/validation/send-email?email=${email}`
+      );
+      return result.data;
+    },
+  });
+};
+
+const useCheckVerificationCodeMutation = () => {
+  return useMutation<BaseResponse<boolean>, BaseError, CheckVerificationCodeRequest>({
+    mutationFn: async (params) => {
+      const result = await axios.post<BaseResponse<boolean>>(
+        `/api/auth/v1/validation/confirm-email?email=${params.email}&&emailKey=${params.emailKey}`
+      );
+      return result.data;
+    },
+  });
+};
+
+const useSignUpMutationMutation = () => {
+  return useMutation<BaseResponse<SignUpResponse>, BaseError, SignUpRequest>({
+    mutationFn: async (params) => {
+      const result = await axios.post<BaseResponse<SignUpResponse>>(
+        `/api/auth/v1/join`,
+        params
+      );
+      return result.data;
+    },
+  });
+};
+
+export {
+  useCheckVailableIdMutation,
+  useCheckVerificationCodeMutation,
+  useSendVerificationCodeMutation,
+  useSignInMutation,
+  useSignUpMutationMutation,
+  useSocialSignInMutation,
+};

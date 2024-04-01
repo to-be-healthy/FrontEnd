@@ -9,8 +9,7 @@ import { SocialSignIn } from '@/features/auth/ui';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import Logo from '@/shared/assets/images/logo.svg';
 import { Button, RollingBanner } from '@/shared/ui';
-
-import AuthLayout from './AuthLayout';
+import { Layout } from '@/shared/ui';
 
 const SelectMemberTypePage = () => {
   return (
@@ -98,7 +97,7 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
           asChild
           variant='link'
           className='typography-title-3 mt-5 font-semibold text-gray-500 hover:no-underline'>
-          <Link href={`/signin?type=${memberType}`}>아이디 로그인</Link>
+          <Link href={`/sign-in?type=${memberType}`}>아이디 로그인</Link>
         </Button>
         <p className='w-2/3 break-keep text-center text-[11px] font-normal text-gray-400'>
           로그인 시{' '}
@@ -121,9 +120,9 @@ export const OnboardingPage = () => {
   const type = params?.get('type');
 
   return (
-    <AuthLayout>
+    <Layout type={null}>
       {!type && <SelectMemberTypePage />}
       {type && <SelectLoginMethodPage memberType={type} />}
-    </AuthLayout>
+    </Layout>
   );
 };

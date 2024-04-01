@@ -2,8 +2,10 @@ import axios, { type CreateAxiosDefaults } from 'axios';
 
 import { auth } from '@/entities/auth';
 
-const BASE_SERVER_URL =
-  process.env.NEXT_PUBLIC_AUTH_URL ?? 'https://api.to-be-healthy.site';
+// const BASE_SERVER_URL =
+//   process.env.NEXT_PUBLIC_AUTH_URL ?? 'https://api.to-be-healthy.site';
+
+const BASE_SERVER_URL = 'http://localhost:3000';
 
 const apiClient = () => {
   const defaultOptions: CreateAxiosDefaults = {

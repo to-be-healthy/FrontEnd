@@ -1,6 +1,6 @@
 'use client';
 
-import { TrainerMyPage } from '@/pages/user/ui';
+import { TrainerMyPage } from '@/pages/member/ui';
 
 const Page = () => {
   return <TrainerMyPage />;

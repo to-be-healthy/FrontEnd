@@ -1,4 +1,4 @@
-export { useSignInMutation, useSocialSignInMutation } from './api/index'; // api 반영 후 이것도 수정해주세요!
+export * as authMutation from './api/mutations';
 export {
   GOOGLE_SOCIAL_AUTH_URL,
   googleRedirectUri,
@@ -9,8 +9,11 @@ export {
 } from './consts';
 export { auth, useAuthAction, useAuthSelector } from './model/store';
 export type {
+  Provider,
   SignInRequest,
   SignInResponse,
+  SignUpRequest,
+  SignUpResponse,
   SocialSignInRequest,
   UserInfo,
 } from './model/types';

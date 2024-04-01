@@ -4,4 +4,14 @@ interface LoginForm {
   trainer: string;
 }
 
-export type { LoginForm };
+interface signUpForm {
+  userId: string;
+  name: string;
+  password: string;
+  passwordConfirm: string;
+  email: string;
+  emailVerifiedCode: string;
+  signUp: string;
+}
+
+export type { LoginForm, signUpForm };

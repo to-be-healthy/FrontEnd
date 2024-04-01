@@ -2,14 +2,14 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { useAuthAction, useSignInMutation } from '@/entities/auth';
+import { authMutation, useAuthAction } from '@/entities/auth';
 import { Button, Input } from '@/shared/ui';
 
 import { LoginForm } from '../model';
 
 export const SignInForm = ({ memberType }: { memberType: 'trainer' | 'student' }) => {
   const router = useRouter();
-  const { mutate } = useSignInMutation();
+  const { mutate } = authMutation.useSignInMutation();
   const { setUserInfo } = useAuthAction();
 
   const {
@@ -81,7 +81,7 @@ export const SignInForm = ({ memberType }: { memberType: 'trainer' | 'student' }
           로그인
         </Button>
         <Button variant='outline' size='full' asChild>
-          <Link href={`/signup?type=${memberType}`}>회원가입</Link>
+          <Link href={`/sign-up?type=${memberType}`}>회원가입</Link>
         </Button>
       </div>
     </form>
