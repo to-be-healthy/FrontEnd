@@ -14,7 +14,34 @@ import {
   ScrollArea,
   ScrollBar,
 } from '@/shared/ui';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/shared/ui/select';
 import { cn } from '@/shared/utils';
+
+const GYM_LIST = [
+  {
+    name: '건강해짐 홍대점',
+    id: 1,
+  },
+  {
+    name: '건강해짐 떡잎마을점',
+    id: 2,
+  },
+  {
+    name: '건강해짐 당산점',
+    id: 3,
+  },
+  {
+    name: '건강해짐 울산점',
+    id: 4,
+  },
+];
 
 // TODO) 스케줄 관리 entity
 const TODAY_CLASSES = [
@@ -55,10 +82,20 @@ export const TrainerHomePage = () => {
   return (
     <Layout type='trainer'>
       <header className='flex h-14 items-center justify-between bg-white px-[20px] py-[16px]'>
-        {/* Select 컴포넌트 필요 */}
-        <select className='typography-title-2'>
-          <option value='1'>건강해짐 홍대점</option>
-        </select>
+        <Select defaultValue={'1'}>
+          <SelectTrigger className='flex w-fit items-center gap-x-[4px]'>
+            <SelectValue placeholder='헬스장 선택' />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              {GYM_LIST.map((item) => (
+                <SelectItem key={item.id} value={String(item.id)}>
+                  {item.name}
+                </SelectItem>
+              ))}
+            </SelectGroup>
+          </SelectContent>
+        </Select>
         {/* 임시로 로그아웃 기능 적용 */}
         <Button
           variant='ghost'
