@@ -72,12 +72,12 @@ export const SignUpForm = () => {
   const passwordConfirmValue = watch('passwordConfirm');
 
   const { mutate: checkAvailableIdMutate, isPending } =
-    authMutation.useCheckVailableIdMutation();
+    authMutation.useCheckVailableId();
   const { mutate: sendVerificationCodeMutate } =
-    authMutation.useSendVerificationCodeMutation();
+    authMutation.useSendVerificationCode();
   const { mutate: checkVerificationCodeMutate } =
-    authMutation.useCheckVerificationCodeMutation();
-  const { mutate: signUpMutation } = authMutation.useSignUpMutationMutation();
+    authMutation.useCheckVerificationCode();
+  const { mutate: signUpMutation } = authMutation.useSignUp();
 
   //이메일 인증코드 발송
   const handleSendVerificationCode = (e: FormEvent<HTMLButtonElement>) => {

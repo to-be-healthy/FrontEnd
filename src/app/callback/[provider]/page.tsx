@@ -16,7 +16,7 @@ export default function Page({ params }: Props) {
   const state = searchParams?.get('state');
 
   const router = useRouter();
-  const { mutate } = authMutation.useSocialSignInMutation();
+  const { mutate } = authMutation.useSocialSignIn();
   const { setUserInfo } = useAuthAction();
 
   useEffect(() => {

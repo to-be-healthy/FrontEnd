@@ -9,7 +9,7 @@ import { LoginForm } from '../model';
 
 export const SignInForm = ({ memberType }: { memberType: 'trainer' | 'student' }) => {
   const router = useRouter();
-  const { mutate } = authMutation.useSignInMutation();
+  const { mutate } = authMutation.useSignIn();
   const { setUserInfo } = useAuthAction();
 
   const {
