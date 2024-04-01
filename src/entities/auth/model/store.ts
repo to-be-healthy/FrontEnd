@@ -19,6 +19,7 @@ const DEFAULT_AUTH_STATE = {
   memberType: null,
   refreshToken: null,
   accessToken: null,
+  gymId: null,
 };
 
 const authStore = () => DEFAULT_AUTH_STATE;
@@ -30,6 +31,7 @@ const useAuthStore = create(
       'memberType',
       'refreshToken',
       'accessToken',
+      'gymId',
     ]),
     { name: AUTH_STATE_NAME }
   )
@@ -53,9 +55,9 @@ const auth = () => {
   const { state } = JSON.parse(store) as {
     state: UserInfo;
   };
-  const { accessToken, refreshToken, memberType } = state;
+  const { accessToken, refreshToken, memberType, gymId } = state;
   const tokens = { accessToken, refreshToken };
-  return { tokens, memberType };
+  return { tokens, memberType, gymId };
 };
 
 export { auth, useAuthAction, useAuthSelector };
