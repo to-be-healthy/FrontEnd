@@ -16,10 +16,11 @@ import { Button, Layout } from '@/shared/ui';
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuRadioGroup,
-  DropdownMenuRadioItem,
+  DropdownMenuGroup,
+  DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
+import { cn } from '@/shared/utils';
 
 interface Student {
   name: string;
@@ -231,18 +232,20 @@ const StudentListPage = () => {
                     {sort}
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className='absolute right-0'>
-                  <DropdownMenuRadioGroup
-                    value={sort}
-                    onValueChange={(value) =>
-                      setSort(value as keyof typeof sortCondition)
-                    }>
+                <DropdownMenuContent className='absolute -right-9 top-1 flex w-[96px] flex-col'>
+                  <DropdownMenuGroup className='flex flex-col'>
                     {Object.keys(sortCondition).map((item) => (
-                      <DropdownMenuRadioItem key={item} value={item}>
+                      <DropdownMenuItem
+                        key={item}
+                        className={cn(
+                          'typography-title-3 px-[16px] py-[12px] text-gray-500',
+                          item === sort && 'text-black'
+                        )}
+                        onClick={() => setSort(item as keyof typeof sortCondition)}>
                         {item}
-                      </DropdownMenuRadioItem>
+                      </DropdownMenuItem>
                     ))}
-                  </DropdownMenuRadioGroup>
+                  </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
             </div>
