@@ -58,7 +58,7 @@ export const SelectGym = () => {
   };
 
   return (
-    <Layout type={null}>
+    <Layout>
       <article className='h-[100vh]'>
         <div className='flex h-full w-full flex-col items-center justify-between p-[20px]'>
           <div className='flex w-full flex-col items-center justify-start overflow-y-auto pt-[104px]'>

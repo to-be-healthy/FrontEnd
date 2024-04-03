@@ -20,33 +20,35 @@ export const SignInPage = () => {
   const title = memberType === 'student' ? '로그인' : '트레이너 로그인';
 
   return (
-    <Layout type={null}>
-      <header className='flex items-center justify-between px-5 py-4'>
+    <Layout className='bg-white'>
+      <Layout.Header>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
         <p className='typography-heading-4 flex h-full items-center'>{title}</p>
         <Button variant='ghost' onClick={() => router.push('/')}>
           <IconClose />
         </Button>
-      </header>
-      <div className='flex flex-col items-center px-5'>
-        <div className='mb-[35px] mt-[18px]'>
-          <Logo />
+      </Layout.Header>
+      <Layout.Contents>
+        <div className='flex flex-col items-center px-5'>
+          <div className='mb-[35px] mt-[18px]'>
+            <Logo />
+          </div>
+          <SignInForm memberType={memberType} />
+          <ul className='mt-9 flex gap-x-3'>
+            <li
+              className='typography-body-3 cursor-pointer text-gray-500'
+              onClick={() => router.push('/find/pw')}>
+              비밀번호 찾기
+            </li>
+            <Separator orientation='vertical' />
+            <li
+              className='typography-body-3 cursor-pointer text-gray-500'
+              onClick={() => router.push('/find/id')}>
+              아이디 찾기
+            </li>
+          </ul>
         </div>
-        <SignInForm memberType={memberType} />
-        <ul className='mt-9 flex gap-x-3'>
-          <li
-            className='typography-body-3 cursor-pointer text-gray-500'
-            onClick={() => router.push('/find/pw')}>
-            비밀번호 찾기
-          </li>
-          <Separator orientation='vertical' />
-          <li
-            className='typography-body-3 cursor-pointer text-gray-500'
-            onClick={() => router.push('/find/id')}>
-            아이디 찾기
-          </li>
-        </ul>
-      </div>
+      </Layout.Contents>
     </Layout>
   );
 };

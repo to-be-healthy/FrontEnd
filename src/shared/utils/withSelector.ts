@@ -8,7 +8,7 @@ export const withSelector = <StateType extends object>(
   return function <K extends keyof StateType>(keys: K[]) {
     const selectors = useCallback(
       (state: StateType) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-explicit-any
         const obj = {} as any;
         keys.forEach((key) => {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access

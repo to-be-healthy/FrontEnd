@@ -5,7 +5,7 @@ import { Layout } from '@/shared/ui';
 
 const SignUpPage = () => {
   return (
-    <Layout type={null}>
+    <Layout>
       <SignUpForm />
     </Layout>
   );
