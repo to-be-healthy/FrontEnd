@@ -13,7 +13,6 @@ export {
 export { Button, buttonVariants } from './button';
 export { Card, CardContent, CardFooter, CardHeader } from './card';
 export { EmailInput, PasswordInput, TextInput } from './input';
-export { Input } from './input-shadcn';
 export { Layout } from './layout';
 export { StudentNavigation, TrainerNavigation } from './navigation';
 export { RollingBanner } from './rolling-banner';
