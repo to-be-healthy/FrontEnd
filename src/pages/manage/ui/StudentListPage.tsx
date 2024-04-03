@@ -13,6 +13,13 @@ import IconMedalSilver from '@/shared/assets/images/icon_medal_silver.svg';
 import IconPlus from '@/shared/assets/images/icon_plus.svg';
 import IconSearch from '@/shared/assets/images/icon_search.svg';
 import { Button, Layout } from '@/shared/ui';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from '@/shared/ui/dropdown-menu';
 
 interface Student {
   name: string;
@@ -32,20 +39,20 @@ const STUDENT_LIST: Student[] = [
     ticket_state: '1개월 후 만료',
     total_class: 20,
     remain_class: 4,
-    ranking: 1,
+    ranking: 2,
     id: 1,
   },
   {
-    name: '김진영',
+    name: '박혜민',
     age: 20,
     ticket_state: '1개월 후 만료',
     total_class: 20,
     remain_class: 4,
-    ranking: 2,
+    ranking: 1,
     id: 2,
   },
   {
-    name: '김진영',
+    name: '박은채',
     age: 20,
     ticket_state: '1개월 후 만료',
     total_class: 20,
@@ -54,7 +61,7 @@ const STUDENT_LIST: Student[] = [
     id: 3,
   },
   {
-    name: '김진영',
+    name: '구진실',
     age: 20,
     ticket_state: '1개월 후 만료',
     total_class: 20,
@@ -63,34 +70,7 @@ const STUDENT_LIST: Student[] = [
     id: 4,
   },
   {
-    name: '김진영',
-    age: 20,
-    ticket_state: '1개월 후 만료',
-    total_class: 20,
-    remain_class: 4,
-    ranking: 5,
-    id: 5,
-  },
-  {
-    name: '김진영',
-    age: 20,
-    ticket_state: '1개월 후 만료',
-    total_class: 20,
-    remain_class: 4,
-    ranking: 6,
-    id: 6,
-  },
-  {
-    name: '김진영',
-    age: 20,
-    ticket_state: '1개월 후 만료',
-    total_class: 20,
-    remain_class: 4,
-    ranking: 7,
-    id: 7,
-  },
-  {
-    name: '김진영',
+    name: '박성재',
     age: 20,
     ticket_state: '1개월 후 만료',
     total_class: 20,
@@ -99,7 +79,52 @@ const STUDENT_LIST: Student[] = [
     id: 8,
   },
   {
-    name: '김진영',
+    name: '정빛나',
+    age: 20,
+    ticket_state: '1개월 후 만료',
+    total_class: 20,
+    remain_class: 4,
+    ranking: 6,
+    id: 6,
+  },
+  {
+    name: '송하영',
+    age: 20,
+    ticket_state: '1개월 후 만료',
+    total_class: 20,
+    remain_class: 4,
+    ranking: 11,
+    id: 11,
+  },
+  {
+    name: '정선우',
+    age: 20,
+    ticket_state: '1개월 후 만료',
+    total_class: 20,
+    remain_class: 4,
+    ranking: 7,
+    id: 7,
+  },
+  {
+    name: '임채린',
+    age: 20,
+    ticket_state: '1개월 후 만료',
+    total_class: 20,
+    remain_class: 4,
+    ranking: 5,
+    id: 5,
+  },
+  {
+    name: '박유진',
+    age: 20,
+    ticket_state: '1개월 후 만료',
+    total_class: 20,
+    remain_class: 4,
+    ranking: 10,
+    id: 10,
+  },
+  {
+    name: '김문영',
     age: 20,
     ticket_state: '1개월 후 만료',
     total_class: 20,
@@ -110,8 +135,8 @@ const STUDENT_LIST: Student[] = [
 ];
 
 const sortCondition = {
-  default: null,
-  ranking: (a: Student, b: Student) => b.ranking - a.ranking,
+  '기본 순': (a: Student, b: Student) => a.id - b.id,
+  '랭킹 순': (a: Student, b: Student) => a.ranking - b.ranking,
 };
 
 const StudentListController = (students: Student[]) => ({
@@ -139,7 +164,7 @@ const medalMapper = (ranking: number) => {
 
 const StudentListPage = () => {
   const router = useRouter();
-  const [sort] = useState<keyof typeof sortCondition>('default');
+  const [sort, setSort] = useState<keyof typeof sortCondition>('랭킹 순');
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -173,8 +198,8 @@ const StudentListPage = () => {
         </Button>
       </Layout.Header>
       <Layout.Contents className='overflow-y-hidden'>
-        <div className='grid-rows-auto-1fr grid h-full'>
-          <div className='row-span-1 flex w-full px-[20px] py-[16px]'>
+        <div className='flex h-full flex-col'>
+          <div className='flex h-fit w-full px-[20px] py-[16px]'>
             <div className='flex h-fit w-full justify-between rounded-md bg-gray-200 px-[16px] py-[10px]'>
               {/* 공통 인풋 적용 예정 */}
               <input
@@ -187,7 +212,7 @@ const StudentListPage = () => {
               </Button>
             </div>
           </div>
-          <div className='row-span-1 mt-[4px] flex h-full flex-1 flex-grow flex-col overflow-y-auto px-[20px]'>
+          <div className='mt-[4px] flex h-full flex-1 flex-grow flex-col overflow-y-auto px-[20px]'>
             <div className='mb-[10px] flex items-center justify-between'>
               <p className='typography-body-2'>
                 총{' '}
@@ -196,15 +221,30 @@ const StudentListPage = () => {
                 </span>
                 명
               </p>
-              <div>
-                <Button
-                  variant='ghost'
-                  className='typography-body-3 flex gap-x-[4px]'
-                  onClick={changeAlignment}>
-                  <IconArrowDownUp />
-                  랭킹 순
-                </Button>
-              </div>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant='ghost'
+                    className='typography-body-3 flex gap-x-[4px]'
+                    onClick={changeAlignment}>
+                    <IconArrowDownUp />
+                    {sort}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className='absolute right-0'>
+                  <DropdownMenuRadioGroup
+                    value={sort}
+                    onValueChange={(value) =>
+                      setSort(value as keyof typeof sortCondition)
+                    }>
+                    {Object.keys(sortCondition).map((item) => (
+                      <DropdownMenuRadioItem key={item} value={item}>
+                        {item}
+                      </DropdownMenuRadioItem>
+                    ))}
+                  </DropdownMenuRadioGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
             {STUDENT_LIST.length === 0 && (
               <div className='mb-[30%] flex h-full flex-col items-center justify-center gap-y-[36px]'>
