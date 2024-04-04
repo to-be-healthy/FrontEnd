@@ -6,9 +6,14 @@ import * as React from 'react';
 
 import { cn } from '@/shared/utils/tw-utils';
 
+interface InputOTPProps {
+  className?: string;
+  containerClassName?: string;
+}
+
 const InputOTP = React.forwardRef<
   React.ElementRef<typeof OTPInput>,
-  React.ComponentPropsWithoutRef<typeof OTPInput>
+  InputOTPProps & React.ComponentPropsWithoutRef<typeof OTPInput>
 >(({ className, containerClassName, ...props }, ref) => (
   <OTPInput
     ref={ref}
@@ -25,7 +30,7 @@ InputOTP.displayName = 'InputOTP';
 
 const InputOTPGroup = React.forwardRef<
   React.ElementRef<'div'>,
-  React.ComponentPropsWithoutRef<'div'>
+  InputOTPProps & React.ComponentPropsWithoutRef<'div'>
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
@@ -37,7 +42,7 @@ InputOTPGroup.displayName = 'InputOTPGroup';
 
 const InputOTPSlot = React.forwardRef<
   React.ElementRef<'div'>,
-  React.ComponentPropsWithoutRef<'div'> & { index: number }
+  InputOTPProps & React.ComponentPropsWithoutRef<'div'> & { index: number }
 >(({ index, className, ...props }, ref) => {
   const inputOTPContext = React.useContext(OTPInputContext);
   const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index];
