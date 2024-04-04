@@ -9,4 +9,4 @@ export interface RegisteredStudent {
   gymEndDt: string;
 }
 
-export type RegisteredStudentsListResponse = RegisteredStudent[];
+export type RegisteredStudentsListResponse = RegisteredStudent[] | null;

@@ -27,7 +27,12 @@ import { cn } from '@/shared/utils';
 
 type Student = memberTypes.RegisteredStudent;
 
-const sortCondition = {
+interface SortCondition {
+  label: string;
+  condition: (a: Student, b: Student) => number;
+}
+
+const sortCondition: Record<string, SortCondition> = {
   DEFAULT: {
     label: '기본 순',
     condition: (a: Student, b: Student) => a.memberId - b.memberId,
@@ -37,8 +42,6 @@ const sortCondition = {
     condition: (a: Student, b: Student) => a.ranking - b.ranking,
   },
 };
-
-type SortCondition = (typeof sortCondition)[keyof typeof sortCondition];
 
 const StudentListController = (students: Student[]) => ({
   search: (keyword: string) => {
@@ -69,7 +72,7 @@ const StudentListPage = () => {
   const [sort, setSort] = useState<SortCondition>(sortCondition.DEFAULT);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: studentList, isFetching } = memberQuery.useRegisteredStudentsList();
+  const { data: studentList, isLoading } = memberQuery.useRegisteredStudentsList();
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -106,7 +109,7 @@ const StudentListPage = () => {
               />
             </div>
           </div>
-          {isFetching ? null : (
+          {!isLoading && (
             <div className='mt-[4px] flex h-full flex-1 flex-grow flex-col overflow-y-auto px-[20px]'>
               <div className='mb-[10px] flex items-center justify-between'>
                 <p className='typography-body-2'>
@@ -142,7 +145,7 @@ const StudentListPage = () => {
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
-              {studentList.length === 0 && (
+              {studentList === null && (
                 <div className='mb-[30%] flex h-full flex-col items-center justify-center gap-y-[36px]'>
                   <div className='flex flex-col items-center gap-y-[12px]'>
                     <IconCircleAlert />
@@ -160,7 +163,7 @@ const StudentListPage = () => {
                   </AddStudentDialog>
                 </div>
               )}
-              {studentList.length > 0 && processedStudentList.length === 0 && (
+              {studentList !== null && processedStudentList.length === 0 && (
                 <div className='mb-[30%] flex h-full flex-col items-center justify-center'>
                   <div className='mb-[30%] flex h-full flex-col items-center justify-center'>
                     <div className='flex flex-col items-center gap-y-[36px]'>
@@ -174,7 +177,7 @@ const StudentListPage = () => {
                   </div>
                 </div>
               )}
-              {studentList.length > 0 && processedStudentList.length > 0 && (
+              {studentList !== null && processedStudentList.length > 0 && (
                 <div className='flex w-full flex-col gap-y-[10px] pb-8'>
                   {processedStudentList.map((item) => {
                     const medal = medalMapper(item.ranking);

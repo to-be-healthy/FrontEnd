@@ -2,17 +2,16 @@ import { useQuery } from '@tanstack/react-query';
 
 import { api, BaseError, BaseResponse } from '@/shared/api';
 
-import { RegisteredStudent } from '../model/types';
+import { RegisteredStudentsListResponse } from '../model/types';
 
 export const useRegisteredStudentsList = () => {
-  return useQuery<RegisteredStudent[], BaseError>({
+  return useQuery<RegisteredStudentsListResponse, BaseError>({
     queryKey: ['registeredStudents'],
     queryFn: async () => {
-      const result = await api.get<BaseResponse<RegisteredStudent[]>>(
+      const result = await api.get<BaseResponse<RegisteredStudentsListResponse>>(
         '/api/trainers/v1/members'
       );
       return result.data.data;
     },
-    initialData: [],
   });
 };
