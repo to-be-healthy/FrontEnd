@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { AddStudentDialog } from '@/features/member/ui/AddStudentDialog';
 import IconArrowDownUp from '@/shared/assets/images/icon_arrow_down_up.svg';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconCircleAlert from '@/shared/assets/images/icon_circle_alert.svg';
@@ -160,6 +161,7 @@ const medalMapper = (ranking: number) => {
   if (ranking === 1) return <IconMedalGold />;
   if (ranking === 2) return <IconMedalSilver />;
   if (ranking === 3) return <IconMedalBronze />;
+  if (ranking === 999) return <IconMedalNormal />;
   return <IconMedalNormal />;
 };
 
@@ -170,10 +172,6 @@ const StudentListPage = () => {
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
-  };
-
-  const addStudent = () => {
-    console.log('Add member');
   };
 
   const changeAlignment = () => {
@@ -193,24 +191,22 @@ const StudentListPage = () => {
         <Button variant='ghost' size='icon' onClick={() => router.replace('/trainer')}>
           <IconBack />
         </Button>
-        <h2 className='font-semibold'>나의 회원</h2>
-        <Button variant='ghost' size='icon' onClick={addStudent}>
-          <IconPlus />
-        </Button>
+        <h2 className='typography-heading-4 font-semibold'>나의 회원</h2>
+        <AddStudentDialog />
       </Layout.Header>
       <Layout.Contents className='overflow-y-hidden'>
         <div className='flex h-full flex-col'>
           <div className='flex h-fit w-full px-[20px] py-[16px]'>
             <div className='flex h-fit w-full justify-between rounded-md bg-gray-200 px-[16px] py-[10px]'>
+              <Button variant='ghost' size='icon' className='h-[20px] w-[20px]'>
+                <IconSearch />
+              </Button>
               {/* 공통 인풋 적용 예정 */}
               <input
                 type='text'
                 className='w-full bg-transparent px-5'
                 onChange={handleSearchInput}
               />
-              <Button variant='ghost' size='icon' className='h-[20px] w-[20px]'>
-                <IconSearch />
-              </Button>
             </div>
           </div>
           <div className='mt-[4px] flex h-full flex-1 flex-grow flex-col overflow-y-auto px-[20px]'>
@@ -257,12 +253,14 @@ const StudentListPage = () => {
                     등록된 회원이 없습니다.
                   </p>
                 </div>
-                <Button
-                  variant='default'
-                  className='typography-title-3 flex h-[48px] w-[146px] items-center gap-x-[4px] px-[24px] py-[8px]'>
-                  <IconPlus fill='white' />
-                  회원 등록하기
-                </Button>
+                <AddStudentDialog>
+                  <Button
+                    variant='default'
+                    className='typography-title-3 flex h-[48px] w-[146px] items-center gap-x-[4px] px-[24px] py-[8px]'>
+                    <IconPlus fill='white' />
+                    회원 등록하기
+                  </Button>
+                </AddStudentDialog>
               </div>
             )}
             {STUDENT_LIST.length > 0 && processedStudentList.length === 0 && (

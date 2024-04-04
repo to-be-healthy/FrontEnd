@@ -25,7 +25,7 @@ export const Layout = ({ type, className, children, ...props }: LayoutProps) => 
   return (
     <div className={'flex h-screen items-center justify-center bg-[#383838]'}>
       <div
-        className={cn('flex h-full w-[390px] flex-col bg-gray-100', className)}
+        className={cn('flex h-full w-[var(--max-width)] flex-col bg-gray-100', className)}
         {...props}>
         {header}
         {contents}
