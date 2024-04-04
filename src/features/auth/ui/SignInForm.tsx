@@ -4,10 +4,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { authMutation, useAuthAction } from '@/entities/auth';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
-import { Button, TextInput } from '@/shared/ui';
-import { useToast } from '@/shared/ui/use-toast';
+import { Button, TextInput, useToast } from '@/shared/ui';
 
-import { LoginForm } from '../model';
+import { LoginForm } from '../model/type';
 
 export const SignInForm = ({ memberType }: { memberType: 'trainer' | 'student' }) => {
   const router = useRouter();

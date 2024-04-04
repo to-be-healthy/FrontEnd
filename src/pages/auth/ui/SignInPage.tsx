@@ -2,7 +2,7 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { SignInForm } from '@/features/auth/ui';
+import { SignInForm } from '@/features/auth';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import Logo from '@/shared/assets/images/logo.svg';
 import { Button, Layout, Separator } from '@/shared/ui';

@@ -1,4 +1,4 @@
-import { SelectGymPage } from '@/pages/member/ui';
+import { SelectGymPage } from '@/pages/member';
 
 const SelectGym = () => {
   return (

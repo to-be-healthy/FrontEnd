@@ -21,7 +21,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/shared/ui/select';
+} from '@/shared/ui/select'; //index에 추가하고 삭제
 import { cn } from '@/shared/utils';
 
 const GYM_LIST = [

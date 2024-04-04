@@ -9,9 +9,14 @@ import { GymList } from '@/entities/auth/model/types';
 import { memberMutation } from '@/entities/member';
 import { BaseError } from '@/shared/api';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
-import { Button, Layout } from '@/shared/ui';
-import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/shared/ui/input-otp';
-import { toast } from '@/shared/ui/use-toast';
+import {
+  Button,
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+  Layout,
+  useToast,
+} from '@/shared/ui';
 import { cn } from '@/shared/utils/tw-utils';
 
 export const SelectGym = () => {
@@ -22,6 +27,7 @@ export const SelectGym = () => {
   const router = useRouter();
   const auth = useAuthSelector(['accessToken', 'memberType', 'refreshToken', 'userId']);
   const { setUserInfo } = useAuthAction();
+  const { toast } = useToast();
 
   const { mutate } = memberMutation.useRegisterGymMutation();
   const { data: gymData } = useQuery<GymList[], BaseError>({

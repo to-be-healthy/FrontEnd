@@ -2,14 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { redirect, useRouter } from 'next/navigation';
-import { useSearchParams } from 'next/navigation';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
 
-import { SocialSignIn } from '@/features/auth/ui';
+import { SocialSignIn } from '@/features/auth';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import Logo from '@/shared/assets/images/logo.svg';
-import { Button, RollingBanner } from '@/shared/ui';
-import { Layout } from '@/shared/ui';
+import { Button, Layout, RollingBanner } from '@/shared/ui';
 
 const SelectMemberTypePage = () => {
   return (

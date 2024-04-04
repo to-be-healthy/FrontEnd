@@ -33,7 +33,7 @@ import {
   useToast,
 } from '@/shared/ui';
 
-import { signUpForm } from '../model';
+import { signUpForm } from '../model/type';
 
 const EXCLUDE_SPACE_REGEXP = /^\S*$/;
 const NAME_REGEXP = /^[가-힣a-zA-Z]+$/;
