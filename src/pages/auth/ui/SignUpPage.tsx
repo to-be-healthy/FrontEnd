@@ -5,7 +5,7 @@ import { Layout } from '@/shared/ui';
 
 const SignUpPage = () => {
   return (
-    <Layout>
+    <Layout className='bg-white'>
       <SignUpForm />
     </Layout>
   );

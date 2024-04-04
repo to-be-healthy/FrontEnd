@@ -5,7 +5,7 @@ import { Layout } from '@/shared/ui';
 
 export const SelectGymPage = () => {
   return (
-    <Layout>
+    <Layout className='bg-white'>
       <SelectGym />
     </Layout>
   );
