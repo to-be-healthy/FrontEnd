@@ -29,12 +29,12 @@ export { Separator } from './separator';
 export { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
 export {
   Toast,
+  type ToastActionElement,
   ToastDescription,
+  type ToastProps,
   ToastProvider,
   ToastTitle,
   ToastViewport,
-  type ToastActionElement,
-  type ToastProps,
 } from './toast/toast';
 export { Toaster } from './toast/toaster';
 export { useToast } from './toast/use-toast';

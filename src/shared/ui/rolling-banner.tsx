@@ -1,10 +1,10 @@
-interface Props {
-  children: React.ReactNode;
-}
+import { HTMLAttributes } from 'react';
 
-const RollingBanner = ({ children }: Props) => {
+import { cn } from '../utils';
+
+const RollingBanner = ({ className, children }: HTMLAttributes<HTMLDivElement>) => {
   return (
-    <div className='relative w-full overflow-hidden'>
+    <div className={cn('relative w-full overflow-hidden', className)}>
       <div className='absolute flex w-fit animate-rolling flex-nowrap'>{children}</div>
       <div className='flex h-full w-fit animate-rolling_clone flex-nowrap'>
         {children}
