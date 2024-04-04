@@ -43,7 +43,7 @@ interface HeaderProps {
 const Header = ({ children, className }: HeaderProps) => (
   <header
     className={cn(
-      'flex h-14 flex-none items-center justify-between px-[20px] py-[16px]',
+      'flex h-[84px] w-full flex-none items-center justify-between p-[20px]',
       className
     )}>
     {children}
@@ -56,7 +56,9 @@ interface ContentsProps {
   className?: string;
 }
 const Contents = ({ children, className }: ContentsProps) => (
-  <main className={cn('h-full flex-grow overflow-y-auto', className)}>{children}</main>
+  <main className={cn('h-full w-full flex-grow overflow-y-auto', className)}>
+    {children}
+  </main>
 );
 Contents.displayName = 'Contents';
 

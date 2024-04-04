@@ -1,4 +1,4 @@
-import { OnboardingPage } from '@/pages/auth/ui';
+import { OnboardingPage } from '@/pages/auth';
 
 export default function Page() {
   return <OnboardingPage />;

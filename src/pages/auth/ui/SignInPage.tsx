@@ -2,11 +2,10 @@
 
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { SignInForm } from '@/features/auth/ui';
+import { SignInForm } from '@/features/auth';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import Logo from '@/shared/assets/images/logo.svg';
 import { Button, Layout, Separator } from '@/shared/ui';
-// TODO) input-shadcn -> 인풋 컴포넌트에 적용 후 파일 제거
 
 export const SignInPage = () => {
   const params = useSearchParams();
@@ -24,23 +23,25 @@ export const SignInPage = () => {
       <Layout.Header>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
         <p className='typography-heading-4 flex h-full items-center'>{title}</p>
-        <Button variant='ghost' onClick={() => router.push('/')}>
+        <Button variant='ghost' className='p-0' onClick={() => router.push('/')}>
           <IconClose />
         </Button>
       </Layout.Header>
       <Layout.Contents>
-        <div className='flex flex-col items-center px-5'>
+        <div className='flex flex-col items-center px-[20px]'>
           <div className='mb-[35px] mt-[18px]'>
             <Logo />
           </div>
           <SignInForm memberType={memberType} />
-          <ul className='mt-9 flex gap-x-3'>
+          <ul className='mt-9 flex items-center gap-x-5'>
             <li
               className='typography-body-3 cursor-pointer text-gray-500'
               onClick={() => router.push('/find/pw')}>
               비밀번호 찾기
             </li>
-            <Separator orientation='vertical' />
+            <li>
+              <Separator className='h-[12px]' orientation='vertical' />
+            </li>
             <li
               className='typography-body-3 cursor-pointer text-gray-500'
               onClick={() => router.push('/find/id')}>
