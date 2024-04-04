@@ -224,3 +224,11 @@
     @apply flex items-center justify-center;
   }
 }
+
+/* input-otp width, clip-path 덮어쓰기 */
+@layer utilities {
+  .input-otp-override {
+    width: 100% !important;
+    clip-path: none !important;
+  }
+}
