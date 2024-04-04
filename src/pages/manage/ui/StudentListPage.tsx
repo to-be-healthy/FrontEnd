@@ -28,9 +28,17 @@ import { cn } from '@/shared/utils';
 type Student = memberTypes.RegisteredStudent;
 
 const sortCondition = {
-  '기본 순': (a: Student, b: Student) => a.memberId - b.memberId,
-  '랭킹 순': (a: Student, b: Student) => a.ranking - b.ranking,
+  DEFAULT: {
+    label: '기본 순',
+    condition: (a: Student, b: Student) => a.memberId - b.memberId,
+  },
+  RANKING: {
+    label: '랭킹 순',
+    condition: (a: Student, b: Student) => a.ranking - b.ranking,
+  },
 };
+
+type SortCondition = (typeof sortCondition)[keyof typeof sortCondition];
 
 const StudentListController = (students: Student[]) => ({
   search: (keyword: string) => {
@@ -58,7 +66,7 @@ const medalMapper = (ranking: number) => {
 
 const StudentListPage = () => {
   const router = useRouter();
-  const [sort, setSort] = useState<keyof typeof sortCondition>('랭킹 순');
+  const [sort, setSort] = useState<SortCondition>(sortCondition.DEFAULT);
   const [searchQuery, setSearchQuery] = useState('');
 
   const { data: studentList, isFetching } = memberQuery.useRegisteredStudentsList();
@@ -67,8 +75,8 @@ const StudentListPage = () => {
     setSearchQuery(e.target.value);
   };
 
-  const processedStudentList = StudentListController(studentList)
-    .sort(sortCondition[sort])
+  const processedStudentList = StudentListController(studentList ?? [])
+    .sort(sort.condition)
     .search(searchQuery)
     .get();
 
@@ -114,20 +122,20 @@ const StudentListPage = () => {
                       variant='ghost'
                       className='typography-body-3 flex gap-x-[4px]'>
                       <IconArrowDownUp />
-                      {sort}
+                      {sort.label}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className='absolute -right-9 top-1 flex w-[96px] flex-col'>
                     <DropdownMenuGroup className='flex flex-col'>
-                      {Object.keys(sortCondition).map((item) => (
+                      {Object.values(sortCondition).map((item) => (
                         <DropdownMenuItem
-                          key={item}
+                          key={item.label}
                           className={cn(
                             'typography-title-3 px-[16px] py-[12px] text-gray-500',
-                            item === sort && 'text-black'
+                            item.label === sort.label && 'text-black'
                           )}
-                          onClick={() => setSort(item as keyof typeof sortCondition)}>
-                          {item}
+                          onClick={() => setSort(item)}>
+                          {item.label}
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuGroup>
