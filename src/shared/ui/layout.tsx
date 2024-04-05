@@ -1,16 +1,15 @@
-import { Children, isValidElement, PropsWithChildren, ReactNode } from 'react';
+import { Children, HTMLAttributes, isValidElement, ReactNode } from 'react';
 
 import { Toaster } from '@/shared/ui';
 import { StudentNavigation, TrainerNavigation } from '@/shared/ui';
 
 import { cn } from '../utils';
 
-interface LayoutProps extends PropsWithChildren {
+interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   type?: 'student' | 'trainer';
-  className?: string;
 }
 
-export const Layout = ({ type, className, children }: LayoutProps) => {
+export const Layout = ({ type, className, children, ...props }: LayoutProps) => {
   let header: ReactNode;
   const contents: ReactNode[] = [];
 
@@ -25,7 +24,9 @@ export const Layout = ({ type, className, children }: LayoutProps) => {
 
   return (
     <div className={'flex h-screen items-center justify-center bg-[#383838]'}>
-      <div className={cn('flex h-full w-[390px] flex-col bg-gray-100', className)}>
+      <div
+        className={cn('flex h-full w-[var(--max-width)] flex-col bg-gray-100', className)}
+        {...props}>
         {header}
         {contents}
         <Toaster />
@@ -36,27 +37,20 @@ export const Layout = ({ type, className, children }: LayoutProps) => {
   );
 };
 
-interface HeaderProps {
-  children: ReactNode;
-  className?: string;
-}
-const Header = ({ children, className }: HeaderProps) => (
+const Header = ({ children, className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <header
     className={cn(
       'flex h-[84px] w-full flex-none items-center justify-between p-[20px]',
       className
-    )}>
+    )}
+    {...props}>
     {children}
   </header>
 );
 Header.displayName = 'Header';
 
-interface ContentsProps {
-  children: ReactNode;
-  className?: string;
-}
-const Contents = ({ children, className }: ContentsProps) => (
-  <main className={cn('h-full w-full flex-grow overflow-y-auto', className)}>
+const Contents = ({ children, className, ...props }: HTMLAttributes<HTMLDivElement>) => (
+  <main className={cn('h-full w-full flex-grow overflow-y-auto', className)} {...props}>
     {children}
   </main>
 );

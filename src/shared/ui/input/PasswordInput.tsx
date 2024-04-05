@@ -1,6 +1,6 @@
 'use client';
 
-import { FormEvent, forwardRef, useState } from 'react';
+import { FormEvent, forwardRef, InputHTMLAttributes, useState } from 'react';
 
 import HidePasswordIcon from '@/shared/assets/images/icon_hide_password.svg';
 import ShowPasswordIcon from '@/shared/assets/images/icon_show_password.svg';
@@ -8,14 +8,13 @@ import TextDeleteIcon from '@/shared/assets/images/icon_text_delete.svg';
 import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
   hasClear?: boolean;
-  className?: string;
   clearValueButton?: (e: FormEvent<HTMLButtonElement>) => void;
 }
 
-export const PasswordInput = forwardRef<HTMLInputElement, InputProps>(
-  ({ className, value, clearValueButton, ...props }: InputProps, inputRef) => {
+export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
+  ({ className, value, clearValueButton, ...props }, inputRef) => {
     const [isShowPassword, setIsShowPassword] = useState(true);
 
     const handlePasswordIconClick = (e: FormEvent<HTMLButtonElement>) => {

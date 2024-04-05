@@ -50,6 +50,8 @@
     --gray-800: #2e3134;
 
     --point-color: #ff4668;
+
+    --max-width: 390px;
   }
 
   .dark {

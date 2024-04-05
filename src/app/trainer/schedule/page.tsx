@@ -1,6 +1,6 @@
 'use client';
 
-import { TrainerSchedulePage } from '@/pages/schedule/ui';
+import { TrainerSchedulePage } from '@/pages/schedule';
 
 const Page = () => {
   return <TrainerSchedulePage />;

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { HTMLAttributes } from 'react';
 
 import IconAccountFilled from '@/shared/assets/images/nav_account_filled.svg';
 import IconAccountOutlined from '@/shared/assets/images/nav_account_outlined.svg';
@@ -11,10 +12,10 @@ import IconHomeFilled from '@/shared/assets/images/nav_home_filled.svg';
 import IconHomeOutlined from '@/shared/assets/images/nav_home_outlined.svg';
 import { cn } from '@/shared/utils/tw-utils';
 
-const TrainerNavigation = () => {
+const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
   const pathname = usePathname();
   return (
-    <nav className='bg-white'>
+    <nav className={cn('bg-white', className)} {...props}>
       <ul className='flex items-center justify-between px-[36px] py-[18px]'>
         <li>
           <Link
@@ -71,10 +72,10 @@ const TrainerNavigation = () => {
   );
 };
 
-const StudentNavigation = () => {
+const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
   const pathname = usePathname();
   return (
-    <nav className='bg-white'>
+    <nav className={cn('bg-white', className)} {...props}>
       <ul className='flex items-center justify-between px-[36px] py-[18px]'>
         <li>
           <Link
