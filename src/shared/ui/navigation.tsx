@@ -79,13 +79,13 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
       <ul className='flex items-center justify-between px-[36px] py-[18px]'>
         <li>
           <Link
-            href='/trainer'
+            href='/student'
             className='flex flex-col items-center justify-between gap-y-[6px]'>
-            {pathname === '/trainer' ? <IconHomeFilled /> : <IconHomeOutlined />}
+            {pathname === '/student' ? <IconHomeFilled /> : <IconHomeOutlined />}
             <span
               className={cn(
                 'text-[10px] font-semibold',
-                pathname === '/trainer' ? 'text-black' : 'text-gray-700'
+                pathname === '/student' ? 'text-black' : 'text-gray-700'
               )}>
               홈
             </span>
@@ -93,9 +93,27 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
         </li>
         <li>
           <Link
-            href='/trainer/mypage'
+            href='/student/schedule'
             className='flex flex-col items-center justify-between gap-y-[6px]'>
-            {pathname === '/trainer/mypage' ? (
+            {pathname === '/student/schedule' ? (
+              <IconCalendarFilled />
+            ) : (
+              <IconCalendarOutlined />
+            )}
+            <span
+              className={cn(
+                'text-[10px] font-semibold',
+                pathname === '/student/schedule' ? 'text-black' : 'text-gray-700'
+              )}>
+              수업예약
+            </span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href='/student/mypage'
+            className='flex flex-col items-center justify-between gap-y-[6px]'>
+            {pathname === '/student/mypage' ? (
               <IconAccountFilled />
             ) : (
               <IconAccountOutlined />
@@ -103,7 +121,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             <span
               className={cn(
                 'text-[10px] font-semibold',
-                pathname === '/trainer/mypage' ? 'text-black' : 'text-gray-700'
+                pathname === '/student/mypage' ? 'text-black' : 'text-gray-700'
               )}>
               마이
             </span>
