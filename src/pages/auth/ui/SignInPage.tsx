@@ -30,7 +30,7 @@ export const SignInPage = () => {
       <Layout.Contents>
         <div className='flex flex-col items-center px-[20px]'>
           <div className='mb-[35px] mt-[18px]'>
-            <Logo />
+            <Logo width='88px' height='88px' />
           </div>
           <SignInForm memberType={memberType} />
           <ul className='mt-9 flex items-center gap-x-5'>
