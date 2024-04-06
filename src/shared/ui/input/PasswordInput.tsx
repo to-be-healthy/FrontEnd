@@ -44,6 +44,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           <TextDeleteIcon />
         </Button>
         <Button
+          type='button'
           onClick={handlePasswordIconClick}
           variant='ghost'
           className='absolute right-[20px] p-0'>
