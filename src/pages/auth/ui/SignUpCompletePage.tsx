@@ -10,7 +10,7 @@ import { Button, Layout } from '@/shared/ui';
 export const SignUpCompletePage = () => {
   const params = useSearchParams();
   const type = params?.get('type');
-  const { name } = signUpStore();
+  const { name } = signUpStore(); //Todo : context api 사용해서 수정
 
   return (
     <Layout className='bg-white'>

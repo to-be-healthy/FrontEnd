@@ -12,7 +12,7 @@ export {
 } from './alert-dialog';
 export { Button, buttonVariants } from './button';
 export { Card, CardContent, CardFooter, CardHeader } from './card';
-export { GenericForm } from './GenericForm';
+export { GenericForm } from './generic-form';
 export { EmailInput } from './input/EmailInput';
 export {
   InputOTP,

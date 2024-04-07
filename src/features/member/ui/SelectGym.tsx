@@ -115,7 +115,7 @@ export const SelectGym = () => {
   return (
     <section className='h-full'>
       {isPending ? (
-        <p>로딩중...</p>
+        <p>로딩중...</p> //Todo :추후 아이콘을 넣어주면 좋을것 같아요
       ) : (
         <>
           {step === 1 && (
@@ -190,30 +190,15 @@ export const SelectGym = () => {
                       value={authValue}
                       onChange={(value) => setAuthValue(value)}>
                       <InputOTPGroup>
-                        <InputOTPSlot
-                          index={0}
-                          className='typography-heading-1 bg-gray-100'
-                        />
-                        <InputOTPSlot
-                          index={1}
-                          className='typography-heading-1 bg-gray-100'
-                        />
-                        <InputOTPSlot
-                          index={2}
-                          className='typography-heading-1 bg-gray-100'
-                        />
-                        <InputOTPSlot
-                          index={3}
-                          className='typography-heading-1 bg-gray-100'
-                        />
-                        <InputOTPSlot
-                          index={4}
-                          className='typography-heading-1 bg-gray-100'
-                        />
-                        <InputOTPSlot
-                          index={5}
-                          className='typography-heading-1 bg-gray-100'
-                        />
+                        {Array.from({ length: 6 }, (_, i) => i).map((_, index) => {
+                          return (
+                            <InputOTPSlot
+                              key={index}
+                              index={index}
+                              className='typography-heading-1 bg-gray-100'
+                            />
+                          );
+                        })}
                       </InputOTPGroup>
                     </InputOTP>
                   </div>

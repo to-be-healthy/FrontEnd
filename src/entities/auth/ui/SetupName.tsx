@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { NAME_REGEXP, SignUpFormType } from '@/entities/auth';
+import { regexp, SignUpFormType } from '@/entities/auth';
 import { TextInput } from '@/shared/ui';
 
 export const SetupName = () => {
@@ -38,7 +38,7 @@ export const SetupName = () => {
             message: '이름은 최소 2자 이상 입력해주세요.',
           },
           pattern: {
-            value: NAME_REGEXP,
+            value: regexp.NAME_REGEXP,
             message: '한글 또는 영문만 입력해주세요',
           },
         })}

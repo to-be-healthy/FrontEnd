@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { PASSWORD_REGEXP, SignUpFormType } from '@/entities/auth';
+import { regexp, SignUpFormType } from '@/entities/auth';
 import { PasswordInput } from '@/shared/ui';
 
 export const SetupPassword = () => {
@@ -39,7 +39,7 @@ export const SetupPassword = () => {
               message: '비밀번호는 8글자 이상이여야 합니다',
             },
             pattern: {
-              value: PASSWORD_REGEXP,
+              value: regexp.PASSWORD_REGEXP,
               message: '영문+숫자 조합 8자리 이상 입력해주세요.',
             },
           })}

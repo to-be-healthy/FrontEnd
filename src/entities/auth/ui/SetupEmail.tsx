@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { EMAIL_REGEXP, SignUpFormType } from '@/entities/auth';
+import { regexp, SignUpFormType } from '@/entities/auth';
 import { EmailInput } from '@/shared/ui';
 
 interface SetupEmailProps {
@@ -39,7 +39,7 @@ export const SetupEmail = ({ isEmailVerified }: SetupEmailProps) => {
         clearValueButton={() => setValue('email', '')}
         {...register('email', {
           pattern: {
-            value: EMAIL_REGEXP,
+            value: regexp.EMAIL_REGEXP,
             message: '이메일 형식이 아닙니다',
           },
         })}
