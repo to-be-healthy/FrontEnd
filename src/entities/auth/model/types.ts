@@ -29,7 +29,7 @@ interface SignUpRequest {
   passwordConfirm: string;
   name: string;
   memberType: string;
-  trainerId: string;
+  uuid?: string;
 }
 
 interface SignUpResponse {
@@ -58,12 +58,23 @@ interface CheckVerificationCodeRequest {
   emailKey: string;
 }
 
+interface SignUpFormType {
+  userId: string;
+  name: string;
+  password: string;
+  passwordConfirm: string;
+  email: string;
+  emailVerifiedCode: string;
+  signUp: string;
+}
+
 export type {
   CheckVerificationCodeRequest,
   GymList,
   Provider,
   SignInRequest,
   SignInResponse,
+  SignUpFormType,
   SignUpRequest,
   SignUpResponse,
   SocialSignInRequest,

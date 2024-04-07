@@ -13,19 +13,19 @@ const SelectMemberTypePage = () => {
   return (
     <Layout className='bg-white'>
       <Layout.Contents>
-        <div className='flex h-full flex-col items-center justify-around px-5'>
+        <div className='flex h-full flex-col items-center justify-around px-7'>
           <div className='flex flex-col items-center gap-y-9'>
-            <Logo />
+            <Logo width='88px' height='88px' />
             <h1 className='typography-heading-1 whitespace-pre-wrap break-keep text-center'>{`안녕하세요!\n건강해짐입니다!`}</h1>
           </div>
           <div className='typography-heading-4 flex w-full flex-col gap-y-3'>
             <Button
-              className='h-20 bg-gray-100 p-0 px-[42px] py-[10px] font-bold text-black'
+              className='typography-heading-4 h-20 bg-gray-100 p-0 px-[42px] py-[10px] text-black'
               asChild>
               <Link href='?type=trainer'>트레이너로 시작</Link>
             </Button>
             <Button
-              className='h-20 bg-gray-100 p-0 px-[42px] py-[10px] font-bold text-black'
+              className='typography-heading-4 h-20 bg-gray-100 p-0 px-[42px] py-[10px] text-black'
               asChild>
               <Link href='?type=student'>회원으로 시작</Link>
             </Button>
@@ -46,12 +46,16 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
   return (
     <Layout className='bg-white'>
       <Layout.Header>
-        <Button variant='ghost' size='icon' onClick={() => router.back()}>
+        <Button
+          variant='ghost'
+          size='icon'
+          className='w-auto'
+          onClick={() => router.back()}>
           <IconBack />
         </Button>
       </Layout.Header>
       <Layout.Contents>
-        <div className={'mt-[60px] flex flex-col items-center gap-y-9'}>
+        <div className={'mt-[48px] flex flex-col items-center gap-y-9'}>
           <h1 className='typography-heading-1 whitespace-pre-wrap break-keep text-center'>
             {`차별화된 PT 서비스를\n경험해보세요!`}
           </h1>
@@ -94,7 +98,7 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
             </div>
           </RollingBanner>
         </div>
-        <div className={'flex flex-col items-center justify-center px-5 py-12'}>
+        <div className={'flex flex-col items-center justify-center px-7 py-12'}>
           <SocialSignIn memberType={memberType} />
           <Button
             asChild

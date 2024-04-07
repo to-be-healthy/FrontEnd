@@ -26,6 +26,7 @@ export const EmailInput = forwardRef<HTMLInputElement, EmailInputProps>(
         />
         {!isEmailVerified && (
           <Button
+            type='button'
             className={cn(
               'absolute right-[16px] top-[50%] hidden h-auto w-auto translate-y-[-50%] bg-transparent p-0',
               {
