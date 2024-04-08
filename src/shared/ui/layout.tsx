@@ -12,11 +12,14 @@ interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
 export const Layout = ({ type, className, children, ...props }: LayoutProps) => {
   let header: ReactNode;
   const contents: ReactNode[] = [];
+  let footer: ReactNode;
 
   Children.forEach(children, (child) => {
     if (!isValidElement(child)) return;
     if (child.type === Header) {
       header = child;
+    } else if (child.type === Footer) {
+      footer = child;
     } else {
       contents.push(child);
     }
@@ -32,6 +35,7 @@ export const Layout = ({ type, className, children, ...props }: LayoutProps) => 
         <Toaster />
         {type === 'trainer' && <TrainerNavigation />}
         {type === 'student' && <StudentNavigation />}
+        {type === undefined && footer}
       </div>
     </div>
   );
@@ -56,5 +60,12 @@ const Contents = ({ children, className, ...props }: HTMLAttributes<HTMLDivEleme
 );
 Contents.displayName = 'Contents';
 
+const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLDivElement>) => (
+  <footer className={cn('w-full p-[20px]', className)} {...props}>
+    {children}
+  </footer>
+);
+
 Layout.Header = Header;
 Layout.Contents = Contents;
+Layout.Footer = Footer;
