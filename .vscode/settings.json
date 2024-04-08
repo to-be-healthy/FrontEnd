@@ -4,8 +4,8 @@
     "source.fixAll.stylelint": "explicit"
   },
   "stylelint.enable": true,
-  "stylelint.validate": ["css", "scss", "typescript"]
-  // "tailwindCSS.experimental.classRegex": [
-  //   ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
-  // ]
+  "stylelint.validate": ["css", "scss", "typescript"],
+  "tailwindCSS.experimental.classRegex": [
+    ["clsx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ]
 }
