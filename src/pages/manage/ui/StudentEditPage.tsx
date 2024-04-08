@@ -33,7 +33,6 @@ const StudentEditPage = ({ memberId }: Props) => {
         <div className='typography-title-3 flex gap-x-[8px]'>
           <div className='flex flex-col gap-y-[8px]'>
             <p>이름</p>
-            {/* TextInput typography 오버라이드 안됨 */}
             <TextInput className='typography-title-3 px-[16px] py-[11.5px]' />
           </div>
           <div className='flex flex-col gap-y-[8px]'>

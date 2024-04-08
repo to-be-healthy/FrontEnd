@@ -129,6 +129,134 @@ module.exports = {
         md: '0px 4px 12px 0px rgba(0, 0, 0, 0.16)',
         lg: '0px 4px 8px 0px rgba(0, 0, 0, 0.16)',
       },
+      fontSize: {
+        'heading-1': [
+          '24px',
+          {
+            fontWeight: '700',
+            lineHeight: '130%',
+          },
+        ],
+        'heading-2': [
+          '22px',
+          {
+            fontWeight: '700',
+            lineHeight: '130%',
+          },
+        ],
+        'heading-3': [
+          '20px',
+          {
+            fontWeight: '700',
+            lineHeight: '130%',
+          },
+        ],
+        'heading-4': [
+          '18px',
+          {
+            fontWeight: '700',
+            lineHeight: '130%',
+          },
+        ],
+        'heading-4-bold': [
+          '18px',
+          {
+            fontWeight: '700',
+            lineHeight: '130%',
+          },
+        ],
+        'heading-4-semibold': [
+          '18px',
+          {
+            fontWeight: '600',
+            lineHeight: '130%',
+          },
+        ],
+        'heading-5': [
+          '13px',
+          {
+            fontWeight: '600',
+            lineHeight: '150%',
+          },
+        ],
+        'title-1': [
+          '16px',
+          {
+            fontWeight: '700',
+            lineHeight: '140%',
+          },
+        ],
+        'title-1-bold': [
+          '16px',
+          {
+            fontWeight: '700',
+            lineHeight: '140%',
+          },
+        ],
+        'title-1-semibold': [
+          '16px',
+          {
+            fontWeight: '600',
+            lineHeight: '140%',
+          },
+        ],
+        'title-2': [
+          '15px',
+          {
+            fontWeight: '600',
+            lineHeight: '140%',
+          },
+        ],
+        'title-3': [
+          '14px',
+          {
+            fontWeight: '600',
+            lineHeight: '150%',
+          },
+        ],
+        'body-1': [
+          '16px',
+          {
+            fontWeight: '500',
+            lineHeight: '150%',
+          },
+        ],
+        'body-2': [
+          '14px',
+          {
+            fontWeight: '500',
+            lineHeight: '150%',
+          },
+        ],
+        'body-3': [
+          '13px',
+          {
+            fontWeight: '500',
+            lineHeight: '150%',
+          },
+        ],
+        'body-4': [
+          '12px',
+          {
+            fontWeight: '500',
+            lineHeight: '150%',
+          },
+        ],
+        'body-4': [
+          '12px',
+          {
+            fontWeight: '500',
+            lineHeight: '150%',
+          },
+        ],
+        'body-4': [
+          '12px',
+          {
+            fontWeight: '400',
+            lineHeight: '150%',
+          },
+        ],
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
