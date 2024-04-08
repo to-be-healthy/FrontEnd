@@ -24,6 +24,7 @@ export { PasswordInput } from './input/PasswordInput';
 export { TextInput } from './input/TextInput';
 export { Layout } from './layout';
 export { StudentNavigation, TrainerNavigation } from './navigation';
+export { Progress } from './progress';
 export { RollingBanner } from './rolling-banner';
 export { ScrollArea, ScrollBar } from './scroll-area';
 export { Separator } from './separator';

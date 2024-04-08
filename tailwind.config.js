@@ -124,6 +124,11 @@ module.exports = {
       fontFamily: {
         pretendard: ['Pretendard'],
       },
+      boxShadow: {
+        sm: '0px 4px 12px 0px rgba(0, 0, 0, 0.08)',
+        md: '0px 4px 12px 0px rgba(0, 0, 0, 0.16)',
+        lg: '0px 4px 8px 0px rgba(0, 0, 0, 0.16)',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],

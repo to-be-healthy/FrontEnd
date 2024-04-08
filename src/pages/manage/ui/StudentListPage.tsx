@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -187,35 +188,35 @@ const StudentListPage = () => {
                     const expirationMessage =
                       differenceInDays < 0 ? '만료' : `${differenceInDays}일 후 만료`;
                     return (
-                      <div
-                        key={item.memberId}
-                        className='flex justify-between rounded-lg bg-white px-[16px] py-[20px]'>
-                        <div className='flex items-center gap-x-[16px]'>
-                          <div className='relative'>
-                            {medal}
-                            <span className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-white'>
-                              {item.ranking}
-                            </span>
+                      <Link key={item.memberId} href={`/trainer/manage/${item.memberId}`}>
+                        <div className='flex justify-between rounded-lg bg-white px-[16px] py-[20px]'>
+                          <div className='flex items-center gap-x-[16px]'>
+                            <div className='relative'>
+                              {medal}
+                              <span className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-white'>
+                                {item.ranking}
+                              </span>
+                            </div>
+                            <div className='flex flex-col gap-y-[4px]'>
+                              <p className='typography-title-1 font-bold'>{item.name}</p>
+                              <span className='typography-body-4 text-gray-500'>
+                                {expirationMessage}
+                              </span>
+                            </div>
                           </div>
-                          <div className='flex flex-col gap-y-[4px]'>
-                            <p className='typography-title-1 font-bold'>{item.name}</p>
-                            <span className='typography-body-4 text-gray-500'>
-                              {expirationMessage}
+                          <div className='flex items-center'>
+                            <span className='typography-body-3 mr-[2px] text-primary-500'>
+                              잔여
+                            </span>
+                            <span className='typography-title-3 text-primary-500'>
+                              {item.remainLessonCnt}
+                            </span>
+                            <span className='typography-body-2 text-gray-400'>
+                              /{item.lessonCnt}
                             </span>
                           </div>
                         </div>
-                        <div className='flex items-center'>
-                          <span className='typography-body-3 mr-[2px] text-primary-500'>
-                            잔여
-                          </span>
-                          <span className='typography-title-3 text-primary-500'>
-                            {item.remainLessonCnt}
-                          </span>
-                          <span className='typography-body-2 text-gray-400'>
-                            /{item.lessonCnt}
-                          </span>
-                        </div>
-                      </div>
+                      </Link>
                     );
                   })}
                 </div>
