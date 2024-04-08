@@ -14,6 +14,7 @@ export { Button, buttonVariants } from './button';
 export { Card, CardContent, CardFooter, CardHeader } from './card';
 export { GenericForm } from './generic-form';
 export { EmailInput } from './input/EmailInput';
+export { Input } from './input/Input';
 export {
   InputOTP,
   InputOTPGroup,
