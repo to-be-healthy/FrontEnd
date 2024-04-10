@@ -14,6 +14,7 @@ export { Button, buttonVariants } from './button';
 export { Card, CardContent, CardFooter, CardHeader } from './card';
 export { GenericForm } from './generic-form';
 export { EmailInput } from './input/EmailInput';
+export { Input } from './input/Input';
 export {
   InputOTP,
   InputOTPGroup,
@@ -24,6 +25,7 @@ export { PasswordInput } from './input/PasswordInput';
 export { TextInput } from './input/TextInput';
 export { Layout } from './layout';
 export { StudentNavigation, TrainerNavigation } from './navigation';
+export { Progress } from './progress';
 export { RollingBanner } from './rolling-banner';
 export { ScrollArea, ScrollBar } from './scroll-area';
 export { Separator } from './separator';

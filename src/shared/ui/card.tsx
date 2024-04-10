@@ -9,8 +9,7 @@ const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
       ref={ref}
       className={cn(
         'h-35 relative flex w-40 flex-col gap-y-2 rounded-[12px] bg-white p-[16px]',
-        'text-[17px]/[24px] font-bold', // TODO) typography-heading-4
-        '', // TODO) box-shadow
+        'text-[17px]/[24px] font-bold',
         className
       )}
       {...props}
@@ -24,10 +23,7 @@ const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, forwardedRef) => (
     <div
       ref={forwardedRef}
-      className={cn(
-        'text-[17px]/[24px] font-bold', // TODO) typography-heading-4
-        className
-      )}
+      className={cn('text-[17px]/[24px] font-bold', className)}
       {...props}
     />
   )
@@ -41,7 +37,7 @@ const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
       ref={forwardedRef}
       className={cn(
         'whitespace-pre-wrap font-normal text-gray-500',
-        'text-[12px]/[20px] font-normal', // TODO) typography-body-4
+        'text-[12px]/[20px] font-normal',
         className
       )}
       {...props}
