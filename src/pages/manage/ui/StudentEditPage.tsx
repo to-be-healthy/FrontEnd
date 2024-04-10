@@ -67,7 +67,7 @@ const StudentEditPage = ({ memberId }: Props) => {
           회원 삭제하기
         </Button>
       </Layout.Contents>
-      <Layout.Footer>
+      <Layout.BottomArea>
         <Button
           variant='default'
           size='full'
@@ -75,7 +75,7 @@ const StudentEditPage = ({ memberId }: Props) => {
           onClick={handleEditStudentDetail}>
           수정 완료
         </Button>
-      </Layout.Footer>
+      </Layout.BottomArea>
     </Layout>
   );
 };

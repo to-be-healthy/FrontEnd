@@ -217,35 +217,21 @@ module.exports = {
         'body-1': [
           '16px',
           {
-            fontWeight: '500',
+            fontWeight: '400',
             lineHeight: '150%',
           },
         ],
         'body-2': [
           '14px',
           {
-            fontWeight: '500',
+            fontWeight: '400',
             lineHeight: '150%',
           },
         ],
         'body-3': [
           '13px',
           {
-            fontWeight: '500',
-            lineHeight: '150%',
-          },
-        ],
-        'body-4': [
-          '12px',
-          {
-            fontWeight: '500',
-            lineHeight: '150%',
-          },
-        ],
-        'body-4': [
-          '12px',
-          {
-            fontWeight: '500',
+            fontWeight: '400',
             lineHeight: '150%',
           },
         ],
@@ -253,6 +239,20 @@ module.exports = {
           '12px',
           {
             fontWeight: '400',
+            lineHeight: '150%',
+          },
+        ],
+        'body-4-regular': [
+          '12px',
+          {
+            fontWeight: '400',
+            lineHeight: '150%',
+          },
+        ],
+        'body-4-medium': [
+          '12px',
+          {
+            fontWeight: '500',
             lineHeight: '150%',
           },
         ],

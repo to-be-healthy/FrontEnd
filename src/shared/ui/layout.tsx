@@ -18,7 +18,7 @@ export const Layout = ({ type, className, children, ...props }: LayoutProps) => 
     if (!isValidElement(child)) return;
     if (child.type === Header) {
       header = child;
-    } else if (child.type === Footer) {
+    } else if (child.type === BottomArea) {
       footer = child;
     } else {
       contents.push(child);
@@ -32,10 +32,10 @@ export const Layout = ({ type, className, children, ...props }: LayoutProps) => 
         {...props}>
         {header}
         {contents}
-        <Toaster />
         {type === 'trainer' && <TrainerNavigation />}
         {type === 'student' && <StudentNavigation />}
         {type === undefined && footer}
+        <Toaster />
       </div>
     </div>
   );
@@ -60,7 +60,11 @@ const Contents = ({ children, className, ...props }: HTMLAttributes<HTMLDivEleme
 );
 Contents.displayName = 'Contents';
 
-const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLDivElement>) => (
+const BottomArea = ({
+  children,
+  className,
+  ...props
+}: HTMLAttributes<HTMLDivElement>) => (
   <footer className={cn('w-full p-[20px]', className)} {...props}>
     {children}
   </footer>
@@ -68,4 +72,4 @@ const Footer = ({ children, className, ...props }: HTMLAttributes<HTMLDivElement
 
 Layout.Header = Header;
 Layout.Contents = Contents;
-Layout.Footer = Footer;
+Layout.BottomArea = BottomArea;

@@ -80,7 +80,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
             <p className='typography-heading-5'>수업 내역</p>
           </Button>
         </div>
-        <Card className='mb-[16px] w-full gap-y-[36px] bg-primary-500 text-white'>
+        <Card className='mb-[16px] w-full gap-y-[36px] bg-primary-500 text-white shadow-sm'>
           <CardHeader className='flex justify-between'>
             <p className='typography-heading-4 font-semibold'>
               잔여 <span className='font-bold'>{data.course.remain}</span>회
@@ -95,7 +95,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
             <Progress value={50} />
           </CardContent>
         </Card>
-        <Card className='mb-[16px] w-full gap-y-[24px] px-[16px] py-[20px]'>
+        <Card className='mb-[16px] w-full gap-y-[24px] px-[16px] py-[20px] shadow-sm'>
           <CardHeader className='flex items-center justify-between text-gray-800'>
             <h4 className='typography-title-2 text-gray-800'>다음 PT예정일</h4>
             <Link href='#'>
@@ -109,7 +109,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
             </p>
           </CardContent>
         </Card>
-        <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px]'>
+        <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
           <CardHeader className='flex items-center justify-between text-gray-800'>
             <h4 className='typography-title-2 text-gray-800'>오늘 식단</h4>
             <Link href='#'>
@@ -124,7 +124,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
             <div className='h-[95px] w-[95px] bg-gray-300'></div>
           </CardContent>
         </Card>
-        <Card className='w-full gap-y-[12px] px-[16px] py-[20px]'>
+        <Card className='w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
           <CardHeader>
             <h4 className='typography-title-2 text-gray-800'>운동 기록</h4>
           </CardHeader>

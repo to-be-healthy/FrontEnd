@@ -8,7 +8,7 @@ const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     <div
       ref={ref}
       className={cn(
-        'h-35 relative flex w-40 flex-col gap-y-2 rounded-[12px] bg-white p-[16px] shadow-sm',
+        'h-35 relative flex w-40 flex-col gap-y-2 rounded-[12px] bg-white p-[16px]',
         'text-[17px]/[24px] font-bold',
         className
       )}
