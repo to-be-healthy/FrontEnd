@@ -1,4 +1,10 @@
-export interface RegisteredStudent {
+interface RegisterGymRequest {
+  memberType: string;
+  gymId: number;
+  joinCode?: number;
+}
+
+interface RegisteredStudent {
   memberId: number;
   name: string;
   userId: string;
@@ -9,4 +15,22 @@ export interface RegisteredStudent {
   gymEndDt: string;
 }
 
-export type RegisteredStudentsListResponse = RegisteredStudent[] | null;
+interface InviteRequest {
+  name: string;
+  lessonCnt: number;
+}
+
+interface InviteResponse {
+  uuid: string;
+  invitationLink: string;
+}
+
+type RegisteredStudentsListResponse = RegisteredStudent[] | null;
+
+export type {
+  InviteRequest,
+  InviteResponse,
+  RegisteredStudent,
+  RegisteredStudentsListResponse,
+  RegisterGymRequest,
+};
