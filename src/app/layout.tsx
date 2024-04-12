@@ -3,7 +3,7 @@ import '@/app/_styles/global.css';
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata } from 'next';
 
-import { MSWComponent, QueryProvider } from './_providers';
+import { KakaoScript, MSWComponent, QueryProvider } from './_providers';
 
 const gaId = process.env.GA_ID ?? '';
 
@@ -26,6 +26,7 @@ export default function RootLayout({
         </QueryProvider>
       </body>
       <GoogleAnalytics gaId={gaId} />
+      <KakaoScript />
     </html>
   );
 }

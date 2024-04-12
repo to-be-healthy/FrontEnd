@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { memberMutation, memberTypes } from '@/entities/member';
+import { memberMutation, memberQuery, memberTypes } from '@/entities/member';
 import CheckIcon from '@/shared/assets/images/icon_check.svg';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
@@ -25,6 +25,9 @@ export const TrainerInvitePage = () => {
 
   const { toast } = useToast();
   const { mutate } = memberMutation.useInviteStudent();
+  const { data } = memberQuery.useMyInfo();
+  const gymName = data?.gym.name ?? '';
+  const trainerName = data?.name ?? '';
 
   const onValidSubmit: SubmitHandler<memberTypes.InviteRequest> = (invitationInfo) => {
     mutate(invitationInfo, {
@@ -39,7 +42,7 @@ export const TrainerInvitePage = () => {
           description: (
             <div className='flex items-center justify-center'>
               <ErrorIcon />
-              <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
+              <p className='typography-heading-5 ml-6 text-white'>{message}</p>
             </div>
           ),
           duration: 2000,
@@ -54,7 +57,7 @@ export const TrainerInvitePage = () => {
       description: (
         <div className='flex items-center justify-center'>
           <ErrorIcon />
-          <p className='typography-heading-5 ml-6 text-[#fff]'>
+          <p className='typography-heading-5 ml-6 text-white'>
             입력이 필요한 항목이 있습니다.
           </p>
         </div>
@@ -63,20 +66,20 @@ export const TrainerInvitePage = () => {
     });
   };
 
-  const initInvitationForm = () => {
+  const resetInvitationForm = () => {
     reset();
     setInvitationUrl('');
   };
 
   const copyUrl = async () => {
     await navigator.clipboard.writeText(invitationUrl);
-    initInvitationForm();
+    resetInvitationForm();
     toast({
       className: 'h-[48px]',
       description: (
         <div className='flex items-center justify-center'>
           <CheckIcon />
-          <p className='typography-heading-5 ml-6 text-[#fff]'>초대 링크를 복사했어요.</p>
+          <p className='typography-heading-5 ml-6 text-white'>초대 링크를 복사했어요.</p>
         </div>
       ),
       duration: 2000,
@@ -84,7 +87,30 @@ export const TrainerInvitePage = () => {
   };
 
   const shareUrl = () => {
-    console.log('Share');
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+    window.Kakao.Share.sendDefault({
+      objectType: 'feed',
+      content: {
+        title: '초대장이 도착했어요!',
+        description: `${gymName} ${trainerName} 트레이너님이 초대장을 보냈어요!`.trim(),
+        imageUrl:
+          'https://to-be-healthy-bucket.s3.ap-northeast-2.amazonaws.com/images/invitation.png',
+        link: {
+          mobileWebUrl: invitationUrl,
+          webUrl: invitationUrl,
+        },
+      },
+      buttons: [
+        {
+          title: '초대장 확인하기',
+          link: {
+            mobileWebUrl: invitationUrl,
+            webUrl: invitationUrl,
+          },
+        },
+      ],
+    });
+    resetInvitationForm();
   };
 
   return (
