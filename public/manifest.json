@@ -2,24 +2,15 @@
   "theme_color": "#393fc7",
   "background_color": "#f69435",
   "display": "standalone",
+  "orientation": "portrait",
   "scope": "/",
   "start_url": "/",
-  "name": "to_be_healthy",
-  "short_name": "to_be_healthy",
+  "name": "건강해짐",
+  "short_name": "건강해짐",
   "icons": [
     {
       "src": "/icon-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/icon-256x256.png",
-      "sizes": "256x256",
-      "type": "image/png"
-    },
-    {
-      "src": "/icon-384x384.png",
-      "sizes": "384x384",
       "type": "image/png"
     },
     {
