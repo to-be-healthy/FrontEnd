@@ -6,7 +6,7 @@ import { authMutation, useAuthAction } from '@/entities/auth';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Button, TextInput, useToast } from '@/shared/ui';
 
-import { LoginForm } from '../model/type';
+import { LoginForm } from '../model/types';
 
 export const SignInForm = ({ memberType }: { memberType: 'trainer' | 'student' }) => {
   const router = useRouter();

@@ -13,7 +13,7 @@ import { Typography } from '@/shared/mixin';
 import { Button, Dialog, DialogContent, Input, Layout, useToast } from '@/shared/ui';
 import { cn, twSelector } from '@/shared/utils';
 
-export const InviteStudentPage = () => {
+export const TrainerInvitePage = () => {
   const {
     register,
     handleSubmit,

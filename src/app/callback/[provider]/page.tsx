@@ -5,6 +5,11 @@ import { useEffect } from 'react';
 
 import { authMutation, Provider, useAuthAction } from '@/entities/auth';
 
+interface StateType {
+  memberType: 'trainer' | 'student';
+  uuid?: string;
+}
+
 interface Props {
   params: { provider: Provider };
 }
@@ -22,10 +27,22 @@ export default function Page({ params }: Props) {
   useEffect(() => {
     if (!code || !state) return router.replace('/');
 
-    const memberType = state.toUpperCase();
+    const stringifiedValue = localStorage.getItem(state);
+    localStorage.removeItem(state);
+    if (!stringifiedValue) {
+      throw new Error();
+    }
+
+    const { memberType, uuid } = JSON.parse(stringifiedValue) as StateType;
 
     mutate(
-      { provider, code, state, memberType },
+      {
+        provider,
+        code,
+        state,
+        memberType: memberType.toUpperCase(),
+        ...(uuid && { uuid }),
+      },
       {
         onSuccess: (result) => {
           const data = result.data;

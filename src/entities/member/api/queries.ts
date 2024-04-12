@@ -4,7 +4,7 @@ import { api, BaseError, BaseResponse } from '@/shared/api';
 
 import { RegisteredStudentsListResponse } from '../model/types';
 
-export const useRegisteredStudentsList = () => {
+const useRegisteredStudentsList = () => {
   return useQuery<RegisteredStudentsListResponse, BaseError>({
     queryKey: ['registeredStudents'],
     queryFn: async () => {
@@ -15,3 +15,5 @@ export const useRegisteredStudentsList = () => {
     },
   });
 };
+
+export { useRegisteredStudentsList };
