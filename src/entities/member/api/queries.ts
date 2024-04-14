@@ -2,9 +2,9 @@ import { useQuery } from '@tanstack/react-query';
 
 import { api, BaseError, BaseResponse } from '@/shared/api';
 
-import { RegisteredStudentsListResponse } from '../model/types';
+import { Member, RegisteredStudentsListResponse } from '../model/types';
 
-export const useRegisteredStudentsList = () => {
+const useRegisteredStudentsList = () => {
   return useQuery<RegisteredStudentsListResponse, BaseError>({
     queryKey: ['registeredStudents'],
     queryFn: async () => {
@@ -15,3 +15,15 @@ export const useRegisteredStudentsList = () => {
     },
   });
 };
+
+const useMyInfo = () => {
+  return useQuery<Member, BaseError>({
+    queryKey: ['myinfo'],
+    queryFn: async () => {
+      const result = await api.get<BaseResponse<Member>>(`/api/members/v1/me`);
+      return result.data.data;
+    },
+  });
+};
+
+export { useMyInfo, useRegisteredStudentsList };

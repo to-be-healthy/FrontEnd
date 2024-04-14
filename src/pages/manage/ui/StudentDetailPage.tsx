@@ -9,7 +9,9 @@ import IconCalendar from '@/shared/assets/images/icon_calendar_blue.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile.svg';
 import IconEdit from '@/shared/assets/images/icon_edit.svg';
 import IconPhone from '@/shared/assets/images/icon_phone.svg';
+import { Typography } from '@/shared/mixin';
 import { Button, Card, CardContent, CardHeader, Layout, Progress } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 interface Props {
   memberId: string;
@@ -46,10 +48,10 @@ export const StudentDetailPage = ({ memberId }: Props) => {
           onClick={() => router.replace('/trainer/manage')}>
           <IconBack />
         </Button>
-        <h2 className='typography-heading-4 font-semibold'>나의 회원</h2>
+        <h2 className={Typography.HEADING_4_SEMIBOLD}>나의 회원</h2>
         <Link
           href={`/trainer/manage/${memberId}/edit`}
-          className='typography-title-2 font-semibold'>
+          className={Typography.TITLE_1_SEMIBOLD}>
           수정
         </Link>
       </Layout.Header>
@@ -57,7 +59,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
         <div className='flex w-full items-center gap-x-[24px]  py-[24px]'>
           <IconDefaultProfile />
           <div className='flex flex-col'>
-            <h2 className='typography-heading-2 flex gap-x-[8px]'>
+            <h2 className={cn('flex gap-x-[8px]', Typography.HEADING_2)}>
               {data.name}
               <IconPhone />
             </h2>
@@ -71,24 +73,24 @@ export const StudentDetailPage = ({ memberId }: Props) => {
             variant='ghost'
             className='flex w-full items-center justify-center gap-x-[6px] bg-white py-[11px]'>
             <IconCalendar />
-            <p className='typography-heading-5'>일정 등록</p>
+            <p className={Typography.HEADING_5}>일정 등록</p>
           </Button>
           <Button
             variant='ghost'
             className='flex w-full items-center justify-center gap-x-[6px] bg-white py-[11px]'>
             <IconEdit />
-            <p className='typography-heading-5'>수업 내역</p>
+            <p className={Typography.HEADING_5}>수업 내역</p>
           </Button>
         </div>
         <Card className='mb-[16px] w-full gap-y-[36px] bg-primary-500 text-white shadow-sm'>
           <CardHeader className='flex justify-between'>
-            <p className='typography-heading-4 font-semibold'>
+            <p className={Typography.HEADING_4_SEMIBOLD}>
               잔여 <span className='font-bold'>{data.course.remain}</span>회
             </p>
-            <p className='typography-body-3'>{data.course.title}</p>
+            <p className={Typography.BODY_3}>{data.course.title}</p>
           </CardHeader>
           <CardContent className='flex flex-col gap-y-[8px]'>
-            <p className='typography-heading-5 text-white'>
+            <p className={cn(Typography.HEADING_5, 'text-white')}>
               PT 진행 횟수 {data.course.progress}
               <span className='text-blue-200'>/{data.course.total}</span>
             </p>
@@ -97,13 +99,17 @@ export const StudentDetailPage = ({ memberId }: Props) => {
         </Card>
         <Card className='mb-[16px] w-full gap-y-[24px] px-[16px] py-[20px] shadow-sm'>
           <CardHeader className='flex items-center justify-between text-gray-800'>
-            <h4 className='typography-title-2 text-gray-800'>다음 PT예정일</h4>
+            <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>다음 PT예정일</h4>
             <Link href='#'>
-              <p className='typography-body-3 font-semibold text-gray-500'>예약 전체</p>
+              <p className={cn(Typography.BODY_3, 'text-gray-500')}>예약 전체</p>
             </Link>
           </CardHeader>
           <CardContent>
-            <p className='typography-heading-4 flex items-center gap-x-[8px] text-black'>
+            <p
+              className={cn(
+                Typography.HEADING_4,
+                'flex items-center gap-x-[8px] text-black'
+              )}>
               <IconPhone />
               {data.schedule.nextCourse}
             </p>
@@ -111,11 +117,9 @@ export const StudentDetailPage = ({ memberId }: Props) => {
         </Card>
         <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
           <CardHeader className='flex items-center justify-between text-gray-800'>
-            <h4 className='typography-title-2 text-gray-800'>오늘 식단</h4>
+            <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>오늘 식단</h4>
             <Link href='#'>
-              <p className='typography-body-3 font-semibold text-gray-500'>
-                등록 식단 전체
-              </p>
+              <p className={cn(Typography.BODY_3, 'text-gray-500')}>등록 식단 전체</p>
             </Link>
           </CardHeader>
           <CardContent className='flex justify-center gap-x-[6px]'>
@@ -126,7 +130,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
         </Card>
         <Card className='w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
           <CardHeader>
-            <h4 className='typography-title-2 text-gray-800'>운동 기록</h4>
+            <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>운동 기록</h4>
           </CardHeader>
         </Card>
       </Layout.Contents>

@@ -1,4 +1,3 @@
-export { AlertDialogOverlay } from './alert-dialog';
 export {
   AlertDialog,
   AlertDialogAction,
@@ -7,11 +6,24 @@ export {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
+  AlertDialogOverlay,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from './alert-dialog';
 export { Button, buttonVariants } from './button';
 export { Card, CardContent, CardFooter, CardHeader } from './card';
+export {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogPortal,
+  DialogTitle,
+  DialogTrigger,
+} from './dialog';
 export { GenericForm } from './generic-form';
 export { EmailInput } from './input/EmailInput';
 export { Input } from './input/Input';

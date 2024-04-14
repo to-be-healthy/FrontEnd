@@ -1,9 +1,16 @@
 import '@/app/_styles/global.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
-import { MSWComponent, QueryProvider } from './_providers';
+import { KakaoScript, MSWComponent, QueryProvider } from './_providers';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+};
 
 const gaId = process.env.GA_ID ?? '';
 
@@ -26,6 +33,7 @@ export default function RootLayout({
         </QueryProvider>
       </body>
       <GoogleAnalytics gaId={gaId} />
+      <KakaoScript />
     </html>
   );
 }

@@ -1,6 +1,6 @@
-import { InviteStudentPage } from '@/pages/manage';
+import { TrainerInvitePage } from '@/pages/manage';
 
 const Page = () => {
-  return <InviteStudentPage />;
+  return <TrainerInvitePage />;
 };
 export default Page;

@@ -25,7 +25,6 @@ const useSignIn = () => {
 const useSocialSignIn = () => {
   return useMutation<BaseResponse<SignInResponse>, BaseError, SocialSignInRequest>({
     mutationFn: async ({ provider, ...payload }) => {
-      // TODO) 서버측에서 요청받은 클라이언트의 host를 판별하여 redirectUri를 확인하도록 협의 필요
       if (provider === 'kakao') {
         Object.assign(payload, { redirectUrl: kakaoRedirectUri });
       }

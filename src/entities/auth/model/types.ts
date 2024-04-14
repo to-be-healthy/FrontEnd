@@ -68,6 +68,23 @@ interface SignUpFormType {
   signUp: string;
 }
 
+interface Trainer {
+  id: number;
+  userId: string;
+  email: string;
+  name: string;
+  age: number;
+  height: number;
+  weight: number;
+  delYn: false;
+  profile: null;
+  memberType: 'TRAINER';
+  pushAlarmStatus: 'ENABLED';
+  feedbackAlarmStatus: 'ENABLED';
+  gym: null | number;
+  socialType: 'NONE';
+}
+
 export type {
   CheckVerificationCodeRequest,
   GymList,
@@ -78,5 +95,6 @@ export type {
   SignUpRequest,
   SignUpResponse,
   SocialSignInRequest,
+  Trainer,
   UserInfo,
 };

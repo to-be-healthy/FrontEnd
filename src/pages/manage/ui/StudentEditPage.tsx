@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation';
 
 import IconBack from '@/shared/assets/images/icon_back.svg';
+import { Typography } from '@/shared/mixin';
 import { Button, Input, Layout } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
@@ -32,11 +33,11 @@ const StudentEditPage = ({ memberId }: Props) => {
           onClick={() => router.replace(`/trainer/manage/${memberId}`)}>
           <IconBack />
         </Button>
-        <h2 className='typography-heading-4 font-semibold'>회원 정보 수정</h2>
+        <h2 className={Typography.HEADING_4_SEMIBOLD}>회원 정보 수정</h2>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1} />
       </Layout.Header>
       <Layout.Contents className='mt-[36px] flex flex-col gap-y-[36px] px-[20px]'>
-        <div className='typography-title-3 flex justify-center gap-x-[8px]'>
+        <div className={cn('flex justify-center gap-x-[8px]', Typography.TITLE_3)}>
           <div className='flex flex-col gap-y-[8px]'>
             <p>이름</p>
             {/* TODO) 컴포넌트 병합 필요 - Custom Input */}
@@ -44,7 +45,7 @@ const StudentEditPage = ({ memberId }: Props) => {
               className={cn(
                 'flex rounded-md border border-gray-200 bg-white px-[16px] py-[11.5px] focus-within:border-primary-500'
               )}>
-              <Input className='w-full text-title-3' />
+              <Input className={cn('w-full', Typography.TITLE_3)} />
             </div>
           </div>
           <div className='flex flex-col gap-y-[8px]'>
@@ -54,8 +55,10 @@ const StudentEditPage = ({ memberId }: Props) => {
               className={cn(
                 'flex gap-x-[10px] rounded-md border border-gray-200 bg-white px-[16px] py-[11.5px] focus-within:border-primary-500'
               )}>
-              <Input type='number' className='no-spin w-full text-title-3' />
-              <div className='right-[16px] text-body-3 text-gray-500'>회</div>
+              <Input type='number' className={cn('no-spin w-full', Typography.TITLE_3)} />
+              <div className={cn('right-[16px] text-gray-500', Typography.BODY_3)}>
+                회
+              </div>
             </div>
           </div>
         </div>
@@ -71,7 +74,7 @@ const StudentEditPage = ({ memberId }: Props) => {
         <Button
           variant='default'
           size='full'
-          className='typography-title-1 font-bold'
+          className={Typography.TITLE_1_BOLD}
           onClick={handleEditStudentDetail}>
           수정 완료
         </Button>

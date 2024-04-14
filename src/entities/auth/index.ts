@@ -17,6 +17,7 @@ export type {
   SignUpRequest,
   SignUpResponse,
   SocialSignInRequest,
+  Trainer,
   UserInfo,
 } from './model/types';
 export * as regexp from './regexp';
