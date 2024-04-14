@@ -20,10 +20,10 @@ export type {
   Trainer,
   UserInfo,
 } from './model/types';
-export * as regexp from './regexp';
-export { SetupEmail } from './ui/SetupEmail';
-export { SetupEmailVerificationCode } from './ui/SetupEmailVerificationCode';
-export { SetupId } from './ui/SetupId';
-export { SetupName } from './ui/SetupName';
-export { SetupPassword } from './ui/SetupPassword';
-export { SignUpCancelDialog } from './ui/SignUpCancelDialog';
+export {
+  EMAIL_REGEXP,
+  EXCLUDE_SPACE_REGEXP,
+  ID_REGEXP,
+  NAME_REGEXP,
+  PASSWORD_REGEXP,
+} from './regexp';

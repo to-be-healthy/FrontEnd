@@ -1,13 +1,11 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useAuthAction, useAuthSelector } from '@/entities/auth';
-import { GymList } from '@/entities/auth/model/types';
-import { memberMutation } from '@/entities/member';
-import { BaseError } from '@/shared/api';
+import { useGetGymList, useRegisterGymMutation } from '@/entities/member';
+import { GymItem } from '@/entities/member/model/types';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import {
@@ -30,11 +28,8 @@ export const SelectGym = () => {
   const { setUserInfo } = useAuthAction();
   const { toast } = useToast();
 
-  const { mutate } = memberMutation.useRegisterGymMutation();
-  const { data: gymData, isPending } = useQuery<GymList[], BaseError>({
-    queryKey: ['gymList'],
-    queryFn: memberMutation.getGymList,
-  });
+  const { mutate } = useRegisterGymMutation();
+  const { data: gymList, isPending } = useGetGymList();
 
   const handleSelectGymId = (gymId: number) => {
     setSelectGymId(gymId);
@@ -128,7 +123,7 @@ export const SelectGym = () => {
                     선택해주세요.
                   </p>
                   <ul className='w-full'>
-                    {gymData?.map((item: GymList) => {
+                    {gymList?.map((item: GymItem) => {
                       return (
                         <li key={item.gymId} className='mb-3 h-[80px] w-full'>
                           <Button

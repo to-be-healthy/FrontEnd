@@ -1,3 +1,14 @@
-export * as memberMutation from './api/mutations';
-export * as memberQuery from './api/queries';
-export * as memberTypes from './model/types';
+export { useGetGymList } from './api/useGetGymList';
+export { useInviteStudent } from './api/useInviteStudent';
+export { useMyInfo } from './api/useMyInfo';
+export { useRegisteredStudentsList } from './api/useRegisteredStudentsList';
+export { useRegisterGymMutation } from './api/useRegisterGymMutation';
+export type {
+  GymItem,
+  GymListResponse,
+  InviteRequest,
+  InviteResponse,
+  Member,
+  RegisteredStudent,
+  RegisteredStudentsListResponse,
+} from './model/types';

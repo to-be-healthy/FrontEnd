@@ -10,18 +10,21 @@ import { useFormContext } from 'react-hook-form';
 
 import {
   authMutation,
-  regexp,
-  SetupEmail,
-  SetupEmailVerificationCode,
-  SetupId,
-  SetupName,
-  SetupPassword,
+  EMAIL_REGEXP,
+  EXCLUDE_SPACE_REGEXP,
+  ID_REGEXP,
+  NAME_REGEXP,
   SignUpFormType,
 } from '@/entities/auth';
 import SendEmailIcon from '@/shared/assets/images/icon_send_email.svg';
 import { Button, useToast } from '@/shared/ui';
 
-import { FunnelProps, StepProps } from '../hooks/useSignUpFunnel';
+import { FunnelProps, StepProps } from '../../hooks/useSignUpFunnel';
+import { SetupEmail } from '../SignUpFunnel/SetupEmail';
+import { SetupEmailVerificationCode } from '../SignUpFunnel/SetupEmailVerificationCode';
+import { SetupId } from '../SignUpFunnel/SetupId';
+import { SetupName } from '../SignUpFunnel/SetupName';
+import { SetupPassword } from '../SignUpFunnel/SetupPassword';
 
 interface Props {
   step: number;
@@ -71,7 +74,7 @@ export const SignUpFunnel = ({
     clearErrors('userId');
 
     if (isIdVerified) {
-      setIsIdVerified(false); //중복확인 후 글자 입력시 focus아웃됨
+      setIsIdVerified(false); //todo: 중복확인 후 글자 입력시 focus아웃됨
       setIdSuccessMsg('');
     }
   }, [userIdValue]);
@@ -79,13 +82,13 @@ export const SignUpFunnel = ({
   const isNextButtonDisabled = () => {
     switch (step) {
       case 1:
-        return !nameValue || nameValue?.length < 2 || !regexp.NAME_REGEXP.test(nameValue);
+        return !nameValue || nameValue?.length < 2 || !NAME_REGEXP.test(nameValue);
       case 2:
-        return (!emailValue && !isEmailVerified) || !regexp.EMAIL_REGEXP.test(emailValue);
+        return (!emailValue && !isEmailVerified) || !EMAIL_REGEXP.test(emailValue);
       case 3:
         return (
           verificationCodeValue?.length < 6 ||
-          !regexp.EXCLUDE_SPACE_REGEXP.test(verificationCodeValue)
+          !EXCLUDE_SPACE_REGEXP.test(verificationCodeValue)
         );
       case 4:
         return !isIdVerified;
@@ -101,7 +104,7 @@ export const SignUpFunnel = ({
     e.preventDefault();
     setValue('emailVerifiedCode', '');
 
-    if (!regexp.EMAIL_REGEXP.test(emailValue))
+    if (!EMAIL_REGEXP.test(emailValue))
       return setError('email', { message: '이메일 형식이 아닙니다' });
 
     sendVerificationCodeMutate(emailValue, {
@@ -152,7 +155,7 @@ export const SignUpFunnel = ({
   const handleIsIdAvailable = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setIdSuccessMsg('');
-    if (!(userIdValue && regexp.ID_REGEXP.test(userIdValue))) {
+    if (!(userIdValue && ID_REGEXP.test(userIdValue))) {
       return setError('userId', {
         message: '아이디는 소문자,대문자,숫자만 입력할 수 있습니다',
       });

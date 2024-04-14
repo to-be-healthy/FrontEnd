@@ -1,9 +1,3 @@
-interface RegisterGymRequest {
-  memberType: string;
-  gymId: number;
-  joinCode?: number;
-}
-
 interface RegisteredStudent {
   memberId: number;
   name: string;
@@ -13,16 +7,6 @@ interface RegisteredStudent {
   lessonCnt: number;
   remainLessonCnt: number;
   gymEndDt: string;
-}
-
-interface InviteRequest {
-  name: string;
-  lessonCnt: number;
-}
-
-interface InviteResponse {
-  uuid: string;
-  invitationLink: string;
 }
 
 type RegisteredStudentsListResponse = RegisteredStudent[] | null;
@@ -54,11 +38,29 @@ interface Member {
   socialType: 'NONE' | 'KAKAO' | 'NAVER' | 'GOOGLE';
 }
 
+interface GymItem {
+  gymId: number;
+  name: string;
+}
+
+type GymListResponse = GymItem[] | null;
+
+interface InviteRequest {
+  name: string;
+  lessonCnt: number;
+}
+
+interface InviteResponse {
+  uuid: string;
+  invitationLink: string;
+}
+
 export type {
+  GymItem,
+  GymListResponse,
   InviteRequest,
   InviteResponse,
   Member,
   RegisteredStudent,
   RegisteredStudentsListResponse,
-  RegisterGymRequest,
 };

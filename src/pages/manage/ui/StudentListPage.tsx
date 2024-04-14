@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { memberQuery, memberTypes } from '@/entities/member';
+import { RegisteredStudent, useRegisteredStudentsList } from '@/entities/member';
 import { AddStudentDialog } from '@/features/member/ui/AddStudentDialog';
 import IconArrowDownUp from '@/shared/assets/images/icon_arrow_down_up.svg';
 import IconBack from '@/shared/assets/images/icon_back.svg';
@@ -26,7 +26,7 @@ import {
 } from '@/shared/ui/dropdown-menu';
 import { cn } from '@/shared/utils';
 
-type Student = memberTypes.RegisteredStudent;
+type Student = RegisteredStudent;
 
 interface SortCondition {
   label: string;
@@ -73,7 +73,7 @@ const StudentListPage = () => {
   const [sort, setSort] = useState<SortCondition>(sortCondition.DEFAULT);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: studentList, isLoading } = memberQuery.useRegisteredStudentsList();
+  const { data: studentList, isLoading } = useRegisteredStudentsList();
 
   const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
