@@ -1,7 +1,7 @@
 import { FormEvent, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { regexp, SignUpFormType } from '@/entities/auth';
+import { EXCLUDE_SPACE_REGEXP, SignUpFormType } from '@/entities/auth';
 import { Button, TextInput } from '@/shared/ui';
 
 interface SetupEmailProps {
@@ -52,7 +52,7 @@ export const SetupEmailVerificationCode = ({
           clearValueButton={() => setValue('emailVerifiedCode', '')}
           {...register('emailVerifiedCode', {
             pattern: {
-              value: regexp.EXCLUDE_SPACE_REGEXP,
+              value: EXCLUDE_SPACE_REGEXP,
               message: '공백 문자를 포함할 수 없습니다',
             },
           })}

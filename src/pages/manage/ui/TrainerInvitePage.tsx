@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { memberMutation, memberQuery, memberTypes } from '@/entities/member';
+import { InviteRequest, useInviteStudent, useMyInfo } from '@/entities/member';
 import CheckIcon from '@/shared/assets/images/icon_check.svg';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
@@ -19,17 +19,17 @@ export const TrainerInvitePage = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<memberTypes.InviteRequest>();
+  } = useForm<InviteRequest>();
   const [invitationUrl, setInvitationUrl] = useState<string>('');
   const dialogOpen = !!invitationUrl;
 
   const { toast } = useToast();
-  const { mutate } = memberMutation.useInviteStudent();
-  const { data } = memberQuery.useMyInfo();
+  const { mutate } = useInviteStudent();
+  const { data } = useMyInfo();
   const gymName = data?.gym.name ?? '';
   const trainerName = data?.name ?? '';
 
-  const onValidSubmit: SubmitHandler<memberTypes.InviteRequest> = (invitationInfo) => {
+  const onValidSubmit: SubmitHandler<InviteRequest> = (invitationInfo) => {
     mutate(invitationInfo, {
       onSuccess: ({ data }) => {
         const { invitationLink } = data;

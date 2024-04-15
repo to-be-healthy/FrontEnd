@@ -3,6 +3,9 @@ import withPWA from 'next-pwa';
 
 const nextConfig = {
   reactStrictMode: false,
+  images: {
+    domains: ['to-be-healthy-bucket.s3.ap-northeast-2.amazonaws.com'],
+  },
   async rewrites() {
     return [
       {

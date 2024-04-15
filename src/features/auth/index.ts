@@ -1,7 +1,7 @@
+export * as authQuery from './api/queries';
 export { useSignUpFunnel } from './hooks/useSignUpFunnel';
 export type { LoginForm } from './model/types';
 export { SignInForm } from './ui/SignInForm';
-// export { SignUpForm } from './ui/SignUpForm'; // TODO) 제거 예정
-export * as authQuery from './api/queries';
-export { SignUpFunnel } from './ui/SignUpFunnel';
+export { SignUpCancelDialog } from './ui/SignUpFunnel/SignUpCancelDialog';
+export { SignUpFunnel } from './ui/SignUpFunnel/SignUpFunnel';
 export { SocialSignIn } from './ui/SocialSignIn';

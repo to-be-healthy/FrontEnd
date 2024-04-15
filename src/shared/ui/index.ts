@@ -12,6 +12,7 @@ export {
 } from './alert-dialog';
 export { Button, buttonVariants } from './button';
 export { Card, CardContent, CardFooter, CardHeader } from './card';
+export { Collapsible, CollapsibleContent, CollapsibleTrigger } from './collapsible';
 export {
   Dialog,
   DialogClose,
@@ -32,7 +33,7 @@ export {
   InputOTPGroup,
   InputOTPSeparator,
   InputOTPSlot,
-} from './input/input-otp';
+} from './input/OtpInput';
 export { PasswordInput } from './input/PasswordInput';
 export { TextInput } from './input/TextInput';
 export { Layout } from './layout';

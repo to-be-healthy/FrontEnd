@@ -48,11 +48,6 @@ interface SocialSignInRequest {
   redirectUrl?: string;
 }
 
-interface GymList {
-  gymId: number;
-  name: string;
-}
-
 interface CheckVerificationCodeRequest {
   email: string;
   emailKey: string;
@@ -87,7 +82,6 @@ interface Trainer {
 
 export type {
   CheckVerificationCodeRequest,
-  GymList,
   Provider,
   SignInRequest,
   SignInResponse,

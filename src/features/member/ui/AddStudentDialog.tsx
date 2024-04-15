@@ -17,7 +17,7 @@ export const AddStudentDialog = ({ children }: { children?: React.ReactNode }) =
       <DialogTrigger asChild onClick={addStudent}>
         {children ?? (
           <Button variant='ghost' className='h-[20px] w-[20px]' size='icon'>
-            <IconPlus fill='black' />
+            <IconPlus fill='black' width={17} height={16} fili='#000000' />
           </Button>
         )}
       </DialogTrigger>

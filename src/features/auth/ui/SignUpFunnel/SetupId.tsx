@@ -1,7 +1,7 @@
 import { FormEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 
-import { regexp, SignUpFormType } from '@/entities/auth';
+import { ID_REGEXP, SignUpFormType } from '@/entities/auth';
 import { Button, TextInput } from '@/shared/ui';
 
 interface Props {
@@ -37,7 +37,7 @@ export const SetupId = ({ idSuccessMsg, isPending, handleIsIdAvailable }: Props)
           clearValueButton={() => setValue('userId', '')}
           {...register('userId', {
             pattern: {
-              value: regexp.ID_REGEXP,
+              value: ID_REGEXP,
               message: '영문, 숫자 4자리 이상 입력해주세요.',
             },
           })}
