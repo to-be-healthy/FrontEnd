@@ -4,13 +4,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
-import {
-  authMutation,
-  SignUpCancelDialog,
-  SignUpRequest,
-  signUpStore,
-} from '@/entities/auth';
-import { SignUpFunnel, useSignUpFunnel } from '@/features/auth';
+import { authMutation, SignUpRequest, signUpStore } from '@/entities/auth';
+import { SignUpCancelDialog, SignUpFunnel, useSignUpFunnel } from '@/features/auth';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Button, GenericForm, Layout, useToast } from '@/shared/ui';
