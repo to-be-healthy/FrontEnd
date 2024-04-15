@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import IconAlarm from '@/shared/assets/images/icon_alarm.svg';
@@ -36,6 +37,8 @@ const dietData = [
     fasting: false,
   },
 ];
+
+const FEEDBACK_COUNT = 1
 export const StudentHomePage = () => {
   return (
     <Layout type='student'>
@@ -137,7 +140,7 @@ export const StudentHomePage = () => {
                 </Link>
               </CardHeader>
               <CardContent className='flex items-center justify-start'>
-                <CheckIcon fill='#1990FF' />
+                <CheckIcon fill={'var(--primary-500)'} />
                 <p className='typography-heading-4 ml-3 text-[#000]'>
                   05.23 (월) 오후 1:00
                 </p>
@@ -151,7 +154,7 @@ export const StudentHomePage = () => {
                 <h2 className='typography-title-1 text-[#000]'>
                   수업 일지
                   <span className='typography-heading-5 ml-1 inline-block h-7 w-7 rounded-[50%] bg-primary-500 text-center text-[#fff]'>
-                    1
+                    {FEEDBACK_COUNT}
                   </span>
                 </h2>
                 <Link href={'/'} className='typography-body-3 gray-500 h-auto'>
@@ -187,14 +190,18 @@ export const StudentHomePage = () => {
                     return (
                       <li className='w-[calc((100%-12px)/3)]' key={index}>
                         {item.image ? (
-                          <div className='flex h-[88px] w-full items-center justify-center bg-gray-100'>
-                            이미지
-                          </div>
+                          <Image
+                            src={item.image}
+                            width={60} //todo : 퍼센트(string)가능하게
+                            height={88} //todo : 퍼센트(string)가능하게
+                            alt='letter blue heart'
+                            className='flex items-center justify-center'
+                          />
                         ) : item.fasting ? (
                           <div className='h-[88px] w-full bg-gray-100'></div>
                         ) : (
                           <button className='flex h-[88px] w-full items-center justify-center bg-gray-100'>
-                            <PlusIcon width={20} height={20} fill='#86888D' />
+                            <PlusIcon width={20} height={20} fill={'var(--gray-500)'} />
                           </button>
                         )}
 
@@ -204,9 +211,9 @@ export const StudentHomePage = () => {
                           단식
                           <span className='ml-1'>
                             {item.fasting ? (
-                              <CheckIcon fill='#1990FF' />
+                              <CheckIcon fill={'var(--primary-500)'} />
                             ) : (
-                              <CheckIcon fill='#A7A9AE' />
+                              <CheckIcon fill={'var(--gray-400)'} />
                             )}
                           </span>
                         </Button>

@@ -43,8 +43,6 @@ interface GymItem {
   name: string;
 }
 
-type GymListResponse = GymItem[] | null;
-
 interface InviteRequest {
   name: string;
   lessonCnt: number;
@@ -57,7 +55,6 @@ interface InviteResponse {
 
 export type {
   GymItem,
-  GymListResponse,
   InviteRequest,
   InviteResponse,
   Member,

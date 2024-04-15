@@ -20,11 +20,11 @@ import SendEmailIcon from '@/shared/assets/images/icon_send_email.svg';
 import { Button, useToast } from '@/shared/ui';
 
 import { FunnelProps, StepProps } from '../../hooks/useSignUpFunnel';
-import { SetupEmail } from '../SignUpFunnel/SetupEmail';
-import { SetupEmailVerificationCode } from '../SignUpFunnel/SetupEmailVerificationCode';
-import { SetupId } from '../SignUpFunnel/SetupId';
-import { SetupName } from '../SignUpFunnel/SetupName';
-import { SetupPassword } from '../SignUpFunnel/SetupPassword';
+import { SetupEmail } from './SetupEmail';
+import { SetupEmailVerificationCode } from './SetupEmailVerificationCode';
+import { SetupId } from './SetupId';
+import { SetupName } from './SetupName';
+import { SetupPassword } from './SetupPassword';
 
 interface Props {
   step: number;
