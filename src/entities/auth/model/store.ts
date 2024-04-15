@@ -1,5 +1,5 @@
-import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
+import { createWithEqualityFn } from 'zustand/traditional';
 
 import { withSelector } from '@/shared/utils';
 
@@ -24,7 +24,7 @@ const DEFAULT_AUTH_STATE = {
 
 const authStore = () => DEFAULT_AUTH_STATE;
 
-const useAuthStore = create(
+const useAuthStore = createWithEqualityFn(
   persist(
     devtools<AuthState>(authStore, [
       'userId',
