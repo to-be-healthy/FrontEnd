@@ -1,4 +1,22 @@
+import { DailyDiet } from '@/entities/diet';
+
 interface GymItem {
+  gymId: number;
+  name: string;
+}
+
+interface InviteRequest {
+  name: string;
+  lessonCnt: number;
+}
+
+interface InviteResponse {
+  uuid: string;
+  invitationLink: string;
+}
+
+interface RegisterGymRequest {
+  memberType: string;
   gymId: number;
   name: string;
 }
@@ -52,4 +70,25 @@ interface Member {
   socialType: 'NONE' | 'KAKAO' | 'NAVER' | 'GOOGLE';
 }
 
-export type { GymItem, InviteRequest, InviteResponse, Member, RegisteredStudent };
+interface StudentDetail {
+  memberId: number;
+  name: string;
+  nickName: string | null;
+  fileUrl: string | null;
+  memo: string | null;
+  ranking: number;
+  lessonCnt: number;
+  remainLessonCnt: number;
+  lessonDt: string;
+  lessonStartTime: string;
+  diet: DailyDiet;
+}
+
+export type {
+  GymItem,
+  InviteRequest,
+  InviteResponse,
+  Member,
+  RegisteredStudent,
+  StudentDetail,
+};

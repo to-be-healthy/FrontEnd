@@ -3,15 +3,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { type RegisteredStudent, useRegisteredStudentsQuery } from '@/entities/member';
 import { AddStudentDialog } from '@/features/member/ui/AddStudentDialog';
 import IconArrowDownUp from '@/shared/assets/images/icon_arrow_down_up.svg';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconCircleAlert from '@/shared/assets/images/icon_circle_alert.svg';
+import IconDefaultProfileSmall from '@/shared/assets/images/icon_default_profile_small.svg';
 import IconPlus from '@/shared/assets/images/icon_plus.svg';
-import IconProfile from '@/shared/assets/images/icon_profile_default.svg';
 import IconSearch from '@/shared/assets/images/icon_search.svg';
 import { Button, Layout } from '@/shared/ui';
 import {
@@ -23,19 +23,21 @@ import {
 } from '@/shared/ui/dropdown-menu';
 import { cn } from '@/shared/utils';
 
-interface SortCondition {
+import { profileBorderStyleMapper } from '../utils';
+
+interface SortCondition<T> {
   label: string;
-  condition: (a: RegisteredStudent, b: RegisteredStudent) => number;
+  condition: (a: T, b: T) => number;
 }
 
-const sortCondition: Record<string, SortCondition> = {
+const sortConditionMapper: Record<string, SortCondition<RegisteredStudent>> = {
   DEFAULT: {
     label: '기본 순',
-    condition: (a: RegisteredStudent, b: RegisteredStudent) => a.memberId - b.memberId,
+    condition: (a, b) => a.memberId - b.memberId,
   },
   RANKING: {
     label: '랭킹 순',
-    condition: (a: RegisteredStudent, b: RegisteredStudent) => a.ranking - b.ranking,
+    condition: (a, b) => a.ranking - b.ranking,
   },
 };
 
@@ -54,22 +56,14 @@ const StudentListController = (students: RegisteredStudent[]) => ({
   get: () => students,
 });
 
-const profileBorderStyleMapper = (ranking: number) => {
-  const defaultStyle = 'rounded-full';
-  if (ranking === 1) return defaultStyle + ' border-[2px] border-[#FFB950]';
-  if (ranking === 2) return defaultStyle + ' border-[2px] border-[#C4C5CD]';
-  if (ranking === 3) return defaultStyle + ' border-[2px] border-[#FFB58B]';
-  return defaultStyle;
-};
-
 const StudentListPage = () => {
   const router = useRouter();
-  const [sort, setSort] = useState(sortCondition.DEFAULT);
+  const [sort, setSort] = useState(sortConditionMapper.DEFAULT);
   const [searchQuery, setSearchQuery] = useState('');
 
   const { data: studentList, isLoading } = useRegisteredStudentsQuery();
 
-  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
@@ -78,7 +72,7 @@ const StudentListPage = () => {
     .search(searchQuery)
     .get();
 
-  const studentsCount = processedStudentList ? processedStudentList.length ?? 0 : 0;
+  const studentsCount = processedStudentList.length ?? 0;
 
   return (
     <Layout className='flex flex-col'>
@@ -125,7 +119,7 @@ const StudentListPage = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className='absolute -right-9 top-1 flex w-[96px] flex-col'>
                     <DropdownMenuGroup className='flex flex-col'>
-                      {Object.values(sortCondition).map((item) => (
+                      {Object.values(sortConditionMapper).map((item) => (
                         <DropdownMenuItem
                           key={item.label}
                           className={cn(
@@ -189,7 +183,7 @@ const StudentListPage = () => {
                                   className={profileBorderStyleMapper(item.ranking)}
                                 />
                               ) : (
-                                <IconProfile />
+                                <IconDefaultProfileSmall />
                               )}
                             </div>
                             <div className='flex flex-col gap-y-[4px]'>
