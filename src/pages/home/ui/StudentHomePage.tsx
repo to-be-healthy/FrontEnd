@@ -53,7 +53,7 @@ export const StudentHomePage = () => {
           <Card className='w-full gap-y-7 bg-primary-500 p-0'>
             <CardHeader>
               <Link
-                href='./student/classTickets'
+                href='./student/class-tickets'
                 className='block px-6 pb-0 pt-7 text-white'>
                 <div className='typography-body-4 mb-1 flex items-center justify-between text-[#E2F1FF]'>
                   <p>건강해짐 홍대점</p>
