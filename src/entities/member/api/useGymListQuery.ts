@@ -2,11 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 
 import { api, BaseError, BaseResponse } from '@/shared/api';
 
-import { GymItem } from '../model/types';
+import { Gym } from '../model/types';
 
-type GymListResponse = GymItem[] | null;
+type GymListResponse = Gym[] | null;
 
-export const useGetGymList = () => {
+export const useGymListQuery = () => {
   return useQuery<GymListResponse, BaseError>({
     queryKey: ['gymList'],
     queryFn: async () => {

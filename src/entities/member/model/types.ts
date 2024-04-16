@@ -1,6 +1,6 @@
 import { DailyDiet } from '@/entities/diet';
 
-interface GymItem {
+interface Gym {
   gymId: number;
   name: string;
 }
@@ -13,12 +13,6 @@ interface InviteRequest {
 interface InviteResponse {
   uuid: string;
   invitationLink: string;
-}
-
-interface RegisterGymRequest {
-  memberType: string;
-  gymId: number;
-  name: string;
 }
 
 interface RegisteredStudent {
@@ -63,10 +57,7 @@ interface Member {
   memberType: 'STUDENT' | 'TRAINER';
   pushAlarmStatus: 'ENABLED' | 'DISABLE';
   feedbackAlarmStatus: 'ENABLED' | 'DISABLE';
-  gym: {
-    id: number;
-    name: string;
-  };
+  gym: Gym;
   socialType: 'NONE' | 'KAKAO' | 'NAVER' | 'GOOGLE';
 }
 
@@ -85,7 +76,7 @@ interface StudentDetail {
 }
 
 export type {
-  GymItem,
+  Gym,
   InviteRequest,
   InviteResponse,
   Member,

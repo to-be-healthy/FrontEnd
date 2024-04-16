@@ -3,9 +3,6 @@ import withPWA from 'next-pwa';
 
 const nextConfig = {
   reactStrictMode: false,
-  images: {
-    domains: ['to-be-healthy-bucket.s3.ap-northeast-2.amazonaws.com'],
-  },
   async rewrites() {
     return [
       {
@@ -47,7 +44,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: process.env.NEXT_PUBLIC_BUCKET_HOSTNAME,
+        hostname: 'to-be-healthy-bucket.s3.ap-northeast-2.amazonaws.com',
         port: '',
         pathname: '/images/**',
       },

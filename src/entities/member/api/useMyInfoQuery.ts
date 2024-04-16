@@ -4,7 +4,7 @@ import { api, BaseError, BaseResponse } from '@/shared/api';
 
 import { Member } from '../model/types';
 
-export const useMyInfo = () => {
+export const useMyInfoQuery = () => {
   return useQuery<Member, BaseError>({
     queryKey: ['myinfo'],
     queryFn: async () => {
