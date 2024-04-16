@@ -1,7 +1,7 @@
 import { StudentDetailPage } from '@/pages/manage';
 
 interface Props {
-  params: { memberId: string };
+  params: { memberId: number };
 }
 
 const Page = ({ params }: Props) => {

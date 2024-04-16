@@ -1,15 +1,41 @@
+import { DailyDiet } from '@/entities/diet';
+
+interface Gym {
+  gymId: number;
+  name: string;
+}
+
+interface InviteRequest {
+  name: string;
+  lessonCnt: number;
+}
+
+interface InviteResponse {
+  uuid: string;
+  invitationLink: string;
+}
+
 interface RegisteredStudent {
   memberId: number;
   name: string;
+  nickName: null;
   userId: string;
   email: string;
   ranking: number;
   lessonCnt: number;
   remainLessonCnt: number;
-  gymEndDt: string;
+  fileUrl: null;
 }
 
-type RegisteredStudentsListResponse = RegisteredStudent[] | null;
+interface InviteRequest {
+  name: string;
+  lessonCnt: number;
+}
+
+interface InviteResponse {
+  uuid: string;
+  invitationLink: string;
+}
 
 interface Member {
   id: number;
@@ -31,33 +57,29 @@ interface Member {
   memberType: 'STUDENT' | 'TRAINER';
   pushAlarmStatus: 'ENABLED' | 'DISABLE';
   feedbackAlarmStatus: 'ENABLED' | 'DISABLE';
-  gym: {
-    id: number;
-    name: string;
-  };
+  gym: Gym;
   socialType: 'NONE' | 'KAKAO' | 'NAVER' | 'GOOGLE';
 }
 
-interface GymItem {
-  gymId: number;
+interface StudentDetail {
+  memberId: number;
   name: string;
-}
-
-interface InviteRequest {
-  name: string;
+  nickName: string | null;
+  fileUrl: string | null;
+  memo: string | null;
+  ranking: number;
   lessonCnt: number;
-}
-
-interface InviteResponse {
-  uuid: string;
-  invitationLink: string;
+  remainLessonCnt: number;
+  lessonDt: string;
+  lessonStartTime: string;
+  diet: DailyDiet;
 }
 
 export type {
-  GymItem,
+  Gym,
   InviteRequest,
   InviteResponse,
   Member,
   RegisteredStudent,
-  RegisteredStudentsListResponse,
+  StudentDetail,
 };

@@ -1,21 +1,18 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
-import { RegisteredStudent, useRegisteredStudentsList } from '@/entities/member';
+import { type RegisteredStudent, useRegisteredStudentsQuery } from '@/entities/member';
 import { AddStudentDialog } from '@/features/member/ui/AddStudentDialog';
 import IconArrowDownUp from '@/shared/assets/images/icon_arrow_down_up.svg';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconCircleAlert from '@/shared/assets/images/icon_circle_alert.svg';
-import IconMedalBronze from '@/shared/assets/images/icon_medal_bronze.svg';
-import IconMedalGold from '@/shared/assets/images/icon_medal_gold.svg';
-import IconMedalNormal from '@/shared/assets/images/icon_medal_normal.svg';
-import IconMedalSilver from '@/shared/assets/images/icon_medal_silver.svg';
+import IconDefaultProfileSmall from '@/shared/assets/images/icon_default_profile_small.svg';
 import IconPlus from '@/shared/assets/images/icon_plus.svg';
 import IconSearch from '@/shared/assets/images/icon_search.svg';
-import { formatDifferenceInDays } from '@/shared/lib/dateFormat';
 import { Button, Layout } from '@/shared/ui';
 import {
   DropdownMenu,
@@ -26,56 +23,47 @@ import {
 } from '@/shared/ui/dropdown-menu';
 import { cn } from '@/shared/utils';
 
-type Student = RegisteredStudent;
+import { profileBorderStyleMapper } from '../utils';
 
-interface SortCondition {
+interface SortCondition<T> {
   label: string;
-  condition: (a: Student, b: Student) => number;
+  condition: (a: T, b: T) => number;
 }
 
-const sortCondition: Record<string, SortCondition> = {
+const sortConditionMapper: Record<string, SortCondition<RegisteredStudent>> = {
   DEFAULT: {
     label: '기본 순',
-    condition: (a: Student, b: Student) => a.memberId - b.memberId,
+    condition: (a, b) => a.memberId - b.memberId,
   },
   RANKING: {
     label: '랭킹 순',
-    condition: (a: Student, b: Student) => a.ranking - b.ranking,
+    condition: (a, b) => a.ranking - b.ranking,
   },
 };
 
-const StudentListController = (students: Student[]) => ({
+const StudentListController = (students: RegisteredStudent[]) => ({
   search: (keyword: string) => {
     const searchedStudents = students.filter((student) =>
       student.name.includes(keyword.toLowerCase())
     );
     return StudentListController(searchedStudents);
   },
-  sort: (condition: ((a: Student, b: Student) => number) | null) => {
+  sort: (condition: ((a: RegisteredStudent, b: RegisteredStudent) => number) | null) => {
     if (condition === null) return StudentListController(students);
-
     const sortedStudents = students.sort(condition);
     return StudentListController(sortedStudents);
   },
   get: () => students,
 });
 
-const medalMapper = (ranking: number) => {
-  if (ranking === 1) return <IconMedalGold />;
-  if (ranking === 2) return <IconMedalSilver />;
-  if (ranking === 3) return <IconMedalBronze />;
-  if (ranking === 999) return <IconMedalNormal />;
-  return <IconMedalNormal />;
-};
-
 const StudentListPage = () => {
   const router = useRouter();
-  const [sort, setSort] = useState<SortCondition>(sortCondition.DEFAULT);
+  const [sort, setSort] = useState(sortConditionMapper.DEFAULT);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const { data: studentList, isLoading } = useRegisteredStudentsList();
+  const { data: studentList, isLoading } = useRegisteredStudentsQuery();
 
-  const handleSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSearchInput = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
   };
 
@@ -84,7 +72,7 @@ const StudentListPage = () => {
     .search(searchQuery)
     .get();
 
-  const studentsCount = processedStudentList ? processedStudentList.length ?? 0 : 0;
+  const studentsCount = processedStudentList.length ?? 0;
 
   return (
     <Layout className='flex flex-col'>
@@ -131,7 +119,7 @@ const StudentListPage = () => {
                   </DropdownMenuTrigger>
                   <DropdownMenuContent className='absolute -right-9 top-1 flex w-[96px] flex-col'>
                     <DropdownMenuGroup className='flex flex-col'>
-                      {Object.values(sortCondition).map((item) => (
+                      {Object.values(sortConditionMapper).map((item) => (
                         <DropdownMenuItem
                           key={item.label}
                           className={cn(
@@ -181,27 +169,30 @@ const StudentListPage = () => {
               {studentList !== null && processedStudentList.length > 0 && (
                 <div className='flex w-full flex-col gap-y-[10px] pb-8'>
                   {processedStudentList.map((item) => {
-                    const medal = medalMapper(item.ranking);
-                    const differenceInDays = formatDifferenceInDays(
-                      new Date(item.gymEndDt)
-                    );
-                    const expirationMessage =
-                      differenceInDays < 0 ? '만료' : `${differenceInDays}일 후 만료`;
                     return (
                       <Link key={item.memberId} href={`/trainer/manage/${item.memberId}`}>
                         <div className='flex justify-between rounded-lg bg-white px-[16px] py-[20px]'>
                           <div className='flex items-center gap-x-[16px]'>
                             <div className='relative'>
-                              {medal}
-                              <span className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform text-white'>
-                                {item.ranking}
-                              </span>
+                              {item.fileUrl ? (
+                                <Image
+                                  width={32}
+                                  height={32}
+                                  src={item.fileUrl}
+                                  alt='profile'
+                                  className={profileBorderStyleMapper(item.ranking)}
+                                />
+                              ) : (
+                                <IconDefaultProfileSmall />
+                              )}
                             </div>
                             <div className='flex flex-col gap-y-[4px]'>
                               <p className='typography-title-1 font-bold'>{item.name}</p>
-                              <span className='typography-body-4 text-gray-500'>
-                                {expirationMessage}
-                              </span>
+                              {item.nickName ?? (
+                                <span className='typography-body-4 text-gray-500'>
+                                  {item.nickName}
+                                </span>
+                              )}
                             </div>
                           </div>
                           <div className='flex items-center'>

@@ -5,7 +5,11 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { InviteRequest, useInviteStudent, useMyInfo } from '@/entities/member';
+import {
+  InviteRequest,
+  useInviteStudentMutation,
+  useMyInfoQuery,
+} from '@/entities/member';
 import CheckIcon from '@/shared/assets/images/icon_check.svg';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
@@ -24,8 +28,8 @@ export const TrainerInvitePage = () => {
   const dialogOpen = !!invitationUrl;
 
   const { toast } = useToast();
-  const { mutate } = useInviteStudent();
-  const { data } = useMyInfo();
+  const { mutate } = useInviteStudentMutation();
+  const { data } = useMyInfoQuery();
   const gymName = data?.gym.name ?? '';
   const trainerName = data?.name ?? '';
 

@@ -4,7 +4,7 @@ import { api, BaseError, BaseResponse } from '@/shared/api';
 
 import { InviteRequest, InviteResponse } from '../model/types';
 
-export const useInviteStudent = () => {
+export const useInviteStudentMutation = () => {
   return useMutation<BaseResponse<InviteResponse>, BaseError, InviteRequest>({
     mutationFn: async (invitationInfo) => {
       const result = await api.post<BaseResponse<InviteResponse>>(

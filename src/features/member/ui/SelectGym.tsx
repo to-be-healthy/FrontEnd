@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useAuthAction, useAuthSelector } from '@/entities/auth';
-import { useGetGymList, useRegisterGymMutation } from '@/entities/member';
-import { GymItem } from '@/entities/member/model/types';
+import { Gym } from '@/entities/member';
+import { useGymListQuery, useRegisterGymMutation } from '@/entities/member';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import {
@@ -29,7 +29,7 @@ export const SelectGym = () => {
   const { toast } = useToast();
 
   const { mutate } = useRegisterGymMutation();
-  const { data: gymList, isPending } = useGetGymList();
+  const { data: gymList, isPending } = useGymListQuery();
 
   const handleSelectGymId = (gymId: number) => {
     setSelectGymId(gymId);
@@ -123,7 +123,7 @@ export const SelectGym = () => {
                     선택해주세요.
                   </p>
                   <ul className='w-full'>
-                    {gymList?.map((item: GymItem) => {
+                    {gymList?.map((item: Gym) => {
                       return (
                         <li key={item.gymId} className='mb-3 h-[80px] w-full'>
                           <Button

@@ -2,6 +2,7 @@ import '@/app/_styles/global.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata, Viewport } from 'next';
+import { Suspense } from 'react';
 
 import { KakaoScript, MSWComponent, QueryProvider } from './_providers';
 
@@ -29,7 +30,7 @@ export default function RootLayout({
       <body>
         <QueryProvider>
           <MSWComponent />
-          {children}
+          <Suspense>{children}</Suspense>
         </QueryProvider>
       </body>
       <GoogleAnalytics gaId={gaId} />

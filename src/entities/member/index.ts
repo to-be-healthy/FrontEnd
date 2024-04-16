@@ -1,14 +1,14 @@
-export { useGetGymList } from './api/useGetGymList';
-export { useInviteStudent } from './api/useInviteStudent';
-export { useMyInfo } from './api/useMyInfo';
-export { useRegisteredStudentsList } from './api/useRegisteredStudentsList';
+export { useGymListQuery } from './api/useGymListQuery';
+export { useInviteStudentMutation } from './api/useInviteStudentMutation';
+export { useMyInfoQuery } from './api/useMyInfoQuery';
+export { useRegisteredStudentsQuery } from './api/useRegisteredStudentsQuery';
 export { useRegisterGymMutation } from './api/useRegisterGymMutation';
+export { useStudentDetailQuery } from './api/useStudentDetailQuery';
 export type {
-  GymItem,
-  GymListResponse,
+  Gym,
   InviteRequest,
   InviteResponse,
   Member,
   RegisteredStudent,
-  RegisteredStudentsListResponse,
+  StudentDetail,
 } from './model/types';

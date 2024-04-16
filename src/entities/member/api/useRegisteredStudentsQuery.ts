@@ -2,9 +2,11 @@ import { useQuery } from '@tanstack/react-query';
 
 import { api, BaseError, BaseResponse } from '@/shared/api';
 
-import { RegisteredStudentsListResponse } from '../model/types';
+import { RegisteredStudent } from '../model/types';
 
-export const useRegisteredStudentsList = () => {
+type RegisteredStudentsListResponse = RegisteredStudent[] | null;
+
+export const useRegisteredStudentsQuery = () => {
   return useQuery<RegisteredStudentsListResponse, BaseError>({
     queryKey: ['registeredStudents'],
     queryFn: async () => {
