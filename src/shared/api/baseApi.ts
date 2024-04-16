@@ -1,6 +1,6 @@
 import axios, { type CreateAxiosDefaults } from 'axios';
 
-import { auth } from '@/entities/auth';
+import { auth } from '@/entity/auth';
 
 // const BASE_SERVER_URL =
 //   process.env.NEXT_PUBLIC_AUTH_URL ?? 'https://api.to-be-healthy.site';

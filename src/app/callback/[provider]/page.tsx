@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { authMutation, Provider, useAuthAction } from '@/entities/auth';
+import { authMutation, Provider, useAuthAction } from '@/entity/auth';
 
 interface StateType {
   memberType: 'trainer' | 'student';

@@ -1,4 +1,4 @@
-import { StudentDetailPage } from '@/pages/manage';
+import { StudentDetailPage } from '@/page/manage';
 
 interface Props {
   params: { memberId: number };

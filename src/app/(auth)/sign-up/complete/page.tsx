@@ -1,4 +1,4 @@
-import { SignUpCompletePage } from "@/pages/auth";
+import { SignUpCompletePage } from '@/page/auth';
 
 const SignUpComplete = () => {
   return <SignUpCompletePage />;
