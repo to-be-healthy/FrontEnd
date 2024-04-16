@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-import { auth } from '@/entities/auth';
+import { auth } from '@/entity/auth';
 
 export const UserRoleMiddleware = ({
   memberType,

@@ -1,4 +1,4 @@
-import { StudentListPage } from '@/pages/manage';
+import { StudentListPage } from '@/page/manage';
 
 const Page = () => {
   return <StudentListPage />;

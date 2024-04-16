@@ -1,6 +1,6 @@
 'use client';
 
-import { TrainerHomePage } from '@/pages/home';
+import { TrainerHomePage } from '@/page/home';
 
 const Page = () => {
   return <TrainerHomePage />;

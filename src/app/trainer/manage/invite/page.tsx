@@ -1,4 +1,4 @@
-import { TrainerInvitePage } from '@/pages/manage';
+import { TrainerInvitePage } from '@/page/manage';
 
 const Page = () => {
   return <TrainerInvitePage />;
