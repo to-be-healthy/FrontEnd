@@ -9,9 +9,9 @@ import { CourseCard, CourseCardContent, CourseCardHeader } from '@/feature/membe
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import { Layout } from '@/shared/ui';
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 6;
 
-export const StudentCourseHistory = () => {
+export const StudentMyCourseDetailPage = () => {
   const queryClient = useQueryClient();
   const [ref, inView] = useInView({
     threshold: 0.5,
