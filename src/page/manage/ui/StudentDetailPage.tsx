@@ -5,14 +5,23 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { useStudentDetailQuery } from '@/feature/member';
+import IconArrowRight from '@/shared/assets/images/icon_arrow_right.svg';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconCalendar from '@/shared/assets/images/icon_calendar_blue.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile.svg';
+import IconDotsVertical from '@/shared/assets/images/icon_dots_vertical.svg';
 import IconDumbel from '@/shared/assets/images/icon_dumbel.svg';
 import IconEdit from '@/shared/assets/images/icon_edit.svg';
 import IconPhone from '@/shared/assets/images/icon_phone.svg';
 import { Typography } from '@/shared/mixin';
 import { Button, Card, CardContent, CardHeader, Layout, Progress } from '@/shared/ui';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/shared/ui/dropdown-menu';
 import { cn } from '@/shared/utils';
 
 import { profileBorderStyleMapper } from '../utils';
@@ -20,6 +29,8 @@ import { profileBorderStyleMapper } from '../utils';
 interface Props {
   memberId: number;
 }
+
+const MENU_LIST = ['별칭 설정', '회원 삭제'];
 
 export const StudentDetailPage = ({ memberId }: Props) => {
   const router = useRouter();
@@ -35,11 +46,33 @@ export const StudentDetailPage = ({ memberId }: Props) => {
           <IconBack />
         </Button>
         <h2 className={Typography.HEADING_4_SEMIBOLD}>회원 정보</h2>
-        <Link
-          href={`/trainer/manage/${memberId}/edit`}
-          className={Typography.TITLE_1_SEMIBOLD}>
-          수정
-        </Link>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant='ghost'
+              className={Typography.TITLE_1_SEMIBOLD}
+              onClick={() => {
+                console.log('open menu');
+              }}>
+              <IconDotsVertical />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
+            <DropdownMenuGroup className='flex flex-col'>
+              {MENU_LIST.map((item) => (
+                <DropdownMenuItem
+                  key={item}
+                  className='typography-title-3 px-[16px] py-[12px]'
+                  onClick={() => {
+                    console.log('Click', item);
+                  }}>
+                  {item}
+                </DropdownMenuItem>
+              ))}
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </Layout.Header>
       {data && (
         <Layout.Contents className='px-[20px]'>
@@ -107,7 +140,11 @@ export const StudentDetailPage = ({ memberId }: Props) => {
               </Link>
             </Card>
           </div>
-          <Card className='mb-[16px] w-full gap-y-[36px] bg-primary-500 text-white shadow-sm'>
+          <Card
+            className={cn(
+              'mb-[16px] w-full gap-y-[36px] text-white shadow-sm',
+              data.remainLessonCnt !== 0 ? 'bg-primary-500' : 'bg-gray-500'
+            )}>
             <CardHeader className='flex justify-between'>
               <p className={Typography.HEADING_4_SEMIBOLD}>
                 잔여 <span className='font-bold'>{data.remainLessonCnt}</span>회
@@ -117,48 +154,89 @@ export const StudentDetailPage = ({ memberId }: Props) => {
             <CardContent className='flex flex-col gap-y-[8px]'>
               <p className={cn(Typography.HEADING_5, 'text-white')}>
                 PT 진행 횟수 {data.lessonCnt - data.remainLessonCnt}
-                <span className='text-blue-200'>/{data.lessonCnt}</span>
+                <span
+                  className={
+                    data.remainLessonCnt !== 0 ? 'text-blue-200' : 'text-gray-300'
+                  }>
+                  /{data.lessonCnt}
+                </span>
               </p>
               <Progress
                 value={(100 * (data.lessonCnt - data.remainLessonCnt)) / data.lessonCnt}
+                className={cn(data.remainLessonCnt === 0 && 'bg-gray-400')}
               />
             </CardContent>
           </Card>
-          <Card className='mb-[16px] w-full gap-y-[24px] px-[16px] py-[20px] shadow-sm'>
-            <CardHeader className='flex items-center justify-between text-gray-800'>
-              <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>다음 PT예정일</h4>
-              <Link href='#'>
-                <p className={cn(Typography.BODY_3, 'text-gray-500')}>예약 전체</p>
-              </Link>
-            </CardHeader>
-            <CardContent>
-              <p
-                className={cn(
-                  Typography.HEADING_4,
-                  'flex items-center gap-x-[8px] text-black'
-                )}>
-                <IconPhone />
-                {/* TODO) 날짜, 시간 포매터 추가 */}
-                {data.lessonDt} {data.lessonStartTime}
-              </p>
-            </CardContent>
-          </Card>
-          <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
-            <CardHeader className='flex items-center justify-between text-gray-800'>
-              <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>오늘 식단</h4>
-              <Link href='#'>
-                <p className={cn(Typography.BODY_3, 'text-gray-500')}>등록 식단 전체</p>
-              </Link>
-            </CardHeader>
-            <CardContent className='flex justify-center gap-x-[6px]'>
-              <div className='h-[95px] w-[95px] bg-gray-300'></div>
-              <div className='h-[95px] w-[95px] bg-gray-300'></div>
-              <div className='h-[95px] w-[95px] bg-gray-300'></div>
-            </CardContent>
-          </Card>
+          {data.lessonDt && data.lessonStartTime ? (
+            <Card className='mb-[16px] w-full gap-y-[24px] px-[16px] py-[20px] shadow-sm'>
+              <CardHeader className='flex items-center justify-between text-gray-800'>
+                <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>다음 PT예정일</h4>
+                <Link href='#'>
+                  <p className={cn(Typography.BODY_3, 'text-gray-500')}>예약 전체</p>
+                </Link>
+              </CardHeader>
+              <CardContent>
+                <p
+                  className={cn(
+                    Typography.HEADING_4,
+                    'flex items-center gap-x-[8px] text-black'
+                  )}>
+                  <IconPhone />
+                  {/* TODO) 날짜, 시간 포매터 추가 */}
+                  {data.lessonDt} {data.lessonStartTime}
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            <Card className='mb-[16px] w-full gap-y-[24px] px-[16px] py-[20px] shadow-sm'>
+              <CardHeader className='flex items-center justify-between text-gray-800'>
+                <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>
+                  예약 내역
+                  <span className={cn(Typography.BODY_3, 'ml-[10px] text-gray-600')}>
+                    예정된 수업이 없습니다.
+                  </span>
+                </h4>
+                <Link href='#'>
+                  <IconArrowRight />
+                </Link>
+              </CardHeader>
+            </Card>
+          )}
+          {data.diet !== null ? (
+            <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
+              <CardHeader className='flex items-center justify-between text-gray-800'>
+                <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>오늘 식단</h4>
+                <Link href='#'>
+                  <p className={cn(Typography.BODY_3, 'text-gray-500')}>등록 식단 전체</p>
+                </Link>
+              </CardHeader>
+              <CardContent className='flex justify-center gap-x-[6px]'>
+                <div className='h-[95px] w-[95px] bg-gray-300'></div>
+                <div className='h-[95px] w-[95px] bg-gray-300'></div>
+                <div className='h-[95px] w-[95px] bg-gray-300'></div>
+              </CardContent>
+            </Card>
+          ) : (
+            <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
+              <CardHeader className='flex items-center justify-between text-gray-800'>
+                <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>
+                  오늘 식단
+                  <span className={cn(Typography.BODY_3, 'ml-[10px] text-gray-600')}>
+                    오늘 등록된 식단이 없습니다.
+                  </span>
+                </h4>
+                <Link href='#'>
+                  <IconArrowRight />
+                </Link>
+              </CardHeader>
+            </Card>
+          )}
           <Card className='w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
-            <CardHeader>
+            <CardHeader className='flex items-center justify-between'>
               <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>개인 운동 기록</h4>
+              <Link href='#'>
+                <IconArrowRight />
+              </Link>
             </CardHeader>
           </Card>
         </Layout.Contents>
