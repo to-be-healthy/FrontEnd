@@ -12,7 +12,6 @@ export {
 } from './alert-dialog';
 export { Button, buttonVariants } from './button';
 export { Card, CardContent, CardFooter, CardHeader } from './card';
-export { CourseCard, CourseCardContent, CourseCardHeader } from './card/CourseCard';
 export { Collapsible, CollapsibleContent, CollapsibleTrigger } from './collapsible';
 export {
   Dialog,

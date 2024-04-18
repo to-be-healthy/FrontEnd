@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { CourseHistoryType, useMyCourseHistoryQuery } from '@/feature/member';
+import { courseHistoryCodeDescription, useMyCourseHistoryQuery } from '@/feature/member';
+import { CourseCard, CourseCardContent, CourseCardHeader } from '@/feature/member';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
-import { CourseCard, CourseCardContent, CourseCardHeader, Layout } from '@/shared/ui';
+import { Layout } from '@/shared/ui';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -51,14 +52,14 @@ export const StudentCourseHistory = () => {
         ) : (
           <>
             <div className='bg-[#fff] p-7 pb-[58px] pt-6'>
-              <CourseCard key={historyData?.pages[0].course.courseId}>
+              <CourseCard key={historyData?.pages[0]?.course?.courseId}>
                 <CourseCardHeader
                   gymName='건강해짐 홍대점'
-                  remainLessonCnt={historyData?.pages[0].course.remainLessonCnt}
+                  remainLessonCnt={historyData?.pages[0]?.course?.remainLessonCnt}
                 />
                 <CourseCardContent
-                  lessonCnt={historyData?.pages[0].course.lessonCnt ?? 0}
-                  remainLessonCnt={historyData?.pages[0].course.remainLessonCnt ?? 0}
+                  lessonCnt={historyData?.pages[0]?.course?.lessonCnt ?? 0}
+                  remainLessonCnt={historyData?.pages[0]?.course?.remainLessonCnt ?? 0}
                 />
               </CourseCard>
             </div>
@@ -73,7 +74,7 @@ export const StudentCourseHistory = () => {
                       <p className='typography-body-4 text-gray-500'>{formattedDate}</p>
                       <dl className='flex items-center justify-between'>
                         <dt className='typography-title-3 text-gray-700'>
-                          {CourseHistoryType[item.type]}
+                          {courseHistoryCodeDescription[item.type]}
                         </dt>
                         <dd className='typography-title-3 text-[#000]'>
                           {item.calculation === 'PLUS' ? '+' : '-'}

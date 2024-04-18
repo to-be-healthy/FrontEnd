@@ -2,8 +2,8 @@ import { HTMLAttributes, ReactNode } from 'react';
 
 import { cn } from '@/shared/utils';
 
-import { Card, CardContent, CardHeader } from '../card';
-import { Progress } from '../progress';
+import { Card, CardContent, CardHeader } from '../../../shared/ui/card';
+import { Progress } from '../../../shared/ui/progress';
 
 interface CourseCardHeaderType {
   gymName?: string;

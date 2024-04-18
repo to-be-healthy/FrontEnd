@@ -2,13 +2,9 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { api, BaseError, BaseResponse } from '@/shared/api';
 
-type HistoryTypeKey =
-  | 'COURSE_CREATE'
-  | 'PLUS_CNT'
-  | 'MINUS_CNT'
-  | 'ONE_LESSON'
-  | 'RESERVATION'
-  | 'RESERVATION_CANCEL';
+import { courseHistoryCodeDescription } from '../const';
+
+type CourseHistory = keyof typeof courseHistoryCodeDescription;
 
 interface CourseItem {
   courseId: number;
@@ -21,7 +17,7 @@ interface CourseHistoryItem {
   courseHistoryId: number;
   cnt: number;
   calculation: string;
-  type: HistoryTypeKey;
+  type: CourseHistory;
   createdAt: string;
 }
 
