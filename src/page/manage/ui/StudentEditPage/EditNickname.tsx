@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { useContext, useState } from 'react';
 
-import { useEditStudentNickname } from '@/feature/manage';
+import { useEditStudentNicknameMutation } from '@/feature/manage';
 import CheckIcon from '@/shared/assets/images/icon_check.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile.svg';
@@ -36,7 +36,7 @@ const EditNickname = () => {
   const { memberId, name, nickname } = value;
 
   const [newNickname, setNewNickname] = useState(nickname ?? '');
-  const { mutate } = useEditStudentNickname();
+  const { mutate } = useEditStudentNicknameMutation();
 
   const submitChangeNickname = () => {
     if (!newNickname) {

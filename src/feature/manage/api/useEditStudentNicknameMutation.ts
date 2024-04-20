@@ -7,7 +7,7 @@ interface EditStudentNickname {
   nickname: string;
 }
 
-export const useEditStudentNickname = () => {
+export const useEditStudentNicknameMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, EditStudentNickname>({
     mutationFn: async ({ studentId, nickname }) => {
       const result = await api.post<BaseResponse<boolean>>(
