@@ -78,7 +78,7 @@ export const TrainerInvitePage = () => {
       className: 'h-[48px]',
       description: (
         <div className='flex items-center justify-center'>
-          <CheckIcon />
+          <CheckIcon fill={'var(--primary-500)'} />
           <p className='typography-heading-5 ml-6 text-white'>초대 링크를 복사했어요.</p>
         </div>
       ),

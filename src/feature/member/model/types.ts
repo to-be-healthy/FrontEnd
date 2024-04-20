@@ -56,4 +56,9 @@ interface StudentDetail {
   diet: DailyDiet;
 }
 
-export type { InviteForm, Member, RegisteredStudent, StudentDetail };
+interface AppendMemberForm {
+  name: string;
+  lessonCnt: number;
+}
+
+export type { AppendMemberForm, InviteForm, Member, RegisteredStudent, StudentDetail };
