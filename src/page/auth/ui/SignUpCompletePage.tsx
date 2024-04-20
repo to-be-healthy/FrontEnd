@@ -4,13 +4,15 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-import { signUpStore } from '@/entity/auth';
 import { Button, Layout } from '@/shared/ui';
 
 export const SignUpCompletePage = () => {
-  const params = useSearchParams();
-  const type = params?.get('type');
-  const { name } = signUpStore(); //Todo : context api 사용해서 수정
+  const searchParams = useSearchParams();
+  const type = searchParams?.get('type');
+  const name = searchParams?.get('name');
+  if (!type || !name) {
+    throw new Error();
+  }
 
   return (
     <Layout className='bg-white'>

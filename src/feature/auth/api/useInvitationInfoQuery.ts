@@ -1,11 +1,16 @@
 import { useQuery } from '@tanstack/react-query';
 
+import type { Trainer } from '@/entity/auth';
 import { api } from '@/entity/auth';
 import { BaseError, BaseResponse } from '@/shared/api';
 
-import { InvitationResponse } from '../model/types';
+interface InvitationResponse {
+  name: string;
+  lessonCnt: number;
+  trainer: Partial<Pick<Trainer, 'name'>>;
+}
 
-export const useInvitationInfo = (uuid: string) => {
+export const useInvitationInfoQuery = (uuid: string) => {
   return useQuery<InvitationResponse, BaseError>({
     queryKey: ['invitation', uuid],
     queryFn: async () => {

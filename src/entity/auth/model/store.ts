@@ -5,21 +5,21 @@ import { withSelector } from '@/shared/utils';
 
 import { UserInfo } from './types';
 
-type AuthState = UserInfo;
+type AuthState = Partial<UserInfo>;
 
 interface AuthAction {
-  setUserInfo: (userinfo: UserInfo) => void;
+  setUserInfo: (userinfo: AuthState) => void;
   deleteUserInfo: () => void;
 }
 
 const AUTH_STATE_NAME = 'auth-storage';
 
-const DEFAULT_AUTH_STATE = {
-  userId: null,
-  memberType: null,
-  refreshToken: null,
-  accessToken: null,
-  gymId: null,
+const DEFAULT_AUTH_STATE: AuthState = {
+  userId: undefined,
+  accessToken: undefined,
+  refreshToken: undefined,
+  gymId: undefined,
+  memberType: undefined,
 };
 
 const authStore = () => DEFAULT_AUTH_STATE;
@@ -38,7 +38,7 @@ const useAuthStore = createWithEqualityFn(
 );
 
 const useAuthAction = (): AuthAction => ({
-  setUserInfo: (userInfo: UserInfo) => {
+  setUserInfo: (userInfo) => {
     useAuthStore.setState(() => ({ ...userInfo }));
   },
   deleteUserInfo: () => {

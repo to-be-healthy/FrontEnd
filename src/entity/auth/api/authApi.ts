@@ -3,7 +3,7 @@ import axios, { AxiosError } from 'axios';
 import { baseApi, BaseResponse } from '@/shared/api';
 
 import { auth, useAuthAction } from '../model/store';
-import { SignInResponse } from '../model/types';
+import { UserInfo } from '../model/types';
 
 baseApi.interceptors.request.use(
   (request) => {
@@ -43,7 +43,7 @@ baseApi.interceptors.response.use(
 );
 
 const requestRefreshToken = async (userId: string, refreshToken: string) => {
-  const result = await axios.post<BaseResponse<SignInResponse>>(
+  const result = await axios.post<BaseResponse<UserInfo>>(
     `/api/auth/v1/refresh-token?userId=${userId}&refreshToken=${refreshToken}`
   );
   return result.data;

@@ -11,21 +11,12 @@ interface RegisterGymRequest {
 
 export const useRegisterGymMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, RegisterGymRequest>({
-    mutationFn: async (params: RegisterGymRequest) => {
-      if (params.memberType === 'TRAINER') {
-        const result = await api.post<BaseResponse<boolean>>(
-          `/api/gyms/v1/${params.gymId}?joinCode=${params.joinCode}`,
-          {
-            params: { gymId: params.gymId, joinCode: params.joinCode },
-          }
-        );
-        return result.data;
-      } else {
-        const result = await api.post<BaseResponse<boolean>>(
-          `/api/gyms/v1/${params.gymId}`
-        );
-        return result.data;
-      }
+    mutationFn: async ({ gymId, memberType, joinCode }) => {
+      const queryParams = memberType === 'TRAINER' ? `?joinCode=${joinCode}` : '';
+      const result = await api.post<BaseResponse<boolean>>(
+        `/api/gyms/v1/${gymId}${queryParams}`
+      );
+      return result.data;
     },
   });
 };

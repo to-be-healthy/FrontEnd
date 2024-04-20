@@ -17,6 +17,7 @@ export const SetupName = () => {
 
   useEffect(() => {
     clearErrors('name');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nameValue]);
 
   return (

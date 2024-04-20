@@ -1,26 +1,12 @@
-interface SignInRequest {
+interface UserInfo {
   userId: string;
-  password: string;
-  memberType: string;
-}
-
-interface SignInResponse {
   accessToken: string;
   refreshToken: string;
+  gymId: number | null;
   memberType: 'STUDENT' | 'TRAINER';
-  userId: string;
-  gymId: number | null;
 }
 
-interface UserInfo {
-  userId: string | null;
-  memberType: string | null;
-  refreshToken: string | null;
-  accessToken: string | null;
-  gymId: number | null;
-}
-
-type Provider = 'kakao' | 'naver' | 'google';
+type SocialProvider = 'kakao' | 'naver' | 'google';
 
 interface SignUpRequest {
   userId: string;
@@ -30,27 +16,6 @@ interface SignUpRequest {
   name: string;
   memberType: string;
   uuid?: string;
-}
-
-interface SignUpResponse {
-  id: number;
-  email: string;
-  userId: string;
-  name: string;
-  memberType: string;
-}
-
-interface SocialSignInRequest {
-  provider: Provider;
-  code: string;
-  memberType: string;
-  state: string;
-  redirectUrl?: string;
-}
-
-interface CheckVerificationCodeRequest {
-  email: string;
-  emailKey: string;
 }
 
 interface SignUpFormType {
@@ -80,15 +45,4 @@ interface Trainer {
   socialType: 'NONE';
 }
 
-export type {
-  CheckVerificationCodeRequest,
-  Provider,
-  SignInRequest,
-  SignInResponse,
-  SignUpFormType,
-  SignUpRequest,
-  SignUpResponse,
-  SocialSignInRequest,
-  Trainer,
-  UserInfo,
-};
+export type { SignUpFormType, SignUpRequest, SocialProvider, Trainer, UserInfo };

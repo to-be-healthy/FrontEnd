@@ -9,13 +9,15 @@ import {
 import { useFormContext } from 'react-hook-form';
 
 import {
-  authMutation,
   EMAIL_REGEXP,
   EXCLUDE_SPACE_REGEXP,
   ID_REGEXP,
   NAME_REGEXP,
   SignUpFormType,
+  useCheckVailableIdMutation,
 } from '@/entity/auth';
+import { useCheckVerificationCodeMutation } from '@/entity/auth/api/useCheckVerificationCodeMutation';
+import { useSendVerificationCodeMutation } from '@/entity/auth/api/useSendVerificationCodeMutation';
 import SendEmailIcon from '@/shared/assets/images/icon_send_email.svg';
 import { Button, useToast } from '@/shared/ui';
 
@@ -50,10 +52,10 @@ export const SignUpFunnel = ({
   const { toast } = useToast();
 
   const { mutate: sendVerificationCodeMutate, isPending: sendVerificationCodePending } =
-    authMutation.useSendVerificationCode();
-  const { mutate: checkVerificationCodeMutate } = authMutation.useCheckVerificationCode();
+    useSendVerificationCodeMutation();
+  const { mutate: checkVerificationCodeMutate } = useCheckVerificationCodeMutation();
   const { mutate: checkAvailableIdMutate, isPending: checkVailableIdPending } =
-    authMutation.useCheckVailableId();
+    useCheckVailableIdMutation();
 
   const [idSuccessMsg, setIdSuccessMsg] = useState('');
 
@@ -77,6 +79,7 @@ export const SignUpFunnel = ({
       setIsIdVerified(false); //todo: 중복확인 후 글자 입력시 focus아웃됨
       setIdSuccessMsg('');
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userIdValue]);
 
   const isNextButtonDisabled = () => {

@@ -1,3 +1,4 @@
+import { SocialProvider } from '@/entity/auth';
 import { DailyDiet } from '@/entity/diet';
 import { Gym } from '@/entity/gym';
 
@@ -39,7 +40,7 @@ interface Member {
   pushAlarmStatus: 'ENABLED' | 'DISABLE';
   feedbackAlarmStatus: 'ENABLED' | 'DISABLE';
   gym: Gym;
-  socialType: 'NONE' | 'KAKAO' | 'NAVER' | 'GOOGLE';
+  socialType: 'NONE' | Uppercase<SocialProvider>;
 }
 
 interface StudentDetail {

@@ -1,1 +1,1 @@
-export { useEditStudentNicknameMutation } from './api/useEditStudentNicknameMutation';
+export { useEditNicknameMutation } from './api/useEditNicknameMutation';

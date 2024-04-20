@@ -22,6 +22,7 @@ export const SetupEmail = ({ isEmailVerified }: SetupEmailProps) => {
 
   useEffect(() => {
     clearErrors('email');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [emailValue]);
 
   return (
