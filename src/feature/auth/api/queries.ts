@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
-import { api, BaseError, BaseResponse } from '@/shared/api';
+import { api } from '@/entity/auth';
+import { BaseError, BaseResponse } from '@/shared/api';
 
 import { InvitationResponse } from '../model/types';
 

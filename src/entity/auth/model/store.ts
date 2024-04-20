@@ -50,14 +50,14 @@ const useAuthSelector = withSelector(useAuthStore);
 
 const auth = () => {
   const store = localStorage.getItem(AUTH_STATE_NAME);
-  if (!store) return { tokens: null, memberType: null };
+  if (!store) return { tokens: null, memberType: null, userId: null };
 
   const { state } = JSON.parse(store) as {
     state: UserInfo;
   };
-  const { accessToken, refreshToken, memberType, gymId } = state;
+  const { accessToken, refreshToken, memberType, gymId, userId } = state;
   const tokens = { accessToken, refreshToken };
-  return { tokens, memberType, gymId };
+  return { tokens, memberType, gymId, userId };
 };
 
 export { auth, useAuthAction, useAuthSelector };

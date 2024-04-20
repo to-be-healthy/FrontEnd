@@ -1,3 +1,4 @@
+export { api } from './api/authApi';
 export * as authMutation from './api/mutations';
 export {
   GOOGLE_SOCIAL_AUTH_URL,

@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { api, BaseError, BaseResponse } from '@/shared/api';
+import { api } from '@/entity/auth';
+import { BaseError, BaseResponse } from '@/shared/api';
 
 import { InviteForm } from '../model/types';
 
