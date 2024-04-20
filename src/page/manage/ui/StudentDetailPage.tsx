@@ -30,11 +30,13 @@ interface Props {
   memberId: number;
 }
 
-const MENU_LIST = ['별칭 설정', '회원 삭제'];
-
 export const StudentDetailPage = ({ memberId }: Props) => {
   const router = useRouter();
   const { data } = useStudentDetailQuery(memberId);
+
+  const deleteStudent = () => {
+    console.log('Delete Member', memberId);
+  };
 
   return (
     <Layout>
@@ -60,16 +62,26 @@ export const StudentDetailPage = ({ memberId }: Props) => {
           </DropdownMenuTrigger>
           <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
             <DropdownMenuGroup className='flex flex-col'>
-              {MENU_LIST.map((item) => (
-                <DropdownMenuItem
-                  key={item}
-                  className='typography-title-3 px-[16px] py-[12px]'
-                  onClick={() => {
-                    console.log('Click', item);
+              <DropdownMenuItem
+                className='typography-title-3 px-[16px] py-[12px]'
+                asChild>
+                <Link
+                  href={{
+                    pathname: `/trainer/manage/${memberId}/edit`,
+                    query: {
+                      type: 'nickname',
+                      name: data?.name,
+                      nickname: data?.nickName,
+                    },
                   }}>
-                  {item}
-                </DropdownMenuItem>
-              ))}
+                  별칭 설정
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className='typography-title-3 px-[16px] py-[12px]'
+                onClick={deleteStudent}>
+                회원 삭제
+              </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>

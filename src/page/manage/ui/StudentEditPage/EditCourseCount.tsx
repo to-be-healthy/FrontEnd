@@ -1,5 +1,3 @@
-'use client';
-
 import { useRouter } from 'next/navigation';
 
 import IconBack from '@/shared/assets/images/icon_back.svg';
@@ -7,19 +5,9 @@ import { Typography } from '@/shared/mixin';
 import { Button, Input, Layout } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-interface Props {
-  memberId: string;
-}
-
-const StudentEditPage = ({ memberId }: Props) => {
-  console.log('memberId', memberId);
+const EditNickname = ({ memberId }: { memberId: string }) => {
   const router = useRouter();
 
-  const handleRemoveStudent = () => {
-    console.log(`Remove ${memberId} student`);
-  };
-
-  // TODO) react-hook-form
   const handleEditStudentDetail = () => {
     console.log('Edit student info');
   };
@@ -62,13 +50,6 @@ const StudentEditPage = ({ memberId }: Props) => {
             </div>
           </div>
         </div>
-        <Button
-          variant='outline'
-          size='full'
-          className='border-[2px] border-gray-200 py-[12px] text-point'
-          onClick={handleRemoveStudent}>
-          회원 삭제하기
-        </Button>
       </Layout.Contents>
       <Layout.BottomArea>
         <Button
@@ -83,4 +64,4 @@ const StudentEditPage = ({ memberId }: Props) => {
   );
 };
 
-export { StudentEditPage };
+export { EditNickname };
