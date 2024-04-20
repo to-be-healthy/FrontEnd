@@ -134,7 +134,13 @@ export const StudentDetailPage = ({ memberId }: Props) => {
               </Link>
               <div className='h-[36px] w-[1px] bg-gray-100' />
               <Link
-                href={'#'}
+                href={{
+                  pathname: `/trainer/manage/${memberId}/edit`,
+                  query: {
+                    type: 'memo',
+                    name: data?.name,
+                  },
+                }}
                 className='flex flex-col items-center justify-between gap-y-[8px]'>
                 <div className='flex h-[20px] items-center justify-center'>
                   <IconEdit />

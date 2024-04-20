@@ -33,7 +33,7 @@ const StudentEditPage = ({ memberId }: Props) => {
         name,
         nickname,
       }}>
-      {type === 'memo' && <EditMemo memberId={memberId} name={name} />}
+      {type === 'memo' && <EditMemo />}
       {type === 'nickname' && <EditNickname />}
     </StudentEditContext.Provider>
   );
