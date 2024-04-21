@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { api, BaseError, BaseResponse } from '@/shared/api';
+import { authApi } from '@/entity/auth';
+import { BaseError, BaseResponse } from '@/shared/api';
 
 import { InviteForm } from '../model/types';
 
@@ -12,7 +13,7 @@ interface InviteResponse {
 export const useInviteStudentMutation = () => {
   return useMutation<BaseResponse<InviteResponse>, BaseError, InviteForm>({
     mutationFn: async (invitationInfo) => {
-      const result = await api.post<BaseResponse<InviteResponse>>(
+      const result = await authApi.post<BaseResponse<InviteResponse>>(
         '/api/trainers/v1/invitation',
         invitationInfo
       );

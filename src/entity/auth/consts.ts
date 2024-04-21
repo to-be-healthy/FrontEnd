@@ -1,4 +1,4 @@
-import { Provider } from './model/types';
+import { SocialProvider } from './model/types';
 
 // const BASE_REDIRECT_URI = process.env.NEXT_PUBLIC_WEB_URI;
 const BASE_REDIRECT_URI = 'http://localhost:3000'; // localhost:3000 개발용
@@ -7,7 +7,7 @@ const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
 const NAVER_CLIENT_ID = process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;
 const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 
-const genRedirectUri = (provider: Provider) =>
+const genRedirectUri = (provider: SocialProvider) =>
   `${BASE_REDIRECT_URI}/${provider}/callback`;
 
 const kakaoRedirectUri = genRedirectUri('kakao');
@@ -24,5 +24,4 @@ export {
   KAKAO_SOCIAL_AUTH_URL,
   kakaoRedirectUri,
   NAVER_SOCIAL_AUTH_URL,
-  naverRedirectUri,
 };

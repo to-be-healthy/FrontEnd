@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-import { authMutation, Provider, useAuthAction } from '@/entity/auth';
+import { SocialProvider, useAuthAction, useSocialSignInMutation } from '@/entity/auth';
 
 interface StateType {
   memberType: 'trainer' | 'student';
@@ -11,7 +11,7 @@ interface StateType {
 }
 
 interface Props {
-  params: { provider: Provider };
+  params: { provider: SocialProvider };
 }
 
 export default function Page({ params }: Props) {
@@ -21,7 +21,7 @@ export default function Page({ params }: Props) {
   const state = searchParams?.get('state');
 
   const router = useRouter();
-  const { mutate } = authMutation.useSocialSignIn();
+  const { mutate } = useSocialSignInMutation();
   const { setUserInfo } = useAuthAction();
 
   useEffect(() => {

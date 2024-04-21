@@ -1,28 +1,21 @@
-import axios from 'axios';
+import axios, { CreateAxiosDefaults } from 'axios';
 
-import { auth } from '@/entity/auth';
-
+// TODO) 서버 측에서 배포 주소에 대하여 CORS 허용 후 테스트 필요
 // const BASE_SERVER_URL =
 //   process.env.NEXT_PUBLIC_AUTH_URL ?? 'https://api.to-be-healthy.site';
 
-const apiClient = () => {
-  const instance = axios;
+const defaultOptions: CreateAxiosDefaults = {
+  // baseURL: BASE_SERVER_URL,
+};
 
-  instance.interceptors.request.use(
-    (request) => {
-      const { tokens } = auth();
-      if (tokens) {
-        request.headers.Authorization = `Bearer ${tokens.accessToken}`;
-        request.headers['Content-Type'] = 'application/json';
-      }
-      return request;
-    },
-    async (error) => {
-      return await Promise.reject(error);
-    }
-  );
-
+const generateAxiosInstance = () => {
+  const instance = axios.create(defaultOptions);
   return instance;
 };
 
-export const api = apiClient();
+/**
+ * @description 토큰 X
+ */
+const api = generateAxiosInstance();
+
+export { api, generateAxiosInstance };

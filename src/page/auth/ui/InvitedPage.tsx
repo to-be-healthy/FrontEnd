@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-import { authQuery, SocialSignIn } from '@/feature/auth';
+import { SocialSignIn, useInvitationInfoQuery } from '@/feature/auth';
 import { Typography } from '@/shared/mixin';
 import { Button, Layout } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -14,7 +14,7 @@ const InvitedPage = () => {
   const searchParams = useSearchParams();
   const uuid = searchParams?.get('uuid') ?? '';
 
-  const { data, isPending, error } = authQuery.useInvitationInfo(uuid);
+  const { data, isPending, error } = useInvitationInfoQuery(uuid);
 
   if (error !== null) {
     const message = error?.response?.data.message;

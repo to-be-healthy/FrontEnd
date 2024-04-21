@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { authMutation, useAuthAction } from '@/entity/auth';
+import { useAuthAction, useSignInMutation } from '@/entity/auth';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Button, TextInput, useToast } from '@/shared/ui';
 
@@ -10,7 +10,7 @@ import { LoginForm } from '../model/types';
 
 export const SignInForm = ({ memberType }: { memberType: 'trainer' | 'student' }) => {
   const router = useRouter();
-  const { mutate } = authMutation.useSignIn();
+  const { mutate } = useSignInMutation();
   const { setUserInfo } = useAuthAction();
   const { toast } = useToast();
 

@@ -1,23 +1,18 @@
-export * as authMutation from './api/mutations';
+export { authApi } from './api/authApi';
+export { useCheckVailableIdMutation } from './api/useCheckVailableIdMutation';
+export { useSignInMutation } from './api/useSignInMutation';
+export { useSignUpMutation } from './api/useSignUpMutation';
+export { useSocialSignInMutation } from './api/useSocialSignInMutation';
 export {
   GOOGLE_SOCIAL_AUTH_URL,
-  googleRedirectUri,
   KAKAO_SOCIAL_AUTH_URL,
-  kakaoRedirectUri,
   NAVER_SOCIAL_AUTH_URL,
-  naverRedirectUri,
 } from './consts';
-export { signUpStore } from './model/signUpStore';
 export { auth, useAuthAction, useAuthSelector } from './model/store';
 export type {
-  CheckVerificationCodeRequest,
-  Provider,
-  SignInRequest,
-  SignInResponse,
   SignUpFormType,
   SignUpRequest,
-  SignUpResponse,
-  SocialSignInRequest,
+  SocialProvider,
   Trainer,
   UserInfo,
 } from './model/types';

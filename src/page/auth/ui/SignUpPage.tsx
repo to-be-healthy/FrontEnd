@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
-import { authMutation, SignUpRequest, signUpStore } from '@/entity/auth';
+import { SignUpRequest, useSignUpMutation } from '@/entity/auth';
 import { SignUpCancelDialog, SignUpFunnel, useSignUpFunnel } from '@/feature/auth';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
@@ -15,9 +15,8 @@ const SignUpPage = () => {
   const params = useSearchParams();
   const type = params?.get('type');
   const { toast } = useToast();
-  const { setName } = signUpStore();
   const { step, Step, Funnel, setStep } = useSignUpFunnel(1);
-  const { mutate: signUpMutation } = authMutation.useSignUp();
+  const { mutate: signUpMutation } = useSignUpMutation();
 
   const [isIdVerified, setIsIdVerified] = useState(false); //아이디 중복 확인 완료 여부
   const [isEmailVerified, setIsEmailVerified] = useState(false); //이메일 인증 완료 여부
@@ -77,8 +76,7 @@ const SignUpPage = () => {
       },
       {
         onSuccess: () => {
-          setName(data.name);
-          router.push(`/sign-up/complete?type=${type}`);
+          router.push(`/sign-up/complete?type=${type}&name=${data.name}`);
         },
         onError: (error) => {
           toast({
