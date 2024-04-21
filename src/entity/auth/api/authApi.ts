@@ -1,11 +1,16 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 
-import { baseApi, BaseResponse } from '@/shared/api';
+import { api, BaseResponse, generateAxiosInstance } from '@/shared/api';
 
 import { auth, useAuthAction } from '../model/store';
 import { UserInfo } from '../model/types';
 
-baseApi.interceptors.request.use(
+/**
+ * @description 토큰 O
+ */
+const authApi = generateAxiosInstance();
+
+authApi.interceptors.request.use(
   (request) => {
     const { tokens } = auth();
     if (tokens) {
@@ -19,7 +24,7 @@ baseApi.interceptors.request.use(
   }
 );
 
-baseApi.interceptors.response.use(
+authApi.interceptors.response.use(
   async (response) => {
     return await Promise.resolve(response);
   },
@@ -38,15 +43,16 @@ baseApi.interceptors.response.use(
       const { data } = await requestRefreshToken(userId, refreshToken);
       useAuthAction().setUserInfo(data);
     }
+
     return await Promise.reject(error);
   }
 );
 
 const requestRefreshToken = async (userId: string, refreshToken: string) => {
-  const result = await axios.post<BaseResponse<UserInfo>>(
+  const result = await api.post<BaseResponse<UserInfo>>(
     `/api/auth/v1/refresh-token?userId=${userId}&refreshToken=${refreshToken}`
   );
   return result.data;
 };
 
-export const api = baseApi;
+export { authApi };

@@ -1,6 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
-import { api } from '@/entity/auth';
+import { authApi } from '@/entity/auth';
 import { BaseError, BaseResponse } from '@/shared/api';
 
 interface EditNicknameRequest {
@@ -11,7 +11,7 @@ interface EditNicknameRequest {
 export const useEditNicknameMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, EditNicknameRequest>({
     mutationFn: async ({ studentId, nickname }) => {
-      const result = await api.post<BaseResponse<boolean>>(
+      const result = await authApi.post<BaseResponse<boolean>>(
         `/api/members/v1/nickname/${studentId}?nickname=${nickname}`
       );
       return result.data;

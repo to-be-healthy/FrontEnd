@@ -1,4 +1,4 @@
-export { api } from './api/authApi';
+export { authApi } from './api/authApi';
 export { useCheckVailableIdMutation } from './api/useCheckVailableIdMutation';
 export { useSignInMutation } from './api/useSignInMutation';
 export { useSignUpMutation } from './api/useSignUpMutation';

@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
-import axios from 'axios';
 
-import { BaseError, BaseResponse } from '@/shared/api';
+import { api, BaseError, BaseResponse } from '@/shared/api';
 
 import { googleRedirectUri, kakaoRedirectUri } from '../consts';
 import { SocialProvider, UserInfo } from '../model/types';
@@ -23,7 +22,7 @@ export const useSocialSignInMutation = () => {
       if (provider === 'google') {
         Object.assign(payload, { redirectUrl: googleRedirectUri });
       }
-      const result = await axios.post<BaseResponse<UserInfo>>(
+      const result = await api.post<BaseResponse<UserInfo>>(
         `/api/auth/v1/access-token/${provider}`,
         payload
       );

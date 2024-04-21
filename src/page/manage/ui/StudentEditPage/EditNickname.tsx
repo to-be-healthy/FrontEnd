@@ -23,7 +23,7 @@ import {
 } from '@/shared/ui';
 import { cn, twSelector } from '@/shared/utils';
 
-import { StudentEditContext } from '.';
+import { StudentEditContext } from './index';
 
 const EditNickname = () => {
   const router = useRouter();
