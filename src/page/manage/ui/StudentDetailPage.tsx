@@ -19,7 +19,6 @@ import {
   CourseCardContent,
   CourseCardHeader,
   useRegisterStudentCourseMutation,
-  useStudentDetailQuery,
 } from '@/feature/member';
 import IconArrowRight from '@/shared/assets/images/icon_arrow_right.svg';
 import IconBack from '@/shared/assets/images/icon_back.svg';
@@ -41,6 +40,7 @@ import {
 } from '@/shared/ui/dropdown-menu';
 import { cn } from '@/shared/utils';
 
+import { useStudentInfo } from '../hooks/useStudentInfo';
 import { profileBorderStyleMapper } from '../utils';
 
 interface Props {
@@ -52,16 +52,17 @@ const REMAIN_CNT_ZERO = 0;
 export const StudentDetailPage = ({ memberId }: Props) => {
   const router = useRouter();
   const { toast } = useToast();
-  const { data } = useStudentDetailQuery(memberId);
+  const { memberInfo } = useStudentInfo(memberId);
+  const { mutate: RegisterMutation } = useRegisterStudentCourseMutation();
+
+  const queryClient = useQueryClient();
   const [isRegisterSheetOpen, setIsRegisterSheetOpen] = useState(false);
   const [RegisterInput, setRegisterInput] = useState('');
-  const { mutate: RegisterMutation } = useRegisterStudentCourseMutation();
-  const queryClient = useQueryClient();
 
   const RegisterCourseCount = () => {
     RegisterMutation(
       {
-        memberId: memberId,
+        memberId,
         lessonCnt: Number(RegisterInput),
       },
       {
@@ -113,7 +114,6 @@ export const StudentDetailPage = ({ memberId }: Props) => {
           <IconBack />
         </Button>
         <h2 className={Typography.HEADING_4_SEMIBOLD}>회원 정보</h2>
-
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -130,17 +130,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
               <DropdownMenuItem
                 className='typography-title-3 px-[16px] py-[12px]'
                 asChild>
-                <Link
-                  href={{
-                    pathname: `/trainer/manage/${memberId}/edit`,
-                    query: {
-                      type: 'nickname',
-                      name: data?.name,
-                      nickname: data?.nickName,
-                    },
-                  }}>
-                  별칭 설정
-                </Link>
+                <Link href={`/trainer/manage/${memberId}/edit/nickname`}>별칭 설정</Link>
               </DropdownMenuItem>
               <DropdownMenuItem
                 className='typography-title-3 px-[16px] py-[12px]'
@@ -151,23 +141,23 @@ export const StudentDetailPage = ({ memberId }: Props) => {
           </DropdownMenuContent>
         </DropdownMenu>
       </Layout.Header>
-      {data && (
+      {memberInfo && (
         <Layout.Contents className='px-[20px]'>
           <div className='flex w-full items-center gap-x-[24px]  py-[24px]'>
-            {data.fileUrl ? (
+            {memberInfo.fileUrl ? (
               <Image
                 width={80}
                 height={80}
-                src={data.fileUrl}
+                src={memberInfo.fileUrl}
                 alt='profile'
-                className={profileBorderStyleMapper(data.ranking)}
+                className={profileBorderStyleMapper(memberInfo.ranking)}
               />
             ) : (
               <IconDefaultProfile />
             )}
             <div className='flex flex-col'>
               <h2 className={cn('flex gap-x-[8px]', Typography.HEADING_2)}>
-                {data.name}
+                {memberInfo.name}
                 <IconPhone />
               </h2>
               <div
@@ -175,13 +165,13 @@ export const StudentDetailPage = ({ memberId }: Props) => {
                   Typography.BODY_3,
                   'flex items-center gap-x-[6px] text-gray-500'
                 )}>
-                {data.nickName && <p>{data.nickName}</p>}
-                {data.ranking !== 999 && data.nickName && (
+                {memberInfo.nickName && <p>{memberInfo.nickName}</p>}
+                {memberInfo.ranking !== 999 && memberInfo.nickName && (
                   <div className='block h-[11px] w-[1px] bg-gray-300'></div>
                 )}
-                {data.ranking !== 999 && (
+                {memberInfo.ranking !== 999 && (
                   <p>
-                    랭킹 <span className='text-primary-500'>{data.ranking}</span>
+                    랭킹 <span className='text-primary-500'>{memberInfo.ranking}</span>
                   </p>
                 )}
               </div>
@@ -199,13 +189,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
               </Link>
               <div className='h-[36px] w-[1px] bg-gray-100' />
               <Link
-                href={{
-                  pathname: `/trainer/manage/${memberId}/edit`,
-                  query: {
-                    type: 'memo',
-                    name: data?.name,
-                  },
-                }}
+                href={`/trainer/manage/${memberId}/edit/memo`}
                 className='flex flex-col items-center justify-between gap-y-[8px]'>
                 <div className='flex h-[20px] items-center justify-center'>
                   <IconEdit />
@@ -214,7 +198,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
               </Link>
               <div className='h-[36px] w-[1px] bg-gray-100' />
               <Link
-                href={'#'}
+                href={`/trainer/manage/${memberId}/log`}
                 className='flex flex-col items-center justify-between gap-y-[8px]'>
                 <div className='flex h-[20px] items-center justify-center'>
                   <IconDumbel />
@@ -223,45 +207,49 @@ export const StudentDetailPage = ({ memberId }: Props) => {
               </Link>
             </Card>
           </div>
-
-          {data?.course?.courseId ? (
+          {/* 수강권 있는 경우 */}
+          {memberInfo.course && (
             <Link
               href={{
                 pathname: `/trainer/manage/${memberId}/course-detail`,
-                query: { name: data?.name },
+                query: { name: memberInfo.name },
               }}>
               <CourseCard
-                key={data?.course?.courseId}
+                key={memberInfo.course?.courseId}
                 className={cn(
                   'mb-6 gap-y-11',
-                  data?.course?.remainLessonCnt === REMAIN_CNT_ZERO && 'bg-gray-500'
+                  memberInfo.course?.remainLessonCnt === REMAIN_CNT_ZERO && 'bg-gray-500'
                 )}>
                 <CourseCardHeader
-                  remainLessonCnt={data?.course?.remainLessonCnt}
+                  remainLessonCnt={memberInfo.course?.remainLessonCnt}
                   title={
-                    data?.course?.remainLessonCnt === REMAIN_CNT_ZERO
-                      ? `${data?.course?.totalLessonCnt}회 PT 수강`
-                      : `잔여 ${data?.course?.remainLessonCnt}회`
+                    memberInfo.course?.remainLessonCnt === REMAIN_CNT_ZERO
+                      ? `${memberInfo.course?.totalLessonCnt}회 PT 수강`
+                      : `잔여 ${memberInfo.course?.remainLessonCnt}회`
                   }
                   indication={
-                    data?.course?.remainLessonCnt === REMAIN_CNT_ZERO
+                    memberInfo.course?.remainLessonCnt === REMAIN_CNT_ZERO
                       ? '만료'
                       : 'PT 수강권'
                   }
                 />
                 <CourseCardContent
                   className={cn(
-                    data?.course?.remainLessonCnt === REMAIN_CNT_ZERO && 'text-gray-300'
+                    memberInfo.course?.remainLessonCnt === REMAIN_CNT_ZERO &&
+                      'text-gray-300'
                   )}
                   progressClassName={cn(
-                    data?.course?.remainLessonCnt === REMAIN_CNT_ZERO && 'bg-gray-400'
+                    memberInfo.course?.remainLessonCnt === REMAIN_CNT_ZERO &&
+                      'bg-gray-400'
                   )}
-                  totalLessonCnt={data?.course?.totalLessonCnt}
-                  remainLessonCnt={data?.course?.remainLessonCnt}
+                  totalLessonCnt={memberInfo.course?.totalLessonCnt}
+                  remainLessonCnt={memberInfo.course?.remainLessonCnt}
                 />
               </CourseCard>
             </Link>
-          ) : (
+          )}
+          {/* 수강권 없는 경우 */}
+          {!memberInfo.course && (
             <Card className='mb-6 flex w-full items-center justify-center bg-gray-500 py-[32px]'>
               <p className={cn('mb-2 text-[#fff]', Typography.TITLE_3)}>
                 등록된 수강권이 없습니다.
@@ -292,43 +280,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
               </CourseSheet>
             </Card>
           )}
-
-          {data.lessonDt && data.lessonStartTime ? (
-            <Card className='mb-[16px] w-full gap-y-[24px] px-[16px] py-[20px] shadow-sm'>
-              <CardHeader className='flex items-center justify-between text-gray-800'>
-                <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>다음 PT예정일</h4>
-                <Link href='#'>
-                  <p className={cn(Typography.BODY_3, 'text-gray-500')}>예약 전체</p>
-                </Link>
-              </CardHeader>
-              <CardContent>
-                <p
-                  className={cn(
-                    Typography.HEADING_4,
-                    'flex items-center gap-x-[8px] text-black'
-                  )}>
-                  <IconPhone />
-                  {/* TODO) 날짜, 시간 포매터 추가 */}
-                  {data.lessonDt} {data.lessonStartTime}
-                </p>
-              </CardContent>
-            </Card>
-          ) : (
-            <Card className='mb-[16px] w-full gap-y-[24px] px-[16px] py-[20px] shadow-sm'>
-              <CardHeader className='flex items-center justify-between text-gray-800'>
-                <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>
-                  예약 내역
-                  <span className={cn(Typography.BODY_3, 'ml-[10px] text-gray-600')}>
-                    예정된 수업이 없습니다.
-                  </span>
-                </h4>
-                <Link href='#'>
-                  <IconArrowRight />
-                </Link>
-              </CardHeader>
-            </Card>
-          )}
-          {data.diet !== null ? (
+          {memberInfo.diet !== null && (
             <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
               <CardHeader className='flex items-center justify-between text-gray-800'>
                 <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>오늘 식단</h4>
@@ -342,7 +294,8 @@ export const StudentDetailPage = ({ memberId }: Props) => {
                 <div className='h-[95px] w-[95px] bg-gray-300'></div>
               </CardContent>
             </Card>
-          ) : (
+          )}
+          {memberInfo.diet === null && (
             <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
               <CardHeader className='flex items-center justify-between text-gray-800'>
                 <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>

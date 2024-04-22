@@ -55,6 +55,7 @@ export {
   SheetTrigger,
 } from './sheet';
 export { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
+export { Textarea } from './textarea';
 export {
   Toast,
   type ToastActionElement,

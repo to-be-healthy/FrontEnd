@@ -9,6 +9,11 @@ export {useRegisterStudentCourseMutation} from './api/useRegisterStudentCourseMu
 export { useStudentCourseDetailQuery } from './api/useStudentCourseDetailQuery';
 export { useStudentDetailQuery } from './api/useStudentDetailQuery';
 export { courseHistoryCodeDescription } from './const';
+export {
+  StudentDetailContext,
+  useStudentDetail,
+  useStudentDetailContext,
+} from './model/studentDetailContext';
 export type {
   AppendMemberForm,
 CourseItem,
