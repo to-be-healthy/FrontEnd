@@ -1,3 +1,5 @@
+'use client';
+
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Link from 'next/link';
@@ -9,7 +11,7 @@ import { CourseCard, CourseCardContent, CourseCardHeader } from '@/feature/membe
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import { Layout } from '@/shared/ui';
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 20;
 
 export const StudentMyCourseDetailPage = () => {
   const queryClient = useQueryClient();
@@ -58,7 +60,7 @@ export const StudentMyCourseDetailPage = () => {
                   remainLessonCnt={historyData?.pages[0]?.course?.remainLessonCnt}
                 />
                 <CourseCardContent
-                  lessonCnt={historyData?.pages[0]?.course?.lessonCnt ?? 0}
+                  totalLessonCnt={historyData?.pages[0]?.course?.totalLessonCnt ?? 0}
                   remainLessonCnt={historyData?.pages[0]?.course?.remainLessonCnt ?? 0}
                 />
               </CourseCard>
@@ -86,11 +88,12 @@ export const StudentMyCourseDetailPage = () => {
                 });
               })}
             </ul>
-            {hasNextPage && (
-              <div ref={ref} className='h-[20px] p-3 text-center'>
-                loading...
-              </div>
-            )}
+            {historyData?.pages[0].courseHistories.length === ITEMS_PER_PAGE &&
+              hasNextPage && (
+                <div ref={ref} className='h-[20px] p-3 text-center'>
+                  loading...
+                </div>
+              )}
           </>
         )}
       </Layout.Contents>

@@ -1,8 +1,11 @@
+export { useAddStudentCourseMutation } from './api/useAddStudentCourseMutation';
+export { useDeleteStudentCourseMutation } from './api/useDeleteStudentCourseMutation';
 export { useInviteStudentMutation } from './api/useInviteStudentMutation';
 export { useMyCourseHistoryQuery } from './api/useMyCourseHistoryQuery';
 export { useMyInfoQuery } from './api/useMyInfoQuery';
 export { useNotRegisteredStudentsQuery } from './api/useNotRegisteredStudentsQuery';
 export { useRegisteredStudentsQuery } from './api/useRegisteredStudentsQuery';
+export { useStudentCourseDetailQuery } from './api/useStudentCourseDetailQuery';
 export { useStudentDetailQuery } from './api/useStudentDetailQuery';
 export { courseHistoryCodeDescription } from './const';
 export type {

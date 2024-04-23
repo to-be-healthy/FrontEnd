@@ -42,6 +42,18 @@ export { Progress } from './progress';
 export { RollingBanner } from './rolling-banner';
 export { ScrollArea, ScrollBar } from './scroll-area';
 export { Separator } from './separator';
+export {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  SheetOverlay,
+  SheetPortal,
+  SheetTitle,
+  SheetTrigger,
+} from './sheet';
 export { Tabs, TabsContent, TabsList, TabsTrigger } from './tabs';
 export {
   Toast,

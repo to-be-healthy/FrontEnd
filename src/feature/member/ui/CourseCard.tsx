@@ -1,3 +1,5 @@
+'use client';
+
 import { HTMLAttributes, ReactNode } from 'react';
 
 import { cn } from '@/shared/utils';
@@ -5,56 +7,11 @@ import { cn } from '@/shared/utils';
 import { Card, CardContent, CardHeader } from '../../../shared/ui/card';
 import { Progress } from '../../../shared/ui/progress';
 
-interface CourseCardHeaderType {
+interface CourseCardHeaderProps {
   gymName?: string;
-  title?: string;
   remainLessonCnt?: number;
+  expiration?: boolean;
 }
-
-export const CourseCardHeader = ({
-  gymName,
-  title,
-  remainLessonCnt,
-}: CourseCardHeaderType) => (
-  <CardHeader>
-    {gymName ? (
-      <>
-        <div className='typography-body-4 mb-1 flex items-center justify-between text-[#E2F1FF]'>
-          <p>{gymName}</p>
-          <span>PT 수강권</span>
-        </div>
-        <p className='typography-heading-3'>{remainLessonCnt}회 남아있어요!</p>
-      </>
-    ) : (
-      <div className='flex items-center justify-between'>
-        <p className='typography-heading-4 text-[#fff]'>{title}</p>
-        <span className='typography-body-3 text-[#fff]'>
-          PT {remainLessonCnt}회 수강권
-        </span>
-      </div>
-    )}
-  </CardHeader>
-);
-
-interface CourseCardContentType {
-  lessonCnt: number;
-  remainLessonCnt: number;
-}
-
-export const CourseCardContent = ({
-  lessonCnt,
-  remainLessonCnt,
-}: CourseCardContentType) => (
-  <CardContent>
-    <div>
-      <p className='typography-heading-5 mb-[6px] text-[#fff]'>
-        PT 진행 횟수 {lessonCnt}
-        <span className='typography-body-3 text-[#8EC7FF]'>/ {remainLessonCnt}</span>
-      </p>
-      <Progress className='h-[2px]' value={(lessonCnt / remainLessonCnt) * 100} />
-    </div>
-  </CardContent>
-);
 
 interface CourseCardProps extends HTMLAttributes<HTMLDivElement> {
   className?: string;
@@ -69,3 +26,51 @@ export const CourseCard = ({ className, children }: CourseCardProps) => {
     </Card>
   );
 };
+
+export const CourseCardHeader = ({
+  gymName,
+  remainLessonCnt,
+  expiration,
+}: CourseCardHeaderProps) => (
+  <CardHeader>
+    {gymName ? (
+      <>
+        <div className='typography-body-3 mb-1 flex items-center justify-between text-[#fff]'>
+          <p>{gymName}</p>
+          <span>{expiration ? '만료' : 'PT 수강권'}</span>
+        </div>
+        <p className='typography-heading-3'>{remainLessonCnt}회 남아있어요!</p>
+      </>
+    ) : (
+      <div className='flex items-center justify-between'>
+        <p className='typography-heading-4 text-[#fff]'>잔여 {remainLessonCnt}회</p>
+        <span className='typography-body-3 text-[#fff]'>
+          {expiration ? '만료' : 'PT 수강권'}
+        </span>
+      </div>
+    )}
+  </CardHeader>
+);
+
+interface CourseCardContentProps {
+  totalLessonCnt: number;
+  remainLessonCnt: number;
+}
+
+export const CourseCardContent = ({
+  totalLessonCnt,
+  remainLessonCnt,
+}: CourseCardContentProps) => (
+  <CardContent>
+    <div>
+      <p className='typography-heading-5 mb-[6px] text-[#fff]'>
+        PT 진행 횟수 {totalLessonCnt - remainLessonCnt}
+        <span className='typography-body-3 text-[#8EC7FF]'>/ {totalLessonCnt}</span>
+      </p>
+      <Progress
+        className='h-[2px]'
+        value={((totalLessonCnt - remainLessonCnt) / totalLessonCnt) * 100}
+      />
+    </div>
+  </CardContent>
+);

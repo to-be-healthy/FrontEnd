@@ -27,12 +27,12 @@ interface StudentCourse {
   courseHistories: CourseHistoryItem[];
 }
 
-export const useMyCourseHistoryQuery = (size: number) => {
+export const useStudentCourseDetailQuery = (memberId: number, size: number) => {
   return useInfiniteQuery<StudentCourse, BaseError>({
-    queryKey: ['myCourseHistory'],
+    queryKey: ['studentCourseDetail'],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentCourse>>(
-        `/api/members/v1/course?page=${pageParam as number}&size=${size}`
+        `/api/members/v1/${memberId}/course?page=${pageParam as number}&size=${size}`
       );
       return res.data.data;
     },
