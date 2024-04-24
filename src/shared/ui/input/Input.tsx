@@ -3,14 +3,14 @@ import { forwardRef, InputHTMLAttributes } from 'react';
 import { cn } from '@/shared/utils';
 
 export const Input = forwardRef<HTMLInputElement, InputHTMLAttributes<HTMLInputElement>>(
-  ({ className, ...props }, inputRef) => {
+  ({ className, type = 'text', ...props }, inputRef) => {
     return (
       <input
         className={cn(
           'outline-none autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)]',
           className
         )}
-        type='text'
+        type={type}
         ref={inputRef}
         {...props}
       />

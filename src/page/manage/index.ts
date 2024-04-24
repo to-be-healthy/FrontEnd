@@ -1,4 +1,5 @@
 export { NotRegisteredStudentListPage } from './ui/NotRegisteredStudentListPage';
+export { StudentCourseDetailPage } from './ui/StudentCourseDetailPage';
 export { StudentDetailPage } from './ui/StudentDetailPage';
 export { StudentEditPage } from './ui/StudentEditPage';
 export { StudentListPage } from './ui/StudentListPage';

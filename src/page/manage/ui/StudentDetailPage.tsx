@@ -1,20 +1,37 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 
-import { useStudentDetailQuery } from '@/feature/member';
+import {
+  CourseSheet,
+  CourseSheetContent,
+  CourseSheetFooter,
+  CourseSheetHeader,
+  CourseSheetInput,
+  CourseSheetTrigger,
+} from '@/feature/manage';
+import {
+  CourseCard,
+  CourseCardContent,
+  CourseCardHeader,
+  useRegisterStudentCourseMutation,
+  useStudentDetailQuery,
+} from '@/feature/member';
 import IconArrowRight from '@/shared/assets/images/icon_arrow_right.svg';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconCalendar from '@/shared/assets/images/icon_calendar_blue.svg';
+import CheckIcon from '@/shared/assets/images/icon_check.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile.svg';
 import IconDotsVertical from '@/shared/assets/images/icon_dots_vertical.svg';
 import IconDumbel from '@/shared/assets/images/icon_dumbel.svg';
 import IconEdit from '@/shared/assets/images/icon_edit.svg';
 import IconPhone from '@/shared/assets/images/icon_phone.svg';
 import { Typography } from '@/shared/mixin';
-import { Button, Card, CardContent, CardHeader, Layout, Progress } from '@/shared/ui';
+import { Button, Card, CardContent, CardHeader, Layout, useToast } from '@/shared/ui';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -30,9 +47,57 @@ interface Props {
   memberId: number;
 }
 
+const REMAIN_CNT_ZERO = 0;
+
 export const StudentDetailPage = ({ memberId }: Props) => {
   const router = useRouter();
+  const { toast } = useToast();
   const { data } = useStudentDetailQuery(memberId);
+  const [isRegisterSheetOpen, setIsRegisterSheetOpen] = useState(false);
+  const [RegisterInput, setRegisterInput] = useState('');
+  const { mutate: RegisterMutation } = useRegisterStudentCourseMutation();
+  const queryClient = useQueryClient();
+
+  const RegisterCourseCount = () => {
+    RegisterMutation(
+      {
+        memberId: memberId,
+        lessonCnt: Number(RegisterInput),
+      },
+      {
+        onSuccess: (reslut) => {
+          setIsRegisterSheetOpen(false);
+          void queryClient.invalidateQueries({
+            queryKey: ['registeredStudent'],
+          });
+          return toast({
+            className: 'h-12',
+            description: (
+              <div className='flex items-center justify-center'>
+                <CheckIcon fill={'var(--primary-500)'} />
+                <p className='typography-heading-5 ml-6 text-[#fff]'>{reslut.message}</p>
+              </div>
+            ),
+            duration: 2000,
+          });
+        },
+        onError: (error) => {
+          return toast({
+            className: 'h-12',
+            description: (
+              <div className='flex items-center justify-center'>
+                <CheckIcon fill={'var(--primary-500)'} />
+                <p className='typography-heading-5 ml-6 text-[#fff]'>
+                  {error.response?.data.message}
+                </p>
+              </div>
+            ),
+            duration: 2000,
+          });
+        },
+      }
+    );
+  };
 
   const deleteStudent = () => {
     console.log('Delete Member', memberId);
@@ -158,33 +223,76 @@ export const StudentDetailPage = ({ memberId }: Props) => {
               </Link>
             </Card>
           </div>
-          <Card
-            className={cn(
-              'mb-[16px] w-full gap-y-[36px] text-white shadow-sm',
-              data.remainLessonCnt !== 0 ? 'bg-primary-500' : 'bg-gray-500'
-            )}>
-            <CardHeader className='flex justify-between'>
-              <p className={Typography.HEADING_4_SEMIBOLD}>
-                잔여 <span className='font-bold'>{data.remainLessonCnt}</span>회
+
+          {data?.course?.courseId ? (
+            <Link
+              href={{
+                pathname: `/trainer/manage/${memberId}/course-detail`,
+                query: { name: data?.name },
+              }}>
+              <CourseCard
+                key={data?.course?.courseId}
+                className={cn(
+                  'mb-6 gap-y-11',
+                  data?.course?.remainLessonCnt === REMAIN_CNT_ZERO && 'bg-gray-500'
+                )}>
+                <CourseCardHeader
+                  remainLessonCnt={data?.course?.remainLessonCnt}
+                  title={
+                    data?.course?.remainLessonCnt === REMAIN_CNT_ZERO
+                      ? `${data?.course?.totalLessonCnt}회 PT 수강`
+                      : `잔여 ${data?.course?.remainLessonCnt}회`
+                  }
+                  indication={
+                    data?.course?.remainLessonCnt === REMAIN_CNT_ZERO
+                      ? '만료'
+                      : 'PT 수강권'
+                  }
+                />
+                <CourseCardContent
+                  className={cn(
+                    data?.course?.remainLessonCnt === REMAIN_CNT_ZERO && 'text-gray-300'
+                  )}
+                  progressClassName={cn(
+                    data?.course?.remainLessonCnt === REMAIN_CNT_ZERO && 'bg-gray-400'
+                  )}
+                  totalLessonCnt={data?.course?.totalLessonCnt}
+                  remainLessonCnt={data?.course?.remainLessonCnt}
+                />
+              </CourseCard>
+            </Link>
+          ) : (
+            <Card className='mb-6 flex w-full items-center justify-center bg-gray-500 py-[32px]'>
+              <p className={cn('mb-2 text-[#fff]', Typography.TITLE_3)}>
+                등록된 수강권이 없습니다.
               </p>
-              <p className={Typography.BODY_3}>{`PT ${data.lessonCnt}회 수강권`}</p>
-            </CardHeader>
-            <CardContent className='flex flex-col gap-y-[8px]'>
-              <p className={cn(Typography.HEADING_5, 'text-white')}>
-                PT 진행 횟수 {data.lessonCnt - data.remainLessonCnt}
-                <span
-                  className={
-                    data.remainLessonCnt !== 0 ? 'text-blue-200' : 'text-gray-300'
-                  }>
-                  /{data.lessonCnt}
-                </span>
-              </p>
-              <Progress
-                value={(100 * (data.lessonCnt - data.remainLessonCnt)) / data.lessonCnt}
-                className={cn(data.remainLessonCnt === 0 && 'bg-gray-400')}
-              />
-            </CardContent>
-          </Card>
+              <CourseSheet
+                isOpen={isRegisterSheetOpen}
+                setIsOpen={setIsRegisterSheetOpen}>
+                <CourseSheetTrigger
+                  className={cn(
+                    'flex h-[37px] w-[112px] items-center justify-center rounded-[9999px] border border-[#fff] bg-gray-500 text-[#fff]',
+                    Typography.TITLE_3
+                  )}>
+                  수강권 등록
+                </CourseSheetTrigger>
+                <CourseSheetContent>
+                  <CourseSheetHeader>등록할 수업횟수</CourseSheetHeader>
+                  <CourseSheetInput
+                    courseInput={RegisterInput}
+                    setCourseInput={setRegisterInput}
+                    isOpen={isRegisterSheetOpen}
+                  />
+                  <CourseSheetFooter
+                    courseInput={RegisterInput}
+                    clickButtonHandler={RegisterCourseCount}>
+                    수강권 등록
+                  </CourseSheetFooter>
+                </CourseSheetContent>
+              </CourseSheet>
+            </Card>
+          )}
+
           {data.lessonDt && data.lessonStartTime ? (
             <Card className='mb-[16px] w-full gap-y-[24px] px-[16px] py-[20px] shadow-sm'>
               <CardHeader className='flex items-center justify-between text-gray-800'>

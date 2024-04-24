@@ -43,6 +43,14 @@ interface Member {
   socialType: 'NONE' | Uppercase<SocialProvider>;
 }
 
+
+interface CourseItem {
+  courseId: number;
+  totalLessonCnt: number;
+  remainLessonCnt: number;
+  createdAt: string;
+}
+
 interface StudentDetail {
   memberId: number;
   name: string;
@@ -55,6 +63,7 @@ interface StudentDetail {
   lessonDt: string;
   lessonStartTime: string;
   diet: DailyDiet;
+  course:CourseItem
 }
 
 interface AppendMemberForm {
@@ -62,4 +71,4 @@ interface AppendMemberForm {
   lessonCnt: number;
 }
 
-export type { AppendMemberForm, InviteForm, Member, RegisteredStudent, StudentDetail };
+export type { AppendMemberForm, CourseItem,InviteForm, Member, RegisteredStudent, StudentDetail };

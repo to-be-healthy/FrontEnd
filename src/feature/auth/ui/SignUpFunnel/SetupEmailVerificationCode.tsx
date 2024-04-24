@@ -68,7 +68,7 @@ export const SetupEmailVerificationCode = ({
       </div>
 
       {errors.emailVerifiedCode && (
-        <p className='typography-body-4 mt-[8px] text-[#FF4668]'>
+        <p className='typography-body-4 mt-[8px] text-point'>
           {errors.emailVerifiedCode.message}
         </p>
       )}

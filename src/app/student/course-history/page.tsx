@@ -1,9 +1,9 @@
 'use client';
 
-import { StudentCourseHistory } from '@/page/home';
+import { StudentMyCourseDetailPage } from '@/page/home';
 
 const Page = () => {
-  return <StudentCourseHistory />;
+  return <StudentMyCourseDetailPage />;
 };
 
 export default Page;

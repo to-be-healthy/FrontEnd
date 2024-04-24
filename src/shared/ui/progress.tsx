@@ -4,10 +4,11 @@ import { cn } from '../utils';
 
 interface ProgressProps extends HTMLAttributes<HTMLDivElement> {
   value: number;
+  progressClassName?: string;
 }
 
 const Progress = forwardRef<HTMLDivElement, ProgressProps>(
-  ({ className, value, ...props }, ref) => (
+  ({ className, progressClassName, value, ...props }, ref) => (
     <div
       ref={ref}
       className={cn(
@@ -16,7 +17,10 @@ const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       )}
       {...props}>
       <div
-        className='h-full w-full flex-1 rounded-full bg-white transition-all'
+        className={cn(
+          'h-full w-full flex-1 rounded-full bg-white transition-all',
+          progressClassName
+        )}
         style={{ transform: `translateX(-${100 - (value || 0)}%)` }}
       />
     </div>

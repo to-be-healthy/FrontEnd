@@ -46,7 +46,7 @@ export const SetupPassword = () => {
           })}
         />
         {errors.password && (
-          <p className='typography-body-4 mt-[8px] text-[#FF4668]'>
+          <p className='typography-body-4 mt-[8px] text-point'>
             {errors.password.message}
           </p>
         )}
@@ -70,7 +70,7 @@ export const SetupPassword = () => {
           })}
         />
         {errors.passwordConfirm && (
-          <p className='typography-body-4 mt-[8px] text-[#FF4668]'>
+          <p className='typography-body-4 mt-[8px] text-point'>
             {errors.passwordConfirm.message}
           </p>
         )}
