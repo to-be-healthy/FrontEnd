@@ -52,9 +52,7 @@ export const SetupId = ({ idSuccessMsg, isPending, handleIsIdAvailable }: Props)
       </div>
 
       {errors.userId && (
-        <p className='typography-body-4 mt-[8px] text-[#FF4668]'>
-          {errors.userId.message}
-        </p>
+        <p className='typography-body-4 mt-[8px] text-point'>{errors.userId.message}</p>
       )}
       {idSuccessMsg && (
         <p className='typography-body-4 mt-[8px] text-primary-500'>{idSuccessMsg}</p>

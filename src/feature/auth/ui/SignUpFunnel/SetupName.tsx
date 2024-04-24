@@ -45,7 +45,7 @@ export const SetupName = () => {
         })}
       />
       {errors.name && (
-        <p className='typography-body-4 mt-[8px] text-[#FF4668]'>{errors.name.message}</p>
+        <p className='typography-body-4 mt-[8px] text-point'>{errors.name.message}</p>
       )}
     </div>
   );

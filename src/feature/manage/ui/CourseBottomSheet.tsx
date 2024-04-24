@@ -106,9 +106,7 @@ export const CourseSheetInput = ({
         )}
       />
       {courseInputError && (
-        <p className={cn('mt-[8px] text-[#FF4668]', Typography.BODY_4)}>
-          {courseInputError}
-        </p>
+        <p className={cn('mt-[8px] text-point', Typography.BODY_4)}>{courseInputError}</p>
       )}
     </div>
   );

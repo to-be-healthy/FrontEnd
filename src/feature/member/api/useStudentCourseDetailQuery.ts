@@ -23,7 +23,7 @@ interface StudentCourse {
 
 export const useStudentCourseDetailQuery = (memberId: number, size: number) => {
   return useInfiniteQuery<StudentCourse, BaseError>({
-    queryKey: ['studentCourseDetail', memberId, size],
+    queryKey: ['studentCourseDetail', memberId],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentCourse>>(
         `/api/members/v1/${memberId}/course?page=${pageParam as number}&size=${size}`

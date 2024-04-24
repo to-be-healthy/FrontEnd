@@ -47,9 +47,7 @@ export const SetupEmail = ({ isEmailVerified }: SetupEmailProps) => {
       />
 
       {errors.email && (
-        <p className='typography-body-4 mt-[8px] text-[#FF4668]'>
-          {errors.email.message}
-        </p>
+        <p className='typography-body-4 mt-[8px] text-point'>{errors.email.message}</p>
       )}
     </div>
   );
