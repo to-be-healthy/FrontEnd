@@ -9,7 +9,6 @@ export const useDeleteStudentCourseMutation = () => {
       const result = await authApi.delete<BaseResponse<null>>(
         `/api/course/v1/${courseId}`
       );
-      console.log(result);
       return result.data;
     },
   });

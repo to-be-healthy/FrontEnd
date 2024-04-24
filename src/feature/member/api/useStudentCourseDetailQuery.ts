@@ -4,15 +4,9 @@ import { authApi } from '@/entity/auth';
 import { BaseError, BaseResponse } from '@/shared/api';
 
 import { courseHistoryCodeDescription } from '../const';
+import { CourseItem } from '../model/types';
 
 type CourseHistory = keyof typeof courseHistoryCodeDescription;
-
-interface CourseItem {
-  courseId: number;
-  totalLessonCnt: number;
-  remainLessonCnt: number;
-  createdAt: string;
-}
 
 interface CourseHistoryItem {
   courseHistoryId: number;
@@ -29,7 +23,7 @@ interface StudentCourse {
 
 export const useStudentCourseDetailQuery = (memberId: number, size: number) => {
   return useInfiniteQuery<StudentCourse, BaseError>({
-    queryKey: ['studentCourseDetail'],
+    queryKey: ['studentCourseDetail', memberId, size],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentCourse>>(
         `/api/members/v1/${memberId}/course?page=${pageParam as number}&size=${size}`
@@ -39,7 +33,10 @@ export const useStudentCourseDetailQuery = (memberId: number, size: number) => {
     initialPageParam: 0,
 
     getNextPageParam: (lastPage: StudentCourse, allPages: StudentCourse[]) => {
-      return lastPage.courseHistories ? allPages.length : undefined;
+      if (lastPage.courseHistories && lastPage.courseHistories.length === size) {
+        return allPages.length;
+      }
+      return undefined;
     },
   });
 };

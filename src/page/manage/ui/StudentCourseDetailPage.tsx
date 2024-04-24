@@ -3,12 +3,16 @@
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Link from 'next/link';
-import { FormEvent, useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import {
   CourseSheet,
   CourseSheetContent,
+  CourseSheetFooter,
+  CourseSheetHeader,
+  CourseSheetInput,
   CourseSheetTrigger,
 } from '@/feature/manage/ui/CourseBottomSheet';
 import {
@@ -18,6 +22,7 @@ import {
   courseHistoryCodeDescription,
   useAddStudentCourseMutation,
   useDeleteStudentCourseMutation,
+  useRegisterStudentCourseMutation,
   useStudentCourseDetailQuery,
 } from '@/feature/member';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
@@ -35,29 +40,30 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
   Button,
-  Input,
   Layout,
   Sheet,
   SheetContent,
   SheetHeader,
-  SheetTitle,
   SheetTrigger,
   useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
-
 interface Props {
   memberId: number;
 }
 
 const ITEMS_PER_PAGE = 20;
+const REMAIN_CNT_ZERO = 0;
 
 export const StudentCourseDetailPage = ({ memberId }: Props) => {
   const { toast } = useToast();
+  const params = useSearchParams();
+  const name = params.get('name');
 
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-  const [courseInput, setCourseInput] = useState('');
-  const [courseInputError, setCourseInputError] = useState('');
+  const [isAddSheetOpen, setIsAddSheetOpen] = useState(false);
+  const [isRegisterSheetOpen, setIsRegisterSheetOpen] = useState(false);
+  const [addInput, setAddInput] = useState('');
+  const [RegisterInput, setRegisterInput] = useState('');
 
   const queryClient = useQueryClient();
   const [ref, inView] = useInView({
@@ -71,75 +77,102 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
     fetchNextPage,
   } = useStudentCourseDetailQuery(memberId, ITEMS_PER_PAGE);
 
-  const studentCourseId = Number(detailData?.pages[0]?.course.courseId);
+  const studentCourseId = Number(detailData?.pages[0]?.course?.courseId);
 
   const { mutate: addMutation } = useAddStudentCourseMutation();
   const { mutate: deleteMutation } = useDeleteStudentCourseMutation();
+  const { mutate: RegisterMutation } = useRegisterStudentCourseMutation();
 
-  // const changeCourseInput = (e: FormEvent<HTMLInputElement>) => {
-  //   let inputValue = e.currentTarget.value;
-  //   if (inputValue.length > 3) {
-  //     inputValue = inputValue.slice(0, 3);
-  //   }
+  const RegisterCourseCount = () => {
+    RegisterMutation(
+      {
+        memberId: memberId,
+        lessonCnt: Number(RegisterInput),
+      },
+      {
+        onSuccess: (reslut) => {
+          setIsRegisterSheetOpen(false);
+          void queryClient.invalidateQueries({
+            queryKey: ['studentCourseDetail'],
+          });
+          return toast({
+            className: 'h-12',
+            description: (
+              <div className='flex items-center justify-center'>
+                <CheckIcon fill={'var(--primary-500)'} />
+                <p className='typography-heading-5 ml-6 text-[#fff]'>{reslut.message}</p>
+              </div>
+            ),
+            duration: 2000,
+          });
+        },
+        onError: (error) => {
+          return toast({
+            className: 'h-12',
+            description: (
+              <div className='flex items-center justify-center'>
+                <CheckIcon fill={'var(--primary-500)'} />
+                <p className='typography-heading-5 ml-6 text-[#fff]'>
+                  {error.response?.data.message}
+                </p>
+              </div>
+            ),
+            duration: 2000,
+          });
+        },
+      }
+    );
+  };
 
-  //   if (Number(inputValue) > 500) {
-  //     setCourseInputError('500회 이하로 입력해주세요.');
-  //   } else {
-  //     setCourseInputError('');
-  //   }
-  //   setCourseInput(inputValue);
-  // };
-
-  // const addCourseCount = () => {
-  //   addMutation(
-  //     {
-  //       courseId: studentCourseId,
-  //       memberId: memberId,
-  //       calculation: 'PLUS',
-  //       type: 'PLUS_CNT',
-  //       updateCnt: courseInput,
-  //     },
-  //     {
-  //       onSuccess: () => {
-  //         setIsSheetOpen(false);
-  //         void queryClient.invalidateQueries({
-  //           queryKey: ['studentCourseDetail'],
-  //         });
-  //         return toast({
-  //           className: 'h-12',
-  //           description: (
-  //             <div className='flex items-center justify-center'>
-  //               <CheckIcon fill={'var(--primary-500)'} />
-  //               <p className='typography-heading-5 ml-6 text-[#fff]'>
-  //                 {courseInput}회가 연장되었습니다.
-  //               </p>
-  //             </div>
-  //           ),
-  //           duration: 2000,
-  //         });
-  //       },
-  //       onError: (error) => {
-  //         return toast({
-  //           className: 'h-12',
-  //           description: (
-  //             <div className='flex items-center justify-center'>
-  //               <CheckIcon fill={'var(--primary-500)'} />
-  //               <p className='typography-heading-5 ml-6 text-[#fff]'>
-  //                 {error.response?.data.message}
-  //               </p>
-  //             </div>
-  //           ),
-  //           duration: 2000,
-  //         });
-  //       },
-  //     }
-  //   );
-  // };
+  const addCourseCount = () => {
+    addMutation(
+      {
+        courseId: studentCourseId,
+        memberId: memberId,
+        calculation: 'PLUS',
+        type: 'PLUS_CNT',
+        updateCnt: addInput,
+      },
+      {
+        onSuccess: () => {
+          setIsAddSheetOpen(false);
+          void queryClient.invalidateQueries({
+            queryKey: ['studentCourseDetail'],
+          });
+          return toast({
+            className: 'h-12',
+            description: (
+              <div className='flex items-center justify-center'>
+                <CheckIcon fill={'var(--primary-500)'} />
+                <p className='typography-heading-5 ml-6 text-[#fff]'>
+                  {addInput}회가 연장되었습니다.
+                </p>
+              </div>
+            ),
+            duration: 2000,
+          });
+        },
+        onError: (error) => {
+          return toast({
+            className: 'h-12',
+            description: (
+              <div className='flex items-center justify-center'>
+                <CheckIcon fill={'var(--primary-500)'} />
+                <p className='typography-heading-5 ml-6 text-[#fff]'>
+                  {error.response?.data.message}
+                </p>
+              </div>
+            ),
+            duration: 2000,
+          });
+        },
+      }
+    );
+  };
 
   const deleteStudentCourse = () => {
     deleteMutation(studentCourseId, {
       onSuccess: (result) => {
-        console.log(result);
         void queryClient.invalidateQueries({
           queryKey: ['studentCourseDetail'],
         });
@@ -148,9 +181,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           description: (
             <div className='flex items-center justify-center'>
               <CheckIcon fill={'var(--primary-500)'} />
-              <p className='typography-heading-5 ml-6 text-[#fff]'>
-                {courseInput}회가 연장되었습니다.
-              </p>
+              <p className='typography-heading-5 ml-6 text-[#fff]'>{result.message}</p>
             </div>
           ),
           duration: 2000,
@@ -181,18 +212,11 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
     }
   }, [fetchNextPage, hasNextPage, inView]);
 
-  // useEffect(() => {
-  //   return () => {
-  //     queryClient.removeQueries({ queryKey: ['studentCourseDetail'] });
-  //   };
-  // }, [queryClient]);
-
   useEffect(() => {
-    if (!isSheetOpen) {
-      setCourseInput('');
-      setCourseInputError('');
-    }
-  }, [isSheetOpen]);
+    return () => {
+      queryClient.removeQueries({ queryKey: ['studentCourseDetail'] });
+    };
+  }, [queryClient]);
 
   return (
     <Layout type='trainer'>
@@ -200,48 +224,27 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
         <Link href='./' className='absolute left-7'>
           <BackIcon />
         </Link>
-        <h2>김지윤님 수강권</h2>
-        {/* {detailData?.pages[0]?.course && (
-          <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-            <SheetTrigger className={cn('h-[46px] w-[160px]', Typography.HEADING_5)}>
+        <h2>{name}님 수강권</h2>
+        {detailData?.pages[0]?.course?.remainLessonCnt === REMAIN_CNT_ZERO && (
+          <CourseSheet isOpen={isRegisterSheetOpen} setIsOpen={setIsRegisterSheetOpen}>
+            <CourseSheetTrigger className='absolute right-7'>
               <PlusIcon width={20} height={20} fili='#000000' />
-            </SheetTrigger>
-            <SheetContent
-              className='m-auto mb-7 w-[calc(100%-20px)] rounded-lg px-7 pb-9 pt-8'
-              closeClassName='top-7 right-7'
-              xClassName='w-[22px] h-[22px] text-[#000]'
-              side='bottom'>
-              <SheetHeader>
-                <SheetTitle
-                  className={cn(cn('mb-8 text-left text-[#000]', Typography.HEADING_4))}>
-                  등록할 수업 횟수
-                </SheetTitle>
-              </SheetHeader>
-              <div className='mb-8 text-center'>
-                <Input
-                  type='number'
-                  value={courseInput}
-                  onChange={changeCourseInput}
-                  className={cn(
-                    'border-b-1 w-[100px] border-b border-solid border-y-gray-400 py-[2px] text-center text-[40px] font-bold leading-[130%] text-[#000] focus:border-y-primary-500',
-                    courseInputError && 'focus:border-y-red-500'
-                  )}
-                />
-                {courseInputError && (
-                  <p className={cn('mt-[8px] text-[#FF4668]', Typography.BODY_4)}>
-                    {courseInputError}
-                  </p>
-                )}
-              </div>
-              <Button
-                className={cn('h-[52px] w-full', Typography.TITLE_1)}
-                disabled={courseInput === '' || Number(courseInput) > 500}
-                onClick={addCourseCount}>
+            </CourseSheetTrigger>
+            <CourseSheetContent>
+              <CourseSheetHeader>등록할 수업횟수</CourseSheetHeader>
+              <CourseSheetInput
+                courseInput={RegisterInput}
+                setCourseInput={setRegisterInput}
+                isOpen={isRegisterSheetOpen}
+              />
+              <CourseSheetFooter
+                courseInput={RegisterInput}
+                clickButtonHandler={RegisterCourseCount}>
                 수강권 등록
-              </Button>
-            </SheetContent>
-          </Sheet>
-        )} */}
+              </CourseSheetFooter>
+            </CourseSheetContent>
+          </CourseSheet>
+        )}
       </Layout.Header>
       <Layout.Contents>
         {isPending ? (
@@ -251,65 +254,67 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             {detailData?.pages[0]?.course ? (
               <>
                 <div className='bg-[#fff] p-7 pt-6'>
-                  <CourseCard key={detailData?.pages[0]?.course?.courseId}>
+                  <CourseCard
+                    key={detailData?.pages[0]?.course?.courseId}
+                    className={cn(
+                      'gap-y-11',
+                      detailData?.pages[0]?.course?.remainLessonCnt === REMAIN_CNT_ZERO &&
+                        'bg-gray-500'
+                    )}>
                     <CourseCardHeader
                       remainLessonCnt={detailData?.pages[0]?.course?.remainLessonCnt}
+                      title={
+                        detailData?.pages[0]?.course?.remainLessonCnt === REMAIN_CNT_ZERO
+                          ? `${detailData?.pages[0]?.course?.totalLessonCnt}회 PT 수강`
+                          : `잔여 ${detailData?.pages[0]?.course?.remainLessonCnt}회`
+                      }
+                      indication={
+                        detailData?.pages[0]?.course?.remainLessonCnt === REMAIN_CNT_ZERO
+                          ? '만료'
+                          : 'PT 수강권'
+                      }
                     />
                     <CourseCardContent
-                      totalLessonCnt={detailData?.pages[0]?.course?.totalLessonCnt ?? 0}
-                      remainLessonCnt={detailData?.pages[0]?.course?.remainLessonCnt ?? 0}
+                      className={cn(
+                        detailData?.pages[0]?.course?.remainLessonCnt ===
+                          REMAIN_CNT_ZERO && 'text-gray-300'
+                      )}
+                      progressClassName={cn(
+                        detailData?.pages[0]?.course?.remainLessonCnt ===
+                          REMAIN_CNT_ZERO && 'bg-gray-400'
+                      )}
+                      totalLessonCnt={detailData?.pages[0]?.course?.totalLessonCnt}
+                      remainLessonCnt={detailData?.pages[0]?.course?.remainLessonCnt}
                     />
                   </CourseCard>
                 </div>
 
                 <div className='bg-[#fff] p-7 pt-0'>
                   <div className='flex items-center justify-center rounded-lg bg-gray-100 text-[#000]'>
-                    {/* <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-                      <SheetTrigger
-                        className={cn('h-[46px] w-[160px]', Typography.HEADING_5)}>
+                    <CourseSheet isOpen={isAddSheetOpen} setIsOpen={setIsAddSheetOpen}>
+                      <CourseSheetTrigger
+                        className={cn('h-[46px] w-[160px]', Typography.HEADING_5)}
+                        disabled={
+                          detailData?.pages[0]?.course?.remainLessonCnt ===
+                          REMAIN_CNT_ZERO
+                        }>
                         수업 횟수 추가
-                      </SheetTrigger>
-                      <SheetContent
-                        className='m-auto mb-7 w-[calc(100%-20px)] rounded-lg px-7 pb-9 pt-8'
-                        closeClassName='top-7 right-7'
-                        xClassName='w-[22px] h-[22px] text-[#000]'
-                        side='bottom'>
-                        <SheetHeader>
-                          <SheetTitle
-                            className={cn(
-                              cn('mb-8 text-left text-[#000]', Typography.HEADING_4)
-                            )}>
-                            추가할 수업 횟수
-                          </SheetTitle>
-                        </SheetHeader>
-                        <div className='mb-8 text-center'>
-                          <Input
-                            type='number'
-                            value={courseInput}
-                            onChange={changeCourseInput}
-                            className={cn(
-                              'border-b-1 w-[100px] border-b border-solid border-y-gray-400 py-[2px] text-center text-[40px] font-bold leading-[130%] text-[#000] focus:border-y-primary-500',
-                              courseInputError && 'focus:border-y-red-500'
-                            )}
-                          />
-                          {courseInputError && (
-                            <p
-                              className={cn(
-                                'mt-[8px] text-[#FF4668]',
-                                Typography.BODY_4
-                              )}>
-                              {courseInputError}
-                            </p>
-                          )}
-                        </div>
-                        <Button
-                          className={cn('h-[52px] w-full', Typography.TITLE_1)}
-                          disabled={courseInput === '' || Number(courseInput) > 500}
-                          onClick={addCourseCount}>
+                      </CourseSheetTrigger>
+                      <CourseSheetContent>
+                        <CourseSheetHeader>추가할 수업횟수</CourseSheetHeader>
+                        <CourseSheetInput
+                          courseInput={addInput}
+                          setCourseInput={setAddInput}
+                          isOpen={isAddSheetOpen}
+                        />
+                        <CourseSheetFooter
+                          courseInput={addInput}
+                          clickButtonHandler={addCourseCount}>
                           수업 횟수 추가
-                        </Button>
-                      </SheetContent>
-                    </Sheet> */}
+                        </CourseSheetFooter>
+                      </CourseSheetContent>
+                    </CourseSheet>
+
                     <span className='h-[30px] w-[1px] bg-gray-200'></span>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
@@ -342,6 +347,17 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                   </div>
                 </div>
 
+                <div className='bg-[#fff] px-7 pb-3 text-right'>
+                  <Sheet>
+                    <SheetTrigger className={cn('text-gray-700', Typography.BODY_2)}>
+                      월 선택
+                    </SheetTrigger>
+                    <SheetContent side='bottom'>
+                      <SheetHeader>월 선택하기</SheetHeader>
+                    </SheetContent>
+                  </Sheet>
+                </div>
+
                 <ul className='bg-gray-100'>
                   {detailData?.pages?.map((data) => {
                     return data.courseHistories?.map((item) => {
@@ -367,6 +383,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                     });
                   })}
                 </ul>
+
                 {detailData?.pages[0].courseHistories.length === ITEMS_PER_PAGE &&
                   hasNextPage && (
                     <div ref={ref} className='h-[20px] p-3 text-center'>
@@ -380,54 +397,30 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                   <p className={cn('mb-3 text-gray-500', Typography.TITLE_3)}>
                     등록된 수강권이 없습니다.
                   </p>
-                  {/* <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-                    <SheetTrigger asChild>
-                      <Button
-                        variant='outline'
-                        className={cn(
-                          'h-[37px] w-[112px] rounded-[9999px] border-primary-500 text-primary-400',
-                          Typography.TITLE_3
-                        )}>
+                  <CourseSheet
+                    isOpen={isRegisterSheetOpen}
+                    setIsOpen={setIsRegisterSheetOpen}>
+                    <CourseSheetTrigger
+                      className={cn(
+                        'flex h-[37px] w-[112px] items-center justify-center rounded-[9999px] border border-primary-500 text-primary-500',
+                        Typography.TITLE_3
+                      )}>
+                      수강권 등록
+                    </CourseSheetTrigger>
+                    <CourseSheetContent>
+                      <CourseSheetHeader>등록할 수업횟수</CourseSheetHeader>
+                      <CourseSheetInput
+                        courseInput={RegisterInput}
+                        setCourseInput={setRegisterInput}
+                        isOpen={isRegisterSheetOpen}
+                      />
+                      <CourseSheetFooter
+                        courseInput={RegisterInput}
+                        clickButtonHandler={RegisterCourseCount}>
                         수강권 등록
-                      </Button>
-                    </SheetTrigger>
-                    <SheetContent
-                      className='m-auto mb-7 w-[calc(100%-20px)] rounded-lg px-7 pb-9 pt-8'
-                      closeClassName='top-7 right-7'
-                      xClassName='w-[22px] h-[22px] text-[#000]'
-                      side='bottom'>
-                      <SheetHeader>
-                        <SheetTitle
-                          className={cn(
-                            cn('mb-8 text-left text-[#000]', Typography.HEADING_4)
-                          )}>
-                          등록할 수업 횟수
-                        </SheetTitle>
-                      </SheetHeader>
-                      <div className='mb-8 text-center'>
-                        <Input
-                          type='number'
-                          value={courseInput}
-                          onChange={changeCourseInput}
-                          className={cn(
-                            'border-b-1 w-[100px] border-b border-solid border-y-gray-400 py-[2px] text-center text-[40px] font-bold leading-[130%] text-[#000] focus:border-y-primary-500',
-                            courseInputError && 'focus:border-y-red-500'
-                          )}
-                        />
-                        {courseInputError && (
-                          <p className={cn('mt-[8px] text-[#FF4668]', Typography.BODY_4)}>
-                            {courseInputError}
-                          </p>
-                        )}
-                      </div>
-                      <Button
-                        className={cn('h-[52px] w-full', Typography.TITLE_1)}
-                        disabled={courseInput === '' || Number(courseInput) > 500}
-                        onClick={addCourseCount}>
-                        수강권 등록
-                      </Button>
-                    </SheetContent>
-                  </Sheet> */}
+                      </CourseSheetFooter>
+                    </CourseSheetContent>
+                  </CourseSheet>
                 </div>
 
                 <div className='flex flex-col items-center justify-center pt-[124px]'>
@@ -445,18 +438,6 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             )}
           </>
         )}
-        <CourseSheet>
-          <CourseSheetTrigger>버튼</CourseSheetTrigger>
-
-          <CourseSheetContent
-            title='추가할 수업횟수'
-            buttonText='수업 추가 횟수'
-            courseInput={courseInput}
-            setCourseInput={setCourseInput}
-            courseInputError={courseInputError}
-            setCourseInputError={setCourseInputError}
-          />
-        </CourseSheet>
       </Layout.Contents>
     </Layout>
   );

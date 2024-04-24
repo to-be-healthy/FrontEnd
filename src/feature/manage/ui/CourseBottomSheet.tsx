@@ -1,13 +1,11 @@
 'use client';
 
 import {
-  createContext,
   Dispatch,
   FormEvent,
   HTMLAttributes,
   ReactNode,
   SetStateAction,
-  useContext,
   useEffect,
   useState,
 } from 'react';
@@ -25,22 +23,14 @@ import {
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-interface SheetContextType {
-  isSheetOpen: boolean;
-}
-
-const SheetContext = createContext<SheetContextType>({
-  isSheetOpen: false,
-});
-
 interface CourseSheetFooterProps {
-  text?: string;
+  children: ReactNode;
   courseInput: string;
-  clickButtonHandler?: () => void;
+  clickButtonHandler: () => void;
 }
 
 export const CourseSheetFooter = ({
-  text,
+  children,
   courseInput,
   clickButtonHandler,
 }: CourseSheetFooterProps) => {
@@ -50,44 +40,39 @@ export const CourseSheetFooter = ({
         className={cn('h-[52px] w-full', Typography.TITLE_1)}
         disabled={courseInput === '' || Number(courseInput) > 500}
         onClick={clickButtonHandler}>
-        {text}
+        {children}
       </Button>
     </SheetFooter>
   );
 };
 
-interface CourseSheetTitleProps {
-  title?: string;
+interface CourseSheetHeaderProps {
+  children?: ReactNode;
 }
 
-export const CourseSheetHeader = ({ title }: CourseSheetTitleProps) => {
+export const CourseSheetHeader = ({ children }: CourseSheetHeaderProps) => {
   return (
     <SheetHeader>
       <SheetTitle className={cn('mb-8 text-left text-[#000]', Typography.HEADING_4)}>
-        {title}
+        {children}
       </SheetTitle>
     </SheetHeader>
   );
 };
 
-interface CourseSheetContentProps {
-  title?: string;
-  buttonText?: string;
+interface CourseSheetInputProps {
+  isOpen?: boolean;
   courseInput: string;
   setCourseInput: Dispatch<SetStateAction<string>>;
-  courseInputError: string;
-  setCourseInputError: Dispatch<SetStateAction<string>>;
 }
 
-export const CourseSheetContent = ({
-  title,
-  buttonText,
+export const CourseSheetInput = ({
+  isOpen,
   courseInput,
   setCourseInput,
-  courseInputError,
-  setCourseInputError,
-}: CourseSheetContentProps) => {
-  const isSheetOpen = useContext(SheetContext);
+}: CourseSheetInputProps) => {
+  const [courseInputError, setCourseInputError] = useState('');
+
   const changeCourseInput = (e: FormEvent<HTMLInputElement>) => {
     let inputValue = e.currentTarget.value;
     if (inputValue.length > 3) {
@@ -103,36 +88,44 @@ export const CourseSheetContent = ({
   };
 
   useEffect(() => {
-    if (!isSheetOpen) {
+    if (!isOpen) {
       setCourseInput('');
       setCourseInputError('');
     }
-  }, [isSheetOpen]);
+  }, [isOpen]);
 
+  return (
+    <div className='mb-8 text-center'>
+      <Input
+        type='number'
+        value={courseInput}
+        onChange={changeCourseInput}
+        className={cn(
+          'border-b-1 w-[100px] border-b border-solid border-y-gray-400 py-[2px] text-center text-[40px] font-bold leading-[130%] text-[#000] focus:border-y-primary-500',
+          courseInputError && 'focus:border-y-red-500'
+        )}
+      />
+      {courseInputError && (
+        <p className={cn('mt-[8px] text-[#FF4668]', Typography.BODY_4)}>
+          {courseInputError}
+        </p>
+      )}
+    </div>
+  );
+};
+
+interface CourseSheetContentProps {
+  children: ReactNode;
+}
+
+export const CourseSheetContent = ({ children }: CourseSheetContentProps) => {
   return (
     <SheetContent
       className='m-auto mb-7 w-[calc(100%-20px)] rounded-lg px-7 pb-9 pt-8'
       closeClassName='top-7 right-7'
       xClassName='w-[22px] h-[22px] text-[#000]'
       side='bottom'>
-      <CourseSheetHeader title={title} />
-      <div className='mb-8 text-center'>
-        <Input
-          type='number'
-          value={courseInput}
-          onChange={changeCourseInput}
-          className={cn(
-            'border-b-1 w-[100px] border-b border-solid border-y-gray-400 py-[2px] text-center text-[40px] font-bold leading-[130%] text-[#000] focus:border-y-primary-500',
-            courseInputError && 'focus:border-y-red-500'
-          )}
-        />
-        {courseInputError && (
-          <p className={cn('mt-[8px] text-[#FF4668]', Typography.BODY_4)}>
-            {courseInputError}
-          </p>
-        )}
-      </div>
-      <CourseSheetFooter courseInput={courseInput} text={buttonText} />
+      {children}
     </SheetContent>
   );
 };
@@ -140,11 +133,18 @@ export const CourseSheetContent = ({
 interface CourseSheetTriggerProps {
   className?: string;
   children: ReactNode;
+  disabled?: boolean;
 }
 
-export const CourseSheetTrigger = ({ className, children }: CourseSheetTriggerProps) => {
+export const CourseSheetTrigger = ({
+  className,
+  children,
+  disabled = false,
+}: CourseSheetTriggerProps) => {
   return (
-    <SheetTrigger className={cn(Typography.HEADING_5, className)}>
+    <SheetTrigger
+      className={cn(Typography.HEADING_5, className, disabled && 'text-gray-400')}
+      disabled={disabled}>
       {children}
     </SheetTrigger>
   );
@@ -152,16 +152,14 @@ export const CourseSheetTrigger = ({ className, children }: CourseSheetTriggerPr
 
 interface CourseSheetProps extends HTMLAttributes<HTMLDivElement> {
   children: ReactNode;
+  isOpen: boolean;
+  setIsOpen: Dispatch<SetStateAction<boolean>>;
 }
 
-export const CourseSheet = ({ children }: CourseSheetProps) => {
-  const [isSheetOpen, setIsSheetOpen] = useState(false);
-
+export const CourseSheet = ({ children, isOpen, setIsOpen }: CourseSheetProps) => {
   return (
-    <SheetContext.Provider value={{ isSheetOpen }}>
-      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
-        {children}
-      </Sheet>
-    </SheetContext.Provider>
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      {children}
+    </Sheet>
   );
 };

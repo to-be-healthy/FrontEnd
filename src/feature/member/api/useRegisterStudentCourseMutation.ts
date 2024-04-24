@@ -15,7 +15,6 @@ export const useRegisterStudentCourseMutation = () => {
         `/api/course/v1`,
         registerCourseInfo
       );
-      console.log(result);
       return result.data;
     },
   });
