@@ -42,6 +42,7 @@ const StudentLogPage = ({ memberId }: Props) => {
   const pathname = usePathname();
 
   const { memberInfo } = useStudentInfo(memberId);
+  const studentName = '김진영'; // data.studentName
 
   const [data] = useState(MOCK_DATA);
 
@@ -54,10 +55,12 @@ const StudentLogPage = ({ memberId }: Props) => {
               <IconBack />
             </Button>
             <h2 className='typography-heading-4 font-semibold'>
-              {memberInfo.name}님 수업 일지
+              {studentName}님 수업 일지
             </h2>
-            <Button variant='ghost' size='icon'>
-              <IconPlus fill='black' width={17} height={16} fili='#000000' />
+            <Button variant='ghost' size='icon' asChild>
+              <Link href={`/trainer/manage/${memberId}/log/write`}>
+                <IconPlus fill='black' width={17} height={16} />
+              </Link>
             </Button>
           </Layout.Header>
           <Layout.Contents className='overflow-y-hidden py-[20px]'>

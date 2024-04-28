@@ -47,6 +47,7 @@ module.exports = {
         },
         blue: {
           10: 'var(--blue-10)',
+          50: 'var(--blue-50)',
         },
         secondary: {
           DEFAULT: 'hsl(var(--secondary))',
