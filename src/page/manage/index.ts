@@ -1,7 +1,9 @@
 export { NotRegisteredStudentListPage } from './ui/NotRegisteredStudentListPage';
 export { StudentCourseDetailPage } from './ui/StudentCourseDetailPage';
 export { StudentDetailPage } from './ui/StudentDetailPage';
-export { StudentEditPage } from './ui/StudentEditPage';
+export { StudentEditMemo } from './ui/StudentEditMemo';
 export { StudentListPage } from './ui/StudentListPage';
+export { StudentLogPage } from './ui/StudentLogPage';
+export { StudentLogWritePage } from './ui/StudentLogWritePage';
 export { TrainerAppendStudentPage } from './ui/TrainerAppendStudentPage';
 export { TrainerInvitePage } from './ui/TrainerInvitePage';

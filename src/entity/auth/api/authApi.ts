@@ -40,8 +40,13 @@ authApi.interceptors.response.use(
     }
 
     if (status === 401) {
-      const { data } = await requestRefreshToken(userId, refreshToken);
-      useAuthAction().setUserInfo(data);
+      try {
+        const { data } = await requestRefreshToken(userId, refreshToken);
+        useAuthAction().setUserInfo(data);
+      } catch (error) {
+        localStorage.clear();
+        window.location.href = '/';
+      }
     }
 
     return await Promise.reject(error);

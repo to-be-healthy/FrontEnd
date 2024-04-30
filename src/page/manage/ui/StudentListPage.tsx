@@ -13,7 +13,7 @@ import {
 import IconArrowDownUp from '@/shared/assets/images/icon_arrow_down_up.svg';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconCircleAlert from '@/shared/assets/images/icon_circle_alert.svg';
-import IconDefaultProfileSmall from '@/shared/assets/images/icon_default_profile_small.svg';
+import IconDefaultProfile from '@/shared/assets/images/icon_default_profile_small.svg';
 import IconPlus from '@/shared/assets/images/icon_plus.svg';
 import IconSearch from '@/shared/assets/images/icon_search.svg';
 import { Button, Layout } from '@/shared/ui';
@@ -186,7 +186,7 @@ const StudentListPage = () => {
                                   className={profileBorderStyleMapper(item.ranking)}
                                 />
                               ) : (
-                                <IconDefaultProfileSmall />
+                                <IconDefaultProfile width={32} height={32} />
                               )}
                             </div>
                             <div className='flex flex-col gap-y-[4px]'>

@@ -1,8 +1,10 @@
+'use client';
+
 import { useRouter } from 'next/navigation';
-import { useContext, useState } from 'react';
+import { useState } from 'react';
 
 import { useEditNicknameMutation } from '@/feature/manage';
-import CheckIcon from '@/shared/assets/images/icon_check.svg';
+import IconCheck from '@/shared/assets/images/icon_check.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
@@ -23,23 +25,21 @@ import {
 } from '@/shared/ui';
 import { cn, twSelector } from '@/shared/utils';
 
-import { StudentEditContext } from './index';
+import { useStudentInfo } from '../hooks/useStudentInfo';
 
-const EditNickname = () => {
+interface Props {
+  memberId: number;
+}
+
+const StudentEditNickname = ({ memberId }: Props) => {
   const router = useRouter();
   const { toast } = useToast();
-
-  const value = useContext(StudentEditContext);
-  if (!value) {
-    throw new Error();
-  }
-  const { memberId, name, nickname } = value;
-
-  const [newNickname, setNewNickname] = useState(nickname ?? '');
   const { mutate } = useEditNicknameMutation();
+  const { memberInfo, refetchMemberInfo } = useStudentInfo(memberId);
+  const [newNickName, setNewNickName] = useState(memberInfo?.nickName ?? '');
 
-  const submitChangeNickname = () => {
-    if (!newNickname) {
+  const onSubmit = () => {
+    if (!newNickName) {
       return toast({
         className: 'py-5 px-6',
         description: (
@@ -51,7 +51,8 @@ const EditNickname = () => {
         duration: 2000,
       });
     }
-    if (nickname === newNickname) {
+
+    if (memberInfo?.nickName === newNickName) {
       return toast({
         className: 'py-5 px-6',
         description: (
@@ -69,14 +70,15 @@ const EditNickname = () => {
 
   const changeNickname = () => {
     mutate(
-      { studentId: Number(memberId), nickname: newNickname },
+      { studentId: Number(memberId), nickname: newNickName },
       {
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
+          await refetchMemberInfo();
           toast({
             className: 'py-5 px-6',
             description: (
               <div className='flex items-center justify-center'>
-                <CheckIcon fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} />
                 <p className='typography-heading-5 ml-6 text-white'>{data.message}</p>
               </div>
             ),
@@ -85,7 +87,6 @@ const EditNickname = () => {
           router.replace(`/trainer/manage/${memberId}`);
         },
         onError: (error) => {
-          console.log(error);
           toast({
             className: 'py-5 px-6',
             description: (
@@ -113,7 +114,6 @@ const EditNickname = () => {
           <IconClose />
         </Button>
         <h2 className={Typography.HEADING_4_SEMIBOLD}>회원 별칭 설정</h2>
-
         <AlertDialog>
           <AlertDialogTrigger asChild>
             <Button variant='ghost' className={cn(Typography.BODY_1, 'p-0')}>
@@ -132,10 +132,7 @@ const EditNickname = () => {
                 아니요
               </AlertDialogCancel>
               <AlertDialogAction asChild>
-                <Button
-                  variant='default'
-                  className='py-[10px]'
-                  onClick={submitChangeNickname}>
+                <Button variant='default' className='py-[10px]' onClick={onSubmit}>
                   예
                 </Button>
               </AlertDialogAction>
@@ -156,7 +153,7 @@ const EditNickname = () => {
               'rounded-md border border-gray-200 bg-gray-100 px-[16px] py-[13px]'
             )}>
             <Input
-              defaultValue={name}
+              defaultValue={memberInfo?.name}
               id='name'
               readOnly
               className={cn(
@@ -173,10 +170,10 @@ const EditNickname = () => {
           </label>
           <div className={cn('rounded-md border border-gray-200 px-[16px] py-[13px]')}>
             <Input
-              defaultValue={newNickname}
+              defaultValue={newNickName}
               id='name'
               placeholder='별칭을 입력해주세요.'
-              onChange={(e) => setNewNickname(e.target.value)}
+              onChange={(e) => setNewNickName(e.target.value)}
               className={cn(
                 Typography.BODY_1,
                 twSelector('placeholder', Typography.BODY_1),
@@ -190,4 +187,4 @@ const EditNickname = () => {
   );
 };
 
-export { EditNickname };
+export { StudentEditNickname };
