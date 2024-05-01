@@ -3,16 +3,15 @@ import { useMutation } from '@tanstack/react-query';
 import { authApi } from '@/entity/auth';
 import { BaseError, BaseResponse } from '@/shared/api';
 
-interface EditNicknameRequest {
-  studentId: number;
-  nickname: string;
+interface DeleteLogCommentRequest {
+  id: number;
 }
 
 export const useDeleteCommentMutation = () => {
-  return useMutation<BaseResponse<boolean>, BaseError, EditNicknameRequest>({
-    mutationFn: async ({ studentId, nickname }) => {
-      const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/members/v1/nickname/${studentId}?nickname=${nickname}`
+  return useMutation<BaseResponse<boolean>, BaseError, DeleteLogCommentRequest>({
+    mutationFn: async ({ id }) => {
+      const result = await authApi.delete<BaseResponse<boolean>>(
+        `/api/lessonhistory/v1/comment/${id}`
       );
       return result.data;
     },

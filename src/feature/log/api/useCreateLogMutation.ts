@@ -4,7 +4,7 @@ import { authApi } from '@/entity/auth';
 import { BaseError, BaseResponse } from '@/shared/api';
 
 interface CreateLogRequest {
-  uploadFiles?: ImageData;
+  uploadFiles?: ImageData[];
   request: {
     title: string;
     content: string;

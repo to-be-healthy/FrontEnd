@@ -228,7 +228,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
         {detailData?.pages[0]?.course?.remainLessonCnt === REMAIN_CNT_ZERO && (
           <CourseSheet isOpen={isRegisterSheetOpen} setIsOpen={setIsRegisterSheetOpen}>
             <CourseSheetTrigger className='absolute right-7'>
-              <PlusIcon width={20} height={20} fili='#000000' />
+              <PlusIcon width={20} height={20} fill='#000000' />
             </CourseSheetTrigger>
             <CourseSheetContent>
               <CourseSheetHeader>등록할 수업횟수</CourseSheetHeader>

@@ -4,7 +4,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 
-import { KakaoScript, MSWComponent, QueryProvider } from './_providers';
+import { MSWComponent, QueryProvider } from './_providers';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -34,7 +34,6 @@ export default function RootLayout({
         </QueryProvider>
       </body>
       <GoogleAnalytics gaId={gaId} />
-      <KakaoScript />
     </html>
   );
 }

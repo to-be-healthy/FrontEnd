@@ -1,69 +1,33 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { authApi } from '@/entity/auth';
-import { BaseError, BaseResponse } from '@/shared/api';
+import { BaseError, BaseResponse, Pageable } from '@/shared/api';
 
-interface Pageable<T> {
-  content: T;
-  pageable: {
-    pageNumber: number;
-    pageSize: number;
-    sort: {
-      empty: boolean;
-      sorted: boolean;
-      unsorted: boolean;
-    };
-    offset: number;
-    paged: boolean;
-    unpaged: boolean;
-  };
-  totalPages: number;
-  totalElements: number;
-  last: boolean;
-  size: number;
-  number: number;
-  sort: {
-    empty: boolean;
-    sorted: boolean;
-    unsorted: boolean;
-  };
-  numberOfElements: number;
-  first: boolean;
-  empty: boolean;
-}
+import { Log } from '../model/types';
 
 interface StudentLogListRequest {
   studentId: number;
-  searchDate: string;
+  searchDate?: string;
 }
 
-interface Log {
-  id: number;
-  title: string;
-  content: string;
-  comments: Comment[];
-  commentCount: number;
-  createdAt: string;
-  student: string;
-  trainer: string;
-  lessonDt: string;
-  lessonTime: string;
-  attendanceStatus: '출석' | '미출석';
-  files: string[];
+interface StudentLogListResponse extends Pageable {
+  studentName: string;
+  content: Log[];
 }
-
-type StudentLogList = Pageable<Log[]>;
 
 export const useStudentLogListQuery = ({
   studentId,
   searchDate,
 }: StudentLogListRequest) => {
-  return useQuery<Pageable<Log[]>, BaseError>({
-    queryKey: ['studentLogList'],
+  return useQuery<StudentLogListResponse, BaseError>({
+    queryKey: ['studentLogList', studentId, searchDate],
     queryFn: async () => {
-      const result = await authApi.get<BaseResponse<StudentLogList>>(
-        `/api/lessonhistory/v1/detail/${studentId}?searchDate=${searchDate}`
-      );
+      const queryParams = new URLSearchParams();
+      if (searchDate) {
+        queryParams.append('searchDate', searchDate);
+      }
+      const url = `/api/lessonhistory/v1/detail/${studentId}?${queryParams.toString()}`;
+      const result = await authApi.get<BaseResponse<StudentLogListResponse>>(url);
       return result.data.data;
     },
   });

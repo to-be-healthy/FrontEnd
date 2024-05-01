@@ -17,7 +17,7 @@ interface Props {
 const StudentLogWritePage = ({ memberId }: Props) => {
   const router = useRouter();
   const [content, setContent] = useState('');
-  const [scheduleId] = useState(0); // TODO
+  const [scheduleId] = useState(2); // TODO
 
   const { mutate } = useCreateLogMutation();
 

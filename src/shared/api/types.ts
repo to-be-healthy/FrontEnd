@@ -1,12 +1,22 @@
 import { AxiosError } from 'axios';
 
-export interface BaseResponse<T> {
+interface BaseResponse<T> {
   message: string;
   data: T;
 }
 
-export type BaseError = AxiosError<{
+type BaseError = AxiosError<{
   code: string;
   message: string;
   timestamp: string;
 }>;
+
+interface Pageable {
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number;
+  totalElements: number;
+  isLast: boolean;
+}
+
+export type { BaseError, BaseResponse, Pageable };

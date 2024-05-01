@@ -165,6 +165,7 @@ export const TrainerHomePage = () => {
                     fill
                     sizes='auto'
                     alt='Calendar image for classes'
+                    priority
                   />
                 </div>
               </CardContent>
