@@ -110,6 +110,14 @@ module.exports = {
             transform: 'translateX(0)',
           },
         },
+        'calendar-accordion-down': {
+          from: { height: '150px' },
+          to: { height: 'var(--radix-calendar-accordion-content-height)' },
+        },
+        'calendar-accordion-up': {
+          from: { height: 'var(--radix-calendar-accordion-content-height)' },
+          to: { height: '150px' },
+        },
         'accordion-down': {
           from: { height: '0' },
           to: { height: 'var(--radix-accordion-content-height)' },
@@ -124,6 +132,8 @@ module.exports = {
         rolling_clone: 'rolling_clone 10s linear infinite',
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        'calendar-accordion-down': 'calendar-accordion-down 0.2s ease-out',
+        'calendar-accordion-up': 'calendar-accordion-up 0.2s ease-out',
       },
       fontFamily: {
         pretendard: ['Pretendard'],

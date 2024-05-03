@@ -120,8 +120,6 @@ export const CourseSheetContent = ({ children }: CourseSheetContentProps) => {
   return (
     <SheetContent
       className='m-auto mb-7 w-[calc(100%-20px)] rounded-lg px-7 pb-9 pt-8'
-      closeClassName='top-7 right-7'
-      xClassName='w-[22px] h-[22px] text-[#000]'
       side='bottom'>
       {children}
     </SheetContent>

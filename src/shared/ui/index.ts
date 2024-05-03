@@ -11,6 +11,7 @@ export {
   AlertDialogTrigger,
 } from './alert-dialog';
 export { Button, buttonVariants } from './button';
+export { Calendar } from './calendar';
 export { Card, CardContent, CardFooter, CardHeader } from './card';
 export { Collapsible, CollapsibleContent, CollapsibleTrigger } from './collapsible';
 export {
