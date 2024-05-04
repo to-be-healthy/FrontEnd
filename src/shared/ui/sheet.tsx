@@ -73,10 +73,10 @@ const SheetContent = forwardRef<
         {children}
         <SheetPrimitive.Close
           className={cn(
-            'absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-secondary',
+            'absolute right-7 top-7 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-secondary',
             closeClassName
           )}>
-          <X className={cn('h-4 w-4', xClassName)} />
+          <X className={cn('h-[22px] w-[22px] text-black', xClassName)} />
           <span className='sr-only'>Close</span>
         </SheetPrimitive.Close>
       </SheetPrimitive.Content>

@@ -53,7 +53,7 @@ interface CourseSheetHeaderProps {
 export const CourseSheetHeader = ({ children }: CourseSheetHeaderProps) => {
   return (
     <SheetHeader>
-      <SheetTitle className={cn('mb-8 text-left text-[#000]', Typography.HEADING_4)}>
+      <SheetTitle className={cn('mb-8 text-left text-black', Typography.HEADING_4)}>
         {children}
       </SheetTitle>
     </SheetHeader>
@@ -101,7 +101,7 @@ export const CourseSheetInput = ({
         value={courseInput}
         onChange={changeCourseInput}
         className={cn(
-          'border-b-1 w-[100px] border-b border-solid border-y-gray-400 py-[2px] text-center text-[40px] font-bold leading-[130%] text-[#000] focus:border-y-primary-500',
+          'border-b-1 w-[100px] border-b border-solid border-y-gray-400 py-[2px] text-center text-[40px] font-bold leading-[130%] text-black focus:border-y-primary-500',
           courseInputError && 'focus:border-y-red-500'
         )}
       />
@@ -120,8 +120,6 @@ export const CourseSheetContent = ({ children }: CourseSheetContentProps) => {
   return (
     <SheetContent
       className='m-auto mb-7 w-[calc(100%-20px)] rounded-lg px-7 pb-9 pt-8'
-      closeClassName='top-7 right-7'
-      xClassName='w-[22px] h-[22px] text-[#000]'
       side='bottom'>
       {children}
     </SheetContent>

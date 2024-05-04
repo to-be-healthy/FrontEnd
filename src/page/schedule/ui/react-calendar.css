@@ -1,0 +1,38 @@
+.calendar-shadow {
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
+}
+
+.calendar-day.in-range {
+  display: none;
+}
+
+.rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  background-color: transparent;
+}
+
+.rdp-button {
+  border-radius: 9999px;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.aria-selected\:opacity-100[aria-selected='true'] {
+  color: #fff !important;
+}
+
+.aria-selected\:opacity-30[aria-selected='true'] {
+  color: #1990ff !important;
+}
+
+.reserved-indicator {
+  width: 6px;
+  height: 6px;
+  background-color: #3ba0ff;
+  display: block;
+  border-radius: 9999px;
+  position: absolute;
+  left: 50%;
+  margin-left: -3px;
+}

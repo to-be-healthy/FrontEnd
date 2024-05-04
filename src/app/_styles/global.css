@@ -55,6 +55,8 @@
     --blue-50: #e2f1ff;
 
     --max-width: 390px;
+
+    --radix-calendar-accordion-content-height: 350px;
   }
 
   .dark {
@@ -236,8 +238,8 @@
   }
 }
 
-/* input-otp width, clip-path 덮어쓰기 */
 @layer utilities {
+  /* input-otp width, clip-path 덮어쓰기 */
   .input-otp-override {
     width: 100% !important;
     clip-path: none !important;
