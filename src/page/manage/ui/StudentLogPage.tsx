@@ -21,14 +21,7 @@ import {
   CarouselItem,
   CarouselNav,
 } from '@/shared/ui/carousel';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/shared/ui/select';
+import { MonthPicker } from '@/shared/ui/month-picker';
 import { cn } from '@/shared/utils';
 
 interface Props {
@@ -38,7 +31,7 @@ interface Props {
 const StudentLogPage = ({ memberId }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
-  const [searchMonth] = useState<string>();
+  const [searchMonth, setSearchMonth] = useState<string>();
 
   const { data } = useStudentLogListQuery({
     studentId: memberId,
@@ -66,20 +59,10 @@ const StudentLogPage = ({ memberId }: Props) => {
           </Layout.Header>
           <Layout.Contents className='overflow-y-hidden py-[20px]'>
             <div className='px-[20px]'>
-              <Select defaultValue={'2023년 12월'}>
-                <SelectTrigger className='flex w-fit items-center gap-x-[4px] bg-transparent'>
-                  <SelectValue placeholder='헬스장 선택' />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    {['2023년 12월', '2024년 1월'].map((item) => (
-                      <SelectItem key={item} value={String(item)}>
-                        {item}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+              <MonthPicker
+                date={searchMonth}
+                onChangeDate={(newDate) => setSearchMonth(newDate)}
+              />
             </div>
             <div className='mt-[4px] flex h-full flex-1 flex-grow flex-col overflow-y-auto px-[20px] pb-[20px]'>
               <div className='flex w-full flex-col gap-y-[16px] pb-[16px]'>
