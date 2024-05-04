@@ -2,6 +2,7 @@ export { useCreateLogCommentMutation } from './api/useCreateLogCommentMutation';
 export { useCreateLogMutation } from './api/useCreateLogMutation';
 export { useCreateLogReplyMutation } from './api/useCreateLogReplyMutation';
 export { useDeleteCommentMutation } from './api/useDeleteCommentMutation';
+export { useDeleteLogMutation } from './api/useDeleteLogMutation';
 export { useStudentLogListQuery } from './api/useStudentLogListQuery';
 export {
   CommentContext as LogCommentContext,
