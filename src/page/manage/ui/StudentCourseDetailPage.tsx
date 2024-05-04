@@ -290,7 +290,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                 </div>
 
                 <div className='bg-[#fff] p-7 pt-0'>
-                  <div className='flex items-center justify-center rounded-lg bg-gray-100 text-[#000]'>
+                  <div className='flex items-center justify-center rounded-lg bg-gray-100 text-black'>
                     <CourseSheet isOpen={isAddSheetOpen} setIsOpen={setIsAddSheetOpen}>
                       <CourseSheetTrigger
                         className={cn('h-[46px] w-[160px]', Typography.HEADING_5)}
@@ -373,7 +373,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                             <dt className='typography-title-3 text-gray-700'>
                               {courseHistoryCodeDescription[item.type]}
                             </dt>
-                            <dd className='typography-title-3 text-[#000]'>
+                            <dd className='typography-title-3 text-black'>
                               {item.calculation === 'PLUS' ? '+' : '-'}
                               {item.cnt}
                             </dd>

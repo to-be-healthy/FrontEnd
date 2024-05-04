@@ -127,7 +127,7 @@ export const SelectGym = () => {
                         <li key={item.gymId} className='mb-3 h-[80px] w-full'>
                           <Button
                             className={cn(
-                              'typography-heading-4 h-full text-[#000]',
+                              'typography-heading-4 h-full text-black',
                               selectGymId === item.gymId
                                 ? 'border-2 border-solid border-primary-500 bg-[#fff]'
                                 : 'bg-gray-100'

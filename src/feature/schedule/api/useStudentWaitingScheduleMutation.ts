@@ -9,7 +9,6 @@ export const useStudentWaitingScheduleMutation = () => {
       const result = await authApi.post<BaseResponse<boolean>>(
         `/api/schedule/waiting/v1/${scheduleId}`
       );
-      console.log(result);
       return result.data;
     },
   });

@@ -25,10 +25,10 @@ interface MyReservationResponse {
 
 export const useStudentMyReservationListQuery = (lessonDt: string) => {
   return useQuery<MyReservationResponse, BaseError>({
-    queryKey: ['StudentMyReservationList'],
+    queryKey: ['StudentMyReservationList', lessonDt],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<MyReservationResponse>>(
-        `/api/schedule/v1/my-reservation?lessonDt=${lessonDt}`
+        `/api/schedule/v1/student/my-reservation?lessonDt=${lessonDt}`
       );
       return res.data.data;
     },

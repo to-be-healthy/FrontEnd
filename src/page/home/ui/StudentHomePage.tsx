@@ -89,13 +89,13 @@ export const StudentHomePage = () => {
                     <li className='w-[130px]'>
                       <Card className='h-full w-full gap-y-7 p-6'>
                         <CardHeader>
-                          <p className='typography-heading-5 flex items-center justify-start text-[#000]'>
+                          <p className='typography-heading-5 flex items-center justify-start text-black'>
                             <PointIcon />
                             이번달 포인트
                           </p>
                         </CardHeader>
                         <CardContent>
-                          <p className='typography-heading-2 mb-7 flex items-center text-[#000]'>
+                          <p className='typography-heading-2 mb-7 flex items-center text-black'>
                             16
                             <span className='typography-heading-5 ml-[2px] text-gray-700'>
                               점
@@ -110,12 +110,12 @@ export const StudentHomePage = () => {
                     <li className='ml-3 w-[130px]'>
                       <Card className='h-full w-full gap-y-7 p-6'>
                         <CardHeader>
-                          <p className='typography-heading-5 flex items-center justify-start text-[#000]'>
+                          <p className='typography-heading-5 flex items-center justify-start text-black'>
                             랭킹 <IconArrowUpFull />
                           </p>
                         </CardHeader>
                         <CardContent>
-                          <p className='typography-heading-2 mb-7 flex items-center text-[#000]'>
+                          <p className='typography-heading-2 mb-7 flex items-center text-black'>
                             3
                             <span className='typography-heading-5 ml-[2px] text-gray-700'>
                               위
@@ -142,9 +142,7 @@ export const StudentHomePage = () => {
             </CardHeader>
             <CardContent className='flex items-center justify-start'>
               <CheckIcon fill={'var(--primary-500)'} />
-              <p className='typography-heading-4 ml-3 text-[#000]'>
-                05.23 (월) 오후 1:00
-              </p>
+              <p className='typography-heading-4 ml-3 text-black'>05.23 (월) 오후 1:00</p>
             </CardContent>
           </Card>
         </div>
@@ -152,7 +150,7 @@ export const StudentHomePage = () => {
         <div className='mb-7'>
           <Card className='w-full gap-y-8 px-6 py-7'>
             <CardHeader className='flex items-center justify-between'>
-              <h2 className='typography-title-1 text-[#000]'>
+              <h2 className='typography-title-1 text-black'>
                 수업 일지
                 <span className='typography-heading-5 ml-1 inline-block h-7 w-7 rounded-[50%] bg-primary-500 text-center text-[#fff]'>
                   {FEEDBACK_COUNT}
@@ -165,7 +163,7 @@ export const StudentHomePage = () => {
             <CardContent className='flex items-start justify-start'>
               <span className='h-9 w-9 bg-gray-100'>profile</span>
               <div className='ml-2 w-full overflow-hidden rounded-lg rounded-tl-none bg-gray-100 p-6'>
-                <p className='typography-body-4 line-clamp-2 text-[#000]'>
+                <p className='typography-body-4 line-clamp-2 text-black'>
                   회원님 아직 운동 기간이 길지 않아 서있는 자세보다는 오늘과 같이 벤치에
                   앉아서 시작하는게 좋을것 같습니다 회원님 아직 운동 기간이 길지 않아
                   서있는 자세보다는 오늘과 같이 벤치에 앉아서 시작하는게 좋을것
@@ -180,7 +178,7 @@ export const StudentHomePage = () => {
         <div>
           <Card className='w-full gap-y-8 px-6 py-7'>
             <CardHeader className='flex items-center justify-between'>
-              <h2 className='typography-title-1 text-[#000]'>오늘 식단</h2>
+              <h2 className='typography-title-1 text-black'>오늘 식단</h2>
               <Link href='/' className='typography-body-3 gray-500 h-auto'>
                 식단전체
               </Link>

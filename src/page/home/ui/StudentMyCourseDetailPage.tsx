@@ -78,7 +78,7 @@ export const StudentMyCourseDetailPage = () => {
                         <dt className='typography-title-3 text-gray-700'>
                           {courseHistoryCodeDescription[item.type]}
                         </dt>
-                        <dd className='typography-title-3 text-[#000]'>
+                        <dd className='typography-title-3 text-black'>
                           {item.calculation === 'PLUS' ? '+' : '-'}
                           {item.cnt}
                         </dd>

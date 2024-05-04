@@ -24,22 +24,12 @@ import {
 import { cn } from '@/shared/utils';
 
 import { useStudentReservationScheduleMutation } from '../api/useStudentReservationScheduleMutation';
+import { ScheduleData } from '../model/type';
 
 dayjs.locale('ko');
 
-interface dateType {
-  scheduleId: number;
-  lessonDt: string;
-  lessonStartTime: string;
-  lessonEndTime: string;
-  reservationStatus: string;
-  round: number;
-  trainerName: string;
-  applicantName: null | string;
-  standByName: null | string;
-}
 interface Props {
-  data: dateType;
+  data: ScheduleData;
   date: Date;
 }
 
@@ -109,7 +99,7 @@ export const ReservationBottomSheet = ({ data, date }: Props) => {
       </SheetTrigger>
       <SheetContent side='bottom' className='rounded-tl-lg rounded-tr-lg p-7 pb-9'>
         <SheetHeader className='mb-8 text-left'>
-          <h2 className={cn(Typography.HEADING_4_BOLD, 'mb-2 text-[#000]')}>
+          <h2 className={cn(Typography.HEADING_4_BOLD, 'mb-2 text-black')}>
             이 수업을 예약할까요?
           </h2>
           <p className={cn(Typography.TITLE_2, 'text-gray-600')}>
@@ -120,7 +110,7 @@ export const ReservationBottomSheet = ({ data, date }: Props) => {
         <div>
           <div
             className={cn(
-              'mb-7 bg-gray-100 p-6 text-center text-[#000]',
+              'mb-7 bg-gray-100 p-6 text-center text-black',
               Typography.HEADING_3
             )}>
             {selectDate} {Number(startHours) < 12 ? '오전 ' : '오후 '}
