@@ -24,12 +24,10 @@ const StudentLogWritePage = ({ memberId }: Props) => {
   const submit = () => {
     mutate(
       {
-        request: {
-          title: '', // TODO - figma에는 타이틀 없음
-          content,
-          studentId: memberId,
-          scheduleId,
-        },
+        title: '무제', // TODO - figma에는 타이틀 없음
+        content,
+        studentId: memberId,
+        scheduleId,
       },
       {
         onSuccess: () => {

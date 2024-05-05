@@ -2,3 +2,4 @@ next.config.mjs
 stylelint.config.js
 public/mockServiceWorker.js
 tailwind.config.js
+kakao.min.js

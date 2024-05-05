@@ -4,7 +4,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 
-import { MSWComponent, QueryProvider } from './_providers';
+import { KakaoScript, MSWComponent, QueryProvider } from './_providers';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -27,6 +27,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang='ko'>
+      <KakaoScript />
       <body>
         <QueryProvider>
           <MSWComponent />
