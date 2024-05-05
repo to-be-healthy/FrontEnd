@@ -11,25 +11,19 @@ import { useEffect, useState } from 'react';
 import {
   ReservationBottomSheet,
   StandbyBottomSheet,
+  StudentMyReservationSchedule,
+  StudentMyWaitingSchedule,
   useScheduleListQuery,
+  useStudentCalendarMyReservationListQuery,
   useStudentMyReservationListQuery,
+  useStudentMyWaitingListQuery,
 } from '@/feature/schedule';
 import AlarmIcon from '@/shared/assets/images/icon_alarm.svg';
 import DownIcon from '@/shared/assets/images/icon_arrow_bottom.svg';
 import ScheduleIcon from '@/shared/assets/images/icon_schedule.svg';
 import { Typography } from '@/shared/mixin';
 import { Calendar } from '@/shared/ui';
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  Layout,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/shared/ui';
+import { Button, Layout, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 dayjs.extend(isBetween);
 import { format } from 'date-fns';
@@ -59,12 +53,14 @@ export const StudentSchedulePage = () => {
 
   const { data: scheduleListData, isPending } =
     useScheduleListQuery(scheduleListFormatDate);
-  const { data: myReservationData } = useStudentMyReservationListQuery(
+  const { data: calendarMyReservationData } = useStudentCalendarMyReservationListQuery(
     myReservationFormatDate
   );
+  const { data: myReservationData } = useStudentMyReservationListQuery();
+  const { data: myWaitingData } = useStudentMyWaitingListQuery();
 
   const reservedDates =
-    myReservationData?.reservations?.map((item) => {
+    calendarMyReservationData?.reservations?.map((item) => {
       return new Date(item.lessonDt);
     }) ?? [];
 
@@ -203,6 +199,7 @@ export const StudentSchedulePage = () => {
               <p>로딩중...</p>
             ) : (
               <div className='p-7'>
+                {/* 트레이너 매핑 안되어있을때도 안보이게 */}
                 {scheduleListData?.morning !== null && (
                   <div className='mb-7'>
                     <p className={cn(Typography.BODY_1, 'mb-4 text-gray-700')}>오전</p>
@@ -292,67 +289,74 @@ export const StudentSchedulePage = () => {
             )}
           </TabsContent>
           <TabsContent value='myReservation'>
-            <div className='px-7 py-6'>
-              <article
-                className={cn(
-                  'mb-8 flex items-center justify-between rounded-md bg-gray-200 px-6 py-3 text-gray-700',
-                  Typography.TITLE_3
-                )}>
-                <p>잔여4회</p>
-                <span className={cn(Typography.BODY_2)}>20회 PT수강권</span>
-              </article>
+            {myReservationData && myReservationData ? (
+              <div className='px-7 py-6'>
+                <article
+                  className={cn(
+                    'mb-8 flex items-center justify-between rounded-md bg-gray-200 px-6 py-3 text-gray-700',
+                    Typography.TITLE_3
+                  )}>
+                  <p>잔여 {myReservationData?.course.remainLessonCnt}회</p>
+                  <span className={cn(Typography.BODY_2)}>
+                    {myReservationData?.course.totalLessonCnt}회 PT수강권
+                  </span>
+                </article>
 
-              <Tabs defaultValue='upcomingReservation'>
-                <TabsList className='mb-6 flex items-center justify-start gap-4 p-0'>
-                  <TabsTrigger
-                    value='upcomingReservation'
-                    asChild
-                    className='block h-full'>
-                    <Button
-                      variant='ghost'
-                      className={cn(
-                        Typography.HEADING_5,
-                        'block w-[95px] rounded-[9999px] bg-[#fff] px-5 py-2 font-normal text-gray-500 shadow-none data-[state=active]:bg-primary-500 data-[state=active]:font-semibold data-[state=active]:text-[#fff]'
-                      )}>
-                      다가오는 예약
-                    </Button>
-                  </TabsTrigger>
-                  <TabsTrigger
-                    value='awaitingReservation'
-                    asChild
-                    className='block h-full'>
-                    <Button
-                      variant='ghost'
-                      className={cn(
-                        Typography.HEADING_5,
-                        'block w-[95px] rounded-[9999px] bg-[#fff] px-5 py-2 font-normal text-gray-500 shadow-none data-[state=active]:bg-primary-500 data-[state=active]:font-semibold data-[state=active]:text-[#fff]'
-                      )}>
-                      대기중 예약
-                    </Button>
-                  </TabsTrigger>
-                </TabsList>
-                <TabsContent value='upcomingReservation' className='w-full'>
-                  <ul>
-                    <li className='mb-3'>
-                      <Button variant='ghost' className='block h-full w-full p-0'>
-                        <Card className='w-full text-left'>
-                          <CardHeader>12월 13일 목요일</CardHeader>
-                          <CardContent>오전 10:00 - 11:00</CardContent>
-                        </Card>
+                <Tabs defaultValue='upcomingReservation'>
+                  <TabsList className='mb-6 flex items-center justify-start gap-4 bg-transparent p-0'>
+                    <TabsTrigger
+                      value='upcomingReservation'
+                      asChild
+                      className='block h-full'>
+                      <Button
+                        variant='ghost'
+                        className={cn(
+                          Typography.HEADING_5,
+                          'block w-[95px] rounded-[9999px] bg-[#fff] px-5 py-2 font-normal text-gray-500 shadow-none data-[state=active]:bg-primary-500 data-[state=active]:font-semibold data-[state=active]:text-[#fff]'
+                        )}>
+                        다가오는 예약
                       </Button>
-                    </li>
-                    <li className='mb-3'>
-                      <Button variant='ghost' className='block h-full w-full p-0'>
-                        <Card className='w-full text-left'>
-                          <CardHeader>12월 13일 목요일</CardHeader>
-                          <CardContent>오전 10:00 - 11:00</CardContent>
-                        </Card>
+                    </TabsTrigger>
+                    <TabsTrigger
+                      value='awaitingReservation'
+                      asChild
+                      className='block h-full'>
+                      <Button
+                        variant='ghost'
+                        className={cn(
+                          Typography.HEADING_5,
+                          'block w-[95px] rounded-[9999px] bg-[#fff] px-5 py-2 font-normal text-gray-500 shadow-none data-[state=active]:bg-primary-500 data-[state=active]:font-semibold data-[state=active]:text-[#fff]'
+                        )}>
+                        대기중 예약
                       </Button>
-                    </li>
-                  </ul>
-                </TabsContent>
-              </Tabs>
-            </div>
+                    </TabsTrigger>
+                  </TabsList>
+                  <TabsContent value='upcomingReservation' className='w-full'>
+                    <ul>
+                      {myReservationData?.reservations.map((item) => {
+                        return (
+                          <StudentMyReservationSchedule
+                            key={item.scheduleId}
+                            data={item}
+                          />
+                        );
+                      })}
+                    </ul>
+                  </TabsContent>
+                  <TabsContent value='awaitingReservation' className='w-full'>
+                    <ul>
+                      {myWaitingData?.myScheduleWaitings.map((item) => {
+                        return (
+                          <StudentMyWaitingSchedule key={item.scheduleId} data={item} />
+                        );
+                      })}
+                    </ul>
+                  </TabsContent>
+                </Tabs>
+              </div>
+            ) : (
+              <p>로딩중...</p>
+            )}
           </TabsContent>
         </Tabs>
       </Layout.Contents>
