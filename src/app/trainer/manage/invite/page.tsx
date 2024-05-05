@@ -1,10 +1,6 @@
 import { TrainerInvitePage } from '@/page/manage';
 
 const Page = () => {
-  return (
-    <>
-      <TrainerInvitePage />
-    </>
-  );
+  return <TrainerInvitePage />;
 };
 export default Page;
