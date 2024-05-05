@@ -1,11 +1,11 @@
 import { StudentLogDetailPage } from '@/page/manage/ui/StudentLogDetailPage';
 
 interface Props {
-  params: { LogId: number; memberId: number };
+  params: { logId: number; memberId: number };
 }
 
 const Page = ({ params }: Props) => {
-  return <StudentLogDetailPage LogId={params.LogId} memberId={params.memberId} />;
+  return <StudentLogDetailPage logId={params.logId} memberId={params.memberId} />;
 };
 
 export default Page;

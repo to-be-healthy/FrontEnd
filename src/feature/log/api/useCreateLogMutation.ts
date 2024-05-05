@@ -4,13 +4,11 @@ import { authApi } from '@/entity/auth';
 import { BaseError, BaseResponse } from '@/shared/api';
 
 interface CreateLogRequest {
-  uploadFiles?: ImageData;
-  request: {
-    title: string;
-    content: string;
-    studentId: number;
-    scheduleId: number;
-  };
+  uploadFiles?: ImageData[];
+  title: string;
+  content: string;
+  studentId: number;
+  scheduleId: number;
 }
 
 export const useCreateLogMutation = () => {

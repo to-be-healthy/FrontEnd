@@ -27,6 +27,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang='ko'>
+      <KakaoScript />
       <body>
         <QueryProvider>
           <MSWComponent />
@@ -34,7 +35,6 @@ export default function RootLayout({
         </QueryProvider>
       </body>
       <GoogleAnalytics gaId={gaId} />
-      <KakaoScript />
     </html>
   );
 }

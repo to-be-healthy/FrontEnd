@@ -15,7 +15,6 @@ authApi.interceptors.request.use(
     const { tokens } = auth();
     if (tokens) {
       request.headers.Authorization = `Bearer ${tokens.accessToken}`;
-      request.headers['Content-Type'] = 'application/json';
     }
     return request;
   },
