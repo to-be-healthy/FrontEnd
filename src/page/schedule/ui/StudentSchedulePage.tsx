@@ -10,16 +10,18 @@ import { useEffect, useState } from 'react';
 
 import {
   ReservationBottomSheet,
-  StandbyBottomSheet,
   StudentMyReservationSchedule,
   StudentMyWaitingSchedule,
   useScheduleListQuery,
   useStudentCalendarMyReservationListQuery,
   useStudentMyReservationListQuery,
   useStudentMyWaitingListQuery,
+  WaitingBottomSheet,
 } from '@/feature/schedule';
 import AlarmIcon from '@/shared/assets/images/icon_alarm.svg';
 import DownIcon from '@/shared/assets/images/icon_arrow_bottom.svg';
+import CloseIcon from '@/shared/assets/images/icon_close.svg';
+import NotificationIcon from '@/shared/assets/images/icon_notification_transparent.svg';
 import ScheduleIcon from '@/shared/assets/images/icon_schedule.svg';
 import { Typography } from '@/shared/mixin';
 import { Calendar } from '@/shared/ui';
@@ -121,6 +123,8 @@ export const StudentSchedulePage = () => {
     );
   };
 
+  // todo : 안내문구 닫기함수
+
   return (
     <Layout type='student'>
       <Layout.Header className='flex justify-end bg-[#fff]'>
@@ -151,7 +155,22 @@ export const StudentSchedulePage = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value='classReservation' className='mt-0'>
-            <article className='calendar-shadow rounded-bl-lg rounded-br-lg bg-[#fff] pt-1'>
+            <article className='calendar-shadow rounded-bl-lg rounded-br-lg bg-[#fff]'>
+              <div className='flex items-center justify-between bg-blue-50 px-7 py-5'>
+                <div className='flex items-center justify-center'>
+                  <NotificationIcon />
+                  <p className={cn(Typography.BODY_3, 'ml-3 text-black')}>
+                    매주 일요일 자정 이후에 해당 주 예약이 가능합니다.
+                  </p>
+                </div>
+                <Button
+                  variant='ghost'
+                  className='h-auto p-0'
+                  // onClick={handleCloseNotification}
+                >
+                  <CloseIcon width={12} height={12}></CloseIcon>
+                </Button>
+              </div>
               <div
                 className={cn(
                   hasMounted
@@ -218,7 +237,7 @@ export const StudentSchedulePage = () => {
                               )}
 
                               {item.reservationStatus === 'COMPLETED' && date && (
-                                <StandbyBottomSheet data={item} date={date} />
+                                <WaitingBottomSheet data={item} date={date} />
                               )}
 
                               {item.reservationStatus === 'SOLD_OUT' && (
@@ -256,7 +275,7 @@ export const StudentSchedulePage = () => {
                               )}
 
                               {item.reservationStatus === 'COMPLETED' && date && (
-                                <StandbyBottomSheet data={item} date={date} />
+                                <WaitingBottomSheet data={item} date={date} />
                               )}
 
                               {item.reservationStatus === 'SOLD_OUT' && (
@@ -289,9 +308,10 @@ export const StudentSchedulePage = () => {
             )}
           </TabsContent>
           <TabsContent value='myReservation'>
-            {myReservationData && myReservationData ? (
+            {myReservationData ? (
               <div className='px-7 py-6'>
-                <article
+                {/* todo : api 완성 후 수정예정 수강권 없을시 course === null */}
+                {/* <article
                   className={cn(
                     'mb-8 flex items-center justify-between rounded-md bg-gray-200 px-6 py-3 text-gray-700',
                     Typography.TITLE_3
@@ -300,7 +320,7 @@ export const StudentSchedulePage = () => {
                   <span className={cn(Typography.BODY_2)}>
                     {myReservationData?.course.totalLessonCnt}회 PT수강권
                   </span>
-                </article>
+                </article> */}
 
                 <Tabs defaultValue='upcomingReservation'>
                   <TabsList className='mb-6 flex items-center justify-start gap-4 bg-transparent p-0'>
@@ -333,23 +353,31 @@ export const StudentSchedulePage = () => {
                   </TabsList>
                   <TabsContent value='upcomingReservation' className='w-full'>
                     <ul>
-                      {myReservationData?.reservations.map((item) => {
-                        return (
-                          <StudentMyReservationSchedule
-                            key={item.scheduleId}
-                            data={item}
-                          />
-                        );
-                      })}
+                      {myReservationData?.reservations ? (
+                        myReservationData?.reservations.map((item) => {
+                          return (
+                            <StudentMyReservationSchedule
+                              key={item.scheduleId}
+                              data={item}
+                            />
+                          );
+                        })
+                      ) : (
+                        <StudentMyReservationSchedule data={null} />
+                      )}
                     </ul>
                   </TabsContent>
                   <TabsContent value='awaitingReservation' className='w-full'>
                     <ul>
-                      {myWaitingData?.myScheduleWaitings.map((item) => {
-                        return (
-                          <StudentMyWaitingSchedule key={item.scheduleId} data={item} />
-                        );
-                      })}
+                      {myWaitingData?.myScheduleWaitings ? (
+                        myWaitingData?.myScheduleWaitings.map((item) => {
+                          return (
+                            <StudentMyWaitingSchedule key={item.scheduleId} data={item} />
+                          );
+                        })
+                      ) : (
+                        <StudentMyWaitingSchedule data={null} />
+                      )}
                     </ul>
                   </TabsContent>
                 </Tabs>

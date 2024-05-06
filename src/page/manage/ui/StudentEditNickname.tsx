@@ -111,7 +111,7 @@ const StudentEditNickname = ({ memberId }: Props) => {
           variant='ghost'
           size='icon'
           onClick={() => router.replace(`/trainer/manage/${memberId}`)}>
-          <IconClose />
+          <IconClose width={20} height={20} />
         </Button>
         <h2 className={Typography.HEADING_4_SEMIBOLD}>회원 별칭 설정</h2>
         <AlertDialog>

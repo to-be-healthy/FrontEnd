@@ -92,6 +92,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
           </Link>
         </li>
         <li>
+          {/* todo: 수강권 없을시 스케줄메뉴 비활성화 */}
           <Link
             href='/student/schedule'
             className='flex flex-col items-center justify-between gap-y-[6px]'>
@@ -105,7 +106,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
                 'text-[10px] font-semibold',
                 pathname === '/student/schedule' ? 'text-black' : 'text-gray-700'
               )}>
-              수업예약
+              스케줄
             </span>
           </Link>
         </li>

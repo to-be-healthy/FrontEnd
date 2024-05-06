@@ -33,7 +33,7 @@ interface Props {
   date: Date;
 }
 
-export const StandbyBottomSheet = ({ data, date }: Props) => {
+export const WaitingBottomSheet = ({ data, date }: Props) => {
   const [isSheetOpen, setIsSheetOpen] = useState(false);
   const [startHours, startMinutes] = data?.lessonStartTime?.split(':') || ['00', '00'];
   const [endHours, endMinutes] = data?.lessonEndTime?.split(':') || ['00', '00'];
@@ -56,6 +56,9 @@ export const StandbyBottomSheet = ({ data, date }: Props) => {
         setIsSheetOpen(false);
         void queryClient.invalidateQueries({
           queryKey: ['scheduleList'],
+        });
+        void queryClient.invalidateQueries({
+          queryKey: ['StudentMyWaitingList'],
         });
         toast({
           className: 'h-12',

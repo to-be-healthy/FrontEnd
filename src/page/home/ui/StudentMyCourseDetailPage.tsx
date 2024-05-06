@@ -44,7 +44,7 @@ export const StudentMyCourseDetailPage = () => {
     <Layout type='student'>
       <Layout.Header className='relative flex justify-center bg-[#fff]'>
         <Link href='./' className='absolute left-7'>
-          <CloseIcon />
+          <CloseIcon width={20} height={20} />
         </Link>
         <h2>내 수강권</h2>
       </Layout.Header>

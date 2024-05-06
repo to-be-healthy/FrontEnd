@@ -24,7 +24,7 @@ export const SignInPage = () => {
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
         <p className='typography-heading-4 flex h-full items-center'>{title}</p>
         <Button variant='ghost' className='p-0' onClick={() => router.push('/')}>
-          <IconClose />
+          <IconClose width={20} height={20} />
         </Button>
       </Layout.Header>
       <Layout.Contents>

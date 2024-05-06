@@ -121,7 +121,7 @@ export const TrainerInvitePage = () => {
           className='border-none bg-transparent p-0 hover:bg-transparent'
           asChild>
           <Link href={'/trainer/manage'}>
-            <CloseIcon />
+            <CloseIcon width={20} height={20} />
           </Link>
         </Button>
         <h1 className='typography-heading-4 font-semibold'>회원추가</h1>

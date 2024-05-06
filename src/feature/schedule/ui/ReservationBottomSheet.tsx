@@ -57,6 +57,12 @@ export const ReservationBottomSheet = ({ data, date }: Props) => {
         void queryClient.invalidateQueries({
           queryKey: ['scheduleList'],
         });
+        void queryClient.invalidateQueries({
+          queryKey: ['StudentCalendarMyReservationList'],
+        });
+        void queryClient.invalidateQueries({
+          queryKey: ['StudentMyReservationList'],
+        });
         toast({
           className: 'h-12',
           description: (

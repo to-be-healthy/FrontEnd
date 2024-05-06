@@ -25,7 +25,7 @@ export const SignUpCancelDialog = ({ type }: { type: string | null | undefined }
         <Button
           variant='outline'
           className='border-none bg-transparent p-0 hover:bg-transparent'>
-          <CloseIcon />
+          <CloseIcon width={20} height={20} />
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>

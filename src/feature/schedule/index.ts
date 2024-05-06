@@ -14,6 +14,6 @@ export type {
   ScheduleData,
 } from './model/type';
 export { ReservationBottomSheet } from './ui/ReservationBottomSheet';
-export { StandbyBottomSheet } from './ui/StandbyBottomSheet';
 export { StudentMyReservationSchedule } from './ui/StudentMyReservationSchedule';
 export { StudentMyWaitingSchedule } from './ui/StudentMyWaitingSchedule';
+export { WaitingBottomSheet } from './ui/WaitingBottomSheet';
