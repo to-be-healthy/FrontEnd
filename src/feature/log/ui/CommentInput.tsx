@@ -1,4 +1,8 @@
+import Image from 'next/image';
+
+import { useImages } from '@/entity/image';
 import IconArrowTop from '@/shared/assets/images/icon_arrow_up_background.svg';
+import IconCloseCircle from '@/shared/assets/images/icon_close_circle.svg';
 import IconPicture from '@/shared/assets/images/icon_picture.svg';
 import { Typography } from '@/shared/mixin';
 import { Button, Input } from '@/shared/ui';
@@ -11,15 +15,16 @@ import { useCommentContext } from '../hooks/useComment';
 
 const CommentInput = () => {
   const {
-    refreshComments,
     logId,
     ref,
     text,
     changeText,
+    clearText,
     target,
     changeTarget,
-    clearText,
+    refreshComments,
   } = useCommentContext();
+  const { images, uploadFiles, clearImages } = useImages();
   const { mutate: createComment } = useCreateLogCommentMutation(logId);
   const { mutate: createReply } = useCreateLogReplyMutation(logId);
   const { mutate: editComment } = useEditLogCommentMutation();
@@ -28,18 +33,19 @@ const CommentInput = () => {
   const submitComment = () => {
     // 신규 댓글
     if (target === null) {
-      createComment({ comment: text }, commentCallback);
+      createComment({ comment: text, images }, commentCallback);
     }
 
-    // 신규 대댓글 mode, isReply
-    if (target?.mode === 'create' && target?.isReply) {
-      const id = target.comment.parentId ?? target.comment.id;
-      createReply({ comment: text, id }, commentCallback);
+    // 신규 대댓글
+    if (target && target.mode === 'create' && target.isReply) {
+      const commentId = target.comment.parentId ?? target.comment.id;
+      createReply({ comment: text, images, commentId }, commentCallback);
     }
 
     // 댓글, 대댓글 수정
-    if (target?.mode === 'edit') {
-      editComment({ comment: text, id: target.comment.id }, commentCallback);
+    if (target && target.mode === 'edit') {
+      const commentId = target.comment.parentId ?? target.comment.id;
+      editComment({ comment: text, commentId }, commentCallback);
     }
   };
 
@@ -47,16 +53,19 @@ const CommentInput = () => {
     onSuccess: async () => {
       await refreshComments();
       clearText();
+      changeTarget(null);
+      clearImages();
     },
   };
 
   return (
     <div
       className={cn(
-        'border-t border-gray-200 bg-white p-[16px]',
-        target?.isReply && 'pt-0'
+        'border-t border-gray-200 bg-white px-[16px] pb-[16px]',
+        target === null && 'pt-[16px]'
       )}>
-      {target?.isReply && (
+      {/* Input 상단 상태바 - 신규 답글 남기기 */}
+      {target !== null && target.mode === 'create' && target.isReply && (
         <div
           className={cn(
             Typography.BODY_4_REGULAR,
@@ -68,13 +77,62 @@ const CommentInput = () => {
             variant='ghost'
             size='auto'
             className={cn(Typography.BODY_4_REGULAR, 'text-gray-500')}
-            onClick={() => changeTarget(null)}>
+            onClick={() => {
+              changeTarget(null);
+              clearImages();
+            }}>
             취소
           </Button>
         </div>
       )}
-      <div className={cn('flex items-center justify-between space-x-[10px] ')}>
-        <IconPicture />
+      {/* Input 상단 상태바 - 기존 댓글, 대댓글 수정하기 */}
+      {target !== null && target.mode === 'edit' && (
+        <div
+          className={cn(
+            Typography.BODY_4_REGULAR,
+            'flex items-center justify-center gap-[6px] py-[10px]'
+          )}>
+          댓글 수정 중
+          <span className='h-[2px] w-[2px] rounded-full bg-gray-500' />
+          <Button
+            variant='ghost'
+            size='auto'
+            className={cn(Typography.BODY_4_REGULAR, 'text-gray-500')}
+            onClick={() => {
+              changeTarget(null);
+              clearImages();
+            }}>
+            취소
+          </Button>
+        </div>
+      )}
+      {/* Input 상단 업로드 할 이미지 */}
+      {images.length > 0 && (
+        <div className='mb-[8px]'>
+          {images.map((image, index) => (
+            <div key={index} className='flex items-start space-x-[4px] overflow-hidden'>
+              <Image
+                src={image.fileUrl}
+                width={80}
+                height={80}
+                alt='staged image'
+                className='rounded-sm'
+              />
+              <IconCloseCircle
+                className='cursor-pointer'
+                onClick={() => {
+                  clearImages();
+                }}
+              />
+            </div>
+          ))}
+        </div>
+      )}
+      <div className={cn('flex items-center justify-between space-x-[10px]')}>
+        <label htmlFor='image-input' className='cursor-pointer'>
+          <IconPicture />
+          <Input id='image-input' type='file' className='hidden' onChange={uploadFiles} />
+        </label>
         <div className='flex-1 rounded-md border px-[16px] py-[13px] focus-within:border-primary-500'>
           <Input
             ref={ref}

@@ -1,32 +1,25 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { authApi } from '@/entity/auth';
+import { ImageType } from '@/entity/image';
 import { BaseError, BaseResponse } from '@/shared/api';
 
 interface CreateLogReplyRequest {
-  uploadFiles?: ImageData[];
+  images?: ImageType[];
   comment: string;
-  id: number;
+  commentId: number;
 }
 
 export const useCreateLogReplyMutation = (logId: number) => {
   return useMutation<BaseResponse<boolean>, BaseError, CreateLogReplyRequest>({
-    mutationFn: async ({ uploadFiles, comment, id }) => {
+    mutationFn: async ({ images, comment, commentId }) => {
       const payload = {
-        uploadFiles,
-        request: {
-          comment,
-        },
+        uploadFileResponse: images,
+        comment,
       };
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/lessonhistory/v1/${logId}/comment/${id}`,
-        payload,
-        {
-          headers: {
-            'Content-Type':
-              'multipart/form-data; boundary=<calculated when request is sent>',
-          },
-        }
+        `/api/lessonhistory/v1/${logId}/comment/${commentId}`,
+        payload
       );
       return result.data;
     },

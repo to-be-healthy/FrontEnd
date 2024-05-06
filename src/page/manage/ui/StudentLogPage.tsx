@@ -6,15 +6,16 @@ import dayjs from 'dayjs';
 dayjs.locale('ko');
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 import { useStudentLogListQuery } from '@/feature/log';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconChat from '@/shared/assets/images/icon_chat.svg';
+import IconNoSchedule from '@/shared/assets/images/icon_no_schedule.svg';
 import IconPlus from '@/shared/assets/images/icon_plus.svg';
 import { Typography } from '@/shared/mixin';
-import { Button, Card, CardContent, CardFooter, CardHeader, Layout } from '@/shared/ui';
+import { Card, CardContent, CardFooter, CardHeader, Layout } from '@/shared/ui';
 import {
   Carousel,
   CarouselContent,
@@ -29,41 +30,37 @@ interface Props {
 }
 
 const StudentLogPage = ({ memberId }: Props) => {
-  const router = useRouter();
   const pathname = usePathname();
   const [searchMonth, setSearchMonth] = useState<string>();
-
   const { data } = useStudentLogListQuery({
     studentId: memberId,
-    ...(searchMonth && { searchMonth }),
+    searchDate: searchMonth,
   });
 
   const contents = data?.content;
 
   return (
     <Layout>
-      {contents && (
-        <>
-          <Layout.Header>
-            <Button variant='ghost' size='icon' onClick={() => router.back()}>
-              <IconBack />
-            </Button>
-            <h2 className='typography-heading-4 font-semibold'>
-              {data.studentName}님 수업 일지
-            </h2>
-            <Button variant='ghost' size='icon' asChild>
-              <Link href={`/trainer/manage/${memberId}/log/write`}>
-                <IconPlus fill='black' width={17} height={16} />
-              </Link>
-            </Button>
-          </Layout.Header>
-          <Layout.Contents className='overflow-y-hidden py-[20px]'>
-            <div className='px-[20px]'>
-              <MonthPicker
-                date={searchMonth}
-                onChangeDate={(newDate) => setSearchMonth(newDate)}
-              />
-            </div>
+      <>
+        <Layout.Header>
+          <Link href={`/trainer/manage/${memberId}`}>
+            <IconBack />
+          </Link>
+          <h2 className='typography-heading-4 font-semibold'>
+            {contents && data.studentName}님 수업 일지
+          </h2>
+          <Link href={`/trainer/manage/${memberId}/log/write`}>
+            <IconPlus fill='black' width={20} height={20} />
+          </Link>
+        </Layout.Header>
+        <Layout.Contents className='overflow-y-hidden py-[20px]'>
+          <div className='px-[20px]'>
+            <MonthPicker
+              date={searchMonth}
+              onChangeDate={(newDate) => setSearchMonth(newDate)}
+            />
+          </div>
+          {contents && contents.length > 0 && (
             <div className='mt-[4px] flex h-full flex-1 flex-grow flex-col overflow-y-auto px-[20px] pb-[20px]'>
               <div className='flex w-full flex-col gap-y-[16px] pb-[16px]'>
                 {contents.length > 0 &&
@@ -103,11 +100,7 @@ const StudentLogPage = ({ memberId }: Props) => {
                               </CarouselContent>
                               <CarouselNav />
                             </Carousel>
-                            <p
-                              className={cn(
-                                Typography.BODY_3,
-                                'px-[16px] py-[8px] text-black'
-                              )}>
+                            <p className={cn(Typography.BODY_3, 'py-[8px] text-black')}>
                               {log.content}
                             </p>
                           </CardContent>
@@ -121,13 +114,19 @@ const StudentLogPage = ({ memberId }: Props) => {
                       </Link>
                     );
                   })}
-                {/* TODO - 수업 내역 없는 경우 화면 필요 */}
-                {contents.length === 0 && <div>수업 내역이 없습니다.</div>}
               </div>
             </div>
-          </Layout.Contents>
-        </>
-      )}
+          )}
+          {contents && contents.length === 0 && (
+            <div className='flex h-full flex-col items-center justify-center space-y-[10px]'>
+              <IconNoSchedule />
+              <p className={cn(Typography.HEADING_4_SEMIBOLD, 'text-gray-400')}>
+                수업일지 내역이 없습니다.
+              </p>
+            </div>
+          )}
+        </Layout.Contents>
+      </>
     </Layout>
   );
 };

@@ -156,7 +156,7 @@ export const TrainerHomePage = () => {
               </CardContent>
             </Card>
             <Card className='h-[140px] w-[155px]'>
-              <CardHeader>수업</CardHeader>
+              <CardHeader>수업 일지</CardHeader>
               <CardContent>
                 <p>{`PT 일정을\n한눈에 조회!`}</p>
                 <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
@@ -171,29 +171,16 @@ export const TrainerHomePage = () => {
               </CardContent>
             </Card>
             <Card className='h-[140px] w-[155px]'>
-              <CardHeader>루틴</CardHeader>
+              <CardHeader>피드백 작성</CardHeader>
               <CardContent>
-                <p>{`운동 패턴을\n루틴으로 관리`}</p>
+                <p>{`수업 내역 관리와\n피드백 작성`}</p>
                 <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
                   <Image
-                    src='/images/icon_dumbel_yellow.png'
+                    src='/images/icon_calendar_shadow.png'
                     fill
                     sizes='auto'
-                    alt='Card image of dumbel'
-                  />
-                </div>
-              </CardContent>
-            </Card>
-            <Card className='h-[140px] w-[155px]'>
-              <CardHeader>급여</CardHeader>
-              <CardContent>
-                <p>{`쉽고 정확한\n급여 계산`}</p>
-                <div className='absolute bottom-[13px] right-[8px] h-[60px] w-[60px]'>
-                  <Image
-                    src='/images/icon_pay_shadow.png'
-                    fill
-                    sizes='auto'
-                    alt='Card image of salary'
+                    alt='Calendar image for classes'
+                    priority
                   />
                 </div>
               </CardContent>

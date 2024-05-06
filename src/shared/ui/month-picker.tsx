@@ -39,7 +39,11 @@ const MonthPicker = ({ date, onChangeDate }: Props) => {
           </p>
           <IconTriangleDown />
         </DialogTrigger>
-        <DialogContent className='bottom-0 top-auto flex max-w-[var(--max-width)] translate-y-0 flex-col justify-center space-y-[24px] rounded-t-[12px] px-[20px] py-[32px]'>
+        <DialogContent
+          className={cn(
+            'bottom-0 top-auto flex max-w-[var(--max-width)] translate-y-0 flex-col justify-center space-y-[24px] rounded-t-[12px] px-[20px] py-[32px]',
+            'data-[state=closed]:slide-out-to-bottom-[48%] data-[state=open]:slide-in-from-bottom-[48%]'
+          )}>
           <div className='flex justify-between'>
             <h4 className={Typography.TITLE_1_SEMIBOLD}>월 선택하기</h4>
             <DialogClose>

@@ -1,0 +1,31 @@
+import { useMutation } from '@tanstack/react-query';
+
+import { authApi } from '@/entity/auth';
+import { BaseError, BaseResponse } from '@/shared/api';
+
+import { ImageType } from '../model/types';
+
+interface UploadImagesRequest {
+  uploadFiles: FileList;
+}
+
+export const useUploadImageMutation = () => {
+  return useMutation<BaseResponse<ImageType[]>, BaseError, UploadImagesRequest>({
+    mutationFn: async ({ uploadFiles }) => {
+      const formData = new FormData();
+      Array.from(uploadFiles).forEach((el) => {
+        formData.append('uploadFiles', el);
+      });
+      const result = await authApi.post<BaseResponse<ImageType[]>>(
+        `/api/lessonhistory/v1/file`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      return result.data;
+    },
+  });
+};
