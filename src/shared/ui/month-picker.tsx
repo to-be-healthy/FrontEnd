@@ -43,7 +43,7 @@ const MonthPicker = ({ date, onChangeDate }: Props) => {
           <div className='flex justify-between'>
             <h4 className={Typography.TITLE_1_SEMIBOLD}>월 선택하기</h4>
             <DialogClose>
-              <IconClose />
+              <IconClose width={20} height={20} />
             </DialogClose>
           </div>
           <div className='flex justify-between'>

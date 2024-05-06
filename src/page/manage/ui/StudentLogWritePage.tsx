@@ -49,7 +49,7 @@ const StudentLogWritePage = ({ memberId }: Props) => {
           variant='ghost'
           className='p-0'
           onClick={() => router.push(`/trainer/manage/${memberId}/log`)}>
-          <IconClose />
+          <IconClose width={20} height={20} />
         </Button>
         <p className='typography-heading-4 flex h-full items-center'>수업 일지 작성</p>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>

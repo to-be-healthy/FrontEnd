@@ -44,7 +44,7 @@ export const NotRegisteredStudentListPage = () => {
           className='border-none bg-transparent p-0 hover:bg-transparent'
           asChild>
           <Link href={'/trainer/manage'}>
-            <CloseIcon />
+            <CloseIcon width={20} height={20} />
           </Link>
         </Button>
       </Layout.Header>

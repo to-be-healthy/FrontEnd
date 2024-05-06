@@ -27,7 +27,7 @@ export const AddStudentDialog = ({ children }: { children?: React.ReactNode }) =
             <Button
               variant='outline'
               className='border-none bg-transparent p-0 hover:bg-transparent'>
-              <CloseIcon />
+              <CloseIcon width={20} height={20} />
             </Button>
           </DialogClose>
           <h1 className='typography-heading-4 font-semibold'>회원추가</h1>

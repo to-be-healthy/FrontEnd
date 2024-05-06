@@ -5,12 +5,12 @@ import { BaseError, BaseResponse } from '@/shared/api';
 
 import { MyReservationResponse } from '../model/type';
 
-export const useStudentMyReservationListQuery = () => {
+export const useStudentCalendarMyReservationListQuery = (lessonDt: string) => {
   return useQuery<MyReservationResponse, BaseError>({
-    queryKey: ['StudentMyReservationList'],
+    queryKey: ['StudentCalendarMyReservationList', lessonDt],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<MyReservationResponse>>(
-        `/api/schedule/v1/student/my-reservation`
+        `/api/schedule/v1/student/my-reservation?lessonDt=${lessonDt}`
       );
       return res.data.data;
     },

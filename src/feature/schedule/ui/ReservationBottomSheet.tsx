@@ -24,12 +24,12 @@ import {
 import { cn } from '@/shared/utils';
 
 import { useStudentReservationScheduleMutation } from '../api/useStudentReservationScheduleMutation';
-import { ScheduleData } from '../model/type';
+import { AllScheduleData } from '../model/type';
 
 dayjs.locale('ko');
 
 interface Props {
-  data: ScheduleData;
+  data: AllScheduleData;
   date: Date;
 }
 
@@ -56,6 +56,12 @@ export const ReservationBottomSheet = ({ data, date }: Props) => {
         setIsSheetOpen(false);
         void queryClient.invalidateQueries({
           queryKey: ['scheduleList'],
+        });
+        void queryClient.invalidateQueries({
+          queryKey: ['StudentCalendarMyReservationList'],
+        });
+        void queryClient.invalidateQueries({
+          queryKey: ['StudentMyReservationList'],
         });
         toast({
           className: 'h-12',
@@ -97,7 +103,11 @@ export const ReservationBottomSheet = ({ data, date }: Props) => {
           <span className={cn(Typography.TITLE_3, 'block text-[#3BA0FF]')}>예약하기</span>
         </Button>
       </SheetTrigger>
-      <SheetContent side='bottom' className='rounded-tl-lg rounded-tr-lg p-7 pb-9'>
+      <SheetContent
+        side='bottom'
+        className='rounded-tl-lg rounded-tr-lg px-7 pb-9 pt-5'
+        closeClassName='opacity-0'>
+        <div className='m-auto mb-8 h-1 w-[44px] rounded-lg bg-gray-200' />
         <SheetHeader className='mb-8 text-left'>
           <h2 className={cn(Typography.HEADING_4_BOLD, 'mb-2 text-black')}>
             이 수업을 예약할까요?
@@ -110,16 +120,17 @@ export const ReservationBottomSheet = ({ data, date }: Props) => {
         <div>
           <div
             className={cn(
-              'mb-7 bg-gray-100 p-6 text-center text-black',
+              'mb-7 rounded-md bg-gray-100 p-6 text-center text-black',
               Typography.HEADING_3
             )}>
             {selectDate} {Number(startHours) < 12 ? '오전 ' : '오후 '}
             {`${convertTo12HourFormat(Number(startHours))}:${startMinutes}`}-
             {`${convertTo12HourFormat(Number(endHours))}:${endMinutes}`}
           </div>
+
           <div className='mb-11'>
-            <dl className='flex items-center justify-between'>
-              <dt className='mb-2 flex items-center justify-between'>
+            <dl className='mb-2 flex items-center justify-between'>
+              <dt className='flex items-center justify-between'>
                 <ReservationCalendarIcon />
                 <span className={cn('ml-2 text-gray-600', Typography.TITLE_1_SEMIBOLD)}>
                   예약
@@ -131,8 +142,8 @@ export const ReservationBottomSheet = ({ data, date }: Props) => {
                 까지
               </dd>
             </dl>
-            <dl className='flex items-center justify-between'>
-              <dt className='mb-2 flex items-center justify-between'>
+            <dl className='mb-2 flex items-center justify-between'>
+              <dt className='flex items-center justify-between'>
                 <CancelCalendarIcon />
                 <span className={cn('ml-2 text-gray-600', Typography.TITLE_1_SEMIBOLD)}>
                   취소

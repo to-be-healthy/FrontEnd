@@ -3,11 +3,11 @@ import { useQuery } from '@tanstack/react-query';
 import { authApi } from '@/entity/auth';
 import { BaseError, BaseResponse } from '@/shared/api';
 
-import { ScheduleData } from '../model/type';
+import { AllScheduleData } from '../model/type';
 
 interface ScheduleResponse {
-  morning: ScheduleData[];
-  afternoon: ScheduleData[];
+  morning: AllScheduleData[];
+  afternoon: AllScheduleData[];
 }
 
 export const useScheduleListQuery = (lessonStartDt: string) => {
