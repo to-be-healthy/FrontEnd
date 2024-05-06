@@ -28,12 +28,12 @@ interface CourseData {
 
 interface MyReservationResponse {
   course: CourseData;
-  reservations: ScheduleData[];
+  reservations: ScheduleData[] | null;
 }
 
 interface MyWaitingResponse {
   course: CourseData;
-  myScheduleWaitings: ScheduleData[];
+  myScheduleWaitings: ScheduleData[] | null;
 }
 
 export type {
