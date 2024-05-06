@@ -32,41 +32,40 @@ const StudentLogPage = ({ memberId }: Props) => {
   const router = useRouter();
   const pathname = usePathname();
   const [searchMonth, setSearchMonth] = useState<string>();
-
   const { data } = useStudentLogListQuery({
     studentId: memberId,
-    ...(searchMonth && { searchMonth }),
+    searchDate: searchMonth,
   });
 
   const contents = data?.content;
 
   return (
     <Layout>
-      {contents && (
-        <>
-          <Layout.Header>
-            <Button
-              variant='ghost'
-              size='icon'
-              onClick={() => router.replace(`/trainer/manage/${memberId}`)}>
-              <IconBack />
-            </Button>
-            <h2 className='typography-heading-4 font-semibold'>
-              {data.studentName}님 수업 일지
-            </h2>
-            <Button variant='ghost' size='icon' asChild>
-              <Link href={`/trainer/manage/${memberId}/log/write`}>
-                <IconPlus fill='black' width={17} height={16} />
-              </Link>
-            </Button>
-          </Layout.Header>
-          <Layout.Contents className='overflow-y-hidden py-[20px]'>
-            <div className='px-[20px]'>
-              <MonthPicker
-                date={searchMonth}
-                onChangeDate={(newDate) => setSearchMonth(newDate)}
-              />
-            </div>
+      <>
+        <Layout.Header>
+          <Button
+            variant='ghost'
+            size='icon'
+            onClick={() => router.replace(`/trainer/manage/${memberId}`)}>
+            <IconBack />
+          </Button>
+          <h2 className='typography-heading-4 font-semibold'>
+            {contents && data.studentName}님 수업 일지
+          </h2>
+          <Button variant='ghost' size='icon' asChild>
+            <Link href={`/trainer/manage/${memberId}/log/write`}>
+              <IconPlus fill='black' width={17} height={16} />
+            </Link>
+          </Button>
+        </Layout.Header>
+        <Layout.Contents className='overflow-y-hidden py-[20px]'>
+          <div className='px-[20px]'>
+            <MonthPicker
+              date={searchMonth}
+              onChangeDate={(newDate) => setSearchMonth(newDate)}
+            />
+          </div>
+          {contents && (
             <div className='mt-[4px] flex h-full flex-1 flex-grow flex-col overflow-y-auto px-[20px] pb-[20px]'>
               <div className='flex w-full flex-col gap-y-[16px] pb-[16px]'>
                 {contents.length > 0 &&
@@ -128,9 +127,9 @@ const StudentLogPage = ({ memberId }: Props) => {
                 {contents.length === 0 && <div>수업 내역이 없습니다.</div>}
               </div>
             </div>
-          </Layout.Contents>
-        </>
-      )}
+          )}
+        </Layout.Contents>
+      </>
     </Layout>
   );
 };
