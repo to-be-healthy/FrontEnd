@@ -1,33 +1,39 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { useImages } from '@/entity/image';
 import { useCreateLogMutation } from '@/feature/log';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import { Typography } from '@/shared/mixin';
-import { Button, Layout, Textarea } from '@/shared/ui';
+import { Button, Input, Layout, Textarea } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
 interface Props {
   memberId: number;
 }
 
+const MAX_IMAGES_COUNT = 3;
+
 const StudentLogWritePage = ({ memberId }: Props) => {
   const router = useRouter();
   const [content, setContent] = useState('');
-  const [scheduleId] = useState(2); // TODO
+  const [scheduleId] = useState(5740); // TODO
+  const { images, uploadFiles } = useImages({ maxCount: MAX_IMAGES_COUNT });
 
   const { mutate } = useCreateLogMutation();
 
   const submit = () => {
     mutate(
       {
-        title: '무제', // TODO - figma에는 타이틀 없음
+        title: '무제',
         content,
         studentId: memberId,
         scheduleId,
+        uploadFileResponse: images,
       },
       {
         onSuccess: () => {
@@ -72,14 +78,32 @@ const StudentLogWritePage = ({ memberId }: Props) => {
             </div>
           </div>
         </div>
-        <div className='mt-[32px]'>
+        <div className='mt-[32px] flex space-x-[5.5px]'>
           {/* TODO - image input 컴포넌트 개발 */}
-          <div className='flex h-[60px] w-[60px] flex-col items-center justify-center space-y-[4px] rounded-sm border border-gray-200'>
-            <IconCamera />
-            <span className={cn(Typography.BODY_4_REGULAR)}>0 / 3</span>
+          <div className='flex h-[60px] w-[60px] cursor-pointer flex-col items-center justify-center space-y-[4px] rounded-sm border border-gray-200'>
+            <Input
+              id='image-input'
+              type='file'
+              className='hidden'
+              onChange={uploadFiles}
+            />
+            <label htmlFor='image-input'>
+              <IconCamera />
+              <span className={cn(Typography.BODY_4_REGULAR)}>0 / 3</span>
+            </label>
           </div>
           {/* TODO - 업로드 된 이미지 리스트 */}
-          <div></div>
+          {images.map((image, index) => (
+            <div key={index} className='overflow-hidden'>
+              <Image
+                src={image.fileUrl}
+                width={60}
+                height={60}
+                alt='staged image'
+                className='rounded-sm'
+              />
+            </div>
+          ))}
         </div>
         <div className='mt-[24px] space-y-[8px]'>
           <h3 className={cn(Typography.TITLE_3)}>내용</h3>

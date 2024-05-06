@@ -1,10 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { authApi } from '@/entity/auth';
+import { ImageType } from '@/entity/image';
 import { BaseError, BaseResponse } from '@/shared/api';
 
 interface CreateLogRequest {
-  uploadFiles?: ImageData[];
+  uploadFileResponse: ImageType[];
   title: string;
   content: string;
   studentId: number;

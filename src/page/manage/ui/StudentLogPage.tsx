@@ -45,7 +45,10 @@ const StudentLogPage = ({ memberId }: Props) => {
       {contents && (
         <>
           <Layout.Header>
-            <Button variant='ghost' size='icon' onClick={() => router.back()}>
+            <Button
+              variant='ghost'
+              size='icon'
+              onClick={() => router.replace(`/trainer/manage/${memberId}`)}>
               <IconBack />
             </Button>
             <h2 className='typography-heading-4 font-semibold'>

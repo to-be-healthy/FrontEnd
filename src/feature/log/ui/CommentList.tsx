@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Fragment, PropsWithChildren, useState } from 'react';
 
 import IconProfile from '@/shared/assets/images/icon_default_profile_small.svg';
@@ -69,7 +70,13 @@ const CommentItem = ({
   };
 
   return (
-    <DropdownMenu onOpenChange={(state) => setOpend(state)} modal={false}>
+    <DropdownMenu
+      open={opend}
+      onOpenChange={(state) => {
+        if (comment.delYn) return;
+        setOpend(state);
+      }}
+      modal={false}>
       <DropdownMenuTrigger asChild>
         <li className={cn(active && 'bg-blue-10', className)} {...props}>
           <div
@@ -84,22 +91,42 @@ const CommentItem = ({
                 <p className={cn(Typography.BODY_3, comment.delYn && 'text-gray-500')}>
                   {comment.content}
                 </p>
+                {!comment.delYn && comment.files.length > 0 && (
+                  <div className='mt-[6px]'>
+                    {comment.files.map((file, index) => (
+                      <div key={index} className='overflow-hidden'>
+                        <Image
+                          src={file.fileUrl}
+                          width={90}
+                          height={90}
+                          alt='staged image'
+                          className={cn('aspect-square rounded-sm')}
+                          priority
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
-              <Button
-                variant='ghost'
-                size='auto'
-                className={cn(Typography.BODY_4_REGULAR, 'z-50 text-gray-500')}
-                onPointerDown={(e) => {
-                  e.stopPropagation();
-                  changeTarget({
-                    comment,
-                    isReply: true,
-                    mode: 'create',
-                  });
-                }}
-                onClick={() => focusOnInput()}>
-                답글달기
-              </Button>
+              {!comment.delYn && (
+                <Button
+                  variant='ghost'
+                  size='auto'
+                  className={cn(Typography.BODY_4_REGULAR, 'z-50 text-gray-500')}
+                  onPointerDown={(e) => {
+                    e.stopPropagation();
+                    changeTarget({
+                      comment,
+                      isReply: true,
+                      mode: 'create',
+                    });
+                  }}
+                  onClick={() => {
+                    focusOnInput();
+                  }}>
+                  답글달기
+                </Button>
+              )}
             </div>
           </div>
         </li>
