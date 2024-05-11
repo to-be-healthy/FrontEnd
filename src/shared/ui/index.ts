@@ -42,6 +42,7 @@ export { StudentNavigation, TrainerNavigation } from './navigation';
 export { Progress } from './progress';
 export { RollingBanner } from './rolling-banner';
 export { ScrollArea, ScrollBar } from './scroll-area';
+export { Select } from './select';
 export { Separator } from './separator';
 export {
   Sheet,

@@ -7,6 +7,9 @@ export { useStudentMyWaitingListQuery } from './api/useStudentMyWaitingListQuery
 export { useStudentReservationScheduleMutation } from './api/useStudentReservationScheduleMutation';
 export { useStudentWaitingScheduleMutation } from './api/useStudentWaitingScheduleMutation';
 export { useTrainerClassTimeSettingMutation } from './api/useTrainerClassTimeSettingMutation';
+export { useTrainerScheduleQuery } from './api/useTrainerScheduleQuery';
+export { getStartOfWeek } from './lib/utils';
+export { scheduleAdaptor } from './model/adaptor';
 export type {
   AllScheduleData,
   ClassTimeOptions,
@@ -19,4 +22,5 @@ export type {
 export { ReservationBottomSheet } from './ui/ReservationBottomSheet';
 export { StudentMyReservationSchedule } from './ui/StudentMyReservationSchedule';
 export { StudentMyWaitingSchedule } from './ui/StudentMyWaitingSchedule';
+export { WeeklyTimetable as TrainerWeeklyTimetable } from './ui/TrainerWeeklyTimetable';
 export { WaitingBottomSheet } from './ui/WaitingBottomSheet';

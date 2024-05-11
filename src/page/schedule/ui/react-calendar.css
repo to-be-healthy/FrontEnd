@@ -6,6 +6,10 @@
   display: none;
 }
 
+.rdp {
+  margin: 0;
+}
+
 .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
   background-color: transparent;
 }
@@ -16,14 +20,6 @@
   font-style: normal;
   font-weight: 400;
   line-height: 150%;
-}
-
-.aria-selected\:opacity-100[aria-selected='true'] {
-  color: #fff !important;
-}
-
-.aria-selected\:opacity-30[aria-selected='true'] {
-  color: #1990ff !important;
 }
 
 .reserved-indicator {

@@ -7,7 +7,7 @@ import { ComponentPropsWithoutRef } from 'react';
 import { buttonVariants } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-const AlertDialog = AlertDialogPrimitive.Root;
+const AlertDialogRoot = AlertDialogPrimitive.Root;
 
 const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
 
@@ -112,6 +112,19 @@ const AlertDialogCancel = forwardRef<
   />
 ));
 AlertDialogCancel.displayName = AlertDialogPrimitive.Cancel.displayName;
+
+const AlertDialog = Object.assign(AlertDialogRoot, {
+  Action: AlertDialogAction,
+  Cancel: AlertDialogCancel,
+  Content: AlertDialogContent,
+  Description: AlertDialogDescription,
+  Footer: AlertDialogFooter,
+  Header: AlertDialogHeader,
+  Overlay: AlertDialogOverlay,
+  Portal: AlertDialogPortal,
+  Title: AlertDialogTitle,
+  Trigger: AlertDialogTrigger,
+});
 
 export {
   AlertDialog,

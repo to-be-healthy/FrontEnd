@@ -8,7 +8,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 import IconTriangleDown from '@/shared/assets/images/icon_triangle_down.svg';
 import { cn } from '@/shared/utils/tw-utils';
 
-const Select = SelectPrimitive.Root;
+const SelectRoot = SelectPrimitive.Root;
 
 const SelectGroup = SelectPrimitive.Group;
 
@@ -135,6 +135,18 @@ const SelectSeparator = forwardRef<
   />
 ));
 SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
+
+const Select = Object.assign(SelectRoot, {
+  Content: SelectContent,
+  Group: SelectGroup,
+  Item: SelectItem,
+  Label: SelectLabel,
+  ScrollDownButton: SelectScrollDownButton,
+  ScrollUpButton: SelectScrollUpButton,
+  Separator: SelectSeparator,
+  Trigger: SelectTrigger,
+  Value: SelectValue,
+});
 
 export {
   Select,

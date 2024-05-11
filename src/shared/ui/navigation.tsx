@@ -4,13 +4,15 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { HTMLAttributes } from 'react';
 
-import IconAccountFilled from '@/shared/assets/images/nav_account_filled.svg';
-import IconAccountOutlined from '@/shared/assets/images/nav_account_outlined.svg';
-import IconCalendarFilled from '@/shared/assets/images/nav_calendar_filled.svg';
-import IconCalendarOutlined from '@/shared/assets/images/nav_calendar_outlined.svg';
-import IconHomeFilled from '@/shared/assets/images/nav_home_filled.svg';
-import IconHomeOutlined from '@/shared/assets/images/nav_home_outlined.svg';
-import { cn } from '@/shared/utils/tw-utils';
+import {
+  IconCalendarFilled,
+  IconCalendarOutlined,
+  IconHomeFilled,
+  IconHomeOutlined,
+  IconProfileFilled,
+  IconProfileOutlined,
+} from '@/shared/assets';
+import { cn } from '@/shared/utils';
 
 const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
   const pathname = usePathname();
@@ -45,7 +47,7 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
                 'text-[10px] font-semibold',
                 pathname === '/trainer/schedule' ? 'text-black' : 'text-gray-700'
               )}>
-              예약관리
+              스케줄
             </span>
           </Link>
         </li>
@@ -54,9 +56,9 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             href='/trainer/mypage'
             className='flex flex-col items-center justify-between gap-y-[6px]'>
             {pathname === '/trainer/mypage' ? (
-              <IconAccountFilled />
+              <IconProfileFilled />
             ) : (
-              <IconAccountOutlined />
+              <IconProfileOutlined />
             )}
             <span
               className={cn(
@@ -115,9 +117,9 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             href='/student/mypage'
             className='flex flex-col items-center justify-between gap-y-[6px]'>
             {pathname === '/student/mypage' ? (
-              <IconAccountFilled />
+              <IconProfileFilled />
             ) : (
-              <IconAccountOutlined />
+              <IconProfileOutlined />
             )}
             <span
               className={cn(

@@ -6,7 +6,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 
 import { cn } from '@/shared/utils/tw-utils';
 
-const Tabs = TabsPrimitive.Root;
+const TabsRoot = TabsPrimitive.Root;
 
 const TabsList = forwardRef<
   ElementRef<typeof TabsPrimitive.List>,
@@ -52,5 +52,11 @@ const TabsContent = forwardRef<
   />
 ));
 TabsContent.displayName = TabsPrimitive.Content.displayName;
+
+const Tabs = Object.assign(TabsRoot, {
+  Content: TabsContent,
+  List: TabsList,
+  Trigger: TabsTrigger,
+});
 
 export { Tabs, TabsContent, TabsList, TabsTrigger };

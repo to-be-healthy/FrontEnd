@@ -244,4 +244,17 @@
     width: 100% !important;
     clip-path: none !important;
   }
+
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .hide-scrollbar {
+    -ms-overflow-style: none; /* IE and 엣지 */
+    scrollbar-width: none; /* 파이어폭스 */
+  }
+
+  .shadow-timetable {
+    box-shadow: 0px 0px 0px 1px #dee1e6;
+  }
 }
