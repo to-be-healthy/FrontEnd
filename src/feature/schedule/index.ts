@@ -6,9 +6,11 @@ export { useStudentMyReservationListQuery } from './api/useStudentMyReservationL
 export { useStudentMyWaitingListQuery } from './api/useStudentMyWaitingListQuery';
 export { useStudentReservationScheduleMutation } from './api/useStudentReservationScheduleMutation';
 export { useStudentWaitingScheduleMutation } from './api/useStudentWaitingScheduleMutation';
+export { useTrainerClassTimeSettingMutation } from './api/useTrainerClassTimeSettingMutation';
 export type {
   AllScheduleData,
   CourseData,
+  DayOfWeek,
   MyReservationResponse,
   MyWaitingResponse,
   ScheduleData,

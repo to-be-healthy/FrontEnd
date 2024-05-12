@@ -36,9 +36,19 @@ interface MyWaitingResponse {
   myScheduleWaitings: ScheduleData[] | null;
 }
 
+type DayOfWeek =
+  | 'MONDAY'
+  | 'TUESDAY'
+  | 'WEDNESDAY'
+  | 'THURSDAY'
+  | 'FRIDAY'
+  | 'SATURDAY'
+  | 'SUNDAY';
+
 export type {
   AllScheduleData,
   CourseData,
+  DayOfWeek,
   MyReservationResponse,
   MyWaitingResponse,
   ScheduleData,
