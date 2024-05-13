@@ -36,6 +36,7 @@ interface MyWaitingResponse {
   myScheduleWaitings: ScheduleData[] | null;
 }
 
+type ClassTimeOptions = 'HALF_HOUR' | 'ONE_HOUR' | 'ONE_AND_HALF_HOUR' | 'TWO_HOUR';
 type DayOfWeek =
   | 'MONDAY'
   | 'TUESDAY'
@@ -47,6 +48,7 @@ type DayOfWeek =
 
 export type {
   AllScheduleData,
+  ClassTimeOptions,
   CourseData,
   DayOfWeek,
   MyReservationResponse,

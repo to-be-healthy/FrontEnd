@@ -2,9 +2,14 @@
 import 'swiper/css';
 import './swiper.css';
 
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { MouseEvent, ReactNode, useState } from 'react';
 
-import { DayOfWeek, useTrainerClassTimeSettingMutation } from '@/feature/schedule';
+import {
+  ClassTimeOptions,
+  DayOfWeek,
+  useTrainerClassTimeSettingMutation,
+} from '@/feature/schedule';
 import CheckIcon from '@/shared/assets/images/icon_check.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import NoCircleCheckIcon from '@/shared/assets/images/noCircleCheck.svg';
@@ -15,11 +20,13 @@ import { cn } from '@/shared/utils';
 
 type TimeSettings = 'startTime' | 'endTime' | 'lunchStartTime' | 'lunchEndTime';
 type Time = '30분' | '1시간' | '1시간 30분' | '2시간';
+
 interface ClassTimeType {
   time: Time;
-  name: 'HALF_HOUR' | 'ONE_HOUR' | 'ONE_AND_HALF_HOUR' | 'TWO_HOUR';
+  name: ClassTimeOptions;
   checked: boolean;
 }
+
 interface TimeListType {
   name: TimeSettings;
   timePeriods: string;
@@ -28,19 +35,15 @@ interface TimeListType {
   state: boolean;
 }
 
-interface DayOfWeekType {
-  eng: DayOfWeek;
-  kor: string;
-}
-const dayOfWeek: DayOfWeekType[] = [
-  { eng: 'MONDAY', kor: '월' },
-  { eng: 'TUESDAY', kor: '화' },
-  { eng: 'WEDNESDAY', kor: '수' },
-  { eng: 'THURSDAY', kor: '목' },
-  { eng: 'FRIDAY', kor: '금' },
-  { eng: 'SATURDAY', kor: '토' },
-  { eng: 'SUNDAY', kor: '일' },
-];
+const dayOfWeekMap: Record<DayOfWeek, string> = {
+  MONDAY: '월',
+  TUESDAY: '화',
+  WEDNESDAY: '수',
+  THURSDAY: '목',
+  FRIDAY: '금',
+  SATURDAY: '토',
+  SUNDAY: '일',
+};
 
 const classTime: ClassTimeType[] = [
   { time: '30분', name: 'HALF_HOUR', checked: false },
@@ -78,69 +81,76 @@ export const ClassTimeSettingPage = () => {
   const [dayOff, setDayOff] = useState<DayOfWeek[]>([]); //휴무일
 
   const { toast } = useToast();
+  const router = useRouter();
+
   const { mutate } = useTrainerClassTimeSettingMutation();
 
-  const formatTo24HourTime = (timeList: TimeListType) => {
-    return timeList.timePeriods === '오후'
-      ? `${Number(timeList.hours) + 12}:${timeList.minutes}`
-      : Number(timeList.hours) < 10
-        ? `0${timeList.hours}:${timeList.minutes}`
-        : `${timeList.hours}:${timeList.minutes}`;
+  const timeExtractor = (timeStr: string) => timeStr.split(':')[0];
+  const isValidTime = (startHour: string, endHour: string) => {
+    return Number(startHour) < Number(endHour);
   };
 
-  const handleSetClassTime = () => {
-    const selectedClassTime = classTimeState.filter((item) => item.checked)[0].name;
-    const selectedStartTime = formatTo24HourTime(timeList[0]);
-    const selectedEndTime = formatTo24HourTime(timeList[1]);
-    const selectedLunchStartTime = formatTo24HourTime(timeList[2]);
-    const selectedLunchEndTime = formatTo24HourTime(timeList[3]);
+  const formatTo24HourTime = (timeList: TimeListType) => {
+    if (timeList.timePeriods === '오후' && timeList.hours !== '12') {
+      return `${Number(timeList.hours) + 12}:${timeList.minutes}`;
+    } else if (timeList.timePeriods === '오전' && timeList.hours === '12') {
+      return `00:${timeList.minutes}`;
+    } else if (timeList.timePeriods === '오전') {
+      return Number(timeList.hours) < 10
+        ? `0${timeList.hours}:${timeList.minutes}`
+        : `${timeList.hours}:${timeList.minutes}`;
+    } else {
+      return `${timeList.hours}:${timeList.minutes}`;
+    }
+  };
 
-    if (
-      selectedClassTime &&
-      selectedStartTime &&
-      selectedEndTime &&
-      selectedLunchStartTime &&
-      selectedLunchEndTime
-    ) {
-      mutate(
-        {
-          startTime: selectedStartTime,
-          endTime: selectedEndTime,
-          lunchStartTime: selectedLunchStartTime,
-          lunchEndTime: selectedLunchEndTime,
-          closedDt: dayOff,
-          sessionTime: selectedClassTime,
+  const showMessage = (icon: ReactNode, message: string) => {
+    toast({
+      className: 'py-5 px-6',
+      description: (
+        <div className='flex items-center justify-center'>
+          {icon}
+          <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
+        </div>
+      ),
+      duration: 2000,
+    });
+  };
+
+  const handleSetClassTime = (e: MouseEvent<HTMLButtonElement>, skip?: boolean) => {
+    e.preventDefault();
+
+    const selectedClass = classTimeState.filter((item) => item.checked)[0].name;
+    const selectedTimeList = timeList.map((_, index) => {
+      return formatTo24HourTime(timeList[index]);
+    });
+
+    const [startHour, endHour, lunchStartHour, lunchEndHour] =
+      selectedTimeList.map(timeExtractor);
+
+    if (!isValidTime(startHour, endHour) || !isValidTime(lunchStartHour, lunchEndHour)) {
+      return showMessage(<ErrorIcon />, '시작 시간은 종료 시간보다 빨라야 합니다');
+    }
+
+    const settings = {
+      startTime: skip ? '09:00' : selectedTimeList[0],
+      endTime: skip ? '18:00' : selectedTimeList[1],
+      lunchStartTime: skip ? '13:00' : isLunchTimeUnset ? '' : selectedTimeList[2],
+      lunchEndTime: skip ? '14:00' : isLunchTimeUnset ? '' : selectedTimeList[3],
+      closedDt: skip ? [] : dayOff,
+      sessionTime: skip ? 'ONE_HOUR' : selectedClass,
+    };
+
+    if (selectedClass && selectedTimeList) {
+      mutate(settings, {
+        onSuccess: ({ message }) => {
+          showMessage(<CheckIcon fill={'var(--primary-500)'} />, message);
+          router.push('/trainer');
         },
-        {
-          onSuccess: ({ message }) => {
-            toast({
-              className: 'h-12',
-              description: (
-                <div className='flex items-center justify-center'>
-                  <CheckIcon fill={'var(--primary-500)'} />
-                  <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
-                </div>
-              ),
-              duration: 2000,
-            });
-          },
-
-          onError: (error) => {
-            toast({
-              className: 'py-5 px-6',
-              description: (
-                <div className='flex items-center justify-center'>
-                  <ErrorIcon />
-                  <p className='typography-heading-5 ml-6 text-[#fff]'>
-                    {error.response?.data.message}
-                  </p>
-                </div>
-              ),
-              duration: 2000,
-            });
-          },
-        }
-      );
+        onError: (error) => {
+          showMessage(<ErrorIcon />, error.response?.data?.message ?? 'Unknown error');
+        },
+      });
     }
   };
 
@@ -153,6 +163,7 @@ export const ClassTimeSettingPage = () => {
     );
   };
 
+  //timepicker 스크롤, 클릭, 스와이프
   const changeSlide = (key: string, selectedValue: string, timeType: TimeSettings) => {
     setTimeList((prev) =>
       prev.map((item) => {
@@ -166,6 +177,7 @@ export const ClassTimeSettingPage = () => {
     );
   };
 
+  //설정안함 체크박스 클릭시
   const resetSettingsOnDisable = () => {
     setIsLunchTimeUnset((prev) => !prev);
 
@@ -182,6 +194,7 @@ export const ClassTimeSettingPage = () => {
     );
   };
 
+  //수업시간 선택
   const selectedClassTime = (selectedTime: Time) => {
     const updatedTimes = classTimeState.map((item) => ({
       ...item,
@@ -191,6 +204,7 @@ export const ClassTimeSettingPage = () => {
     setIsClassTimeSheetOpen(false);
   };
 
+  //휴무일 선택
   const selectedDayClick = (day: DayOfWeek) => {
     if (dayOff.includes(day)) {
       setDayOff(dayOff.filter((d) => d !== day));
@@ -205,7 +219,7 @@ export const ClassTimeSettingPage = () => {
         <Button
           variant='ghost'
           className={cn(Typography.BODY_1, 'p-0 text-gray-500')}
-          onClick={handleSetClassTime}>
+          onClick={(e) => handleSetClassTime(e, true)}>
           건너뛰기
         </Button>
       </Layout.Header>
@@ -426,19 +440,19 @@ export const ClassTimeSettingPage = () => {
               <dt className={cn(Typography.TITLE_1_BOLD, 'mb-6 text-black')}>휴무일</dt>
               <dd>
                 <ul className='flex items-center justify-between'>
-                  {dayOfWeek.map((item: DayOfWeekType, index) => {
-                    const isSelected = dayOff.includes(item.eng)
+                  {Object.entries(dayOfWeekMap).map(([eng, kor], index) => {
+                    const isSelected = dayOff.includes(eng as DayOfWeek)
                       ? 'bg-primary-500 text-gray-100'
                       : 'bg-gray-100 text-gray-600';
                     return (
-                      <li key={`${item.eng}_${index}`}>
+                      <li key={`${eng}_${index}`}>
                         <Button
                           className={cn(
                             Typography.TITLE_1_SEMIBOLD,
                             `p-4} w-[40px] rounded-[9999px] ${isSelected}`
                           )}
-                          onClick={() => selectedDayClick(item.eng)}>
-                          {item.kor}
+                          onClick={() => selectedDayClick(eng as DayOfWeek)}>
+                          {kor}
                         </Button>
                       </li>
                     );
@@ -452,7 +466,7 @@ export const ClassTimeSettingPage = () => {
         <div className='w-full'>
           <Button
             className='typography-title-1 h-[57px] w-full rounded-lg'
-            onClick={handleSetClassTime}>
+            onClick={(e) => handleSetClassTime(e)}>
             수업 시간 설정
           </Button>
         </div>

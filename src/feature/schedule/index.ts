@@ -9,6 +9,7 @@ export { useStudentWaitingScheduleMutation } from './api/useStudentWaitingSchedu
 export { useTrainerClassTimeSettingMutation } from './api/useTrainerClassTimeSettingMutation';
 export type {
   AllScheduleData,
+  ClassTimeOptions,
   CourseData,
   DayOfWeek,
   MyReservationResponse,
