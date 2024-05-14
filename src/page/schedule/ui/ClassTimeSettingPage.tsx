@@ -462,15 +462,16 @@ export const ClassTimeSettingPage = () => {
             </dl>
           </article>
         </div>
-
-        <div className='w-full'>
-          <Button
-            className='typography-title-1 h-[57px] w-full rounded-lg'
-            onClick={(e) => handleSetClassTime(e)}>
-            수업 시간 설정
-          </Button>
-        </div>
       </Layout.Contents>
+
+      <Layout.BottomArea className='bg-white'>
+        <Button
+          size='full'
+          className='typography-title-1 h-[57px] rounded-lg'
+          onClick={(e) => handleSetClassTime(e)}>
+          수업 시간 설정
+        </Button>
+      </Layout.BottomArea>
     </Layout>
   );
 };
