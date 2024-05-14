@@ -7,7 +7,7 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes } from
 
 import { cn } from '@/shared/utils/tw-utils';
 
-const Sheet = SheetPrimitive.Root;
+const SheetRoot = SheetPrimitive.Root;
 
 const SheetTrigger = SheetPrimitive.Trigger;
 
@@ -127,6 +127,18 @@ const SheetDescription = forwardRef<
   />
 ));
 SheetDescription.displayName = SheetPrimitive.Description.displayName;
+
+const Sheet = Object.assign(SheetRoot, {
+  Close: SheetClose,
+  Content: SheetContent,
+  Description: SheetDescription,
+  Footer: SheetFooter,
+  Header: SheetHeader,
+  Overlay: SheetOverlay,
+  Portal: SheetPortal,
+  Title: SheetTitle,
+  Trigger: SheetTrigger,
+});
 
 export {
   Sheet,

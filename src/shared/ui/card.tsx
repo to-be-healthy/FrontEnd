@@ -3,7 +3,7 @@ import { forwardRef, HTMLAttributes } from 'react';
 import { cn } from '../utils/tw-utils';
 
 const CARD_NAME = 'Card';
-const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+const CardRoot = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
@@ -16,7 +16,7 @@ const Card = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     />
   )
 );
-Card.displayName = CARD_NAME;
+CardRoot.displayName = CARD_NAME;
 
 const CARD_HEADER_NAME = 'CardHeader';
 const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
@@ -54,4 +54,10 @@ const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
 );
 CardFooter.displayName = CARD_FOOTER_NAME;
 
-export { Card, CardContent, CardFooter, CardHeader };
+const Card = Object.assign(CardRoot, {
+  Content: CardContent,
+  Footer: CardFooter,
+  Header: CardHeader,
+});
+
+export { Card, CardContent, CardFooter, CardHeader, CardRoot };

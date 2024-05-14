@@ -22,8 +22,8 @@ import {
   CarouselItem,
   CarouselNav,
 } from '@/shared/ui/carousel';
-import { MonthPicker } from '@/shared/ui/month-picker';
 import { cn } from '@/shared/utils';
+import { MonthPicker } from '@/widget/month-picker';
 
 interface Props {
   memberId: number;

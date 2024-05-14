@@ -17,7 +17,7 @@ const CommentContext = createContext<ContextType>(null);
 const useCommentContext = () => {
   const context = useContext(CommentContext);
 
-  if (context == null) {
+  if (context === null) {
     throw new Error();
   }
 

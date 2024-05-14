@@ -29,7 +29,6 @@ import { Button, Layout, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shar
 import { cn } from '@/shared/utils';
 dayjs.extend(isBetween);
 import { format } from 'date-fns';
-import { ko } from 'date-fns/locale';
 import { DateFormatter, DayProps } from 'react-day-picker';
 
 export const StudentSchedulePage = () => {
@@ -191,12 +190,9 @@ export const StudentSchedulePage = () => {
                   month={currentMonth}
                   onDayClick={handleMonthChange}
                   onMonthChange={handleMonthChange}
-                  weekStartsOn={0}
-                  locale={ko}
                   formatters={{ formatCaption }}
                   modifiersStyles={{
                     hidden: { display: 'none' }, // 주간 표시할때 비활성화된 날짜 숨기기
-                    today: { color: 'var(--primary-500)' },
                   }}
                   fixedWeeks={true}
                   modifiers={{ ...modifiers, reserved: reservedDates }}

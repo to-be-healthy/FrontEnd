@@ -1,5 +1,6 @@
 'use client';
 
+import { ko } from 'date-fns/locale';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import * as React from 'react';
 import { ComponentProps } from 'react';
@@ -13,7 +14,7 @@ import { Typography } from '../mixin';
 export type CalendarProps = ComponentProps<typeof DayPicker>;
 
 type isToggleProps = CalendarProps & {
-  isToggle: boolean;
+  isToggle?: boolean;
 };
 function Calendar({
   className,
@@ -54,11 +55,11 @@ function Calendar({
         ),
         day_range_end: 'day-range-end',
         day_selected: 'bg-primary text-[#fff]',
-        day_today: 'bg-accent text-accent-foreground',
+        day_today: 'bg-primary text-accent-foreground',
         day_outside:
           'day-outside text-muted-foreground opacity-50 aria-selected:text-muted-foreground aria-selected:opacity-30',
         day_disabled: 'text-muted-foreground opacity-50 disabled:bg-transparent',
-        day_range_middle: 'aria-selected:bg-accent aria-selected:text-accent-foreground',
+        day_range_middle: 'aria-selected:bg-primary aria-selected:text-accent-foreground',
         day_hidden: 'invisible',
         ...classNames,
       }}
@@ -70,6 +71,8 @@ function Calendar({
           <ChevronRight className={cn(isToggle && 'hidden', 'h-[30px] w-[30px]')} />
         ),
       }}
+      locale={ko}
+      weekStartsOn={0}
       {...props}
     />
   );
