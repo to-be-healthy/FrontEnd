@@ -49,11 +49,7 @@ export const SelectGym = () => {
         {
           onSuccess: () => {
             setUserInfo({ ...auth, gymId: selectGymId });
-            if (auth.memberType === 'TRAINER') {
-              router.push('/trainer');
-            } else {
-              router.push('/student');
-            }
+            router.push('/class-time-setting');
           },
           onError: (error) => {
             toast({
@@ -77,11 +73,7 @@ export const SelectGym = () => {
         {
           onSuccess: () => {
             setUserInfo({ ...auth, gymId: selectGymId });
-            if (auth.memberType === 'TRAINER') {
-              router.push('/trainer');
-            } else {
-              router.push('/student');
-            }
+            router.push('/student');
           },
           onError: (error) => {
             toast({
