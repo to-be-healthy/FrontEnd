@@ -6,6 +6,7 @@ import { BaseError, BaseResponse } from '@/shared/api';
 import { AllScheduleData } from '../model/type';
 
 interface ScheduleResponse {
+  scheduleNoticeStatus: 'ENABLED' | 'DISABLE';
   morning: AllScheduleData[];
   afternoon: AllScheduleData[];
 }

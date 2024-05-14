@@ -13,6 +13,7 @@ import {
   StudentMyReservationSchedule,
   StudentMyWaitingSchedule,
   useScheduleListQuery,
+  useShowNoticeMutation,
   useStudentCalendarMyReservationListQuery,
   useStudentMyReservationListQuery,
   useStudentMyWaitingListQuery,
@@ -28,6 +29,7 @@ import { Calendar } from '@/shared/ui';
 import { Button, Layout, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 dayjs.extend(isBetween);
+import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { DateFormatter, DayProps } from 'react-day-picker';
 
@@ -37,6 +39,7 @@ export const StudentSchedulePage = () => {
 
   const [isToggle, setIsToggle] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
+  const queryClient = useQueryClient();
 
   const [scheduleListFormatDate, setScheduleListFormatDate] = useState(
     dayjs(date).format('YYYY-MM-DD')
@@ -59,6 +62,7 @@ export const StudentSchedulePage = () => {
   );
   const { data: myReservationData } = useStudentMyReservationListQuery();
   const { data: myWaitingData } = useStudentMyWaitingListQuery();
+  const { mutate } = useShowNoticeMutation();
 
   const reservedDates =
     calendarMyReservationData?.reservations?.map((item) => {
@@ -122,7 +126,17 @@ export const StudentSchedulePage = () => {
     );
   };
 
-  // todo : 안내문구 닫기함수
+  const handleCloseNotification = () => {
+    mutate('DISABLE', {
+      onSuccess: () => {
+        void queryClient.invalidateQueries({
+          queryKey: ['scheduleList'],
+        });
+      },
+    });
+  };
+
+  console.log;
 
   return (
     <Layout type='student'>
@@ -155,21 +169,23 @@ export const StudentSchedulePage = () => {
           </TabsList>
           <TabsContent value='classReservation' className='mt-0'>
             <article className='calendar-shadow rounded-bl-lg rounded-br-lg bg-[#fff]'>
-              <div className='flex items-center justify-between bg-blue-50 px-7 py-5'>
-                <div className='flex items-center justify-center'>
-                  <NotificationIcon />
-                  <p className={cn(Typography.BODY_3, 'ml-3 text-black')}>
-                    매주 일요일 자정 이후에 해당 주 예약이 가능합니다.
-                  </p>
+              {scheduleListData?.scheduleNoticeStatus === 'ENABLED' && (
+                <div className='flex items-center justify-between bg-blue-50 px-7 py-5'>
+                  <div className='flex items-center justify-center'>
+                    <NotificationIcon />
+                    <p className={cn(Typography.BODY_3, 'ml-3 text-black')}>
+                      매주 일요일 자정 이후에 해당 주 예약이 가능합니다.
+                    </p>
+                  </div>
+                  <Button
+                    variant='ghost'
+                    className='h-auto p-0'
+                    onClick={handleCloseNotification}>
+                    <CloseIcon width={12} height={12}></CloseIcon>
+                  </Button>
                 </div>
-                <Button
-                  variant='ghost'
-                  className='h-auto p-0'
-                  // onClick={handleCloseNotification}
-                >
-                  <CloseIcon width={12} height={12}></CloseIcon>
-                </Button>
-              </div>
+              )}
+
               <div
                 className={cn(
                   hasMounted
@@ -177,10 +193,9 @@ export const StudentSchedulePage = () => {
                       ? 'animate-calendar-accordion-up fill-mode-forwards'
                       : 'animate-calendar-accordion-down fill-mode-forwards'
                     : '',
-                  'overflow-hidden'
+                  'overflow-hidden px-7 pb-6 pt-8'
                 )}>
                 <Calendar
-                  className='p-1'
                   mode='single'
                   required
                   selected={date}

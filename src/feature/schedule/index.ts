@@ -1,4 +1,5 @@
 export { useScheduleListQuery } from './api/useScheduleListQuery';
+export { useShowNoticeMutation } from './api/useShowNoticeMutation';
 export { useStudentCalendarMyReservationListQuery } from './api/useStudentCalendarMyReservationListQuery';
 export { useStudentCancelReservationScheduleMutation } from './api/useStudentCancelReservationScheduleMutation';
 export { useStudentCancelWaitingScheduleMutation } from './api/useStudentCancelWaitingScheduleMutation';
