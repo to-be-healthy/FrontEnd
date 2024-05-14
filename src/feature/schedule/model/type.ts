@@ -48,11 +48,14 @@ type DayOfWeek =
 // 트레이너 스케줄 서버 데이터
 interface TrainerSchedule {
   scheduleId: number;
+  duration: number;
   lessonStartTime: string;
   lessonEndTime: string;
-  reservationStatus: 'COMPLETED' | 'AVAILABLE' | 'NO_SHOW' | 'SOLD_OUT';
-  applicantName: string | null;
-  waitingStudentName: string | null;
+  reservationStatus: ReservationStatus;
+  applicantId?: number | null;
+  applicantName?: string | null;
+  waitingStudentId?: number | null;
+  waitingStudentName?: string | null;
 }
 
 interface ClassTimeSettingData {
@@ -63,36 +66,44 @@ interface ClassTimeSettingData {
   closedDays: DayOfWeek[];
   lessonTime: number;
 }
+type ReservationStatus =
+  | 'COMPLETED'
+  | 'AVAILABLE'
+  | 'NO_SHOW'
+  | 'SOLD_OUT'
+  | 'DISABLED'
+  | 'LUNCH_TIME';
 
 type TrainerWeeklySchedule = Record<string, TrainerSchedule[]>;
 
-interface ScheduleEvent extends TrainerSchedule {
-  duration: number;
-  color?: number;
+interface ScheduleColor {
+  bg: string;
+  border: string;
 }
 
-interface HourlySchedule {
-  hour: string;
-  event?: ScheduleEvent;
-  status: 'LESSON' | 'DISABLED';
+interface ScheduleOffset {
+  x: number;
+  y: number;
 }
 
-interface DailySchedule {
-  date: Date;
-  schedules: HourlySchedule[];
+interface FlatSchedule extends TrainerSchedule {
+  date: string;
+  offset: ScheduleOffset;
+  color: ScheduleColor | null;
 }
 
 export type {
   AllScheduleData,
   ClassTimeSettingData,
   CourseData,
-  DailySchedule,
   DayOfWeek,
-  HourlySchedule,
+  FlatSchedule,
   MyReservationResponse,
   MyWaitingResponse,
+  ReservationStatus,
+  ScheduleColor,
   ScheduleData,
-  ScheduleEvent,
+  ScheduleOffset,
   TrainerSchedule,
   TrainerWeeklySchedule,
 };

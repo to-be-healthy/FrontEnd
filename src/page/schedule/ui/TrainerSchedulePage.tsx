@@ -1,53 +1,33 @@
 'use client';
 
-import 'dayjs/locale/ko';
+import Link from 'next/link';
 
-import dayjs from 'dayjs';
-import { useState } from 'react';
-
-import {
-  getStartOfWeek,
-  scheduleAdaptor,
-  TrainerWeeklyTimetable,
-  useTrainerScheduleQuery,
-} from '@/feature/schedule';
+import { useWeeklySchedules, WeeklyTimetable } from '@/feature/schedule';
 import { IconGear } from '@/shared/assets';
-import { Typography } from '@/shared/mixin';
+import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, WeekPicker } from '@/widget';
 
 export const TrainerSchedulePage = () => {
-  const currentStartOfWeek = getStartOfWeek();
-  const [startDate, setStartDate] = useState(currentStartOfWeek);
-
-  const { data, isPending } = useTrainerScheduleQuery({
-    lessonEndDt: dayjs(startDate).add(6, 'days').format('YYYY-MM-DD'),
-    lessonStartDt: dayjs(startDate).format('YYYY-MM-DD'),
-  });
-
-  const schedules = data?.schedule;
-
-  const handleWeekChange = (date: Date) => {
-    setStartDate(date);
-  };
-
-  const weeklySchedules =
-    !isPending && schedules !== null && scheduleAdaptor({ schedules, startDate });
+  const { startDate, changeWeek, weeklySchedules, isPending } = useWeeklySchedules();
 
   return (
     <Layout type='trainer' className='bg-white'>
       <Layout.Header className='py-[16px]'>
         <h1 className={cn(Typography.HEADING_4_SEMIBOLD)}>내 스케줄</h1>
-        <IconGear />
+        <Link href='/trainer/schedule/setting'>
+          <IconGear />
+        </Link>
       </Layout.Header>
       <Layout.Contents className='mt-[16px] overflow-hidden'>
-        <WeekPicker startDate={startDate} onWeekChange={handleWeekChange} />
-        {!isPending && weeklySchedules && (
-          <TrainerWeeklyTimetable weeklySchedules={weeklySchedules} />
+        <WeekPicker startDate={startDate} onWeekChange={changeWeek} />
+        {isPending && <>로딩중...</>}
+        {!isPending && weeklySchedules !== null && (
+          <WeeklyTimetable startDate={startDate} schedules={weeklySchedules} />
         )}
         {!isPending && weeklySchedules === null && (
-          <div className='flex h-full w-full flex-col items-center justify-center space-y-[16px]'>
+          <div className={cn(FLEX_CENTER, 'h-full w-full flex-col space-y-[16px]')}>
             <Button size='lg'>일정 등록</Button>
             <p
               className={cn(

@@ -107,7 +107,7 @@ const MonthPicker = ({ date, onChangeDate, children }: PropsWithChildren<Props>)
         <DialogContent
           className={cn(
             'bottom-0 top-auto flex max-w-[var(--max-width)] translate-y-0 flex-col justify-center space-y-[24px] rounded-t-[12px] px-[20px] py-[32px]',
-            'data-[state=closed]:slide-out-to-bottom-[100%] data-[state=open]:slide-in-from-bottom-[100%]'
+            'data-[state=closed]:slide-out-to-bottom-[200%] data-[state=open]:slide-in-from-bottom-[200%]'
           )}>
           <MonthlyCalendar date={date} onChangeDate={onChangeDate} />
         </DialogContent>
