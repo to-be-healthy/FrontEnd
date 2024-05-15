@@ -31,7 +31,7 @@ const EditMyInfoPage = () => {
   return (
     <Layout className='bg-white'>
       <Layout.Header>
-        <Link href={'/trainer/mypage/info'}>
+        <Link href={'/trainer/mypage'}>
           <IconBack />
         </Link>
       </Layout.Header>
@@ -75,47 +75,43 @@ const EditMyInfoPage = () => {
         </section>
         <section className='flex-grow'>
           <div className='mx-7 mt-[36px] rounded-lg border border-gray-100'>
-            <div className='flex items-center justify-between border-b border-gray-100 px-6 py-7'>
-              <p className={cn(Typography.TITLE_1_SEMIBOLD)}>이름</p>
-              <div
-                className={cn(
-                  Typography.BODY_3,
-                  'flex items-center gap-3 text-gray-500'
-                )}>
-                {data?.name}
-                {!isSocialAccount && (
-                  <Link href={'/trainer/mypage/info/edit/name'}>
-                    <IconArrowRightSmall />
-                  </Link>
-                )}
+            <Link href={'/trainer/mypage/info/edit/name'}>
+              <div className='flex items-center justify-between border-b border-gray-100 px-6 py-7'>
+                <p className={cn(Typography.TITLE_1_SEMIBOLD)}>이름</p>
+                <div
+                  className={cn(
+                    Typography.BODY_3,
+                    'flex items-center gap-3 text-gray-500'
+                  )}>
+                  {data?.name}
+                  {!isSocialAccount && <IconArrowRightSmall />}
+                </div>
               </div>
-            </div>
-            <div className='flex items-center justify-between border-b border-gray-100 px-6 py-7'>
-              <p className={cn(Typography.TITLE_1_SEMIBOLD)}>이메일</p>
-              <div
-                className={cn(
-                  Typography.BODY_3,
-                  'flex items-center gap-3 text-gray-500'
-                )}>
-                {data?.email}
-                {!isSocialAccount && (
-                  <Link href={'/trainer/mypage/info/edit/email'}>
-                    <IconArrowRightSmall />
-                  </Link>
-                )}
+            </Link>
+            <Link href={'/trainer/mypage/info/edit/email'}>
+              <div className='flex items-center justify-between border-b border-gray-100 px-6 py-7'>
+                <p className={cn(Typography.TITLE_1_SEMIBOLD)}>이메일</p>
+                <div
+                  className={cn(
+                    Typography.BODY_3,
+                    'flex items-center gap-3 text-gray-500'
+                  )}>
+                  {data?.email}
+                  {!isSocialAccount && <IconArrowRightSmall />}
+                </div>
               </div>
-            </div>
+            </Link>
             {data && isSocialAccount ? (
               <div className='flex items-center justify-between px-6 py-7'>
                 <p className={cn(Typography.TITLE_1_SEMIBOLD)}>계정 연동 설정</p>
               </div>
             ) : (
-              <div className='flex items-center justify-between px-6 py-7'>
-                <p className={cn(Typography.TITLE_1_SEMIBOLD)}>비밀번호 변경</p>
-                <Link href={'/trainer/mypage/info/edit/password'}>
+              <Link href={'/trainer/mypage/info/edit/password'}>
+                <div className='flex items-center justify-between px-6 py-7'>
+                  <p className={cn(Typography.TITLE_1_SEMIBOLD)}>비밀번호 변경</p>
                   <IconArrowRightSmall />
-                </Link>
-              </div>
+                </div>
+              </Link>
             )}
           </div>
         </section>
