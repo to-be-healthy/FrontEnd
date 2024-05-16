@@ -2,6 +2,8 @@ import { SocialProvider } from '@/entity/auth';
 import { DailyDiet } from '@/entity/diet';
 import { Gym } from '@/entity/gym';
 
+import { courseHistoryCodeDescription } from '../const';
+
 interface RegisteredStudent {
   memberId: number;
   name: string;
@@ -43,13 +45,6 @@ interface Member {
   socialType: 'NONE' | Uppercase<SocialProvider>;
 }
 
-interface CourseItem {
-  courseId: number;
-  totalLessonCnt: number;
-  remainLessonCnt: number;
-  createdAt: string;
-}
-
 interface StudentDetail {
   memberId: number;
   name: string;
@@ -68,11 +63,56 @@ interface AppendMemberForm {
   lessonCnt: number;
 }
 
+type CourseHistory = keyof typeof courseHistoryCodeDescription;
+
+type HistoryType = 'NO_SHOW' | 'NO_SHOW_CANCEL' | 'WORKOUT' | 'DIET';
+
+interface CourseItem {
+  courseId: number;
+  totalLessonCnt: number;
+  remainLessonCnt: number;
+  createdAt: string;
+}
+
+interface CourseHistoryItem {
+  courseHistoryId: number;
+  cnt: number;
+  calculation: string;
+  type: CourseHistory;
+  createdAt: string;
+}
+
+interface StudentCourse {
+  course: CourseItem;
+  gymName: string;
+  courseHistories: CourseHistoryItem[];
+}
+
+interface pointHistoryType {
+  pointId: number;
+  type: HistoryType;
+  calculation: 'MINUS' | 'PLUS';
+  point: number;
+  createdAt: string;
+}
+
+interface StudentPoint {
+  monthPoint: number;
+  totalPoint: number;
+  searchDate: string;
+  pointHistories: null | pointHistoryType[];
+}
+
 export type {
   AppendMemberForm,
+  CourseHistoryItem,
   CourseItem,
+  HistoryType,
   InviteForm,
   Member,
+  pointHistoryType,
   RegisteredStudent,
+  StudentCourse,
   StudentDetail,
+  StudentPoint,
 };
