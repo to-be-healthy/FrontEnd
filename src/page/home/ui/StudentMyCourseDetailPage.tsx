@@ -8,8 +8,9 @@ import { useInView } from 'react-intersection-observer';
 
 import { courseHistoryCodeDescription, useMyCourseHistoryQuery } from '@/feature/member';
 import { CourseCard, CourseCardContent, CourseCardHeader } from '@/feature/member';
-import CloseIcon from '@/shared/assets/images/icon_close.svg';
+import { IconClose } from '@/shared/assets';
 import { Layout } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -44,7 +45,7 @@ export const StudentMyCourseDetailPage = () => {
     <Layout type='student'>
       <Layout.Header className='relative flex justify-center bg-[#fff]'>
         <Link href='./' className='absolute left-7'>
-          <CloseIcon width={20} height={20} />
+          <IconClose width={20} height={20} />
         </Link>
         <h2>내 수강권</h2>
       </Layout.Header>
@@ -54,14 +55,19 @@ export const StudentMyCourseDetailPage = () => {
         ) : (
           <>
             <div className='bg-[#fff] p-7 pb-[58px] pt-6'>
-              <CourseCard key={historyData?.pages[0]?.course?.courseId}>
+              <CourseCard>
                 <CourseCardHeader
-                  gymName='건강해짐 홍대점'
+                  gymName={historyData?.pages[0]?.gymName}
+                  totalLessonCnt={historyData?.pages[0]?.course?.totalLessonCnt}
                   remainLessonCnt={historyData?.pages[0]?.course?.remainLessonCnt}
+                  expiration={historyData?.pages[0]?.course?.remainLessonCnt === 0}
                 />
                 <CourseCardContent
                   totalLessonCnt={historyData?.pages[0]?.course?.totalLessonCnt ?? 0}
                   remainLessonCnt={historyData?.pages[0]?.course?.remainLessonCnt ?? 0}
+                  progressClassName={cn(
+                    historyData?.pages[0]?.course?.remainLessonCnt === 0 && 'bg-gray-400'
+                  )}
                 />
               </CourseCard>
             </div>

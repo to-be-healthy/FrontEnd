@@ -17,9 +17,9 @@ import {
   useLogComment,
 } from '@/feature/log';
 import { useStudentLogDetailQuery } from '@/feature/log/api/useStudentLogDetailQuery';
+import { IconCheck } from '@/shared/assets';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconChat from '@/shared/assets/images/icon_chat.svg';
-import IconCheck from '@/shared/assets/images/icon_check.svg';
 import IconDotsVertical from '@/shared/assets/images/icon_dots_vertical.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import IconNote from '@/shared/assets/images/icon_note.svg';

@@ -47,7 +47,7 @@ const EditMyInfoPage = () => {
                 className='rounded-full border border-gray-300'
               />
             ) : (
-              <IconAvatar />
+              <IconAvatar width={82} height={82} />
             )}
 
             <DropdownMenu>

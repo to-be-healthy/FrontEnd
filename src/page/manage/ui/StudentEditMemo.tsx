@@ -4,8 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
 import { useEditMemoMutation } from '@/feature/manage';
+import { IconCheck } from '@/shared/assets';
 import IconBack from '@/shared/assets/images/icon_back.svg';
-import IconCheck from '@/shared/assets/images/icon_check.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Typography } from '@/shared/mixin';
 import { Button, Layout, useToast } from '@/shared/ui';

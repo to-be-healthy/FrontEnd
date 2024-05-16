@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import { useAuthAction } from '@/entity/auth';
-import IconAlarm from '@/shared/assets/images/icon_alarm.svg';
+import { IconAlarm } from '@/shared/assets';
 import {
   Button,
   Card,

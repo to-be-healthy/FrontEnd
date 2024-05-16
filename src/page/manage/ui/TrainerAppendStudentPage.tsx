@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { AppendMemberForm } from '@/feature/member';
 import { useAppendMemberMutation } from '@/feature/member/api/useAppendMemberMutation';
-import CheckIcon from '@/shared/assets/images/icon_check.svg';
+import { IconCheck } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Typography } from '@/shared/mixin';
@@ -43,7 +43,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
             className: 'h-[48px]',
             description: (
               <div className='flex items-center justify-center'>
-                <CheckIcon fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} />
                 <p className='typography-heading-5 ml-6 text-white'>
                   회원이 추가되었습니다.
                 </p>

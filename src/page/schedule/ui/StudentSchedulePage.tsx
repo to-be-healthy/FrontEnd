@@ -19,7 +19,7 @@ import {
   useStudentMyWaitingListQuery,
   WaitingBottomSheet,
 } from '@/feature/schedule';
-import AlarmIcon from '@/shared/assets/images/icon_alarm.svg';
+import { IconAlarm } from '@/shared/assets';
 import DownIcon from '@/shared/assets/images/icon_arrow_bottom.svg';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import NotificationIcon from '@/shared/assets/images/icon_notification_transparent.svg';
@@ -136,12 +136,10 @@ export const StudentSchedulePage = () => {
     });
   };
 
-  console.log;
-
   return (
     <Layout type='student'>
       <Layout.Header className='flex justify-end bg-[#fff]'>
-        <AlarmIcon />
+        <IconAlarm />
       </Layout.Header>
       <Layout.Contents className='bg-gray-100'>
         <Tabs defaultValue='classReservation'>
@@ -229,41 +227,38 @@ export const StudentSchedulePage = () => {
               <p>로딩중...</p>
             ) : (
               <div className='p-7'>
-                {/* 트레이너 매핑 안되어있을때도 안보이게 */}
                 {scheduleListData?.morning !== null && (
                   <div className='mb-7'>
                     <p className={cn(Typography.BODY_1, 'mb-4 text-gray-700')}>오전</p>
                     <ul className='flex flex-wrap items-center justify-start gap-3'>
-                      {scheduleListData?.morning
-                        ?.filter((items) => items.reservationStatus !== 'NO_SHOW')
-                        .map((item) => {
-                          const [hours, minutes] = item.lessonStartTime?.split(':') || [
-                            '00',
-                            '00',
-                          ];
-                          return (
-                            <li key={item.scheduleId}>
-                              {item.reservationStatus === 'AVAILABLE' && date && (
-                                <ReservationBottomSheet data={item} date={date} />
-                              )}
+                      {scheduleListData?.morning.map((item) => {
+                        const [hours, minutes] = item.lessonStartTime?.split(':') || [
+                          '00',
+                          '00',
+                        ];
+                        return (
+                          <li key={item.scheduleId}>
+                            {item.reservationStatus === 'AVAILABLE' && date && (
+                              <ReservationBottomSheet data={item} date={date} />
+                            )}
 
-                              {item.reservationStatus === 'COMPLETED' && date && (
-                                <WaitingBottomSheet data={item} date={date} />
-                              )}
+                            {item.reservationStatus === 'COMPLETED' && date && (
+                              <WaitingBottomSheet data={item} date={date} />
+                            )}
 
-                              {item.reservationStatus === 'SOLD_OUT' && (
-                                <div
-                                  className={cn(
-                                    Typography.TITLE_3,
-                                    'flex h-full w-[102px] flex-col items-center justify-center rounded-lg bg-gray-200 py-[15px] text-gray-400'
-                                  )}>
-                                  <span>{`${hours}:${minutes}`}</span>
-                                  <span>마감</span>
-                                </div>
-                              )}
-                            </li>
-                          );
-                        })}
+                            {item.reservationStatus === 'SOLD_OUT' && (
+                              <div
+                                className={cn(
+                                  Typography.TITLE_3,
+                                  'flex h-full w-[102px] flex-col items-center justify-center rounded-lg bg-gray-200 py-[15px] text-gray-400'
+                                )}>
+                                <span>{`${hours}:${minutes}`}</span>
+                                <span>마감</span>
+                              </div>
+                            )}
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 )}
@@ -272,36 +267,34 @@ export const StudentSchedulePage = () => {
                   <div>
                     <p className={cn(Typography.BODY_1, 'mb-4 text-gray-700')}>오후</p>
                     <ul className='flex flex-wrap items-center justify-start gap-3'>
-                      {scheduleListData?.afternoon
-                        ?.filter((items) => items.reservationStatus !== 'NO_SHOW')
-                        .map((item) => {
-                          const [hours, minutes] = item.lessonStartTime?.split(':') || [
-                            '00',
-                            '00',
-                          ];
-                          return (
-                            <li key={item.scheduleId}>
-                              {item.reservationStatus === 'AVAILABLE' && date && (
-                                <ReservationBottomSheet data={item} date={date} />
-                              )}
+                      {scheduleListData?.afternoon.map((item) => {
+                        const [hours, minutes] = item.lessonStartTime?.split(':') || [
+                          '00',
+                          '00',
+                        ];
+                        return (
+                          <li key={item.scheduleId}>
+                            {item.reservationStatus === 'AVAILABLE' && date && (
+                              <ReservationBottomSheet data={item} date={date} />
+                            )}
 
-                              {item.reservationStatus === 'COMPLETED' && date && (
-                                <WaitingBottomSheet data={item} date={date} />
-                              )}
+                            {item.reservationStatus === 'COMPLETED' && date && (
+                              <WaitingBottomSheet data={item} date={date} />
+                            )}
 
-                              {item.reservationStatus === 'SOLD_OUT' && (
-                                <div
-                                  className={cn(
-                                    Typography.TITLE_3,
-                                    'flex h-full w-[102px] flex-col items-center justify-center rounded-lg bg-gray-200 py-[15px] text-gray-400'
-                                  )}>
-                                  <span>{`${Number(hours) > 12 ? Number(hours) - 12 : 12}:${minutes}`}</span>
-                                  <span>마감</span>
-                                </div>
-                              )}
-                            </li>
-                          );
-                        })}
+                            {item.reservationStatus === 'SOLD_OUT' && (
+                              <div
+                                className={cn(
+                                  Typography.TITLE_3,
+                                  'flex h-full w-[102px] flex-col items-center justify-center rounded-lg bg-gray-200 py-[15px] text-gray-400'
+                                )}>
+                                <span>{`${Number(hours) > 12 ? Number(hours) - 12 : 12}:${minutes}`}</span>
+                                <span>마감</span>
+                              </div>
+                            )}
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                 )}

@@ -10,7 +10,7 @@ import {
   DayOfWeek,
   useTrainerClassTimeSettingMutation,
 } from '@/feature/schedule';
-import CheckIcon from '@/shared/assets/images/icon_check.svg';
+import { IconCheck } from '@/shared/assets';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import NoCircleCheckIcon from '@/shared/assets/images/noCircleCheck.svg';
 import { Typography } from '@/shared/mixin';
@@ -144,7 +144,7 @@ export const ClassTimeSettingPage = () => {
     if (selectedClass && selectedTimeList) {
       mutate(settings, {
         onSuccess: ({ message }) => {
-          showMessage(<CheckIcon fill={'var(--primary-500)'} />, message);
+          showMessage(<IconCheck fill={'var(--primary-500)'} />, message);
           router.push('/trainer');
         },
         onError: (error) => {

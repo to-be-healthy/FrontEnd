@@ -25,10 +25,10 @@ import {
   useRegisterStudentCourseMutation,
   useStudentCourseDetailQuery,
 } from '@/feature/member';
+import { IconPlus } from '@/shared/assets';
+import { IconCheck } from '@/shared/assets';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
-import CheckIcon from '@/shared/assets/images/icon_check.svg';
 import NotificationsIcon from '@/shared/assets/images/icon_notifications.svg';
-import PlusIcon from '@/shared/assets/images/icon_plus.svg';
 import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
@@ -99,7 +99,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             className: 'h-12',
             description: (
               <div className='flex items-center justify-center'>
-                <CheckIcon fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} />
                 <p className='typography-heading-5 ml-6 text-[#fff]'>{reslut.message}</p>
               </div>
             ),
@@ -111,7 +111,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             className: 'h-12',
             description: (
               <div className='flex items-center justify-center'>
-                <CheckIcon fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} />
                 <p className='typography-heading-5 ml-6 text-[#fff]'>
                   {error.response?.data.message}
                 </p>
@@ -143,7 +143,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             className: 'h-12',
             description: (
               <div className='flex items-center justify-center'>
-                <CheckIcon fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} />
                 <p className='typography-heading-5 ml-6 text-[#fff]'>
                   {addInput}회가 연장되었습니다.
                 </p>
@@ -157,7 +157,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             className: 'h-12',
             description: (
               <div className='flex items-center justify-center'>
-                <CheckIcon fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} />
                 <p className='typography-heading-5 ml-6 text-[#fff]'>
                   {error.response?.data.message}
                 </p>
@@ -180,7 +180,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           className: 'h-12',
           description: (
             <div className='flex items-center justify-center'>
-              <CheckIcon fill={'var(--primary-500)'} />
+              <IconCheck fill={'var(--primary-500)'} />
               <p className='typography-heading-5 ml-6 text-[#fff]'>{result.message}</p>
             </div>
           ),
@@ -192,7 +192,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           className: 'h-12',
           description: (
             <div className='flex items-center justify-center'>
-              <CheckIcon fill={'var(--primary-500)'} />
+              <IconCheck fill={'var(--primary-500)'} />
               <p className='typography-heading-5 ml-6 text-[#fff]'>
                 {error?.response?.data.message}
               </p>
@@ -228,7 +228,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
         {detailData?.pages[0]?.course?.remainLessonCnt === REMAIN_CNT_ZERO && (
           <CourseSheet isOpen={isRegisterSheetOpen} setIsOpen={setIsRegisterSheetOpen}>
             <CourseSheetTrigger className='absolute right-7'>
-              <PlusIcon width={20} height={20} fill='black' />
+              <IconPlus width={20} height={20} fill='black' />
             </CourseSheetTrigger>
             <CourseSheetContent>
               <CourseSheetHeader>등록할 수업횟수</CourseSheetHeader>
@@ -262,17 +262,10 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                         'bg-gray-500'
                     )}>
                     <CourseCardHeader
+                      gymName={detailData?.pages[0]?.gymName}
                       remainLessonCnt={detailData?.pages[0]?.course?.remainLessonCnt}
-                      title={
-                        detailData?.pages[0]?.course?.remainLessonCnt === REMAIN_CNT_ZERO
-                          ? `${detailData?.pages[0]?.course?.totalLessonCnt}회 PT 수강`
-                          : `잔여 ${detailData?.pages[0]?.course?.remainLessonCnt}회`
-                      }
-                      indication={
-                        detailData?.pages[0]?.course?.remainLessonCnt === REMAIN_CNT_ZERO
-                          ? '만료'
-                          : 'PT 수강권'
-                      }
+                      totalLessonCnt={detailData?.pages[0]?.course?.totalLessonCnt}
+                      expiration={detailData?.pages[0]?.course?.remainLessonCnt === 0}
                     />
                     <CourseCardContent
                       className={cn(
