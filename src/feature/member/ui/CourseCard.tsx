@@ -15,8 +15,7 @@ interface CourseCardProps extends HTMLAttributes<HTMLDivElement> {
 
 export const CourseCard = ({ className, children }: CourseCardProps) => {
   return (
-    <Card
-      className={cn('w-full gap-y-8 bg-primary-500 px-6 py-7 text-[#fff]', className)}>
+    <Card className={cn('w-full gap-y-0 bg-primary-500 p-0 text-[#fff]', className)}>
       {children}
     </Card>
   );
@@ -35,7 +34,7 @@ export const CourseCardHeader = ({
   totalLessonCnt,
   expiration,
 }: CourseCardHeaderProps) => (
-  <CardHeader>
+  <CardHeader className='px-6 pb-8 pt-7'>
     <div className='typography-body-3 mb-1 flex items-center justify-between text-white'>
       <p className={cn(Typography.BODY_3, 'text-gray-100')}>{gymName}</p>
       <span className={cn(Typography.BODY_3, 'text-gray-100')}>
@@ -43,7 +42,8 @@ export const CourseCardHeader = ({
       </span>
     </div>
     <p className={cn(Typography.HEADING_3, 'text-white')}>
-      {expiration ? `${10}회 PT수강 만료` : `${remainLessonCnt}`}회 남아있어요!
+      {expiration ? `${totalLessonCnt}회 PT수강 만료` : `${remainLessonCnt}`}회
+      남아있어요!
     </p>
   </CardHeader>
 );
@@ -62,7 +62,7 @@ export const CourseCardContent = ({
   progressClassName,
 }: CourseCardContentProps) => (
   <CardContent>
-    <div>
+    <div className='px-6 pb-7'>
       <p className='typography-heading-5 mb-[6px] text-[#fff]'>
         PT 진행 횟수 {remainLessonCnt}
         <span className={cn('typography-body-3 text-[#8EC7FF]', className)}>
