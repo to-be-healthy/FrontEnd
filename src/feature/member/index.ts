@@ -19,6 +19,7 @@ export type {
   AppendMemberForm,
   CourseHistoryItem,
   CourseItem,
+  Diet,
   HistoryType,
   InviteForm,
   Member,

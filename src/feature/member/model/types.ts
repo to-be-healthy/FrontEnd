@@ -103,10 +103,59 @@ interface StudentPoint {
   pointHistories: null | pointHistoryType[];
 }
 
+interface Diet {
+  dietId: number;
+  member: {
+    id: number;
+    userId: string;
+    email: string;
+    name: string;
+    age: number;
+    height: number;
+    weight: number;
+    delYn: boolean;
+    profile: null | { id: number; fileUrl: string };
+    memberType: 'STUDENT' | 'TRAINER';
+    pushAlarmStatus: null | 'ENABLED' | 'DISABLE';
+    feedbackAlarmStatus: null | 'ENABLED' | 'DISABLE';
+    gym: null | { id: number; name: string };
+    socialType: ['NONE', 'KAKAO', 'NAVER', 'GOOGLE'];
+  };
+  likeCnt: number;
+  commentCnt: number;
+  breakfast: {
+    fast: boolean;
+    dietFile: null | {
+      id: number;
+      dietId: number;
+      fileUrl: string;
+      type: string;
+    };
+  };
+  lunch: {
+    fast: boolean;
+    dietFile: null | {
+      id: number;
+      dietId: number;
+      fileUrl: string;
+      type: string;
+    };
+  };
+  dinner: {
+    fast: boolean;
+    dietFile: null | {
+      id: number;
+      dietId: number;
+      fileUrl: string;
+      type: string;
+    };
+  };
+}
 export type {
   AppendMemberForm,
   CourseHistoryItem,
   CourseItem,
+  Diet,
   HistoryType,
   InviteForm,
   Member,
