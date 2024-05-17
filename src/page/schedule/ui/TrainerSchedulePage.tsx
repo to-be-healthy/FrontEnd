@@ -1,3 +1,5 @@
+'use client';
+
 import 'dayjs/locale/ko';
 
 import dayjs from 'dayjs';
