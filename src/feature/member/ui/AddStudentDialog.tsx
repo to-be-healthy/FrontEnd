@@ -1,9 +1,9 @@
 import Link from 'next/link';
 
+import { IconPlus } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import IconMail from '@/shared/assets/images/icon_mail.svg';
 import IconPeopleAdd from '@/shared/assets/images/icon_people_add.svg';
-import IconPlus from '@/shared/assets/images/icon_plus.svg';
 import { Button, Layout } from '@/shared/ui';
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/shared/ui/dialog';
 

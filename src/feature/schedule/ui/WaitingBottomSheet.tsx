@@ -6,8 +6,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
+import { IconCheck } from '@/shared/assets';
 import CancelCalendarIcon from '@/shared/assets/images/icon_cancel_calendar.svg';
-import CheckIcon from '@/shared/assets/images/icon_check.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import ReservationCalendarIcon from '@/shared/assets/images/icon_reservation_calendar.svg';
 import { Typography } from '@/shared/mixin';
@@ -64,7 +64,7 @@ export const WaitingBottomSheet = ({ data, date }: Props) => {
           className: 'h-12',
           description: (
             <div className='flex items-center justify-center'>
-              <CheckIcon fill={'var(--primary-500)'} />
+              <IconCheck fill={'var(--primary-500)'} />
               <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
             </div>
           ),

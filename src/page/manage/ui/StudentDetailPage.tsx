@@ -20,10 +20,10 @@ import {
   CourseCardHeader,
   useRegisterStudentCourseMutation,
 } from '@/feature/member';
+import { IconCheck } from '@/shared/assets';
 import IconArrowRight from '@/shared/assets/images/icon_arrow_right.svg';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconCalendar from '@/shared/assets/images/icon_calendar_blue.svg';
-import CheckIcon from '@/shared/assets/images/icon_check.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile.svg';
 import IconDotsVertical from '@/shared/assets/images/icon_dots_vertical.svg';
 import IconDumbel from '@/shared/assets/images/icon_dumbel.svg';
@@ -75,7 +75,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
             className: 'h-12',
             description: (
               <div className='flex items-center justify-center'>
-                <CheckIcon fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} />
                 <p className='typography-heading-5 ml-6 text-[#fff]'>{reslut.message}</p>
               </div>
             ),
@@ -87,7 +87,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
             className: 'h-12',
             description: (
               <div className='flex items-center justify-center'>
-                <CheckIcon fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} />
                 <p className='typography-heading-5 ml-6 text-[#fff]'>
                   {error.response?.data.message}
                 </p>
@@ -221,17 +221,11 @@ export const StudentDetailPage = ({ memberId }: Props) => {
                   memberInfo.course?.remainLessonCnt === REMAIN_CNT_ZERO && 'bg-gray-500'
                 )}>
                 <CourseCardHeader
+                  // gymName={memberInfo.}
+                  gymName='건강해짐홍대점~~~~~~~~~~~~~~~~~~~~~~~~~~~' //todo:현재 헬스장 이름 안보내줌
                   remainLessonCnt={memberInfo.course?.remainLessonCnt}
-                  title={
-                    memberInfo.course?.remainLessonCnt === REMAIN_CNT_ZERO
-                      ? `${memberInfo.course?.totalLessonCnt}회 PT 수강`
-                      : `잔여 ${memberInfo.course?.remainLessonCnt}회`
-                  }
-                  indication={
-                    memberInfo.course?.remainLessonCnt === REMAIN_CNT_ZERO
-                      ? '만료'
-                      : 'PT 수강권'
-                  }
+                  totalLessonCnt={memberInfo.course?.totalLessonCnt}
+                  expiration={memberInfo.course?.remainLessonCnt === 0}
                 />
                 <CourseCardContent
                   className={cn(

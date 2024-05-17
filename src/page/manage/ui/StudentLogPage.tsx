@@ -10,10 +10,10 @@ import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
 import { useStudentLogListQuery } from '@/feature/log';
+import { IconPlus } from '@/shared/assets';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconChat from '@/shared/assets/images/icon_chat.svg';
 import IconNoSchedule from '@/shared/assets/images/icon_no_schedule.svg';
-import IconPlus from '@/shared/assets/images/icon_plus.svg';
 import { Typography } from '@/shared/mixin';
 import { Card, CardContent, CardFooter, CardHeader, Layout } from '@/shared/ui';
 import {

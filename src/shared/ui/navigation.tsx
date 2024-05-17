@@ -7,6 +7,8 @@ import { HTMLAttributes } from 'react';
 import {
   IconCalendarFilled,
   IconCalendarOutlined,
+  IconCommunityFilled,
+  IconCommunityOutlined,
   IconHomeFilled,
   IconHomeOutlined,
   IconProfileFilled,
@@ -109,6 +111,24 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
                 pathname === '/student/schedule' ? 'text-black' : 'text-gray-700'
               )}>
               스케줄
+            </span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href='/student/mypage'
+            className='flex flex-col items-center justify-between gap-y-[6px]'>
+            {pathname === '/student/mypage' ? (
+              <IconCommunityFilled />
+            ) : (
+              <IconCommunityOutlined />
+            )}
+            <span
+              className={cn(
+                'text-[10px] font-semibold',
+                pathname === '/student/mypage' ? 'text-black' : 'text-gray-700'
+              )}>
+              커뮤니티
             </span>
           </Link>
         </li>

@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useEditNicknameMutation } from '@/feature/manage';
-import IconCheck from '@/shared/assets/images/icon_check.svg';
+import { IconCheck } from '@/shared/assets';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';

@@ -6,7 +6,7 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { InviteForm, useInviteStudentMutation, useMyInfoQuery } from '@/feature/member';
-import CheckIcon from '@/shared/assets/images/icon_check.svg';
+import { IconCheck } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Typography } from '@/shared/mixin';
@@ -78,7 +78,7 @@ export const TrainerInvitePage = () => {
       className: 'h-[48px]',
       description: (
         <div className='flex items-center justify-center'>
-          <CheckIcon fill={'var(--primary-500)'} />
+          <IconCheck fill={'var(--primary-500)'} />
           <p className='typography-heading-5 ml-6 text-white'>초대 링크를 복사했어요.</p>
         </div>
       ),

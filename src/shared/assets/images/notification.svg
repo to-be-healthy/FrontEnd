@@ -1,0 +1,14 @@
+<svg width="current" height="current" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="interface-alert-warning-circle--warning-alert-frame-exclamation-caution-circle" clip-path="url(#clip0_4816_6877)">
+<g id="Group">
+<path id="Vector" d="M6.00014 11.5706C9.07716 11.5706 11.5716 9.07618 11.5716 5.99916C11.5716 2.92215 9.07716 0.427734 6.00014 0.427734C2.92312 0.427734 0.428711 2.92215 0.428711 5.99916C0.428711 9.07618 2.92312 11.5706 6.00014 11.5706Z" stroke="current" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M6 3V5.57143" stroke="current" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_3" d="M6.00035 8.57003C6.23704 8.57003 6.42892 8.37816 6.42892 8.14146C6.42892 7.90477 6.23704 7.71289 6.00035 7.71289C5.76366 7.71289 5.57178 7.90477 5.57178 8.14146C5.57178 8.37816 5.76366 8.57003 6.00035 8.57003Z" stroke="current" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_4816_6877">
+<rect width="12" height="12" fill="white"/>
+</clipPath>
+</defs>
+</svg>
