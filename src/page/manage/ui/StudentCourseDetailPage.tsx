@@ -27,8 +27,8 @@ import {
 } from '@/feature/member';
 import { IconPlus } from '@/shared/assets';
 import { IconCheck } from '@/shared/assets';
+import { IconNotification } from '@/shared/assets';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
-import NotificationsIcon from '@/shared/assets/images/icon_notifications.svg';
 import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
@@ -417,7 +417,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                 </div>
 
                 <div className='flex flex-col items-center justify-center pt-[124px]'>
-                  <NotificationsIcon
+                  <IconNotification
                     width={37}
                     height={36}
                     fill='transparent'

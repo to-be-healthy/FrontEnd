@@ -20,9 +20,9 @@ import {
   WaitingBottomSheet,
 } from '@/feature/schedule';
 import { IconAlarm } from '@/shared/assets';
+import { IconNotification } from '@/shared/assets';
 import DownIcon from '@/shared/assets/images/icon_arrow_bottom.svg';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
-import NotificationIcon from '@/shared/assets/images/icon_notification_transparent.svg';
 import ScheduleIcon from '@/shared/assets/images/icon_schedule.svg';
 import { Typography } from '@/shared/mixin';
 import { Calendar } from '@/shared/ui';
@@ -170,7 +170,7 @@ export const StudentSchedulePage = () => {
               {scheduleListData?.scheduleNoticeStatus === 'ENABLED' && (
                 <div className='flex items-center justify-between bg-blue-50 px-7 py-5'>
                   <div className='flex items-center justify-center'>
-                    <NotificationIcon />
+                    <IconNotification width={12} height={12} stroke='black' />
                     <p className={cn(Typography.BODY_3, 'ml-3 text-black')}>
                       매주 일요일 자정 이후에 해당 주 예약이 가능합니다.
                     </p>

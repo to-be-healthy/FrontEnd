@@ -1,24 +1,27 @@
 'use client';
 
 import 'dayjs/locale/ko';
+
+import dayjs from 'dayjs';
 dayjs.locale('ko');
 import { useQueryClient } from '@tanstack/react-query';
-import dayjs from 'dayjs';
 import Link from 'next/link';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { useMyPointHistoryQuery } from '@/feature/member/api/useMyPointHistoryQuery';
 import { pointHistoryCodeDescription } from '@/feature/member/const';
-import { IconClose, IconPoint } from '@/shared/assets';
-import IconNotification from '@/shared/assets/images/icon_notification_transparent.svg';
+import { IconClose, IconNotification, IconPoint } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Button, Card, CardContent, CardHeader, Layout } from '@/shared/ui';
+import { Card, CardContent, CardHeader, Layout } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { MonthPicker } from '@/widget/month-picker';
 
 const ITEMS_PER_PAGE = 20;
 
 export const StudentMyPointDetailPage = () => {
+  const date = dayjs(new Date()).format('YYYY-MM');
+  const [searchMonth, setSearchMonth] = useState<string>(date);
   const queryClient = useQueryClient();
   const [ref, inView] = useInView({
     threshold: 0.5,
@@ -29,7 +32,7 @@ export const StudentMyPointDetailPage = () => {
     isPending,
     hasNextPage,
     fetchNextPage,
-  } = useMyPointHistoryQuery(ITEMS_PER_PAGE);
+  } = useMyPointHistoryQuery(ITEMS_PER_PAGE, searchMonth);
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -45,10 +48,7 @@ export const StudentMyPointDetailPage = () => {
     };
   }, [queryClient]);
 
-  // todo : 포인트 없어도 데이터는 항상 있어야함 api수정예정
-  const date = historyData?.pages[0]?.searchDate
-    ? dayjs(historyData?.pages[0]?.searchDate).format('YYYY년 MM월')
-    : '';
+  const month = dayjs(historyData?.pages[0]?.searchDate).format('MM').split('')[1];
 
   return (
     <Layout type='student'>
@@ -70,15 +70,15 @@ export const StudentMyPointDetailPage = () => {
         ) : (
           <>
             <div className='bg-[#fff] p-7 pb-[36px] pt-6'>
-              <Button
-                variant='ghost'
-                className={cn(Typography.HEADING_5, 'mb-6 h-auto p-0 text-black')}>
-                {date}
-              </Button>
+              {/* 어떻게쓰는거임..? */}
+              <MonthPicker
+                date={searchMonth}
+                onChangeDate={(newDate) => setSearchMonth(newDate)}
+              />
               <Card className='mb-6 w-full gap-y-1 bg-primary-500 px-6 py-7'>
                 <CardHeader className='flex items-center justify-between'>
                   <p className={cn(Typography.HEADING_5, 'text-white')}>
-                    {`${date?.split(' ')[1]} 활동 포인트`}
+                    {`${month}월 활동 포인트`}
                   </p>
 
                   <div className='flex items-center justify-between'>
@@ -100,7 +100,7 @@ export const StudentMyPointDetailPage = () => {
                 </CardContent>
               </Card>
               <p className={cn(Typography.BODY_4, 'flex items-center justify-start')}>
-                <IconNotification className='rotate-180' />
+                <IconNotification width={12} height={12} stroke='black' />
                 <span className='ml-1'>활동 포인트는 매월 1일 자정 초기화됩니다.</span>
               </p>
             </div>
@@ -128,7 +128,17 @@ export const StudentMyPointDetailPage = () => {
                     );
                   })
                 ) : (
-                  <li key={`pointHistories_${index}`}>포인트 내역이 없습니다.</li>
+                  <li
+                    key={`pointHistories_${index}`}
+                    className={cn(
+                      Typography.TITLE_1_BOLD,
+                      'flex flex-col items-center justify-center py-28 text-gray-700'
+                    )}>
+                    <span className='mb-5'>
+                      <IconNotification width={33} height={33} stroke='var(--gray-500)' />
+                    </span>
+                    포인트 내역이 없습니다.
+                  </li>
                 );
               })}
             </ul>
