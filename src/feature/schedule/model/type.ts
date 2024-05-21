@@ -7,7 +7,7 @@ interface AllScheduleData {
   round: number;
   trainerName: string;
   applicantName: string | null;
-  standByName: string | null;
+  waitingByName: string | null;
 }
 
 interface ScheduleData {

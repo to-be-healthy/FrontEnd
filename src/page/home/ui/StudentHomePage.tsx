@@ -5,7 +5,6 @@ dayjs.locale('ko');
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 import dayjs from 'dayjs';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
@@ -20,15 +19,14 @@ import {
   IconArrowDown,
   IconArrowFilledDown,
   IconArrowFilledUp,
+  IconArrowRightSmall,
   IconAvatar,
   IconCheck,
   IconLogo,
-  IconPlus,
   IconPoint,
 } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -48,6 +46,7 @@ export const StudentHomePage = () => {
 
   // const [images, setImages] = useState([]);
 
+  //식단 api 완료후 진행예정
   // const uploadFiles = (e: ChangeEvent<HTMLInputElement>) => {
   //   const uploadFiles = e.target.files;
   //   if (!uploadFiles) return;
@@ -96,21 +95,26 @@ export const StudentHomePage = () => {
           <span>로딩중...</span>
         ) : (
           <>
-            {data?.course && (
-              <article className='mb-7'>
-                <CourseCard className='mb-10'>
+            <article className='mb-7'>
+              {/* 수강권 있을때 */}
+              {data?.course && (
+                <CourseCard
+                  expiration={
+                    data.course?.completedLessonCnt === data.course?.totalLessonCnt
+                  }>
                   <Link href='./student/course-history'>
                     <CourseCardHeader
                       gymName={data?.gym.name}
                       totalLessonCnt={data?.course.totalLessonCnt}
                       remainLessonCnt={data?.course.remainLessonCnt}
-                      expiration={data?.course.remainLessonCnt === 0}
+                      completedLessonCnt={data?.course.completedLessonCnt}
                     />
                     <CourseCardContent
                       totalLessonCnt={data?.course.totalLessonCnt}
-                      remainLessonCnt={data?.course.remainLessonCnt}
+                      completedLessonCnt={data?.course.completedLessonCnt}
                       progressClassName={cn(
-                        data?.course.remainLessonCnt === 0 && 'bg-gray-500'
+                        data?.course.completedLessonCnt === data?.course.totalLessonCnt &&
+                          'bg-gray-400'
                       )}
                     />
                   </Link>
@@ -252,11 +256,22 @@ export const StudentHomePage = () => {
                     </div>
                   )}
                 </CourseCard>
-              </article>
-            )}
+              )}
 
-            {data?.myReservation && (
-              <article className='mb-7'>
+              {/* 수강권 없을때 */}
+              {!data?.course && (
+                <div
+                  className={cn(
+                    Typography.TITLE_3,
+                    'flex h-[127px] w-full items-center justify-center rounded-lg bg-gray-500 text-white'
+                  )}>
+                  현재 등록된 수강권이 없습니다.
+                </div>
+              )}
+            </article>
+
+            <article className='mb-7'>
+              {data?.myReservation && (
                 <Card className='w-full gap-y-8 px-6 py-7'>
                   <CardHeader className='flex items-center justify-between'>
                     <h2 className={cn(Typography.TITLE_2, 'text-gray-800')}>
@@ -273,8 +288,8 @@ export const StudentHomePage = () => {
                     </p>
                   </CardContent>
                 </Card>
-              </article>
-            )}
+              )}
+            </article>
 
             {data?.lessonHistory && (
               <article className='mb-7'>
@@ -317,8 +332,8 @@ export const StudentHomePage = () => {
                 </CardHeader>
                 <CardContent>
                   <div className='flex items-center justify-between'>
-                    {/* 식단 post -> response : url, 이미지 용량 체크, 컴포넌트분리 */}
-                    {data?.diet.breakfast?.fast ? (
+                    {/* 식단 post -> response : url, 컴포넌트분리 */}
+                    {/* {data?.diet.breakfast?.fast ? (
                       <div className='w-[calc((100%-12px)/3)]'>
                         <div className='h-full min-h-[95px] w-full rounded-md bg-gray-100'></div>
                         <Button
@@ -371,9 +386,9 @@ export const StudentHomePage = () => {
                           </span>
                         </Button>
                       </div>
-                    )}
+                    )} */}
 
-                    {data?.diet.lunch?.fast ? (
+                    {/* {data?.diet.lunch?.fast ? (
                       <div className='w-[calc((100%-12px)/3)]'>
                         <div className='min-h-[95px] w-full rounded-md bg-gray-100'></div>
                         <Button
@@ -436,9 +451,9 @@ export const StudentHomePage = () => {
                           </span>
                         </Button>
                       </div>
-                    )}
+                    )} */}
 
-                    {data?.diet.dinner.fast ? (
+                    {/* {data?.diet.dinner.fast ? (
                       <div className='w-[calc((100%-12px)/3)]'>
                         <div className='min-h-[95px] w-full rounded-md bg-gray-100'></div>
                         <Button
@@ -491,7 +506,7 @@ export const StudentHomePage = () => {
                           </span>
                         </Button>
                       </div>
-                    )}
+                    )} */}
                   </div>
                 </CardContent>
               </Card>
@@ -504,10 +519,9 @@ export const StudentHomePage = () => {
                     개인 운동 기록
                   </h2>
                   <Link href='/' className={cn(Typography.BODY_3, 'gray-500 h-auto')}>
-                    ㄴㅇㄹ
+                    <IconArrowRightSmall />
                   </Link>
                 </CardHeader>
-                <CardContent>ㄴㄹㄴㅇㄹ</CardContent>
               </Card>
             </article>
           </>

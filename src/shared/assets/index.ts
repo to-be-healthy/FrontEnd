@@ -11,6 +11,7 @@ export { default as IconCamera } from './images/camera.svg';
 export { default as IconCheck } from './images/check.svg';
 export { default as IconCommunityFilled } from './images/community_filled.svg';
 export { default as IconCommunityOutlined } from './images/community_outlined.svg';
+export { default as IconError } from './images/error.svg';
 export { default as IconGear } from './images/gear.svg';
 export { default as IconHomeFilled } from './images/home_filled.svg';
 export { default as IconHomeOutlined } from './images/home_outlined.svg';

@@ -29,6 +29,7 @@ import { IconPlus } from '@/shared/assets';
 import { IconCheck } from '@/shared/assets';
 import { IconNotification } from '@/shared/assets';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
+import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
@@ -41,29 +42,28 @@ import {
   AlertDialogTrigger,
   Button,
   Layout,
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTrigger,
   useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { MonthPicker } from '@/widget/month-picker';
 interface Props {
   memberId: number;
 }
 
 const ITEMS_PER_PAGE = 20;
-const REMAIN_CNT_ZERO = 0;
 
 export const StudentCourseDetailPage = ({ memberId }: Props) => {
   const { toast } = useToast();
   const params = useSearchParams();
   const name = params.get('name');
+  const date = dayjs(new Date()).format('YYYY-MM');
+  const [searchMonth, setSearchMonth] = useState<string>(date);
 
   const [isAddSheetOpen, setIsAddSheetOpen] = useState(false);
   const [isRegisterSheetOpen, setIsRegisterSheetOpen] = useState(false);
   const [addInput, setAddInput] = useState('');
-  const [RegisterInput, setRegisterInput] = useState('');
+  const [registerInput, setRegisterInput] = useState('');
+  const showErrorToast = useShowErrorToast();
 
   const queryClient = useQueryClient();
   const [ref, inView] = useInView({
@@ -76,18 +76,17 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
     hasNextPage,
     fetchNextPage,
   } = useStudentCourseDetailQuery(memberId, ITEMS_PER_PAGE);
-
   const studentCourseId = Number(detailData?.pages[0]?.course?.courseId);
 
   const { mutate: addMutation } = useAddStudentCourseMutation();
   const { mutate: deleteMutation } = useDeleteStudentCourseMutation();
-  const { mutate: RegisterMutation } = useRegisterStudentCourseMutation();
+  const { mutate: registerMutation } = useRegisterStudentCourseMutation();
 
-  const RegisterCourseCount = () => {
-    RegisterMutation(
+  const registerCourseCount = () => {
+    registerMutation(
       {
         memberId: memberId,
-        lessonCnt: Number(RegisterInput),
+        lessonCnt: Number(registerInput),
       },
       {
         onSuccess: (reslut) => {
@@ -107,18 +106,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           });
         },
         onError: (error) => {
-          return toast({
-            className: 'h-12',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} />
-                <p className='typography-heading-5 ml-6 text-[#fff]'>
-                  {error.response?.data.message}
-                </p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          showErrorToast(error.response?.data.message ?? '');
         },
       }
     );
@@ -153,18 +141,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           });
         },
         onError: (error) => {
-          return toast({
-            className: 'h-12',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} />
-                <p className='typography-heading-5 ml-6 text-[#fff]'>
-                  {error.response?.data.message}
-                </p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          showErrorToast(error.response?.data.message ?? '');
         },
       }
     );
@@ -188,18 +165,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
         });
       },
       onError: (error) => {
-        return toast({
-          className: 'h-12',
-          description: (
-            <div className='flex items-center justify-center'>
-              <IconCheck fill={'var(--primary-500)'} />
-              <p className='typography-heading-5 ml-6 text-[#fff]'>
-                {error?.response?.data.message}
-              </p>
-            </div>
-          ),
-          duration: 2000,
-        });
+        showErrorToast(error.response?.data.message ?? '');
       },
     });
   };
@@ -220,12 +186,20 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
 
   return (
     <Layout type='trainer'>
-      <Layout.Header className='relative flex justify-center bg-[#fff]'>
-        <Link href='./' className='absolute left-7'>
+      <Layout.Header className='justify-start bg-[#fff]'>
+        <Link href='./'>
           <BackIcon />
         </Link>
-        <h2>{name}님 수강권</h2>
-        {detailData?.pages[0]?.course?.remainLessonCnt === REMAIN_CNT_ZERO && (
+        <h2
+          className={cn(
+            Typography.HEADING_4_SEMIBOLD,
+            'absolute left-1/2 translate-x-[-50%] text-[$000]'
+          )}>
+          {name}님 수강권
+        </h2>
+
+        {detailData?.pages[0]?.course?.totalLessonCnt ===
+          detailData?.pages[0]?.course?.completedLessonCnt && (
           <CourseSheet isOpen={isRegisterSheetOpen} setIsOpen={setIsRegisterSheetOpen}>
             <CourseSheetTrigger className='absolute right-7'>
               <IconPlus width={20} height={20} fill='black' />
@@ -233,13 +207,13 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             <CourseSheetContent>
               <CourseSheetHeader>등록할 수업횟수</CourseSheetHeader>
               <CourseSheetInput
-                courseInput={RegisterInput}
+                courseInput={registerInput}
                 setCourseInput={setRegisterInput}
                 isOpen={isRegisterSheetOpen}
               />
               <CourseSheetFooter
-                courseInput={RegisterInput}
-                clickButtonHandler={RegisterCourseCount}>
+                courseInput={registerInput}
+                clickButtonHandler={registerCourseCount}>
                 수강권 등록
               </CourseSheetFooter>
             </CourseSheetContent>
@@ -253,43 +227,40 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           <>
             {detailData?.pages[0]?.course ? (
               <>
-                <div className='bg-[#fff] p-7 pt-6'>
+                <div className='bg-[#fff] p-7 pb-0'>
                   <CourseCard
-                    key={detailData?.pages[0]?.course?.courseId}
-                    className={cn(
-                      'gap-y-11',
-                      detailData?.pages[0]?.course?.remainLessonCnt === REMAIN_CNT_ZERO &&
-                        'bg-gray-500'
-                    )}>
+                    className='mb-6'
+                    expiration={
+                      detailData?.pages[0]?.course?.totalLessonCnt ===
+                      detailData?.pages[0]?.course?.completedLessonCnt
+                    }>
                     <CourseCardHeader
                       gymName={detailData?.pages[0]?.gymName}
-                      remainLessonCnt={detailData?.pages[0]?.course?.remainLessonCnt}
                       totalLessonCnt={detailData?.pages[0]?.course?.totalLessonCnt}
-                      expiration={detailData?.pages[0]?.course?.remainLessonCnt === 0}
+                      remainLessonCnt={detailData?.pages[0]?.course?.remainLessonCnt}
+                      completedLessonCnt={
+                        detailData?.pages[0]?.course?.completedLessonCnt
+                      }
                     />
                     <CourseCardContent
-                      className={cn(
-                        detailData?.pages[0]?.course?.remainLessonCnt ===
-                          REMAIN_CNT_ZERO && 'text-gray-300'
-                      )}
-                      progressClassName={cn(
-                        detailData?.pages[0]?.course?.remainLessonCnt ===
-                          REMAIN_CNT_ZERO && 'bg-gray-400'
-                      )}
                       totalLessonCnt={detailData?.pages[0]?.course?.totalLessonCnt}
-                      remainLessonCnt={detailData?.pages[0]?.course?.remainLessonCnt}
+                      completedLessonCnt={
+                        detailData?.pages[0]?.course?.completedLessonCnt
+                      }
+                      progressClassName={cn(
+                        detailData?.pages[0]?.course?.completedLessonCnt ===
+                          detailData?.pages[0]?.course?.totalLessonCnt && 'bg-gray-400'
+                      )}
                     />
                   </CourseCard>
-                </div>
 
-                <div className='bg-[#fff] p-7 pt-0'>
-                  <div className='flex items-center justify-center rounded-lg bg-gray-100 text-black'>
+                  <div className='mb-7 flex items-center justify-center rounded-lg bg-gray-100 text-black'>
                     <CourseSheet isOpen={isAddSheetOpen} setIsOpen={setIsAddSheetOpen}>
                       <CourseSheetTrigger
                         className={cn('h-[46px] w-[160px]', Typography.HEADING_5)}
                         disabled={
-                          detailData?.pages[0]?.course?.remainLessonCnt ===
-                          REMAIN_CNT_ZERO
+                          detailData?.pages[0]?.course?.totalLessonCnt ===
+                          detailData?.pages[0]?.course?.completedLessonCnt
                         }>
                         수업 횟수 추가
                       </CourseSheetTrigger>
@@ -338,17 +309,13 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                       </AlertDialogContent>
                     </AlertDialog>
                   </div>
-                </div>
 
-                <div className='bg-[#fff] px-7 pb-3 text-right'>
-                  <Sheet>
-                    <SheetTrigger className={cn('text-gray-700', Typography.BODY_2)}>
-                      월 선택
-                    </SheetTrigger>
-                    <SheetContent side='bottom'>
-                      <SheetHeader>월 선택하기</SheetHeader>
-                    </SheetContent>
-                  </Sheet>
+                  <div className='flex justify-end'>
+                    <MonthPicker
+                      date={searchMonth}
+                      onChangeDate={(newDate) => setSearchMonth(newDate)}
+                    />
+                  </div>
                 </div>
 
                 <ul className='bg-gray-100'>
@@ -359,14 +326,14 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
 
                       return (
                         <li className='px-7 py-8' key={item.courseHistoryId}>
-                          <p className='typography-body-4 text-gray-500'>
+                          <p className={cn(Typography.BODY_4_MEDIUM, 'text-gray-500')}>
                             {formattedDate}
                           </p>
                           <dl className='flex items-center justify-between'>
-                            <dt className='typography-title-3 text-gray-700'>
+                            <dt className={cn(Typography.TITLE_3, 'text-gray-700')}>
                               {courseHistoryCodeDescription[item.type]}
                             </dt>
-                            <dd className='typography-title-3 text-black'>
+                            <dd className={cn(Typography.TITLE_3, 'text-black')}>
                               {item.calculation === 'PLUS' ? '+' : '-'}
                               {item.cnt}
                             </dd>
@@ -377,7 +344,8 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                   })}
                 </ul>
 
-                {detailData?.pages[0].courseHistories.length === ITEMS_PER_PAGE &&
+                {detailData?.pages[0].courseHistories !== null &&
+                  detailData?.pages[0].courseHistories.length === ITEMS_PER_PAGE &&
                   hasNextPage && (
                     <div ref={ref} className='h-[20px] p-3 text-center'>
                       loading...
@@ -403,13 +371,13 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                     <CourseSheetContent>
                       <CourseSheetHeader>등록할 수업횟수</CourseSheetHeader>
                       <CourseSheetInput
-                        courseInput={RegisterInput}
+                        courseInput={registerInput}
                         setCourseInput={setRegisterInput}
                         isOpen={isRegisterSheetOpen}
                       />
                       <CourseSheetFooter
-                        courseInput={RegisterInput}
-                        clickButtonHandler={RegisterCourseCount}>
+                        courseInput={registerInput}
+                        clickButtonHandler={registerCourseCount}>
                         수강권 등록
                       </CourseSheetFooter>
                     </CourseSheetContent>

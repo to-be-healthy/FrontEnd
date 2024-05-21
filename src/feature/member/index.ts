@@ -28,6 +28,7 @@ export type {
   StudentCourse,
   StudentDetail,
   StudentPoint,
+  StudentRank,
 } from './model/types';
 export { AddStudentDialog } from './ui/AddStudentDialog';
 export { CourseCard, CourseCardContent, CourseCardHeader } from './ui/CourseCard';
