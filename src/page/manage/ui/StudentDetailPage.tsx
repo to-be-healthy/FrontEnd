@@ -1,26 +1,16 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { CourseCard, CourseCardContent, CourseCardHeader } from '@/feature/member';
 import {
-  CourseSheet,
-  CourseSheetContent,
-  CourseSheetFooter,
-  CourseSheetHeader,
-  CourseSheetInput,
-  CourseSheetTrigger,
-} from '@/feature/manage';
-import {
-  CourseCard,
-  CourseCardContent,
-  CourseCardHeader,
-  useRegisterStudentCourseMutation,
-} from '@/feature/member';
-import { IconCheck } from '@/shared/assets';
+  IconArrowDown,
+  IconArrowFilledDown,
+  IconArrowFilledUp,
+  IconPoint,
+} from '@/shared/assets';
 import IconArrowRight from '@/shared/assets/images/icon_arrow_right.svg';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconCalendar from '@/shared/assets/images/icon_calendar_blue.svg';
@@ -30,7 +20,16 @@ import IconDumbel from '@/shared/assets/images/icon_dumbel.svg';
 import IconEdit from '@/shared/assets/images/icon_edit.svg';
 import IconPhone from '@/shared/assets/images/icon_phone.svg';
 import { Typography } from '@/shared/mixin';
-import { Button, Card, CardContent, CardHeader, Layout, useToast } from '@/shared/ui';
+import {
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+  Layout,
+} from '@/shared/ui';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -47,73 +46,31 @@ interface Props {
   memberId: number;
 }
 
-const REMAIN_CNT_ZERO = 0;
-
 export const StudentDetailPage = ({ memberId }: Props) => {
-  const router = useRouter();
-  const { toast } = useToast();
   const { memberInfo } = useStudentInfo(memberId);
-  const { mutate: RegisterMutation } = useRegisterStudentCourseMutation();
-
-  const queryClient = useQueryClient();
-  const [isRegisterSheetOpen, setIsRegisterSheetOpen] = useState(false);
-  const [RegisterInput, setRegisterInput] = useState('');
-
-  const RegisterCourseCount = () => {
-    RegisterMutation(
-      {
-        memberId,
-        lessonCnt: Number(RegisterInput),
-      },
-      {
-        onSuccess: (reslut) => {
-          setIsRegisterSheetOpen(false);
-          void queryClient.invalidateQueries({
-            queryKey: ['registeredStudent'],
-          });
-          return toast({
-            className: 'h-12',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} />
-                <p className='typography-heading-5 ml-6 text-[#fff]'>{reslut.message}</p>
-              </div>
-            ),
-            duration: 2000,
-          });
-        },
-        onError: (error) => {
-          return toast({
-            className: 'h-12',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} />
-                <p className='typography-heading-5 ml-6 text-[#fff]'>
-                  {error.response?.data.message}
-                </p>
-              </div>
-            ),
-            duration: 2000,
-          });
-        },
-      }
-    );
-  };
 
   const deleteStudent = () => {
     console.log('Delete Member', memberId);
+  };
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleArrow = () => {
+    setIsOpen((prev) => !prev);
   };
 
   return (
     <Layout>
       <Layout.Header>
-        <Button
-          variant='ghost'
-          size='icon'
-          onClick={() => router.replace('/trainer/manage')}>
+        <Link href='/trainer/manage'>
           <IconBack />
-        </Button>
-        <h2 className={Typography.HEADING_4_SEMIBOLD}>회원 정보</h2>
+        </Link>
+        <h2
+          className={cn(
+            Typography.HEADING_4_SEMIBOLD,
+            'absolute left-1/2 translate-x-[-50%] text-[$000]'
+          )}>
+          회원 정보
+        </h2>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button
@@ -142,8 +99,8 @@ export const StudentDetailPage = ({ memberId }: Props) => {
         </DropdownMenu>
       </Layout.Header>
       {memberInfo && (
-        <Layout.Contents className='px-[20px]'>
-          <div className='flex w-full items-center gap-x-[24px]  py-[24px]'>
+        <Layout.Contents className='p-7 pt-8'>
+          <div className='mb-6 flex w-full items-center gap-x-[24px]'>
             {memberInfo.fileUrl ? (
               <Image
                 width={80}
@@ -177,7 +134,8 @@ export const StudentDetailPage = ({ memberId }: Props) => {
               </div>
             </div>
           </div>
-          <div className='mb-[16px] flex items-center justify-center gap-x-[8px] '>
+
+          <div className='flex items-center justify-center gap-x-[8px]'>
             <Card className='mb-[16px] flex w-full flex-row items-center justify-between gap-y-[28px] px-[24px] py-[12px] shadow-sm'>
               <Link
                 href={'#'}
@@ -207,73 +165,187 @@ export const StudentDetailPage = ({ memberId }: Props) => {
               </Link>
             </Card>
           </div>
+
           {/* 수강권 있는 경우 */}
           {memberInfo.course && (
+            <CourseCard
+              className='mb-6'
+              expiration={
+                memberInfo.course?.completedLessonCnt ===
+                memberInfo.course?.totalLessonCnt
+              }>
+              <Link
+                href={{
+                  pathname: `/trainer/manage/${memberId}/course-detail`,
+                  query: { name: memberInfo.name },
+                }}>
+                <CourseCardHeader
+                  gymName={memberInfo.gym.name}
+                  totalLessonCnt={memberInfo.course?.totalLessonCnt}
+                  remainLessonCnt={memberInfo.course?.remainLessonCnt}
+                  completedLessonCnt={memberInfo.course?.completedLessonCnt}
+                />
+                <CourseCardContent
+                  progressClassName={cn(
+                    memberInfo.course?.completedLessonCnt ===
+                      memberInfo.course?.totalLessonCnt && 'bg-gray-400'
+                  )}
+                  totalLessonCnt={memberInfo.course?.totalLessonCnt}
+                  completedLessonCnt={memberInfo.course?.completedLessonCnt}
+                />
+              </Link>
+              {memberInfo?.course.remainLessonCnt > 0 ? (
+                <Collapsible className='rounded-bl-lg rounded-br-lg bg-primary-600'>
+                  <CollapsibleTrigger className='w-full text-white' onClick={toggleArrow}>
+                    <div className='flex items-center justify-between p-6'>
+                      <p className={cn(Typography.HEADING_5)}>
+                        {memberInfo?.point.searchDate.split('-')[1].split('')[1]}월 활동
+                        포인트
+                      </p>
+                      <div
+                        className={cn(
+                          Typography.TITLE_1,
+                          'flex items-center justify-center'
+                        )}>
+                        {isOpen ? (
+                          <IconArrowDown widht={14} height={14} className='rotate-180' />
+                        ) : (
+                          <>
+                            <p className='mr-2 flex items-center justify-center'>
+                              <IconPoint />
+                              <span className='ml-[3px]'>
+                                {memberInfo?.point.monthPoint}
+                              </span>
+                            </p>
+                            <IconArrowDown widht={14} height={14} />
+                          </>
+                        )}
+                      </div>
+                    </div>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent className='p-6 pt-3'>
+                    <ul className='flex'>
+                      <li className='w-[130px]'>
+                        {/* todo:링크 회원 트레이너 공통으로 써야함 api 완료후 작업예정 */}
+                        <Link href='./student/point-history'>
+                          <Card className='h-full w-full gap-y-7 p-6'>
+                            <CardHeader>
+                              <p
+                                className={cn(
+                                  Typography.HEADING_5,
+                                  'flex items-center justify-start text-black'
+                                )}>
+                                <IconPoint />
+                                이번달 포인트
+                              </p>
+                            </CardHeader>
+                            <CardContent>
+                              <p
+                                className={cn(
+                                  Typography.HEADING_2,
+                                  'mb-7 flex items-center text-black'
+                                )}>
+                                {memberInfo?.point.monthPoint}
+                                <span
+                                  className={cn(
+                                    Typography.HEADING_5,
+                                    'ml-[2px] text-gray-700'
+                                  )}>
+                                  점
+                                </span>
+                              </p>
+                              <span className={cn(Typography.BODY_4, 'text-gray-400')}>
+                                누적 {memberInfo?.point.totalPoint}
+                              </span>
+                            </CardContent>
+                          </Card>
+                        </Link>
+                      </li>
+                      <li className='ml-3 w-[130px]'>
+                        <Card className='h-full w-full gap-y-7 p-6'>
+                          <CardHeader>
+                            <p
+                              className={cn(
+                                Typography.HEADING_5,
+                                'flex items-center justify-start text-black'
+                              )}>
+                              랭킹
+                            </p>
+                          </CardHeader>
+                          <CardContent>
+                            <p
+                              className={cn(
+                                Typography.HEADING_2,
+                                'mb-7 flex items-center text-black'
+                              )}>
+                              {memberInfo?.rank.ranking}
+                              <span
+                                className={cn(
+                                  Typography.HEADING_5,
+                                  'ml-[2px] mr-1 text-gray-700'
+                                )}>
+                                위
+                              </span>
+                              {memberInfo?.rank?.ranking ===
+                              memberInfo?.rank?.lastMonthRanking ? (
+                                ''
+                              ) : memberInfo?.rank &&
+                                memberInfo?.rank.ranking >
+                                  memberInfo?.rank.lastMonthRanking ? (
+                                <IconArrowFilledDown fill='var(--primary-500)' />
+                              ) : (
+                                <IconArrowFilledUp fill='var(--point-color)' />
+                              )}
+                            </p>
+                            <span className={cn(Typography.BODY_4, 'text-gray-400')}>
+                              총 {memberInfo?.rank.totalMemberCnt}명
+                            </span>
+                          </CardContent>
+                        </Card>
+                      </li>
+                    </ul>
+                  </CollapsibleContent>
+                </Collapsible>
+              ) : (
+                <div className='w-full rounded-bl-lg rounded-br-lg bg-gray-400 text-white'>
+                  <div className='flex items-center justify-between p-6'>
+                    <p className={cn(Typography.HEADING_5)}>
+                      {memberInfo?.point.searchDate.split('-')[1].split('')[1]}월 활동
+                      포인트
+                    </p>
+                    <div
+                      className={cn(
+                        Typography.TITLE_1,
+                        'flex items-center justify-center'
+                      )}>
+                      <p className='mr-2 flex items-center justify-center'>
+                        <IconPoint />
+                        <span className='ml-[3px]'>{memberInfo?.point.monthPoint}</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </CourseCard>
+          )}
+
+          {/* 수강권 없는 경우 */}
+          {!memberInfo.course && (
             <Link
               href={{
                 pathname: `/trainer/manage/${memberId}/course-detail`,
                 query: { name: memberInfo.name },
               }}>
-              <CourseCard
-                key={memberInfo.course?.courseId}
+              <Card
                 className={cn(
-                  'mb-6 gap-y-11',
-                  memberInfo.course?.remainLessonCnt === REMAIN_CNT_ZERO && 'bg-gray-500'
+                  Typography.TITLE_3,
+                  'mb-6 flex h-[127px] w-full items-center justify-center rounded-lg bg-gray-500 text-white'
                 )}>
-                <CourseCardHeader
-                  // gymName={memberInfo.}
-                  gymName='건강해짐홍대점~~~~~~~~~~~~~~~~~~~~~~~~~~~' //todo:현재 헬스장 이름 안보내줌
-                  remainLessonCnt={memberInfo.course?.remainLessonCnt}
-                  totalLessonCnt={memberInfo.course?.totalLessonCnt}
-                  expiration={memberInfo.course?.remainLessonCnt === 0}
-                />
-                <CourseCardContent
-                  className={cn(
-                    memberInfo.course?.remainLessonCnt === REMAIN_CNT_ZERO &&
-                      'text-gray-300'
-                  )}
-                  progressClassName={cn(
-                    memberInfo.course?.remainLessonCnt === REMAIN_CNT_ZERO &&
-                      'bg-gray-400'
-                  )}
-                  totalLessonCnt={memberInfo.course?.totalLessonCnt}
-                  remainLessonCnt={memberInfo.course?.remainLessonCnt}
-                />
-              </CourseCard>
+                현재 등록된 수강권이 없습니다.
+              </Card>
             </Link>
           )}
-          {/* 수강권 없는 경우 */}
-          {!memberInfo.course && (
-            <Card className='mb-6 flex w-full items-center justify-center bg-gray-500 py-[32px]'>
-              <p className={cn('mb-2 text-[#fff]', Typography.TITLE_3)}>
-                등록된 수강권이 없습니다.
-              </p>
-              <CourseSheet
-                isOpen={isRegisterSheetOpen}
-                setIsOpen={setIsRegisterSheetOpen}>
-                <CourseSheetTrigger
-                  className={cn(
-                    'flex h-[37px] w-[112px] items-center justify-center rounded-[9999px] border border-[#fff] bg-gray-500 text-[#fff]',
-                    Typography.TITLE_3
-                  )}>
-                  수강권 등록
-                </CourseSheetTrigger>
-                <CourseSheetContent>
-                  <CourseSheetHeader>등록할 수업횟수</CourseSheetHeader>
-                  <CourseSheetInput
-                    courseInput={RegisterInput}
-                    setCourseInput={setRegisterInput}
-                    isOpen={isRegisterSheetOpen}
-                  />
-                  <CourseSheetFooter
-                    courseInput={RegisterInput}
-                    clickButtonHandler={RegisterCourseCount}>
-                    수강권 등록
-                  </CourseSheetFooter>
-                </CourseSheetContent>
-              </CourseSheet>
-            </Card>
-          )}
+
           {memberInfo.diet !== null && (
             <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
               <CardHeader className='flex items-center justify-between text-gray-800'>
@@ -289,6 +361,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
               </CardContent>
             </Card>
           )}
+
           {memberInfo.diet === null && (
             <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
               <CardHeader className='flex items-center justify-between text-gray-800'>
@@ -304,6 +377,7 @@ export const StudentDetailPage = ({ memberId }: Props) => {
               </CardHeader>
             </Card>
           )}
+
           <Card className='w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
             <CardHeader className='flex items-center justify-between'>
               <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>개인 운동 기록</h4>

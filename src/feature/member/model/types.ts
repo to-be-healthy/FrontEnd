@@ -56,6 +56,9 @@ interface StudentDetail {
   lessonStartTime: string | null;
   diet: DailyDiet | null;
   course: CourseItem | null;
+  point: StudentPoint;
+  rank: StudentRank;
+  gym: Gym;
 }
 
 interface AppendMemberForm {
@@ -71,6 +74,7 @@ interface CourseItem {
   courseId: number;
   totalLessonCnt: number;
   remainLessonCnt: number;
+  completedLessonCnt: number;
   createdAt: string;
 }
 
@@ -102,6 +106,11 @@ interface StudentPoint {
   searchDate: string;
   pointHistories: null | pointHistoryType[];
 }
+interface StudentRank {
+  ranking: number;
+  totalMemberCnt: number;
+  lastMonthRanking: number;
+}
 
 interface Diet {
   dietId: number;
@@ -118,7 +127,7 @@ interface Diet {
     memberType: 'STUDENT' | 'TRAINER';
     pushAlarmStatus: null | 'ENABLED' | 'DISABLE';
     feedbackAlarmStatus: null | 'ENABLED' | 'DISABLE';
-    gym: null | { id: number; name: string };
+    gym: null | Gym;
     socialType: ['NONE', 'KAKAO', 'NAVER', 'GOOGLE'];
   };
   likeCnt: number;
@@ -164,4 +173,5 @@ export type {
   StudentCourse,
   StudentDetail,
   StudentPoint,
+  StudentRank,
 };

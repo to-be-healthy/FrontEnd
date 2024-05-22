@@ -4,16 +4,12 @@ import { authApi } from '@/entity/auth';
 import { Gym } from '@/entity/gym';
 import { BaseError, BaseResponse } from '@/shared/api';
 
-import { CourseItem, Diet, StudentPoint } from '../model/types';
+import { CourseItem, Diet, StudentPoint, StudentRank } from '../model/types';
 
 interface HomeDataResponse {
   course: CourseItem;
   point: StudentPoint;
-  rank: {
-    ranking: number;
-    totalMemberCnt: number;
-    lastMonthRanking: number;
-  };
+  rank: StudentRank;
   myReservation: {
     scheduleId: number;
     lessonDt: string;
@@ -38,8 +34,8 @@ interface HomeDataResponse {
   };
   diet: Diet;
   gym: Gym;
-  mapped: boolean;
 }
+
 export const useStudentHomeDataQuery = () => {
   return useQuery<HomeDataResponse, BaseError>({
     queryKey: ['StudentHomeData'],

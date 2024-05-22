@@ -70,7 +70,6 @@ export const StudentMyPointDetailPage = () => {
         ) : (
           <>
             <div className='bg-[#fff] p-7 pb-[36px] pt-6'>
-              {/* 어떻게쓰는거임..? */}
               <MonthPicker
                 date={searchMonth}
                 onChangeDate={(newDate) => setSearchMonth(newDate)}
@@ -134,8 +133,8 @@ export const StudentMyPointDetailPage = () => {
                       Typography.TITLE_1_BOLD,
                       'flex flex-col items-center justify-center py-28 text-gray-700'
                     )}>
-                    <span className='mb-5'>
-                      <IconNotification width={33} height={33} stroke='var(--gray-500)' />
+                    <span className='mb-5 w-[35px]'>
+                      <IconNotification width={33} height={33} stroke='var(--gray-300)' />
                     </span>
                     포인트 내역이 없습니다.
                   </li>

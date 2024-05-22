@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { HTMLAttributes } from 'react';
 
+import { useCheckTrainerMemberMappingQuery } from '@/feature/schedule/api/useCheckTrainerMemberMappingQuery';
 import {
   IconCalendarFilled,
   IconCalendarOutlined,
@@ -15,6 +16,9 @@ import {
   IconProfileOutlined,
 } from '@/shared/assets';
 import { cn } from '@/shared/utils';
+
+import { useShowErrorToast } from '../hooks';
+import { Button } from './button';
 
 const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
   const pathname = usePathname();
@@ -78,6 +82,24 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
 
 const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const showErrorToast = useShowErrorToast();
+  const { refetch } = useCheckTrainerMemberMappingQuery();
+
+  const clickCheckMappedTrainer = async () => {
+    try {
+      const newData = await refetch();
+      if (newData.data?.mapped) {
+        router.replace('/student/schedule');
+      } else {
+        showErrorToast('트레이너가 지정된 후에 예약 가능합니다');
+      }
+    } catch (error: any) {
+      showErrorToast('트레이너가 지정된 후에 예약 가능합니다');
+    }
+  };
+
   return (
     <nav className={cn('bg-white', className)} {...props}>
       <ul className='flex items-center justify-between px-[36px] py-[18px]'>
@@ -96,10 +118,10 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
           </Link>
         </li>
         <li>
-          {/* todo: 수강권 없을시 스케줄메뉴 비활성화 */}
-          <Link
-            href='/student/schedule'
-            className='flex flex-col items-center justify-between gap-y-[6px]'>
+          <Button
+            variant='ghost'
+            onClick={clickCheckMappedTrainer}
+            className='flex flex-col items-center justify-between gap-y-[6px] p-0 leading-[15px]'>
             {pathname === '/student/schedule' ? (
               <IconCalendarFilled />
             ) : (
@@ -110,9 +132,9 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
                 'text-[10px] font-semibold',
                 pathname === '/student/schedule' ? 'text-black' : 'text-gray-700'
               )}>
-              스케줄
+              수업예약
             </span>
-          </Link>
+          </Button>
         </li>
         <li>
           <Link
