@@ -2,7 +2,6 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 import { ActiveModifiers } from 'react-day-picker';
 
-import { getStartOfWeek } from '@/feature/schedule';
 import { IconArrowLeft, IconArrowRight, IconClose } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {
@@ -13,7 +12,7 @@ import {
   DialogContent,
   DialogTrigger,
 } from '@/shared/ui';
-import { cn } from '@/shared/utils';
+import { cn, getStartOfWeek } from '@/shared/utils';
 dayjs.locale('ko');
 
 const DailyCalendar = ({

@@ -35,9 +35,5 @@ export const useTrainerScheduleQuery = ({
       const res = await authApi.get<BaseResponse<TrainerScheduleResponse>>(url);
       return res.data.data;
     },
-    initialData: {
-      trainerName: '',
-      schedule: null,
-    },
   });
 };

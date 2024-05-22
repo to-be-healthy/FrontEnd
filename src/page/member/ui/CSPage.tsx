@@ -8,7 +8,7 @@ import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const CSPage = () => {
-  const CS_EMAIL = 'to-be-healthy@gmail.com';
+  const CS_EMAIL = 'tobehealthy0127@gmail.com';
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText(CS_EMAIL);

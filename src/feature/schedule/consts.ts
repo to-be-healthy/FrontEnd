@@ -1,6 +1,7 @@
-const HOURS_FROM = 9;
+const HOURS_FROM = 6;
 const HOURS_TO = 24;
-const SCHEDULE_COLOR_LIST = [
+
+const SCHEDULE_ACTIVE_COLORS = [
   {
     bg: '#FFE4E5',
     border: '#FF7C80',
@@ -23,4 +24,20 @@ const SCHEDULE_COLOR_LIST = [
   },
 ];
 
-export { HOURS_FROM, HOURS_TO, SCHEDULE_COLOR_LIST };
+const SCHEDULE_AVAILABLE_COLOR = {
+  bg: '#fff',
+  border: 'transparent',
+};
+
+const SCHEDULE_NOSHOW_COLOR = {
+  bg: '#F2F3F5',
+  border: '#A7A9AE',
+};
+
+export {
+  HOURS_FROM,
+  HOURS_TO,
+  SCHEDULE_ACTIVE_COLORS,
+  SCHEDULE_AVAILABLE_COLOR,
+  SCHEDULE_NOSHOW_COLOR,
+};
