@@ -70,15 +70,6 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
               />
               <p className='typography-body-1 text-white'>일정관리</p>
             </div>
-            <div className='mx-[5px] flex w-[120px] flex-col items-center gap-y-[14px] rounded-[12px] bg-[#95EBAB] px-4 py-[17px]'>
-              <Image
-                src='/images/icon_pay.png'
-                width={80}
-                height={80}
-                alt='Slide image of money'
-              />
-              <p className='typography-body-1 text-white'>급여관리</p>
-            </div>
             <div className='mx-[5px] flex w-[120px] flex-col  items-center gap-y-[14px] rounded-[12px] bg-[#82C3FF] px-4 py-[17px]'>
               <Image
                 src='/images/icon_calendar.png'
