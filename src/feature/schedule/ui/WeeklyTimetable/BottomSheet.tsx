@@ -10,6 +10,7 @@ import {
   IconCameraPositive,
   IconDocumentProfile,
 } from '@/shared/assets';
+import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { Button, DialogClose, DialogContent, SheetContent } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -33,6 +34,8 @@ const sheetMapper = (schedule: FlatSchedule) => ({
 
 const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
   const { mutate } = useTrainerCancelReservationScheduleMutation();
+  const { showErrorToast } = useShowErrorToast();
+
   const queryClient = useQueryClient();
 
   const { date, scheduleId, applicantId } = schedule;
@@ -48,7 +51,8 @@ const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
         });
       },
       onError: (error) => {
-        console.log(error);
+        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+        showErrorToast(message);
       },
     });
   };
@@ -112,6 +116,7 @@ const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
 };
 
 const AvailableSheet = ({ schedule }: { schedule: FlatSchedule }) => {
+  const { showErrorToast } = useShowErrorToast();
   const { mutate } = useTrainerCancelReservationScheduleMutation();
   const queryClient = useQueryClient();
 
@@ -127,7 +132,8 @@ const AvailableSheet = ({ schedule }: { schedule: FlatSchedule }) => {
         });
       },
       onError: (error) => {
-        console.log(error);
+        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+        showErrorToast(message);
       },
     });
   };
@@ -178,6 +184,7 @@ const NoShowSheet = ({ schedule }: { schedule: FlatSchedule }) => {
 };
 
 const DisabledSheet = ({ schedule }: { schedule: FlatSchedule }) => {
+  const { showErrorToast } = useShowErrorToast();
   const { mutate } = useEnableScheduleMutation();
   const queryClient = useQueryClient();
 
@@ -198,7 +205,8 @@ const DisabledSheet = ({ schedule }: { schedule: FlatSchedule }) => {
         });
       },
       onError: (error) => {
-        console.log(error);
+        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+        showErrorToast(message);
       },
     });
   };

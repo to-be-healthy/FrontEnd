@@ -60,7 +60,7 @@ export const ClassTimeSettingPage = () => {
   const [isClassTimeSheetOpen, setIsClassTimeSheetOpen] = useState(false); // 수업시간 sheet
   const [classTimeState, setClassTimeState] = useState(0); //수업시간
   const [dayOff, setDayOff] = useState<DayOfWeek[]>([]); //휴무일
-  const showErrorToast = useShowErrorToast();
+  const { showErrorToast } = useShowErrorToast();
   const { toast } = useToast();
   const router = useRouter();
   const { mutate } = useTrainerClassTimeSettingMutation();

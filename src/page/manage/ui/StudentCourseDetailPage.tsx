@@ -62,7 +62,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
   const [isRegisterSheetOpen, setIsRegisterSheetOpen] = useState(false);
   const [addInput, setAddInput] = useState('');
   const [registerInput, setRegisterInput] = useState('');
-  const showErrorToast = useShowErrorToast();
+  const { showErrorToast } = useShowErrorToast();
 
   const queryClient = useQueryClient();
   const [ref, inView] = useInView({

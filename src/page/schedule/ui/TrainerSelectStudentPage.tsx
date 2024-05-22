@@ -8,12 +8,15 @@ import { StudentList } from '@/feature/manage';
 import { AddStudentDialog } from '@/feature/member';
 import { useAddScheduleMutation } from '@/feature/schedule';
 import { IconBack } from '@/shared/assets';
+import { useShowErrorToast } from '@/shared/hooks';
 import { Layout } from '@/widget';
 
 const TrainerSelectStudentPage = ({ scheduleId }: { scheduleId: number }) => {
   const router = useRouter();
   const { mutate } = useAddScheduleMutation();
   const queryClient = useQueryClient();
+
+  const { showErrorToast } = useShowErrorToast();
 
   const addSchedule = (studentId: number) => {
     mutate(
@@ -26,7 +29,8 @@ const TrainerSelectStudentPage = ({ scheduleId }: { scheduleId: number }) => {
           router.push('/trainer/schedule');
         },
         onError: (error) => {
-          console.log(error);
+          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+          showErrorToast(message);
         },
       }
     );

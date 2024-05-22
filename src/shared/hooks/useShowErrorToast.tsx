@@ -20,5 +20,5 @@ export const useShowErrorToast = () => {
     });
   };
 
-  return showErrorToast;
+  return { showErrorToast };
 };

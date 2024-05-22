@@ -83,7 +83,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
   const pathname = usePathname();
   const router = useRouter();
 
-  const showErrorToast = useShowErrorToast();
+  const { showErrorToast } = useShowErrorToast();
   const { refetch } = useCheckTrainerMemberMappingQuery();
 
   const clickCheckMappedTrainer = async () => {
