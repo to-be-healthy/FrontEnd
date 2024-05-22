@@ -84,9 +84,7 @@ const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
   }
 
   return (
-    <SheetContent
-      side='bottom'
-      className={cn('rounded-tl-lg rounded-tr-lg px-7 pb-9 pt-5')}>
+    <SheetContent side='bottom'>
       <div className='flex w-full flex-col'>
         <h3 className={cn(Typography.HEADING_3)}>{schedule.applicantName}</h3>
         <p className={cn(Typography.BODY_1, 'mt-2')}>{title}</p>
@@ -139,7 +137,7 @@ const AvailableSheet = ({ schedule }: { schedule: FlatSchedule }) => {
   };
 
   return (
-    <SheetContent side='bottom' className='rounded-tl-lg rounded-tr-lg px-7 pb-9 pt-5'>
+    <SheetContent side='bottom'>
       <div className='flex w-full flex-col'>
         <h3 className={cn(Typography.HEADING_3)}>{title}</h3>
         <div className={cn('mt-7 flex w-full justify-center gap-6')}>
@@ -174,7 +172,7 @@ const NoShowSheet = ({ schedule }: { schedule: FlatSchedule }) => {
   const title = `${dayjs(date).format('M.DD(ddd) A')} ${schedule.lessonStartTime} ~ ${schedule.lessonEndTime}`;
 
   return (
-    <SheetContent side='bottom' className='rounded-tl-lg rounded-tr-lg px-7 pb-9 pt-5'>
+    <SheetContent side='bottom'>
       <div className='flex w-full flex-col'>
         <h3 className={cn(Typography.HEADING_3)}>{title}</h3>
         <div className={cn('mt-7 flex w-full justify-center gap-6')}>No Show</div>
@@ -212,7 +210,7 @@ const DisabledSheet = ({ schedule }: { schedule: FlatSchedule }) => {
   };
 
   return (
-    <SheetContent side='bottom' className='rounded-tl-lg rounded-tr-lg px-7 pb-9 pt-5'>
+    <SheetContent side='bottom'>
       <div className='flex w-full flex-col'>
         <h3 className={cn(Typography.HEADING_3)}>{title}</h3>
         <p className={cn(Typography.BODY_1, 'mt-2 text-point')}>예약불가</p>

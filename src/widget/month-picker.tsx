@@ -1,60 +1,58 @@
 import dayjs from 'dayjs';
+dayjs.locale('ko');
+
 import { PropsWithChildren, useState } from 'react';
 
-import {
-  IconArrowLeft,
-  IconArrowRight,
-  IconClose,
-  IconTriangleDown,
-} from '@/shared/assets';
+import { IconArrowLeft, IconArrowRight, IconTriangleDown } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Button, Dialog, DialogClose, DialogContent, DialogTrigger } from '@/shared/ui';
+import { Button, Sheet, SheetClose, SheetContent, SheetTrigger } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
 interface Props {
-  date?: string;
-  onChangeDate: (date: string) => void;
+  date?: Date;
+  onChangeDate: (date: Date) => void;
 }
 
 const MonthlyCalendar = ({ date, onChangeDate }: Props) => {
   const currentYear = dayjs().format('YYYY');
   const currentMonth = dayjs().format('MM');
 
-  const [year, setYear] = useState(dayjs(date, 'YYYYMM').format('YYYY') ?? currentYear);
-  const [month, setMonth] = useState(dayjs(date, 'YYYYMM').format('M') ?? currentMonth);
+  const [year, setYear] = useState(dayjs(date).format('YYYY') ?? currentYear);
+  const [month, setMonth] = useState(dayjs(date).format('M') ?? currentMonth);
 
   const selectDate = () => {
-    const newDate = dayjs(year + month, 'YYYYM').format('YYYYMM');
+    const newDate = dayjs(year + month, 'YYYYM').toDate();
     onChangeDate(newDate);
   };
 
+  const unselectabled = year >= currentYear;
+
   return (
     <>
-      <div className='flex justify-between'>
-        <h4 className={Typography.TITLE_1_SEMIBOLD}>월 선택하기</h4>
-        <Dialog.Close>
-          <IconClose width={20} height={20} />
-        </Dialog.Close>
-      </div>
+      <h4 className={Typography.TITLE_1_SEMIBOLD}>월 선택하기</h4>
       <div className='flex justify-between'>
         <p className={cn(Typography.HEADING_4_BOLD)}>{year}년</p>
-        <div className='flex space-x-[24px]'>
+        <div className='flex space-x-8'>
           <Button
             variant='ghost'
             size='auto'
             onClick={() => {
               setYear((prev) => String(Number(prev) - 1));
             }}>
-            <IconArrowLeft stroke={'#1990FF'} />
+            <IconArrowLeft stroke={cn('var(--primary-500)')} />
           </Button>
           <Button
             variant='ghost'
             size='auto'
+            disabled={unselectabled}
+            className='disabled:bg-transparent'
             onClick={() => {
-              if (year >= currentYear) return;
+              if (unselectabled) return;
               setYear((prev) => String(Number(prev) + 1));
             }}>
-            <IconArrowRight stroke={cn(year >= currentYear ? '#86888D' : '#1990FF')} />
+            <IconArrowRight
+              stroke={cn(unselectabled ? 'var(--gray-500)' : 'var(--primary-500)')}
+            />
           </Button>
         </div>
       </div>
@@ -82,36 +80,39 @@ const MonthlyCalendar = ({ date, onChangeDate }: Props) => {
           );
         })}
       </div>
-      <DialogClose asChild>
+      <SheetClose asChild>
         <Button size='full' className={Typography.TITLE_1_BOLD} onClick={selectDate}>
           {year}년 {month}월 선택
         </Button>
-      </DialogClose>
+      </SheetClose>
     </>
   );
 };
 
+/**
+ * @description MonthlyCalendar에 Sheet를 감싸주는 컴포넌트
+ */
 const MonthPicker = ({ date, onChangeDate, children }: PropsWithChildren<Props>) => {
+  const currentDate = Date.now();
+  const selectedDate = dayjs(date ?? currentDate).format('YYYY년 M월');
+
   return (
     <div>
-      <Dialog>
-        <DialogTrigger className='flex items-center space-x-[4px] py-[16px]'>
+      <Sheet>
+        <SheetTrigger>
           {children ?? (
-            <p className={Typography.HEADING_5}>
-              {dayjs(date, 'YYYY').format('YYYY')}년 {dayjs(date, 'YYYYMM').format('MM')}
-              월
-            </p>
+            <div className='flex items-center space-x-1 py-6'>
+              <p className={Typography.HEADING_5}>{selectedDate}</p>
+              <IconTriangleDown />
+            </div>
           )}
-          <IconTriangleDown />
-        </DialogTrigger>
-        <DialogContent
-          className={cn(
-            'bottom-0 top-auto flex max-w-[var(--max-width)] translate-y-0 flex-col justify-center space-y-[24px] rounded-t-[12px] px-[20px] py-[32px]',
-            'data-[state=closed]:slide-out-to-bottom-[200%] data-[state=open]:slide-in-from-bottom-[200%]'
-          )}>
+        </SheetTrigger>
+        <SheetContent
+          side='bottom'
+          className={cn('mx-auto flex max-w-[var(--max-width)] flex-col gap-7')}>
           <MonthlyCalendar date={date} onChangeDate={onChangeDate} />
-        </DialogContent>
-      </Dialog>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 };

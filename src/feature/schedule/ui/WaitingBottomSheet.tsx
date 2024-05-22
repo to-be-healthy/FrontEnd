@@ -100,11 +100,7 @@ export const WaitingBottomSheet = ({ data, date }: Props) => {
           <span className={cn(Typography.TITLE_3, 'block text-[#00C2FF]')}>대기하기</span>
         </Button>
       </SheetTrigger>
-      <SheetContent
-        side='bottom'
-        className='rounded-tl-lg rounded-tr-lg px-7 pb-9 pt-5'
-        closeClassName='opacity-0'>
-        <div className='m-auto mb-8 h-1 w-[44px] rounded-lg bg-gray-200' />
+      <SheetContent side='bottom' headerType='thumb'>
         <SheetHeader className='mb-8 text-left'>
           <h2 className={cn(Typography.HEADING_4_BOLD, 'mb-2 text-black')}>
             이 수업 예약대기를 걸어둘까요?

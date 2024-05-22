@@ -119,6 +119,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
         <li>
           <Button
             variant='ghost'
+            size='auto'
             onClick={clickCheckMappedTrainer}
             className='flex flex-col items-center justify-between gap-y-[6px] p-0 leading-[15px]'>
             {pathname === '/student/schedule' ? (

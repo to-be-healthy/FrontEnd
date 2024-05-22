@@ -16,8 +16,7 @@ import { Layout, MonthPicker } from '@/widget';
 const ITEMS_PER_PAGE = 20;
 
 export const StudentMyCourseDetailPage = () => {
-  const date = dayjs(new Date()).format('YYYY-MM');
-  const [searchMonth, setSearchMonth] = useState<string>(date);
+  const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
   const queryClient = useQueryClient();
 
   const [ref, inView] = useInView({
@@ -29,7 +28,10 @@ export const StudentMyCourseDetailPage = () => {
     isPending,
     hasNextPage,
     fetchNextPage,
-  } = useMyCourseHistoryQuery(ITEMS_PER_PAGE, searchMonth);
+  } = useMyCourseHistoryQuery({
+    size: ITEMS_PER_PAGE,
+    searchDate: dayjs(selectedMonth).format('YYYY-MM'),
+  });
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -89,8 +91,8 @@ export const StudentMyCourseDetailPage = () => {
               )}
               <div className='mt-7 flex justify-end'>
                 <MonthPicker
-                  date={searchMonth}
-                  onChangeDate={(newDate) => setSearchMonth(newDate)}
+                  date={selectedMonth}
+                  onChangeDate={(newDate) => setSelectedMonth(newDate)}
                 />
               </div>
             </div>

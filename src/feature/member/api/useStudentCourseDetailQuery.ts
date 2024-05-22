@@ -5,12 +5,22 @@ import { BaseError, BaseResponse } from '@/shared/api';
 
 import { StudentCourse } from '../model/types';
 
-export const useStudentCourseDetailQuery = (memberId: number, size: number) => {
+interface StudentCourseDetailRequest {
+  memberId: number;
+  searchDate: string;
+  size: number;
+}
+
+export const useStudentCourseDetailQuery = ({
+  memberId,
+  searchDate,
+  size,
+}: StudentCourseDetailRequest) => {
   return useInfiniteQuery<StudentCourse, BaseError>({
-    queryKey: ['studentCourseDetail', memberId],
+    queryKey: ['studentCourseDetail', { memberId, searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentCourse>>(
-        `/api/members/v1/${memberId}/course?page=${pageParam as number}&size=${size}`
+        `/api/members/v1/${memberId}/course?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
       );
       return res.data.data;
     },

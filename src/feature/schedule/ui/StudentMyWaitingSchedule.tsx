@@ -153,12 +153,7 @@ export const StudentMyWaitingSchedule = ({ data }: Props) => {
                 </Card>
               </Button>
             </SheetTrigger>
-            <SheetContent
-              side='bottom'
-              className='rounded-tl-lg rounded-tr-lg px-7 pb-9 pt-5'
-              closeClassName='opacity-0'>
-              <div className='m-auto mb-8 h-1 w-[44px] rounded-lg bg-gray-200' />
-
+            <SheetContent side='bottom' headerType='thumb'>
               <SheetHeader className='mb-8 text-left'>
                 <h2 className={cn(Typography.HEADING_4_BOLD, 'mb-2 text-black')}>
                   대기중인 예약 정보
@@ -227,12 +222,7 @@ export const StudentMyWaitingSchedule = ({ data }: Props) => {
           </Sheet>
 
           <Sheet open={isCancelSheetOpen} onOpenChange={setIsCancelSheetOpen}>
-            <SheetContent
-              side='bottom'
-              className='rounded-tl-lg rounded-tr-lg px-7 pb-9 pt-5'
-              closeClassName='opacity-0'>
-              <div className='m-auto mb-8 h-1 w-[44px] rounded-lg bg-gray-200' />
-
+            <SheetContent side='bottom' headerType='thumb'>
               <SheetHeader className='mb-8 text-left'>
                 <h2 className={cn(Typography.HEADING_4_BOLD, 'mb-2 text-black')}>
                   대기를 취소할까요?

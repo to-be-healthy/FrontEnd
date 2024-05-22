@@ -5,9 +5,14 @@ import { BaseError, BaseResponse } from '@/shared/api';
 
 import { StudentCourse } from '../model/types';
 
-export const useMyCourseHistoryQuery = (size: number, searchDate: string) => {
+interface MyCourseHistoryRequest {
+  searchDate: string;
+  size: number;
+}
+
+export const useMyCourseHistoryQuery = ({ searchDate, size }: MyCourseHistoryRequest) => {
   return useInfiniteQuery<StudentCourse, BaseError>({
-    queryKey: ['myCourseHistory', searchDate],
+    queryKey: ['myCourseHistory', { searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentCourse>>(
         `/api/members/v1/course?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`

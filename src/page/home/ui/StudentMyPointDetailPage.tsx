@@ -20,8 +20,8 @@ import { Layout, MonthPicker } from '@/widget';
 const ITEMS_PER_PAGE = 20;
 
 export const StudentMyPointDetailPage = () => {
-  const date = dayjs(new Date()).format('YYYY-MM');
-  const [searchMonth, setSearchMonth] = useState<string>(date);
+  const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
+
   const queryClient = useQueryClient();
   const [ref, inView] = useInView({
     threshold: 0.5,
@@ -32,7 +32,10 @@ export const StudentMyPointDetailPage = () => {
     isPending,
     hasNextPage,
     fetchNextPage,
-  } = useMyPointHistoryQuery(ITEMS_PER_PAGE, searchMonth);
+  } = useMyPointHistoryQuery({
+    size: ITEMS_PER_PAGE,
+    searchDate: dayjs(selectedMonth).format('YYYY-MM'),
+  });
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -71,8 +74,8 @@ export const StudentMyPointDetailPage = () => {
           <>
             <div className='bg-[#fff] p-7 pb-[36px] pt-6'>
               <MonthPicker
-                date={searchMonth}
-                onChangeDate={(newDate) => setSearchMonth(newDate)}
+                date={selectedMonth}
+                onChangeDate={(newDate) => setSelectedMonth(newDate)}
               />
               <Card className='mb-6 w-full gap-y-1 bg-primary-500 px-6 py-7'>
                 <CardHeader className='flex items-center justify-between'>
