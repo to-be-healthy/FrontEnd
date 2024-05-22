@@ -6,8 +6,9 @@ import { useState } from 'react';
 
 import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Button, Input, Layout } from '@/shared/ui';
+import { Button, Input } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 const EditPasswordPage = () => {
   const router = useRouter();

@@ -15,7 +15,7 @@ import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconChat from '@/shared/assets/images/icon_chat.svg';
 import IconNoSchedule from '@/shared/assets/images/icon_no_schedule.svg';
 import { Typography } from '@/shared/mixin';
-import { Card, CardContent, CardFooter, CardHeader, Layout } from '@/shared/ui';
+import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import {
   Carousel,
   CarouselContent,
@@ -23,7 +23,7 @@ import {
   CarouselNav,
 } from '@/shared/ui/carousel';
 import { cn } from '@/shared/utils';
-import { MonthPicker } from '@/widget/month-picker';
+import { Layout, MonthPicker } from '@/widget';
 
 interface Props {
   memberId: number;

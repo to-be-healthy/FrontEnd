@@ -2,30 +2,33 @@
 import 'swiper/css';
 import './swiper.css';
 
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
 import { useRouter } from 'next/navigation';
-import { MouseEvent, ReactNode, useState } from 'react';
+import { MouseEvent, useEffect, useState } from 'react';
 
 import {
-  ClassTimeOptions,
+  ClassTimeSettingData,
   DayOfWeek,
   useTrainerClassTimeSettingMutation,
 } from '@/feature/schedule';
+import { useGetTrainerClassTimeSettingQuery } from '@/feature/schedule/api/useGetTrainerClassTimeSettingQuery';
 import { IconCheck } from '@/shared/assets';
-import ErrorIcon from '@/shared/assets/images/icon_error.svg';
-import NoCircleCheckIcon from '@/shared/assets/images/noCircleCheck.svg';
+import IconNoCircleCheck from '@/shared/assets/images/noCircleCheck.svg';
+import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button, Layout, Sheet, SheetContent, SheetTrigger, useToast } from '@/shared/ui';
+import { Button, Sheet, SheetContent, SheetTrigger, useToast } from '@/shared/ui';
 import { TimeSwiper } from '@/shared/ui/time-swiper';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
-type TimeSettings = 'startTime' | 'endTime' | 'lunchStartTime' | 'lunchEndTime';
-type Time = '30분' | '1시간' | '1시간 30분' | '2시간';
-
-interface ClassTimeType {
-  time: Time;
-  name: ClassTimeOptions;
-  checked: boolean;
-}
+type TimeSettings =
+  | 'lessonStartTime'
+  | 'lessonEndTime'
+  | 'lunchStartTime'
+  | 'lunchEndTime';
 
 interface TimeListType {
   name: TimeSettings;
@@ -45,112 +48,119 @@ const dayOfWeekMap: Record<DayOfWeek, string> = {
   SUNDAY: '일',
 };
 
-const classTime: ClassTimeType[] = [
-  { time: '30분', name: 'HALF_HOUR', checked: false },
-  { time: '1시간', name: 'ONE_HOUR', checked: true },
-  { time: '1시간 30분', name: 'ONE_AND_HALF_HOUR', checked: false },
-  { time: '2시간', name: 'TWO_HOUR', checked: false },
-];
-
+const classTime = [30, 60, 90, 120];
 const timePeriods = ['오전', '오후'];
 const hours = Array.from({ length: 12 }, (_, i) => String(i + 1));
 const minutes = Array.from({ length: 60 }, (_, i) => (i < 10 ? `0${i}` : String(i)));
 
 export const ClassTimeSettingPage = () => {
-  const [timeList, setTimeList] = useState<TimeListType[]>([
-    { name: 'startTime', timePeriods: '오전', hours: '9', minutes: '00', state: false },
-    { name: 'endTime', timePeriods: '오후', hours: '6', minutes: '00', state: false },
-    {
-      name: 'lunchStartTime',
-      timePeriods: '오후',
-      hours: '1',
-      minutes: '00',
-      state: false,
-    },
-    {
-      name: 'lunchEndTime',
-      timePeriods: '오후',
-      hours: '2',
-      minutes: '00',
-      state: false,
-    },
-  ]);
+  const { data: classTimeData } = useGetTrainerClassTimeSettingQuery();
+  const [timeList, setTimeList] = useState<TimeListType[]>([]);
   const [isLunchTimeUnset, setIsLunchTimeUnset] = useState(false); //점심시간 설정 체크 유무
   const [isClassTimeSheetOpen, setIsClassTimeSheetOpen] = useState(false); // 수업시간 sheet
-  const [classTimeState, setClassTimeState] = useState(classTime); //수업시간
+  const [classTimeState, setClassTimeState] = useState(0); //수업시간
   const [dayOff, setDayOff] = useState<DayOfWeek[]>([]); //휴무일
-
+  const showErrorToast = useShowErrorToast();
   const { toast } = useToast();
   const router = useRouter();
-
   const { mutate } = useTrainerClassTimeSettingMutation();
 
-  const timeExtractor = (timeStr: string) => timeStr.split(':')[0];
-  const isValidTime = (startHour: string, endHour: string) => {
-    return Number(startHour) < Number(endHour);
-  };
-
   const formatTo24HourTime = (timeList: TimeListType) => {
-    if (timeList.timePeriods === '오후' && timeList.hours !== '12') {
-      return `${Number(timeList.hours) + 12}:${timeList.minutes}`;
-    } else if (timeList.timePeriods === '오전' && timeList.hours === '12') {
-      return `00:${timeList.minutes}`;
-    } else if (timeList.timePeriods === '오전') {
-      return Number(timeList.hours) < 10
-        ? `0${timeList.hours}:${timeList.minutes}`
-        : `${timeList.hours}:${timeList.minutes}`;
-    } else {
-      return `${timeList.hours}:${timeList.minutes}`;
+    const isPM = timeList.timePeriods === '오후';
+    const timeString = `${timeList.hours}:${timeList.minutes}`;
+    let formattedTime = dayjs(timeString, 'h:mm');
+
+    if (
+      (isPM && Number(timeList.hours) !== 12) ||
+      (!isPM && Number(timeList.hours) === 12)
+    ) {
+      formattedTime = formattedTime.add(12, 'h');
     }
+    return formattedTime.format('HH:mm');
   };
 
-  const showMessage = (icon: ReactNode, message: string) => {
-    toast({
-      className: 'py-5 px-6',
-      description: (
-        <div className='flex items-center justify-center'>
-          {icon}
-          <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
-        </div>
-      ),
-      duration: 2000,
-    });
+  const formatTimeTo12Hour = (timeString: string) => {
+    if (!timeString) return '';
+    const formattedTime = dayjs(timeString, 'HH:mm').format('A h:mm');
+    const [periodKor, timeRest] = formattedTime.split(' ');
+
+    return [periodKor, ...timeRest.split(':')];
+  };
+
+  const convertTimeData = (classTimeData: ClassTimeSettingData) => {
+    return {
+      lessonStartTime: formatTimeTo12Hour(classTimeData?.lessonStartTime),
+      lessonEndTime: formatTimeTo12Hour(classTimeData?.lessonEndTime),
+      lunchStartTime: formatTimeTo12Hour(classTimeData?.lunchStartTime),
+      lunchEndTime: formatTimeTo12Hour(classTimeData?.lunchEndTime),
+    };
+  };
+
+  const isValidTime = (startTime: string, endTime: string) => {
+    const start = dayjs(startTime, 'HH:mm');
+    const end = dayjs(endTime, 'HH:mm');
+
+    return start.isSame(end) ? false : dayjs(start).isBefore(end);
   };
 
   const handleSetClassTime = (e: MouseEvent<HTMLButtonElement>, skip?: boolean) => {
     e.preventDefault();
 
-    const selectedClass = classTimeState.filter((item) => item.checked)[0].name;
-    const selectedTimeList = timeList.map((_, index) => {
-      return formatTo24HourTime(timeList[index]);
-    });
-
-    const [startHour, endHour, lunchStartHour, lunchEndHour] =
-      selectedTimeList.map(timeExtractor);
-
-    if (!isValidTime(startHour, endHour) || !isValidTime(lunchStartHour, lunchEndHour)) {
-      return showMessage(<ErrorIcon />, '시작 시간은 종료 시간보다 빨라야 합니다');
-    }
-
-    const settings = {
-      startTime: skip ? '09:00' : selectedTimeList[0],
-      endTime: skip ? '18:00' : selectedTimeList[1],
-      lunchStartTime: skip ? '13:00' : isLunchTimeUnset ? '' : selectedTimeList[2],
-      lunchEndTime: skip ? '14:00' : isLunchTimeUnset ? '' : selectedTimeList[3],
-      closedDt: skip ? [] : dayOff,
-      sessionTime: skip ? 'ONE_HOUR' : selectedClass,
-    };
-
-    if (selectedClass && selectedTimeList) {
-      mutate(settings, {
+    const registrationData = (data: ClassTimeSettingData) => {
+      mutate(data, {
         onSuccess: ({ message }) => {
-          showMessage(<IconCheck fill={'var(--primary-500)'} />, message);
+          toast({
+            className: 'py-5 px-6',
+            description: (
+              <div className='flex items-center justify-center'>
+                <IconCheck fill={'var(--primary-500)'} />
+                <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
+              </div>
+            ),
+            duration: 2000,
+          });
           router.push('/trainer');
         },
         onError: (error) => {
-          showMessage(<ErrorIcon />, error.response?.data?.message ?? 'Unknown error');
+          showErrorToast(error.response?.data?.message ?? 'Unknown error');
         },
       });
+    };
+
+    if (skip) {
+      const defaultData = {
+        lessonStartTime: '10:00',
+        lessonEndTime: '20:00',
+        lunchStartTime: '12:00',
+        lunchEndTime: '13:00',
+        closedDays: [],
+        lessonTime: 60,
+      };
+
+      registrationData(defaultData);
+    }
+
+    const selectedTimeList = timeList.map((list) => formatTo24HourTime(list));
+
+    if (!skip) {
+      if (
+        !isValidTime(selectedTimeList[0], selectedTimeList[1]) ||
+        !isValidTime(selectedTimeList[2], selectedTimeList[3])
+      ) {
+        return showErrorToast('시작 시간은 종료 시간보다 빨라야 합니다');
+      }
+
+      if (classTimeState && selectedTimeList) {
+        const settings = {
+          lessonStartTime: selectedTimeList[0],
+          lessonEndTime: selectedTimeList[1],
+          lunchStartTime: isLunchTimeUnset ? '' : selectedTimeList[2],
+          lunchEndTime: isLunchTimeUnset ? '' : selectedTimeList[3],
+          closedDays: dayOff,
+          lessonTime: classTimeState,
+        };
+        registrationData(settings);
+      }
     }
   };
 
@@ -195,12 +205,8 @@ export const ClassTimeSettingPage = () => {
   };
 
   //수업시간 선택
-  const selectedClassTime = (selectedTime: Time) => {
-    const updatedTimes = classTimeState.map((item) => ({
-      ...item,
-      checked: item.time === selectedTime,
-    }));
-    setClassTimeState(updatedTimes);
+  const selectedClassTime = (selectedTime: number) => {
+    setClassTimeState(selectedTime);
     setIsClassTimeSheetOpen(false);
   };
 
@@ -212,6 +218,59 @@ export const ClassTimeSettingPage = () => {
       setDayOff([...dayOff, day]);
     }
   };
+
+  useEffect(() => {
+    if (classTimeData) {
+      const settingTimeData = convertTimeData(classTimeData);
+
+      const newTimeList: TimeListType[] = [
+        {
+          name: 'lessonStartTime',
+          timePeriods: settingTimeData?.lessonStartTime[0],
+          hours: settingTimeData?.lessonStartTime[1],
+          minutes: settingTimeData?.lessonStartTime[2],
+          state: false,
+        },
+        {
+          name: 'lessonEndTime',
+          timePeriods: settingTimeData?.lessonEndTime[0],
+          hours: settingTimeData?.lessonEndTime[1],
+          minutes: settingTimeData?.lessonEndTime[2],
+          state: false,
+        },
+        {
+          name: 'lunchStartTime',
+          timePeriods: !settingTimeData.lunchStartTime
+            ? '오후'
+            : settingTimeData?.lunchStartTime[0],
+          hours: !settingTimeData.lunchStartTime
+            ? '12'
+            : settingTimeData?.lunchStartTime[1],
+          minutes: !settingTimeData.lunchStartTime
+            ? '00'
+            : settingTimeData?.lunchStartTime[2],
+          state: false,
+        },
+        {
+          name: 'lunchEndTime',
+          timePeriods: !settingTimeData.lunchEndTime
+            ? '오후'
+            : settingTimeData?.lunchEndTime[0],
+          hours: !settingTimeData.lunchEndTime ? '1' : settingTimeData?.lunchEndTime[1],
+          minutes: !settingTimeData.lunchEndTime
+            ? '00'
+            : settingTimeData?.lunchEndTime[2],
+          state: false,
+        },
+      ];
+      setTimeList(newTimeList);
+      setClassTimeState(classTimeData.lessonTime);
+      setDayOff(classTimeData.closedDays);
+      setIsLunchTimeUnset(
+        classTimeData.lunchStartTime === null && classTimeData.lunchEndTime === null
+      );
+    }
+  }, [classTimeData]);
 
   return (
     <Layout>
@@ -238,229 +297,241 @@ export const ClassTimeSettingPage = () => {
             </p>
           </article>
 
-          <article className='border-b border-solid border-gray-100 pb-[28px]'>
-            <dl className='flex items-center justify-between'>
-              <dt className={cn(Typography.TITLE_1_BOLD, 'text-black')}>근무 시간</dt>
-              <dd>
-                <Button
-                  className={cn(
-                    Typography.BODY_2,
-                    'w-[89px] rounded-md bg-gray-100 py-4 text-black'
-                  )}
-                  onClick={() => openTimePicker('startTime')}>
-                  {`${timeList[0].timePeriods} ${timeList[0].hours}:${timeList[0].minutes}`}
-                </Button>
-                <span className={cn(Typography.BODY_1, 'mx-1')}>~</span>
-                <Button
-                  className={cn(
-                    Typography.BODY_2,
-                    'w-[89px] rounded-md bg-gray-100 py-4 text-black'
-                  )}
-                  onClick={() => openTimePicker('endTime')}>
-                  {`${timeList[1].timePeriods} ${timeList[1].hours}:${timeList[1].minutes}`}
-                </Button>
-              </dd>
-            </dl>
-
-            {timeList.map((timeSetting, idx) =>
-              (timeSetting.name === 'startTime' && timeSetting.state) ||
-              (timeSetting.name === 'endTime' && timeSetting.state) ? (
-                <div
-                  className='relative mt-[28px] flex items-center justify-center'
-                  key={`${timeSetting.name}_${idx}`}>
-                  <TimeSwiper
-                    items={timePeriods}
-                    loop={false}
-                    initialSlide={timePeriods.indexOf(timeSetting.timePeriods)}
-                    onSlideChange={(e) =>
-                      changeSlide(
-                        'timePeriods',
-                        timePeriods[e.realIndex],
-                        timeSetting.name
-                      )
-                    }
-                    className='timeSwiper'
-                  />
-                  <TimeSwiper
-                    items={hours}
-                    initialSlide={hours.indexOf(timeSetting.hours)}
-                    onSlideChange={(e) =>
-                      changeSlide('hours', hours[e.realIndex], timeSetting.name)
-                    }
-                    className='timeSwiper'
-                  />
-                  <TimeSwiper
-                    items={minutes}
-                    initialSlide={minutes.indexOf(timeSetting.minutes)}
-                    onSlideChange={(e) =>
-                      changeSlide('minutes', minutes[e.realIndex], timeSetting.name)
-                    }
-                    className='timeSwiper'
-                  />
-                  <div className='absolute left-4 right-4 top-1/2 h-9 -translate-y-1/2 rounded-lg bg-[#f2f3f5] text-2xl'></div>
-                </div>
-              ) : null
-            )}
-          </article>
-
-          <article className='border-b border-solid border-gray-100 py-[28px]'>
-            <dl className='flex items-center justify-between'>
-              <dt className={cn(Typography.TITLE_1_BOLD, 'text-black')}>점심 시간</dt>
-              <dd className='flex flex-col items-end justify-end'>
-                <div className='mb-5'>
-                  <Button
-                    className={cn(
-                      Typography.BODY_2,
-                      'w-[89px] rounded-md bg-gray-100 py-4 text-black disabled:bg-gray-100 disabled:text-gray-500'
-                    )}
-                    disabled={isLunchTimeUnset}
-                    onClick={() => openTimePicker('lunchStartTime')}>
-                    {`${timeList[2].timePeriods} ${timeList[2].hours}:${timeList[2].minutes}`}
-                  </Button>
-                  <span className={cn(Typography.BODY_1, 'mx-1')}>~</span>
-                  <Button
-                    className={cn(
-                      Typography.BODY_2,
-                      'w-[89px] rounded-md bg-gray-100 py-4 text-black disabled:bg-gray-100 disabled:text-gray-500'
-                    )}
-                    onClick={() => openTimePicker('lunchEndTime')}
-                    disabled={isLunchTimeUnset}>
-                    {`${timeList[3].timePeriods} ${timeList[3].hours}:${timeList[3].minutes}`}
-                  </Button>
-                </div>
-                <div className='flex items-center justify-center'>
-                  <span className={cn(Typography.BODY_2, 'mr-1 text-gray-500')}>
-                    설정안함
-                  </span>
-                  <label className='custom-checkbox'>
-                    <input
-                      type='checkbox'
-                      className='peer hidden'
-                      checked={isLunchTimeUnset}
-                      onChange={resetSettingsOnDisable}
-                    />
-                    <span className='flex h-[20px] w-[20px] items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
-                      {isLunchTimeUnset && (
-                        <NoCircleCheckIcon width={15} height={12} fill='white' />
+          {timeList.length > 0 && (
+            <>
+              <article className='border-b border-solid border-gray-100 pb-[28px]'>
+                <dl className='flex items-center justify-between'>
+                  <dt className={cn(Typography.TITLE_1_BOLD, 'text-black')}>근무 시간</dt>
+                  <dd>
+                    <Button
+                      className={cn(
+                        Typography.BODY_2,
+                        'w-[89px] rounded-md bg-gray-100 py-4 text-black'
                       )}
-                    </span>
-                  </label>
-                </div>
-              </dd>
-            </dl>
+                      onClick={() => openTimePicker('lessonStartTime')}>
+                      {`${timeList[0].timePeriods} ${timeList[0].hours}:${timeList[0].minutes}`}
+                    </Button>
+                    <span className={cn(Typography.BODY_1, 'mx-1')}>~</span>
+                    <Button
+                      className={cn(
+                        Typography.BODY_2,
+                        'w-[89px] rounded-md bg-gray-100 py-4 text-black'
+                      )}
+                      onClick={() => openTimePicker('lessonEndTime')}>
+                      {`${timeList[1].timePeriods} ${timeList[1].hours}:${timeList[1].minutes}`}
+                    </Button>
+                  </dd>
+                </dl>
 
-            {timeList.map((timeSetting, idx) =>
-              (timeSetting.name === 'lunchStartTime' && timeSetting.state) ||
-              (timeSetting.name === 'lunchEndTime' && timeSetting.state) ? (
-                <div
-                  className='relative mt-[28px] flex items-center justify-center'
-                  key={`${timeSetting.name}_${idx}`}>
-                  <TimeSwiper
-                    items={timePeriods}
-                    loop={false}
-                    initialSlide={timePeriods.indexOf(timeSetting.timePeriods)}
-                    onSlideChange={(e) =>
-                      changeSlide(
-                        'timePeriods',
-                        timePeriods[e.realIndex],
-                        timeSetting.name
-                      )
-                    }
-                    className='timeSwiper'
-                  />
-                  <TimeSwiper
-                    items={hours}
-                    initialSlide={hours.indexOf(timeSetting.hours)}
-                    onSlideChange={(e) =>
-                      changeSlide('hours', hours[e.realIndex], timeSetting.name)
-                    }
-                    className='timeSwiper'
-                  />
-                  <TimeSwiper
-                    items={minutes}
-                    initialSlide={minutes.indexOf(timeSetting.minutes)}
-                    onSlideChange={(e) =>
-                      changeSlide('minutes', minutes[e.realIndex], timeSetting.name)
-                    }
-                    className='timeSwiper'
-                  />
-                  <div className='absolute left-4 right-4 top-1/2 h-9 -translate-y-1/2 rounded-lg bg-[#f2f3f5] text-2xl'></div>
-                </div>
-              ) : null
-            )}
-          </article>
+                {timeList.map((timeSetting, idx) =>
+                  (timeSetting.name === 'lessonStartTime' && timeSetting.state) ||
+                  (timeSetting.name === 'lessonEndTime' && timeSetting.state) ? (
+                    <div
+                      className='relative mt-[28px] flex items-center justify-center'
+                      key={`${timeSetting.name}_${idx}`}>
+                      <TimeSwiper
+                        items={timePeriods}
+                        loop={false}
+                        initialSlide={timePeriods.indexOf(timeSetting.timePeriods)}
+                        onSlideChange={(e) =>
+                          changeSlide(
+                            'timePeriods',
+                            timePeriods[e.realIndex],
+                            timeSetting.name
+                          )
+                        }
+                        className='timeSwiper'
+                      />
+                      <TimeSwiper
+                        items={hours}
+                        initialSlide={hours.indexOf(timeSetting.hours)}
+                        onSlideChange={(e) =>
+                          changeSlide('hours', hours[e.realIndex], timeSetting.name)
+                        }
+                        className='timeSwiper'
+                      />
+                      <TimeSwiper
+                        items={minutes}
+                        initialSlide={minutes.indexOf(timeSetting.minutes)}
+                        onSlideChange={(e) =>
+                          changeSlide('minutes', minutes[e.realIndex], timeSetting.name)
+                        }
+                        className='timeSwiper'
+                      />
+                      <div className='absolute left-4 right-4 top-1/2 h-9 -translate-y-1/2 rounded-lg bg-[#f2f3f5] text-2xl'></div>
+                    </div>
+                  ) : null
+                )}
+              </article>
 
-          <article className='border-b border-solid border-gray-100'>
-            <dl className='flex items-center justify-between py-[28px]'>
-              <dt className={cn(Typography.TITLE_1_BOLD, 'text-black')}>수업 시간</dt>
-              <dd>
-                <Sheet open={isClassTimeSheetOpen} onOpenChange={setIsClassTimeSheetOpen}>
-                  <SheetTrigger>
-                    {classTimeState.map((item) => (item.checked ? item.time : ''))}
-                  </SheetTrigger>
-                  <SheetContent
-                    side='bottom'
-                    closeClassName='opacity-0'
-                    className='rounded-tl-lg rounded-tr-lg px-7 pb-8 pt-4'>
-                    <div className='m-auto mb-8 h-1 w-[44px] rounded-lg bg-gray-200' />
-                    <ul>
-                      {classTimeState.map((item, index) => {
+              <article className='border-b border-solid border-gray-100 py-[28px]'>
+                <dl className='flex items-center justify-between'>
+                  <dt className={cn(Typography.TITLE_1_BOLD, 'text-black')}>점심 시간</dt>
+                  <dd className='flex flex-col items-end justify-end'>
+                    <div className='mb-5'>
+                      <Button
+                        className={cn(
+                          Typography.BODY_2,
+                          'w-[89px] rounded-md bg-gray-100 py-4 text-black disabled:bg-gray-100 disabled:text-gray-500'
+                        )}
+                        disabled={isLunchTimeUnset}
+                        onClick={() => openTimePicker('lunchStartTime')}>
+                        {`${timeList[2].timePeriods} ${timeList[2].hours}:${timeList[2].minutes}`}
+                      </Button>
+                      <span className={cn(Typography.BODY_1, 'mx-1')}>~</span>
+                      <Button
+                        className={cn(
+                          Typography.BODY_2,
+                          'w-[89px] rounded-md bg-gray-100 py-4 text-black disabled:bg-gray-100 disabled:text-gray-500'
+                        )}
+                        onClick={() => openTimePicker('lunchEndTime')}
+                        disabled={isLunchTimeUnset}>
+                        {`${timeList[3].timePeriods} ${timeList[3].hours}:${timeList[3].minutes}`}
+                      </Button>
+                    </div>
+                    <div className='flex items-center justify-center'>
+                      <span className={cn(Typography.BODY_2, 'mr-1 text-gray-500')}>
+                        설정안함
+                      </span>
+                      <label className='custom-checkbox'>
+                        <input
+                          type='checkbox'
+                          className='peer hidden'
+                          checked={isLunchTimeUnset}
+                          onChange={resetSettingsOnDisable}
+                        />
+                        <span className='flex h-[20px] w-[20px] items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
+                          {isLunchTimeUnset && (
+                            <IconNoCircleCheck width={15} height={12} fill='white' />
+                          )}
+                        </span>
+                      </label>
+                    </div>
+                  </dd>
+                </dl>
+
+                {timeList.map((timeSetting, idx) =>
+                  (timeSetting.name === 'lunchStartTime' && timeSetting.state) ||
+                  (timeSetting.name === 'lunchEndTime' && timeSetting.state) ? (
+                    <div
+                      className='relative mt-[28px] flex items-center justify-center'
+                      key={`${timeSetting.name}_${idx}`}>
+                      <TimeSwiper
+                        items={timePeriods}
+                        loop={false}
+                        initialSlide={timePeriods.indexOf(timeSetting.timePeriods)}
+                        onSlideChange={(e) =>
+                          changeSlide(
+                            'timePeriods',
+                            timePeriods[e.realIndex],
+                            timeSetting.name
+                          )
+                        }
+                        className='timeSwiper'
+                      />
+                      <TimeSwiper
+                        items={hours}
+                        initialSlide={hours.indexOf(timeSetting.hours)}
+                        onSlideChange={(e) =>
+                          changeSlide('hours', hours[e.realIndex], timeSetting.name)
+                        }
+                        className='timeSwiper'
+                      />
+                      <TimeSwiper
+                        items={minutes}
+                        initialSlide={minutes.indexOf(timeSetting.minutes)}
+                        onSlideChange={(e) =>
+                          changeSlide('minutes', minutes[e.realIndex], timeSetting.name)
+                        }
+                        className='timeSwiper'
+                      />
+                      <div className='absolute left-4 right-4 top-1/2 h-9 -translate-y-1/2 rounded-lg bg-[#f2f3f5] text-2xl'></div>
+                    </div>
+                  ) : null
+                )}
+              </article>
+
+              <article className='border-b border-solid border-gray-100'>
+                <dl className='flex items-center justify-between py-[28px]'>
+                  <dt className={cn(Typography.TITLE_1_BOLD, 'text-black')}>수업 시간</dt>
+                  <dd>
+                    <Sheet
+                      open={isClassTimeSheetOpen}
+                      onOpenChange={setIsClassTimeSheetOpen}>
+                      <SheetTrigger>
+                        {classTime.map((item) =>
+                          item === classTimeState
+                            ? `${Math.floor(item / 60) === 0 ? '' : `${Math.floor(item / 60)}시간`} ${item % 60 === 0 ? '' : '30분'}`
+                            : ''
+                        )}
+                      </SheetTrigger>
+                      <SheetContent
+                        side='bottom'
+                        closeClassName='opacity-0'
+                        className='rounded-tl-lg rounded-tr-lg px-7 pb-8 pt-4'>
+                        <div className='m-auto mb-8 h-1 w-[44px] rounded-lg bg-gray-200' />
+                        <ul>
+                          {classTime.map((item, index) => {
+                            return (
+                              <li key={`${item}_${index}`}>
+                                <Button
+                                  variant='ghost'
+                                  className={cn(
+                                    Typography.TITLE_1_SEMIBOLD,
+                                    'h-[54px] w-full items-center justify-between p-0 text-black'
+                                  )}
+                                  onClick={() => selectedClassTime(item)}>
+                                  {`${Math.floor(item / 60) === 0 ? '' : `${Math.floor(item / 60)}시간`} ${item % 60 === 0 ? '' : '30분'}`}
+                                  {item === classTimeState && (
+                                    <span>
+                                      <IconNoCircleCheck
+                                        width={24}
+                                        height={24}
+                                        fill='var(--primary-500)'
+                                      />
+                                    </span>
+                                  )}
+                                </Button>
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      </SheetContent>
+                    </Sheet>
+                  </dd>
+                </dl>
+              </article>
+
+              <article>
+                <dl className='py-[28px]'>
+                  <dt className={cn(Typography.TITLE_1_BOLD, 'mb-6 text-black')}>
+                    휴무일
+                  </dt>
+                  <dd>
+                    <ul className='flex items-center justify-between'>
+                      {Object.entries(dayOfWeekMap).map(([eng, kor], index) => {
+                        const isSelected = dayOff.includes(eng as DayOfWeek)
+                          ? 'bg-primary-500 text-gray-100'
+                          : 'bg-gray-100 text-gray-600';
                         return (
-                          <li key={`${item.time}_${index}`}>
+                          <li key={`${eng}_${index}`}>
                             <Button
-                              variant='ghost'
                               className={cn(
                                 Typography.TITLE_1_SEMIBOLD,
-                                'h-[54px] w-full items-center justify-between p-0 text-black'
+                                `p-4} w-[40px] rounded-[9999px] ${isSelected}`
                               )}
-                              onClick={() => selectedClassTime(item.time)}>
-                              {item.time}
-                              {item.checked && (
-                                <span>
-                                  <NoCircleCheckIcon
-                                    width={24}
-                                    height={24}
-                                    fill='var(--primary-500)'
-                                  />
-                                </span>
-                              )}
+                              onClick={() => selectedDayClick(eng as DayOfWeek)}>
+                              {kor}
                             </Button>
                           </li>
                         );
                       })}
                     </ul>
-                  </SheetContent>
-                </Sheet>
-              </dd>
-            </dl>
-          </article>
-
-          <article>
-            <dl className='py-[28px]'>
-              <dt className={cn(Typography.TITLE_1_BOLD, 'mb-6 text-black')}>휴무일</dt>
-              <dd>
-                <ul className='flex items-center justify-between'>
-                  {Object.entries(dayOfWeekMap).map(([eng, kor], index) => {
-                    const isSelected = dayOff.includes(eng as DayOfWeek)
-                      ? 'bg-primary-500 text-gray-100'
-                      : 'bg-gray-100 text-gray-600';
-                    return (
-                      <li key={`${eng}_${index}`}>
-                        <Button
-                          className={cn(
-                            Typography.TITLE_1_SEMIBOLD,
-                            `p-4} w-[40px] rounded-[9999px] ${isSelected}`
-                          )}
-                          onClick={() => selectedDayClick(eng as DayOfWeek)}>
-                          {kor}
-                        </Button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </dd>
-            </dl>
-          </article>
+                  </dd>
+                </dl>
+              </article>
+            </>
+          )}
         </div>
       </Layout.Contents>
 

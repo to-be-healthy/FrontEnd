@@ -26,12 +26,14 @@ import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import ScheduleIcon from '@/shared/assets/images/icon_schedule.svg';
 import { Typography } from '@/shared/mixin';
 import { Calendar } from '@/shared/ui';
-import { Button, Layout, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
+import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 dayjs.extend(isBetween);
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { DateFormatter, DayProps } from 'react-day-picker';
+
+import { Layout } from '@/widget';
 
 export const StudentSchedulePage = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());

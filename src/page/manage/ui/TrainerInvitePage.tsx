@@ -10,8 +10,9 @@ import { IconCheck } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Typography } from '@/shared/mixin';
-import { Button, Dialog, DialogContent, Input, Layout, useToast } from '@/shared/ui';
+import { Button, Dialog, DialogContent, Input, useToast } from '@/shared/ui';
 import { cn, twSelector } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 export const TrainerInvitePage = () => {
   const {

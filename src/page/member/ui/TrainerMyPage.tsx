@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useMyInfoQuery } from '@/feature/member';
 import { IconArrowRightSmall, IconAvatar } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Layout } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 export const TrainerMyPage = () => {
   const { data } = useMyInfoQuery();

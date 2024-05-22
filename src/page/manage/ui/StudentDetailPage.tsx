@@ -28,7 +28,6 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-  Layout,
 } from '@/shared/ui';
 import {
   DropdownMenu,
@@ -38,6 +37,7 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 import { useStudentInfo } from '../hooks/useStudentInfo';
 import { profileBorderStyleMapper } from '../utils';

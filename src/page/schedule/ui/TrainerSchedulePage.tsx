@@ -13,9 +13,9 @@ import {
 } from '@/feature/schedule';
 import { IconGear } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Button, Layout } from '@/shared/ui';
+import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
-import { WeekPicker } from '@/widget';
+import { Layout, WeekPicker } from '@/widget';
 
 export const TrainerSchedulePage = () => {
   const currentStartOfWeek = getStartOfWeek();

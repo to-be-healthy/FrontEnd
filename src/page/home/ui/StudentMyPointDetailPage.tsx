@@ -13,9 +13,9 @@ import { useMyPointHistoryQuery } from '@/feature/member/api/useMyPointHistoryQu
 import { pointHistoryCodeDescription } from '@/feature/member/const';
 import { IconClose, IconNotification, IconPoint } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Card, CardContent, CardHeader, Layout } from '@/shared/ui';
+import { Card, CardContent, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
-import { MonthPicker } from '@/widget/month-picker';
+import { Layout, MonthPicker } from '@/widget';
 
 const ITEMS_PER_PAGE = 20;
 

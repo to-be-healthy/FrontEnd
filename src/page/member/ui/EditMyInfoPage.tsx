@@ -8,7 +8,6 @@ import { useAuthAction } from '@/entity/auth';
 import { useMyInfoQuery } from '@/feature/member';
 import { IconArrowRightSmall, IconAvatar, IconBack, IconCamera } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Layout } from '@/shared/ui';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,6 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 const EditMyInfoPage = () => {
   const router = useRouter();

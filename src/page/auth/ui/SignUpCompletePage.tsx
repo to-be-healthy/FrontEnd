@@ -4,7 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
-import { Button, Layout } from '@/shared/ui';
+import { Button } from '@/shared/ui';
+import { Layout } from '@/widget';
 
 export const SignUpCompletePage = () => {
   const searchParams = useSearchParams();

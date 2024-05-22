@@ -36,8 +36,6 @@ interface MyWaitingResponse {
   myScheduleWaitings: ScheduleData[] | null;
 }
 
-type ClassTimeOptions = 'HALF_HOUR' | 'ONE_HOUR' | 'ONE_AND_HALF_HOUR' | 'TWO_HOUR';
-
 type DayOfWeek =
   | 'MONDAY'
   | 'TUESDAY'
@@ -55,6 +53,15 @@ interface TrainerSchedule {
   reservationStatus: 'COMPLETED' | 'AVAILABLE' | 'NO_SHOW' | 'SOLD_OUT';
   applicantName: string | null;
   waitingStudentName: string | null;
+}
+
+interface ClassTimeSettingData {
+  lessonStartTime: string;
+  lessonEndTime: string;
+  lunchStartTime: string;
+  lunchEndTime: string;
+  closedDays: DayOfWeek[];
+  lessonTime: number;
 }
 
 type TrainerWeeklySchedule = Record<string, TrainerSchedule[]>;
@@ -77,7 +84,7 @@ interface DailySchedule {
 
 export type {
   AllScheduleData,
-  ClassTimeOptions,
+  ClassTimeSettingData,
   CourseData,
   DailySchedule,
   DayOfWeek,

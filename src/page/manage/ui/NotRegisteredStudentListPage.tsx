@@ -8,8 +8,9 @@ import IconCircleAlert from '@/shared/assets/images/icon_circle_alert.svg';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import IconSearch from '@/shared/assets/images/icon_search.svg';
 import { Typography } from '@/shared/mixin';
-import { Button, Card, Layout } from '@/shared/ui';
+import { Button, Card } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 const MemberListController = (students: Member[]) => ({
   search: (keyword: string) => {

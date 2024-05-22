@@ -15,10 +15,9 @@ import {
   IconProfileFilled,
   IconProfileOutlined,
 } from '@/shared/assets';
+import { useShowErrorToast } from '@/shared/hooks';
+import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
-
-import { useShowErrorToast } from '../hooks';
-import { Button } from './button';
 
 const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
   const pathname = usePathname();

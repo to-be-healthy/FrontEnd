@@ -3,16 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { authApi } from '@/entity/auth';
 import { BaseError, BaseResponse } from '@/shared/api';
 
-import { ClassTimeOptions, DayOfWeek } from '../model/type';
-
-interface ClassTimeSettingData {
-  startTime: string;
-  endTime: string;
-  lunchStartTime: string;
-  lunchEndTime: string;
-  closedDt: DayOfWeek[];
-  sessionTime: ClassTimeOptions;
-}
+import { ClassTimeSettingData } from '../model/type';
 
 export const useTrainerClassTimeSettingMutation = () => {
   return useMutation<BaseResponse<ClassTimeSettingData>, BaseError, ClassTimeSettingData>(

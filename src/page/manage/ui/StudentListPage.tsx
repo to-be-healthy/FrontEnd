@@ -16,7 +16,7 @@ import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconCircleAlert from '@/shared/assets/images/icon_circle_alert.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile_small.svg';
 import IconSearch from '@/shared/assets/images/icon_search.svg';
-import { Button, Layout } from '@/shared/ui';
+import { Button } from '@/shared/ui';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +25,7 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 import { profileBorderStyleMapper } from '../utils';
 

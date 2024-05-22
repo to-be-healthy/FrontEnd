@@ -10,7 +10,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Layout,
   ScrollArea,
   ScrollBar,
 } from '@/shared/ui';
@@ -23,6 +22,7 @@ import {
   SelectValue,
 } from '@/shared/ui/select'; //index에 추가하고 삭제
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 const GYM_LIST = [
   {

@@ -5,7 +5,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { SignInForm } from '@/feature/auth';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import Logo from '@/shared/assets/images/logo.svg';
-import { Button, Layout, Separator } from '@/shared/ui';
+import { Button, Separator } from '@/shared/ui';
+import { Layout } from '@/widget';
 
 export const SignInPage = () => {
   const params = useSearchParams();

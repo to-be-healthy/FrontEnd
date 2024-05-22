@@ -4,8 +4,9 @@ import Link from 'next/link';
 
 import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Layout, Switch } from '@/shared/ui';
+import { Switch } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 const AlarmPage = () => {
   const changeAlarm = (checked: boolean, id: string) => {
