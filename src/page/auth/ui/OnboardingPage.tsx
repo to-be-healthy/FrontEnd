@@ -7,7 +7,8 @@ import { redirect, useRouter, useSearchParams } from 'next/navigation';
 import { SocialSignIn } from '@/feature/auth';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import Logo from '@/shared/assets/images/logo.svg';
-import { Button, Layout, RollingBanner } from '@/shared/ui';
+import { Button, RollingBanner } from '@/shared/ui';
+import { Layout } from '@/widget';
 
 const SelectMemberTypePage = () => {
   return (

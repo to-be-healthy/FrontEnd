@@ -10,9 +10,8 @@ import { courseHistoryCodeDescription, useMyCourseHistoryQuery } from '@/feature
 import { CourseCard, CourseCardContent, CourseCardHeader } from '@/feature/member';
 import { IconClose, IconNotification } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Layout } from '@/shared/ui';
 import { cn } from '@/shared/utils';
-import { MonthPicker } from '@/widget/month-picker';
+import { Layout, MonthPicker } from '@/widget';
 
 const ITEMS_PER_PAGE = 20;
 

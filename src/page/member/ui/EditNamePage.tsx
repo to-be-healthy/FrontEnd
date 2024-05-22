@@ -6,8 +6,9 @@ import { ChangeEvent, useState } from 'react';
 import { useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Button, Input, Layout } from '@/shared/ui';
+import { Button, Input } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 const EditNamePage = () => {
   const { data } = useMyInfoQuery();

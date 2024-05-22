@@ -9,8 +9,9 @@ import { useCreateLogMutation } from '@/feature/log';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import { Typography } from '@/shared/mixin';
-import { Button, Input, Layout, Textarea } from '@/shared/ui';
+import { Button, Input, Textarea } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 interface Props {
   memberId: number;

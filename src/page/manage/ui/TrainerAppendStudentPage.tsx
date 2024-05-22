@@ -11,9 +11,10 @@ import { IconCheck } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Typography } from '@/shared/mixin';
-import { Button, Input, Layout } from '@/shared/ui';
+import { Button, Input } from '@/shared/ui';
 import { toast } from '@/shared/ui/toast/use-toast';
 import { cn, twSelector } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => {
   const router = useRouter();

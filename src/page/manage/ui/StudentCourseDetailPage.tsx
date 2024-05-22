@@ -41,11 +41,10 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
   Button,
-  Layout,
   useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
-import { MonthPicker } from '@/widget/month-picker';
+import { Layout, MonthPicker } from '@/widget';
 interface Props {
   memberId: number;
 }

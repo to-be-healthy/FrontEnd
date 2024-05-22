@@ -8,9 +8,10 @@ import { IconCheck } from '@/shared/assets';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Typography } from '@/shared/mixin';
-import { Button, Layout, useToast } from '@/shared/ui';
+import { Button, useToast } from '@/shared/ui';
 import { Textarea } from '@/shared/ui/textarea';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 import { useStudentInfo } from '../hooks/useStudentInfo';
 

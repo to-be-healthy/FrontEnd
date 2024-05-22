@@ -37,7 +37,6 @@ import {
   CardContent,
   CardFooter,
   CardHeader,
-  Layout,
   useToast,
 } from '@/shared/ui';
 import {
@@ -54,6 +53,7 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 interface Props {
   logId: number;

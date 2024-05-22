@@ -8,7 +8,8 @@ import { SignUpRequest, useSignUpMutation } from '@/entity/auth';
 import { SignUpCancelDialog, SignUpFunnel, useSignUpFunnel } from '@/feature/auth';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
-import { Button, GenericForm, Layout, useToast } from '@/shared/ui';
+import { Button, GenericForm, useToast } from '@/shared/ui';
+import { Layout } from '@/widget';
 
 const SignUpPage = () => {
   const router = useRouter();

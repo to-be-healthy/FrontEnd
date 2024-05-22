@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Layout } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 const CSPage = () => {
   const CS_EMAIL = 'to-be-healthy@gmail.com';

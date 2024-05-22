@@ -4,8 +4,8 @@ import Link from 'next/link';
 
 import { IconArrowRightSmall, IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Layout } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 const PolicyPage = () => {
   return (

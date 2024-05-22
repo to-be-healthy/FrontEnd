@@ -7,15 +7,9 @@ import { useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
 import NoCircleCheckIcon from '@/shared/assets/images/noCircleCheck.svg';
 import { Typography } from '@/shared/mixin';
-import {
-  Button,
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogTrigger,
-  Layout,
-} from '@/shared/ui';
+import { Button, Dialog, DialogClose, DialogContent, DialogTrigger } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 const LeavePage = () => {
   const { data } = useMyInfoQuery();

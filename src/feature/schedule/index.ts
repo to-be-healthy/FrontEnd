@@ -13,7 +13,7 @@ export { getStartOfWeek } from './lib/utils';
 export { scheduleAdaptor } from './model/adaptor';
 export type {
   AllScheduleData,
-  ClassTimeOptions,
+  ClassTimeSettingData,
   CourseData,
   DayOfWeek,
   MyReservationResponse,

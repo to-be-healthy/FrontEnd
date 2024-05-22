@@ -1,9 +1,9 @@
 import { Children, HTMLAttributes, isValidElement, ReactNode } from 'react';
 
 import { Toaster } from '@/shared/ui';
-import { StudentNavigation, TrainerNavigation } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
-import { cn } from '../utils';
+import { StudentNavigation, TrainerNavigation } from './navigation';
 
 interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
   type?: 'student' | 'trainer';

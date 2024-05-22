@@ -20,10 +20,10 @@ import {
   AlertDialogTrigger,
   Button,
   Input,
-  Layout,
   useToast,
 } from '@/shared/ui';
 import { cn, twSelector } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 import { useStudentInfo } from '../hooks/useStudentInfo';
 

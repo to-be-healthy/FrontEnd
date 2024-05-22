@@ -7,15 +7,9 @@ import { useAuthAction, useAuthSelector } from '@/entity/auth';
 import { Gym, useGymListQuery, useRegisterGymMutation } from '@/entity/gym';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
 import ErrorIcon from '@/shared/assets/images/icon_error.svg';
-import {
-  Button,
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-  Layout,
-  useToast,
-} from '@/shared/ui';
+import { Button, InputOTP, InputOTPGroup, InputOTPSlot, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 export const SelectGym = () => {
   const [step, setStep] = useState(1);

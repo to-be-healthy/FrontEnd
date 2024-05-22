@@ -33,9 +33,9 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-  Layout,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 const FEEDBACK_COUNT = 1;
 
@@ -79,8 +79,6 @@ export const StudentHomePage = () => {
   const nextScheduledHour = data?.myReservation
     ? dayjs(data?.myReservation?.lessonStartTime, 'HH:mm:ss').format('A hh:mm')
     : '';
-
-  console.log(data);
 
   return (
     <Layout type='student'>

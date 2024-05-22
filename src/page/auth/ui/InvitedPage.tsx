@@ -6,8 +6,9 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 import { SocialSignIn, useInvitationInfoQuery } from '@/feature/auth';
 import { Typography } from '@/shared/mixin';
-import { Button, Layout } from '@/shared/ui';
+import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 const InvitedPage = () => {
   const router = useRouter();
