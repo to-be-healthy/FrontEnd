@@ -67,7 +67,7 @@ export const StudentMyCourseDetailPage = () => {
         ) : (
           <>
             <div className='bg-[#fff] p-7 pb-0 pt-6'>
-              {historyData?.pages[0]?.courseHistories && (
+              {historyData?.pages[0]?.course && (
                 <CourseCard
                   expiration={
                     historyData?.pages[0].course.completedLessonCnt ===
@@ -122,7 +122,7 @@ export const StudentMyCourseDetailPage = () => {
                   })
                 ) : (
                   <li
-                    key={`courseHistories${index}`}
+                    key={`courseHistories_${index}`}
                     className={cn(
                       Typography.TITLE_1_BOLD,
                       'flex flex-col items-center justify-center py-28 text-gray-700'
