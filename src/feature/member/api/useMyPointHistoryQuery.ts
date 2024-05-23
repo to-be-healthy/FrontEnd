@@ -5,9 +5,14 @@ import { BaseError, BaseResponse } from '@/shared/api';
 
 import { StudentPoint } from '../model/types';
 
-export const useMyPointHistoryQuery = (size: number, searchDate: string) => {
+interface MyPointHistory {
+  searchDate: string;
+  size: number;
+}
+
+export const useMyPointHistoryQuery = ({ searchDate, size }: MyPointHistory) => {
   return useInfiniteQuery<StudentPoint, BaseError>({
-    queryKey: ['myPointHistory', searchDate],
+    queryKey: ['myPointHistory', { searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentPoint>>(
         `/api/members/v1/point?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`

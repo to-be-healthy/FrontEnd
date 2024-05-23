@@ -55,8 +55,8 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
   const { toast } = useToast();
   const params = useSearchParams();
   const name = params.get('name');
-  const date = dayjs(new Date()).format('YYYY-MM');
-  const [searchMonth, setSearchMonth] = useState<string>(date);
+  const date = new Date();
+  const [searchMonth, setSearchMonth] = useState<Date>(date);
 
   const [isAddSheetOpen, setIsAddSheetOpen] = useState(false);
   const [isRegisterSheetOpen, setIsRegisterSheetOpen] = useState(false);
@@ -74,7 +74,11 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
     isPending,
     hasNextPage,
     fetchNextPage,
-  } = useStudentCourseDetailQuery(memberId, ITEMS_PER_PAGE);
+  } = useStudentCourseDetailQuery({
+    memberId,
+    size: ITEMS_PER_PAGE,
+    searchDate: dayjs(searchMonth).format('YYYY-MM'),
+  });
   const studentCourseId = Number(detailData?.pages[0]?.course?.courseId);
 
   const { mutate: addMutation } = useAddStudentCourseMutation();

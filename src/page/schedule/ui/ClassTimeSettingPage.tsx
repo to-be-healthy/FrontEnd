@@ -465,11 +465,7 @@ export const ClassTimeSettingPage = () => {
                             : ''
                         )}
                       </SheetTrigger>
-                      <SheetContent
-                        side='bottom'
-                        closeClassName='opacity-0'
-                        className='rounded-tl-lg rounded-tr-lg px-7 pb-8 pt-4'>
-                        <div className='m-auto mb-8 h-1 w-[44px] rounded-lg bg-gray-200' />
+                      <SheetContent side='bottom' headerType='thumb' className='pt-4'>
                         <ul>
                           {classTime.map((item, index) => {
                             return (

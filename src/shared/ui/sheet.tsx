@@ -2,10 +2,11 @@
 
 import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { cva, type VariantProps } from 'class-variance-authority';
-import { X } from 'lucide-react';
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, HTMLAttributes } from 'react';
 
 import { cn } from '@/shared/utils/tw-utils';
+
+import { IconClose } from '../assets';
 
 const SheetRoot = SheetPrimitive.Root;
 
@@ -37,52 +38,53 @@ const sheetVariants = cva(
       side: {
         top: 'inset-x-0 top-0 border-b data-[state=closed]:slide-out-to-top data-[state=open]:slide-in-from-top',
         bottom:
-          'inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom',
+          'pb-9 px-7 inset-x-0 bottom-0 border-t data-[state=closed]:slide-out-to-bottom data-[state=open]:slide-in-from-bottom rounded-t-lg',
         left: 'inset-y-0 left-0 h-full w-3/4 border-r data-[state=closed]:slide-out-to-left data-[state=open]:slide-in-from-left sm:max-w-sm',
         right:
           'inset-y-0 right-0 h-full w-3/4  border-l data-[state=closed]:slide-out-to-right data-[state=open]:slide-in-from-right sm:max-w-sm',
       },
+      headerType: {
+        close: 'pt-7',
+        thumb: 'pt-5',
+      },
     },
     defaultVariants: {
-      side: 'right',
+      side: 'bottom',
+      headerType: 'close',
     },
   }
 );
 
 interface SheetContentProps
   extends ComponentPropsWithoutRef<typeof SheetPrimitive.Content>,
-    VariantProps<typeof sheetVariants> {
-  closeClassName?: string;
-  xClassName?: string;
-}
+    VariantProps<typeof sheetVariants> {}
 
 const SheetContent = forwardRef<
   ElementRef<typeof SheetPrimitive.Content>,
   SheetContentProps
->(
-  (
-    { side = 'right', className, children, closeClassName, xClassName, ...props },
-    ref
-  ) => (
-    <SheetPortal>
-      <SheetOverlay />
-      <SheetPrimitive.Content
-        ref={ref}
-        className={cn(sheetVariants({ side }), className)}
-        {...props}>
-        {children}
+>(({ side = 'bottom', className, headerType = 'close', children, ...props }, ref) => (
+  <SheetPortal>
+    <SheetOverlay />
+    <SheetPrimitive.Content
+      ref={ref}
+      className={cn(sheetVariants({ side, headerType }), className)}
+      {...props}>
+      {headerType === 'thumb' && (
+        <div className='m-auto mb-8 h-1 w-[44px] rounded-lg bg-gray-200' />
+      )}
+      {children}
+      {headerType === 'close' && (
         <SheetPrimitive.Close
           className={cn(
-            'absolute right-7 top-7 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none disabled:pointer-events-none data-[state=open]:bg-secondary',
-            closeClassName
+            'absolute right-7 top-7 ring-offset-background transition-opacity focus:outline-none disabled:pointer-events-none'
           )}>
-          <X className={cn('h-[22px] w-[22px] text-black', xClassName)} />
+          <IconClose />
           <span className='sr-only'>Close</span>
         </SheetPrimitive.Close>
-      </SheetPrimitive.Content>
-    </SheetPortal>
-  )
-);
+      )}
+    </SheetPrimitive.Content>
+  </SheetPortal>
+));
 SheetContent.displayName = SheetPrimitive.Content.displayName;
 
 const SheetHeader = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => (
