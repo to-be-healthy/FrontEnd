@@ -1,25 +1,43 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 
-import { useMyInfoQuery } from '@/feature/member';
+import { useChangeMyNameMutation, useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
+import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { Button, Input } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const EditNamePage = () => {
+  const router = useRouter();
   const { data } = useMyInfoQuery();
   const [name, setName] = useState('');
+  const { mutate } = useChangeMyNameMutation();
+  const { showErrorToast } = useShowErrorToast();
+  const queryClient = useQueryClient();
 
   const changeName = (e: ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
 
   const submitNewName = () => {
-    console.log('submitNewName');
+    mutate(name, {
+      onSuccess: async () => {
+        await queryClient.refetchQueries({
+          queryKey: ['myinfo'],
+        });
+        router.replace('/trainer/mypage/info');
+      },
+      onError: (error) => {
+        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+        showErrorToast(message);
+      },
+    });
   };
 
   const disabledButton = name === data?.name || name === '';

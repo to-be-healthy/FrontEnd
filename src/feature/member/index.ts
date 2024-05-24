@@ -1,4 +1,5 @@
 export { useAddStudentCourseMutation } from './api/useAddStudentCourseMutation';
+export { useChangeMyNameMutation } from './api/useChangeMyNameMutation';
 export { useDeleteStudentCourseMutation } from './api/useDeleteStudentCourseMutation';
 export { useInviteStudentMutation } from './api/useInviteStudentMutation';
 export { useMyCourseHistoryQuery } from './api/useMyCourseHistoryQuery';
