@@ -47,7 +47,7 @@ export default function Page({ params }: Props) {
         onSuccess: (result) => {
           const data = result.data;
           setUserInfo(data);
-          router.replace(`/${data.memberType.toLowerCase()}`);
+          router.replace(`/${data.memberType?.toLowerCase()}`);
         },
         onError: (error) => {
           const message = error.response?.data.message ?? '문제가 발생했습니다.';

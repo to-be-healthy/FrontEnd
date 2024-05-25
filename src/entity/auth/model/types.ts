@@ -3,7 +3,7 @@ interface UserInfo {
   accessToken: string;
   refreshToken: string;
   gymId: number | null;
-  memberType: 'STUDENT' | 'TRAINER';
+  memberType: 'STUDENT' | 'TRAINER' | null;
 }
 
 type SocialProvider = 'kakao' | 'naver' | 'google';

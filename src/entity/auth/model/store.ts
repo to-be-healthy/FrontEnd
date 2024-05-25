@@ -19,7 +19,7 @@ const DEFAULT_AUTH_STATE: AuthState = {
   accessToken: undefined,
   refreshToken: undefined,
   gymId: undefined,
-  memberType: undefined,
+  memberType: null,
 };
 
 const authStore = () => DEFAULT_AUTH_STATE;
@@ -50,8 +50,9 @@ const useAuthSelector = withSelector(useAuthStore);
 
 const auth = () => {
   const store = localStorage.getItem(AUTH_STATE_NAME);
-  if (!store) return { tokens: null, memberType: null, userId: null };
-
+  if (!store) {
+    return { tokens: null, memberType: null, userId: null };
+  }
   const { state } = JSON.parse(store) as {
     state: UserInfo;
   };
