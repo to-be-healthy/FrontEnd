@@ -1,27 +1,42 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 
+import { useDeleteAccountMutation } from '@/entity/auth';
 import { useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
 import NoCircleCheckIcon from '@/shared/assets/images/noCircleCheck.svg';
+import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { Button, Dialog, DialogClose, DialogContent, DialogTrigger } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const LeavePage = () => {
+  const router = useRouter();
   const { data } = useMyInfoQuery();
   const [agreement, setAgreement] = useState(false);
+  const { mutate } = useDeleteAccountMutation();
+  const { showErrorToast } = useShowErrorToast();
 
   const changeAgreement = (e: ChangeEvent<HTMLInputElement>) => {
     setAgreement(e.target.checked);
   };
 
   const deleteAccount = () => {
-    console.log('deleteAccount');
+    mutate(undefined, {
+      onSuccess: () => {
+        router.replace('/');
+      },
+      onError: (error) => {
+        const message = error.response?.data?.message ?? '문제가 발생했습니다.';
+        showErrorToast(message);
+      },
+    });
   };
+
   return (
     <Layout className='bg-white'>
       <Layout.Header>

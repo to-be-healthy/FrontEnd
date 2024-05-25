@@ -1,6 +1,7 @@
 export { authApi } from './api/authApi';
 export { useCheckVailableIdMutation } from './api/useCheckVailableIdMutation';
 export { useCheckVerificationCodeMutation } from './api/useCheckVerificationCodeMutation';
+export { useDeleteAccountMutation } from './api/useDeleteAccountMutation';
 export { useSendVerificationCodeMutation } from './api/useSendVerificationCodeMutation';
 export { useSignInMutation } from './api/useSignInMutation';
 export { useSignUpMutation } from './api/useSignUpMutation';
