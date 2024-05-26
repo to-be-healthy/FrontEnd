@@ -4,9 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
 import { useEditMemoMutation } from '@/feature/manage';
-import { IconCheck } from '@/shared/assets';
+import { IconCheck, IconError } from '@/shared/assets';
 import IconBack from '@/shared/assets/images/icon_back.svg';
-import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Typography } from '@/shared/mixin';
 import { Button, useToast } from '@/shared/ui';
 import { Textarea } from '@/shared/ui/textarea';
@@ -54,7 +53,7 @@ const StudentEditMemo = ({ memberId }: Props) => {
             className: 'py-5 px-6',
             description: (
               <div className='flex items-center justify-center'>
-                <ErrorIcon />
+                <IconError />
                 <p className='typography-heading-5 ml-6 text-white'>
                   {error.response?.data.message}
                 </p>

@@ -168,7 +168,7 @@ const CarouselContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement
 
     return (
       <div ref={carouselRef} className='overflow-hidden'>
-        <div ref={ref} className={cn('flex', className)} {...props} />
+        <div ref={ref} className={cn('flex gap-6', className)} {...props} />
       </div>
     );
   }
@@ -200,7 +200,7 @@ const CarouselPrevious = forwardRef<HTMLButtonElement, ComponentProps<typeof But
         variant={variant}
         size={size}
         className={cn(
-          'absolute  -left-12 top-1/2 h-8 w-8 -translate-y-1/2 rounded-full',
+          'absolute -left-12 top-1/2 h-8 w-8 -translate-y-1/2 rounded-full',
           className
         )}
         disabled={!canScrollPrev}
@@ -219,7 +219,9 @@ const CarouselNav = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) =>
   const total = getSize();
 
   return (
-    <div className='flex justify-center' {...props}>
+    <div
+      className='absolute bottom-4 left-1/2 flex translate-x-[-50%] justify-center'
+      {...props}>
       <div className={cn('mt-[10px] flex space-x-[6px]', className)}>
         {total > 0 &&
           Array.from({ length: Math.min(total, MAX_CAROUSEL_SIZE) }).map((_, index) => {
@@ -247,8 +249,8 @@ const DotButton = ({ selected, ...props }: DotButton) => {
       type='button'
       {...props}
       className={cn(
-        'h-[6px] w-[6px] rounded-full bg-gray-200',
-        selected && 'bg-primary-500'
+        'h-[6px] w-[6px] rounded-full bg-white opacity-50',
+        selected && 'opacity-100'
       )}
     />
   );

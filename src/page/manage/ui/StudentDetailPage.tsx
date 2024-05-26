@@ -9,13 +9,13 @@ import {
   IconArrowDown,
   IconArrowFilledDown,
   IconArrowFilledUp,
+  IconDotsVertical,
   IconPoint,
 } from '@/shared/assets';
 import IconArrowRight from '@/shared/assets/images/icon_arrow_right.svg';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import IconCalendar from '@/shared/assets/images/icon_calendar_blue.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile.svg';
-import IconDotsVertical from '@/shared/assets/images/icon_dots_vertical.svg';
 import IconDumbel from '@/shared/assets/images/icon_dumbel.svg';
 import IconEdit from '@/shared/assets/images/icon_edit.svg';
 import IconPhone from '@/shared/assets/images/icon_phone.svg';

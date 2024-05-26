@@ -11,4 +11,4 @@ export {
 } from './hooks/useComment';
 export type { Comment, ImageFile, Log } from './model/types';
 export { CommentInput as LogCommentInput } from './ui/CommentInput';
-export { CommentList as StudentLogCommentList } from './ui/CommentList';
+export { CommentList as LogCommentList } from './ui/CommentList';

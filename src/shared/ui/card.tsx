@@ -1,5 +1,6 @@
 import { forwardRef, HTMLAttributes } from 'react';
 
+import { Typography } from '../mixin';
 import { cn } from '../utils/tw-utils';
 
 const CARD_NAME = 'Card';
@@ -8,8 +9,7 @@ const CardRoot = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     <div
       ref={ref}
       className={cn(
-        'h-35 relative flex w-40 flex-col gap-y-2 rounded-[12px] bg-white p-[16px]',
-        'text-[17px]/[24px] font-bold',
+        'h-35 relative flex w-40 flex-col gap-y-2 rounded-[12px] bg-white p-6',
         className
       )}
       {...props}
@@ -23,7 +23,7 @@ const CardHeader = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, forwardedRef) => (
     <div
       ref={forwardedRef}
-      className={cn('text-[17px]/[24px] font-bold', className)}
+      className={cn(Typography.TITLE_1_BOLD, className)}
       {...props}
     />
   )
@@ -36,8 +36,8 @@ const CardContent = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
     <div
       ref={forwardedRef}
       className={cn(
-        'whitespace-pre-wrap font-normal text-gray-500',
-        'text-[12px]/[20px] font-normal',
+        Typography.BODY_4_REGULAR,
+        'whitespace-pre-wrap text-gray-500',
         className
       )}
       {...props}
@@ -49,7 +49,7 @@ CardContent.displayName = CARD_CONTENT_NAME;
 const CARD_FOOTER_NAME = 'CardFooter';
 const CardFooter = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, forwardedRef) => (
-    <div ref={forwardedRef} className={cn('', className)} {...props} />
+    <div ref={forwardedRef} className={cn(className)} {...props} />
   )
 );
 CardFooter.displayName = CARD_FOOTER_NAME;

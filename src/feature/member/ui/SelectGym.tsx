@@ -5,8 +5,8 @@ import { useState } from 'react';
 
 import { useAuthAction, useAuthSelector } from '@/entity/auth';
 import { Gym, useGymListQuery, useRegisterGymMutation } from '@/entity/gym';
+import { IconError } from '@/shared/assets';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
-import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Button, InputOTP, InputOTPGroup, InputOTPSlot, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -50,7 +50,7 @@ export const SelectGym = () => {
               className: 'py-5 px-6',
               description: (
                 <div className='flex items-center justify-center'>
-                  <ErrorIcon />
+                  <IconError />
                   <p className='typography-heading-5 ml-6 text-[#fff]'>
                     {error.response?.data.message}
                   </p>
@@ -74,7 +74,7 @@ export const SelectGym = () => {
               className: 'py-5 px-6',
               description: (
                 <div className='flex items-center justify-center'>
-                  <ErrorIcon />
+                  <IconError />
                   <p className='typography-heading-5 ml-6 text-[#fff]'>
                     {error.response?.data.message}
                   </p>

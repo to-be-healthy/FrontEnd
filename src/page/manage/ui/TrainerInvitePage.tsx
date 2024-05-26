@@ -6,9 +6,8 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { InviteForm, useInviteStudentMutation, useMyInfoQuery } from '@/feature/member';
-import { IconCheck } from '@/shared/assets';
+import { IconCheck, IconError } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
-import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Typography } from '@/shared/mixin';
 import { Button, Dialog, DialogContent, Input, useToast } from '@/shared/ui';
 import { cn, twSelector } from '@/shared/utils';
@@ -42,7 +41,7 @@ export const TrainerInvitePage = () => {
           className: 'h-[48px]',
           description: (
             <div className='flex items-center justify-center'>
-              <ErrorIcon />
+              <IconError />
               <p className='typography-heading-5 ml-6 text-white'>{message}</p>
             </div>
           ),
@@ -57,7 +56,7 @@ export const TrainerInvitePage = () => {
       className: 'h-[48px]',
       description: (
         <div className='flex items-center justify-center'>
-          <ErrorIcon />
+          <IconError />
           <p className='typography-heading-5 ml-6 text-white'>
             입력이 필요한 항목이 있습니다.
           </p>

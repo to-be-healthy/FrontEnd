@@ -89,6 +89,10 @@
 
   body {
     @apply bg-background text-foreground;
+
+    position: fixed;
+    top: 0;
+    width: 100%;
   }
 }
 
@@ -262,5 +266,15 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+  }
+
+  .show-more {
+    float: right;
+    display: flex;
+    align-items: flex-end;
+    height: 40px;
+    margin-right: 10px;
+    shape-outside: inset(calc(100% - 19px) 0 0 0);
+    color: var(--gray-500);
   }
 }

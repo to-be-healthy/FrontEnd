@@ -4,10 +4,9 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useEditNicknameMutation } from '@/feature/manage';
-import { IconCheck } from '@/shared/assets';
+import { IconCheck, IconError } from '@/shared/assets';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile.svg';
-import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
@@ -44,7 +43,7 @@ const StudentEditNickname = ({ memberId }: Props) => {
         className: 'py-5 px-6',
         description: (
           <div className='flex items-center justify-center'>
-            <ErrorIcon />
+            <IconError />
             <p className='typography-heading-5 ml-6 text-white'>별칭을 입력해주세요.</p>
           </div>
         ),
@@ -57,7 +56,7 @@ const StudentEditNickname = ({ memberId }: Props) => {
         className: 'py-5 px-6',
         description: (
           <div className='flex items-center justify-center'>
-            <ErrorIcon />
+            <IconError />
             <p className='typography-heading-5 ml-6 text-white'>기존 별칭과 같습니다.</p>
           </div>
         ),
@@ -91,7 +90,7 @@ const StudentEditNickname = ({ memberId }: Props) => {
             className: 'py-5 px-6',
             description: (
               <div className='flex items-center justify-center'>
-                <ErrorIcon />
+                <IconError />
                 <p className='typography-heading-5 ml-6 text-white'>
                   {error.response?.data.message}
                 </p>
