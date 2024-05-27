@@ -12,10 +12,10 @@ interface StudentCourseInfo {
 }
 export const useAddStudentCourseMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, StudentCourseInfo>({
-    mutationFn: async (addCourseInfo) => {
+    mutationFn: async ({ courseId, ...payload }) => {
       const result = await authApi.patch<BaseResponse<null>>(
-        `/api/course/v1/${addCourseInfo.courseId}`,
-        addCourseInfo
+        `/api/course/v1/${courseId}`,
+        payload
       );
       return result.data;
     },

@@ -30,6 +30,7 @@ export { default as IconArrowLeft } from './images/icon_arrow_left.svg';
 export { default as IconArrowRight } from './images/icon_arrow_right.svg';
 export { default as IconTriangleDown } from './images/icon_triangle_down.svg';
 export { default as IconLogo } from './images/logo.svg';
+export { default as IconMedalGold } from './images/medal_gold.svg';
 export { default as IconNotification } from './images/notification.svg';
 export { default as IconPlus } from './images/plus.svg';
 export { default as IconPoint } from './images/point.svg';
