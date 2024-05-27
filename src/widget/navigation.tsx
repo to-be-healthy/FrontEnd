@@ -23,7 +23,7 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
   const pathname = usePathname();
   return (
     <nav className={cn('bg-white', className)} {...props}>
-      <ul className='flex items-center justify-between px-[36px] py-[18px]'>
+      <ul className='flex items-center justify-between px-11 py-[18px]'>
         <li>
           <Link
             href='/trainer'
@@ -53,6 +53,24 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
                 pathname === '/trainer/schedule' ? 'text-black' : 'text-gray-700'
               )}>
               스케줄
+            </span>
+          </Link>
+        </li>
+        <li>
+          <Link
+            href='/trainer/community'
+            className='flex flex-col items-center justify-between gap-y-[6px]'>
+            {pathname === '/trainer/community' ? (
+              <IconCommunityFilled />
+            ) : (
+              <IconCommunityOutlined />
+            )}
+            <span
+              className={cn(
+                'text-[10px] font-semibold',
+                pathname === '/trainer/community' ? 'text-black' : 'text-gray-700'
+              )}>
+              커뮤니티
             </span>
           </Link>
         </li>
@@ -101,7 +119,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
 
   return (
     <nav className={cn('bg-white', className)} {...props}>
-      <ul className='flex items-center justify-between px-[36px] py-[18px]'>
+      <ul className='flex items-center justify-between px-11 py-[18px]'>
         <li>
           <Link
             href='/student'

@@ -18,7 +18,7 @@ const ImageSlide = ({ images }: { images: ImageFile[] }) => {
         {images.map((file, index) => (
           <CarouselItem key={index}>
             <Card className='h-full w-full p-0'>
-              <CardContent className=''>
+              <CardContent>
                 <Image
                   src={file.fileUrl}
                   alt={'React Rendezvous'}
