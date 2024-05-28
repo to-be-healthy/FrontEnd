@@ -38,12 +38,12 @@ const StudentLogDetailPage = ({ memberId, logId }: Props) => {
   const formattedDate = date.format('M월 D일 (ddd)');
 
   return (
-    <Layout>
-      <LogCommentContext.Provider value={value}>
+    <LogCommentContext.Provider value={value}>
+      <Layout>
         {data && (
           <>
             <Layout.Header>
-              <Header memberId={memberId} logId={logId} />
+              <Header />
             </Layout.Header>
             <Layout.Contents className='px-7 py-6'>
               <Card className='w-full gap-0 px-0 pb-0 pt-7'>
@@ -72,8 +72,8 @@ const StudentLogDetailPage = ({ memberId, logId }: Props) => {
             </Layout.BottomArea>
           </>
         )}
-      </LogCommentContext.Provider>
-    </Layout>
+      </Layout>
+    </LogCommentContext.Provider>
   );
 };
 

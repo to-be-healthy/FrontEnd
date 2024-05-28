@@ -3,15 +3,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { useDeleteLogMutation } from '@/feature/log';
+import { useDeleteLogMutation, useLogCommentContext } from '@/feature/log';
 import {
   IconBack,
   IconCheck,
   IconDotsVertical,
   IconEdit,
-  IconError,
   IconTrash,
 } from '@/shared/assets';
+import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import {
   AlertDialog,
@@ -30,13 +30,13 @@ import {
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-const Header = ({ memberId, logId }: { memberId: number; logId: number }) => {
+const Header = () => {
   const router = useRouter();
   const { toast } = useToast();
   const queryClient = useQueryClient();
-
   const [open, setOpen] = useState(false);
-
+  const { showErrorToast } = useShowErrorToast();
+  const { logId, memberId } = useLogCommentContext();
   const { mutate } = useDeleteLogMutation();
 
   const deleteLog = () => {
@@ -45,6 +45,7 @@ const Header = ({ memberId, logId }: { memberId: number; logId: number }) => {
       {
         onSuccess: async () => {
           await queryClient.refetchQueries({ queryKey: ['studentLogList', memberId] });
+          // TODO) positive toast hook
           toast({
             className: 'py-5 px-6',
             description: (
@@ -60,18 +61,8 @@ const Header = ({ memberId, logId }: { memberId: number; logId: number }) => {
           router.replace(`/trainer/manage/${memberId}/log`);
         },
         onError: (error) => {
-          toast({
-            className: 'py-5 px-6',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconError />
-                <p className='typography-heading-5 ml-6 text-white'>
-                  {error.response?.data.message}
-                </p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+          showErrorToast(message);
         },
       }
     );
