@@ -2,9 +2,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
-import { IconCheck } from '@/shared/assets';
+import { IconCheck, IconError } from '@/shared/assets';
 import CancelCalendarIcon from '@/shared/assets/images/icon_cancel_calendar.svg';
-import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import ReservationCalendarIcon from '@/shared/assets/images/icon_reservation_calendar.svg';
 import ScheduleIcon from '@/shared/assets/images/icon_schedule.svg';
 import { Typography } from '@/shared/mixin';
@@ -97,7 +96,7 @@ export const StudentMyReservationSchedule = ({ data }: Props) => {
           className: 'h-12',
           description: (
             <div className='flex items-center justify-center'>
-              <ErrorIcon fill={'var(--primary-500)'} />
+              <IconError fill={'var(--primary-500)'} />
               <p className='typography-heading-5 ml-6 text-[#fff]'>
                 {error.response?.data.message}
               </p>

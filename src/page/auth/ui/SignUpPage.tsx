@@ -6,8 +6,8 @@ import { SubmitHandler } from 'react-hook-form';
 
 import { SignUpRequest, useSignUpMutation } from '@/entity/auth';
 import { SignUpCancelDialog, SignUpFunnel, useSignUpFunnel } from '@/feature/auth';
+import { IconError } from '@/shared/assets';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
-import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Button, GenericForm, useToast } from '@/shared/ui';
 import { Layout } from '@/widget';
 
@@ -44,7 +44,7 @@ const SignUpPage = () => {
         className: 'h-12',
         description: (
           <div className='flex items-center justify-center'>
-            <ErrorIcon />
+            <IconError />
             <p className='typography-heading-5 ml-6 text-[#fff]'>
               이메일 인증을 해주세요
             </p>
@@ -58,7 +58,7 @@ const SignUpPage = () => {
         className: 'h-12',
         description: (
           <div className='flex items-center justify-center'>
-            <ErrorIcon />
+            <IconError />
             <p className='typography-heading-5 ml-6 text-[#fff]'>
               아이디 중복확인을 해주세요
             </p>
@@ -84,7 +84,7 @@ const SignUpPage = () => {
             className: 'h-12',
             description: (
               <div className='flex items-center justify-center'>
-                <ErrorIcon />
+                <IconError />
                 <p className='typography-heading-5 ml-6 text-[#fff]'>
                   {`${error.response?.data.message}`}
                 </p>

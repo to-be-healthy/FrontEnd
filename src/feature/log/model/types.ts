@@ -32,10 +32,8 @@ interface Log {
 }
 
 interface ImageFile {
-  originalFileName: string;
   fileUrl: string;
   fileOrder: number;
-  createdAt: string;
 }
 
 export type { Comment, ImageFile, Log };

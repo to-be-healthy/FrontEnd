@@ -30,7 +30,7 @@ const CommentList = ({ comments, depth = 0 }: Props) => {
       {comments.map((comment) => (
         <Fragment key={comment.id}>
           <CommentItem comment={comment} depth={depth} />
-          {comment.replies && (
+          {comment.replies && comment.replies.length > 0 && (
             <li>
               <CommentList comments={comment.replies} depth={depth + 1} />
             </li>

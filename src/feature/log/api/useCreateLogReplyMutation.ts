@@ -14,8 +14,8 @@ export const useCreateLogReplyMutation = (logId: number) => {
   return useMutation<BaseResponse<boolean>, BaseError, CreateLogReplyRequest>({
     mutationFn: async ({ images, comment, commentId }) => {
       const payload = {
-        uploadFileResponse: images,
         comment,
+        commandUploadFileResult: images,
       };
       const result = await authApi.post<BaseResponse<boolean>>(
         `/api/lessonhistory/v1/${logId}/comment/${commentId}`,

@@ -7,9 +7,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { AppendMemberForm } from '@/feature/member';
 import { useAppendMemberMutation } from '@/feature/member/api/useAppendMemberMutation';
-import { IconCheck } from '@/shared/assets';
+import { IconCheck, IconError } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
-import ErrorIcon from '@/shared/assets/images/icon_error.svg';
 import { Typography } from '@/shared/mixin';
 import { Button, Input } from '@/shared/ui';
 import { toast } from '@/shared/ui/toast/use-toast';
@@ -60,7 +59,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
             className: 'h-[48px]',
             description: (
               <div className='flex items-center justify-center'>
-                <ErrorIcon />
+                <IconError />
                 <p className='typography-heading-5 ml-6 text-white'>{message}</p>
               </div>
             ),
@@ -76,7 +75,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
       className: 'h-[48px]',
       description: (
         <div className='flex items-center justify-center'>
-          <ErrorIcon />
+          <IconError />
           <p className='typography-heading-5 ml-6 text-white'>
             입력이 필요한 항목이 있습니다.
           </p>

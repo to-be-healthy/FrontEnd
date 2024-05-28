@@ -13,6 +13,14 @@ export {
 export { Button, buttonVariants } from './button';
 export { Calendar } from './calendar';
 export { Card, CardContent, CardFooter, CardHeader } from './card';
+export {
+  Carousel,
+  type CarouselApi,
+  CarouselContent,
+  CarouselItem,
+  CarouselNav,
+  CarouselPrevious,
+} from './carousel';
 export { Collapsible, CollapsibleContent, CollapsibleTrigger } from './collapsible';
 export {
   Dialog,
@@ -26,6 +34,23 @@ export {
   DialogTitle,
   DialogTrigger,
 } from './dialog';
+export {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from './dropdown-menu';
 export { GenericForm } from './generic-form';
 export { EmailInput } from './input/EmailInput';
 export { Input } from './input/Input';

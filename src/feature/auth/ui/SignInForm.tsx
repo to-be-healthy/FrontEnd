@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useAuthAction, useSignInMutation } from '@/entity/auth';
-import ErrorIcon from '@/shared/assets/images/icon_error.svg';
+import { IconError } from '@/shared/assets';
 import { Button, TextInput, useToast } from '@/shared/ui';
 
 import { LoginForm } from '../model/types';
@@ -35,7 +35,7 @@ export const SignInForm = ({ memberType }: { memberType: 'trainer' | 'student' }
             className: 'h-12',
             description: (
               <div className='flex items-center justify-center'>
-                <ErrorIcon />
+                <IconError />
                 <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
               </div>
             ),
