@@ -172,7 +172,7 @@ export const TrainerHomePage = () => {
                   </CardContent>
                 </Card>
               </Link>
-              <Link href={'#'}>
+              <Link href={'/trainer/manage/feedback'}>
                 <Card className='h-[140px] w-full shadow-sm'>
                   <CardHeader>피드백 작성</CardHeader>
                   <CardContent className='relative h-full'>

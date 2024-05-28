@@ -82,22 +82,8 @@ const TrainerAlarmPage = () => {
           className='flex h-full w-full flex-col'
           onValueChange={(value) => setTabState(value)}>
           <TabsList className='flex w-full px-7'>
-            <TabsTrigger
-              value='lesson'
-              className={cn(
-                Typography.TITLE_1_BOLD,
-                'h-[40px] w-full rounded-none border-gray-800 pb-5 pt-0 text-gray-500 data-[state=active]:border-b-2 data-[state=active]:bg-transparent data-[state=active]:text-gray-800 data-[state=active]:shadow-none'
-              )}>
-              수업
-            </TabsTrigger>
-            <TabsTrigger
-              value='community'
-              className={cn(
-                Typography.TITLE_1_BOLD,
-                'h-[40px] w-full rounded-none border-gray-800 pb-5 pt-0 text-gray-500 data-[state=active]:border-b-2 data-[state=active]:bg-transparent data-[state=active]:text-gray-800 data-[state=active]:shadow-none'
-              )}>
-              커뮤니티
-            </TabsTrigger>
+            <TabsTrigger value='lesson'>수업</TabsTrigger>
+            <TabsTrigger value='community'>커뮤니티</TabsTrigger>
           </TabsList>
           <TabsContent value='lesson' className='flex-grow'>
             {data && data.length === 0 && (

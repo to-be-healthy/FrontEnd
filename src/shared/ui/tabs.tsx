@@ -6,6 +6,8 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 
 import { cn } from '@/shared/utils/tw-utils';
 
+import { Typography } from '../mixin';
+
 const TabsRoot = TabsPrimitive.Root;
 
 const TabsList = forwardRef<
@@ -15,7 +17,7 @@ const TabsList = forwardRef<
   <TabsPrimitive.List
     ref={ref}
     className={cn(
-      'inline-flex h-10 items-center justify-center rounded-none bg-muted p-1 text-muted-foreground',
+      'inline-flex w-full items-stretch justify-center rounded-none border-b border-gray-200 px-7 pt-6',
       className
     )}
     {...props}
@@ -30,7 +32,10 @@ const TabsTrigger = forwardRef<
   <TabsPrimitive.Trigger
     ref={ref}
     className={cn(
-      'inline-flex items-center justify-center whitespace-nowrap px-3 py-1.5 text-gray-500 outline-none ring-0 ring-offset-0 transition-all disabled:pointer-events-none disabled:opacity-50 data-[state=active]:bg-background data-[state=active]:text-black',
+      Typography.TITLE_1_BOLD,
+      'inline-flex w-full items-center justify-center whitespace-nowrap pb-5 text-gray-500 shadow-none outline-none ring-0 ring-offset-0 transition-all',
+      'data-[state=active]:border-b-2 data-[state=active]:border-gray-800 data-[state=active]:text-black',
+      'disabled:pointer-events-none disabled:opacity-50',
       className
     )}
     {...props}
