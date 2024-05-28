@@ -66,7 +66,8 @@ export const TrainerHomePage = () => {
       <div className='absolute left-0 top-0 z-0 h-[170px] w-full bg-primary' />
       <Layout.Header className='z-10'>
         <p className={cn(Typography.TITLE_2, 'text-white')}>{userInfo?.gym.name}</p>
-        <Link href={'#'}>
+        <Link href={'/trainer/alarm'}>
+          {/* TODO) 읽지 않은 알람 있을 경우 레드닷 표시 필요 */}
           <IconAlarmWhite />
         </Link>
       </Layout.Header>
@@ -85,7 +86,9 @@ export const TrainerHomePage = () => {
                 <div className='flex w-fit gap-4'>
                   {homeInfo?.todaySchedule.before.map((item) => {
                     return (
-                      <Link href={'#'} key={item.scheduleId}>
+                      <Link
+                        href={`/trainer/manage/${item.applicantId}`}
+                        key={item.scheduleId}>
                         <div
                           className={cn(
                             FLEX_CENTER,

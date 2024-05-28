@@ -1,4 +1,5 @@
 export { default as IconAlarm } from './images/alarm.svg';
+export { default as IconAlarmBig } from './images/alarm_big.svg';
 export { default as IconAlarmWhite } from './images/alarm_white.svg';
 export { default as IconArrowDown } from './images/arrow_down.svg';
 export { default as IconArrowFilledDown } from './images/arrow_filled_down.svg';

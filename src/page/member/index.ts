@@ -1,5 +1,5 @@
-export { AlarmPage } from './ui/AlarmPage';
 export { CSPage } from './ui/CSPage';
+export { EditAlarmPage } from './ui/EditAlarmPage';
 export { EditEmailPage } from './ui/EditEmailPage';
 export { EditMyInfoPage } from './ui/EditMyInfoPage';
 export { EditNamePage } from './ui/EditNamePage';
