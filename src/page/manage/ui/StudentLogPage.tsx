@@ -92,7 +92,7 @@ const StudentLogPage = ({ memberId }: Props) => {
         )}
         {contents && contents.length === 0 && (
           <div className='flex h-full flex-col items-center justify-center space-y-4'>
-            <IconCalendarX />
+            <IconCalendarX width={42} height={42} />
             <p className={cn(Typography.HEADING_4_SEMIBOLD, 'text-gray-400')}>
               수업일지 내역이 없습니다.
             </p>

@@ -27,7 +27,7 @@ import ScheduleIcon from '@/shared/assets/images/icon_schedule.svg';
 import { Typography } from '@/shared/mixin';
 import { Calendar } from '@/shared/ui';
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
-import { cn } from '@/shared/utils';
+import { cn, twSelector } from '@/shared/utils';
 dayjs.extend(isBetween);
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
@@ -140,26 +140,15 @@ export const StudentSchedulePage = () => {
 
   return (
     <Layout type='student'>
-      <Layout.Header className='flex justify-end bg-[#fff]'>
+      <Layout.Header className='flex justify-end bg-white'>
         <IconAlarm />
       </Layout.Header>
       <Layout.Contents className='bg-gray-100'>
         <Tabs defaultValue='classReservation'>
-          <TabsList className='grid w-full grid-cols-2 rounded-none border-b border-b-gray-200 bg-[#fff] p-0'>
-            <TabsTrigger
-              value='classReservation'
-              className={cn(
-                Typography.TITLE_1_BOLD,
-                'h-[40px] rounded-none border-gray-800 text-gray-500 data-[state=active]:border-b-2 data-[state=active]:text-gray-800 data-[state=active]:shadow-none'
-              )}>
-              수업 예약
-            </TabsTrigger>
+          <TabsList className='bg-white'>
+            <TabsTrigger value='classReservation'>수업 예약</TabsTrigger>
             <TabsTrigger
               value='myReservation'
-              className={cn(
-                Typography.TITLE_1_BOLD,
-                'h-[40px] rounded-none border-gray-800 text-gray-500 data-[state=active]:border-b-2 data-[state=active]:text-gray-800 data-[state=active]:shadow-none'
-              )}
               onClick={() => {
                 setHasMounted(false);
                 setIsToggle(false);
@@ -329,32 +318,26 @@ export const StudentSchedulePage = () => {
                 </article> */}
 
                 <Tabs defaultValue='upcomingReservation'>
-                  <TabsList className='mb-6 flex items-center justify-start gap-4 bg-transparent p-0'>
+                  <TabsList className='mb-6 flex items-center justify-start gap-4 border-b-0 p-0'>
                     <TabsTrigger
                       value='upcomingReservation'
-                      asChild
-                      className='block h-full'>
-                      <Button
-                        variant='ghost'
-                        className={cn(
-                          Typography.HEADING_5,
-                          'block w-[95px] rounded-[9999px] bg-[#fff] px-5 py-2 font-normal text-gray-500 shadow-none data-[state=active]:bg-primary-500 data-[state=active]:font-semibold data-[state=active]:text-[#fff]'
-                        )}>
-                        다가오는 예약
-                      </Button>
+                      className={cn(
+                        Typography.BODY_3,
+                        twSelector('data-[state=active]', Typography.HEADING_5),
+                        'w-fit rounded-full border-none bg-white px-5 py-[5px] text-gray-500',
+                        'data-[state=active]:bg-primary-500 data-[state=active]:text-white'
+                      )}>
+                      다가오는 예약
                     </TabsTrigger>
                     <TabsTrigger
                       value='awaitingReservation'
-                      asChild
-                      className='block h-full'>
-                      <Button
-                        variant='ghost'
-                        className={cn(
-                          Typography.HEADING_5,
-                          'block w-[95px] rounded-[9999px] bg-[#fff] px-5 py-2 font-normal text-gray-500 shadow-none data-[state=active]:bg-primary-500 data-[state=active]:font-semibold data-[state=active]:text-[#fff]'
-                        )}>
-                        대기중 예약
-                      </Button>
+                      className={cn(
+                        Typography.BODY_3,
+                        twSelector('data-[state=active]', Typography.HEADING_5),
+                        'w-fit rounded-full border-none bg-white px-5 py-[5px] text-gray-500',
+                        'data-[state=active]:bg-primary-500 data-[state=active]:text-white'
+                      )}>
+                      대기중 예약
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value='upcomingReservation' className='w-full'>

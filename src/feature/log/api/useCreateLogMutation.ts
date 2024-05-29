@@ -5,7 +5,7 @@ import { ImageType } from '@/entity/image';
 import { BaseError, BaseResponse } from '@/shared/api';
 
 interface CreateLogRequest {
-  uploadFileResponse: ImageType[];
+  uploadFiles: ImageType[];
   title: string;
   content: string;
   studentId: number;
@@ -16,7 +16,7 @@ export const useCreateLogMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, CreateLogRequest>({
     mutationFn: async (payload) => {
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/lessonhistory/v1/register`,
+        `/api/lessonhistory/v1`,
         payload
       );
       return result.data;

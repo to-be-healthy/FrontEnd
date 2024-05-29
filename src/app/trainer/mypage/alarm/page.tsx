@@ -1,7 +1,7 @@
-import { AlarmPage } from '@/page/member';
+import { EditAlarmPage } from '@/page/member';
 
 const Page = () => {
-  return <AlarmPage />;
+  return <EditAlarmPage />;
 };
 
 export default Page;

@@ -44,7 +44,7 @@ export const Layout = ({ type, className, children, ...props }: LayoutProps) => 
 const Header = ({ children, className, ...props }: HTMLAttributes<HTMLDivElement>) => (
   <header
     className={cn(
-      'relative flex h-[56px] w-full flex-none items-center justify-between p-[20px]',
+      'relative flex h-[56px] w-full flex-none items-center justify-between px-7 py-6',
       className
     )}
     {...props}>

@@ -8,7 +8,7 @@ import { Switch } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
-const AlarmPage = () => {
+const EditAlarmPage = () => {
   const changeAlarm = (checked: boolean, id: string) => {
     console.log(id, checked);
   };
@@ -61,4 +61,4 @@ const AlarmPage = () => {
   );
 };
 
-export { AlarmPage };
+export { EditAlarmPage };

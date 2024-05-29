@@ -22,7 +22,7 @@ const MAX_IMAGES_COUNT = 3;
 const StudentLogWritePage = ({ memberId }: Props) => {
   const router = useRouter();
   const [content, setContent] = useState('');
-  const [scheduleId] = useState(5740); // TODO
+  const [scheduleId] = useState(9895); // TODO
   const { images, uploadFiles } = useImages({ maxCount: MAX_IMAGES_COUNT });
 
   const { mutate } = useCreateLogMutation();
@@ -34,7 +34,7 @@ const StudentLogWritePage = ({ memberId }: Props) => {
         content,
         studentId: memberId,
         scheduleId,
-        uploadFileResponse: images,
+        uploadFiles: images,
       },
       {
         onSuccess: () => {

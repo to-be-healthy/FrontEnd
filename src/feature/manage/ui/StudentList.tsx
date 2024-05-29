@@ -15,6 +15,7 @@ import IconArrowDownUp from '@/shared/assets/images/icon_arrow_down_up.svg';
 import IconCircleAlert from '@/shared/assets/images/icon_circle_alert.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile_small.svg';
 import IconSearch from '@/shared/assets/images/icon_search.svg';
+import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import {
   DropdownMenu,
@@ -83,12 +84,11 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
 
   return (
     <div className='flex h-full flex-col'>
-      <div className='flex h-fit w-full px-[20px] py-[16px]'>
-        <div className='flex h-fit w-full justify-between rounded-md bg-gray-200 px-[16px] py-[10px]'>
-          <Button variant='ghost' size='icon' className='h-[20px] w-[20px]'>
+      <div className='flex h-fit w-full px-7 py-6'>
+        <div className='flex h-fit w-full justify-between rounded-md bg-gray-200 px-6 py-4'>
+          <Button variant='ghost' size='icon' className='h-7 w-7'>
             <IconSearch />
           </Button>
-          {/* 공통 인풋 적용 예정 */}
           <input
             type='text'
             className='w-full bg-transparent px-5'
@@ -97,16 +97,18 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
         </div>
       </div>
       {!isLoading && (
-        <div className='mt-[4px] flex h-full flex-1 flex-grow flex-col overflow-y-auto px-[20px]'>
+        <div className='hide-scrollbar mt-1 flex h-full flex-1 flex-grow flex-col overflow-y-auto px-[20px]'>
           <div className='mb-[10px] flex items-center justify-between'>
-            <p className='typography-body-2'>
+            <p className={Typography.BODY_2}>
               총{' '}
-              <span className='typography-title-3 text-primary-500'>{studentsCount}</span>
+              <span className={cn(Typography.TITLE_3, 'text-primary-500')}>
+                {studentsCount}
+              </span>
               명
             </p>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant='ghost' className='typography-body-3 flex gap-x-[4px]'>
+                <Button variant='ghost' className={cn(Typography.BODY_3, 'flex gap-x-1')}>
                   <IconArrowDownUp />
                   {sort.label}
                 </Button>
@@ -117,8 +119,9 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
                     <DropdownMenuItem
                       key={item.label}
                       className={cn(
-                        'typography-title-3 px-[16px] py-[12px] text-gray-500',
-                        item.label === sort.label && 'text-black'
+                        Typography.TITLE_3,
+                        'px-6 py-5',
+                        item.label === sort.label ? 'text-black' : 'text-gray-500'
                       )}
                       onClick={() => setSort(item)}>
                       {item.label}
@@ -129,17 +132,20 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
             </DropdownMenu>
           </div>
           {studentList === null && (
-            <div className='mb-[30%] flex h-full flex-col items-center justify-center gap-y-[36px]'>
+            <div className='mb-[30%] flex h-full flex-col items-center justify-center gap-y-11'>
               <div className='flex flex-col items-center gap-y-[12px]'>
                 <IconCircleAlert />
-                <p className='text-[16px]/[130%] font-bold text-gray-700'>
+                <p className={cn(Typography.TITLE_1_BOLD, 'text-gray-700')}>
                   등록된 회원이 없습니다.
                 </p>
               </div>
               <AddStudentDialog>
                 <Button
                   variant='default'
-                  className='typography-title-3 flex h-[48px] w-[146px] items-center gap-x-[4px] px-[24px] py-[8px]'>
+                  className={cn(
+                    Typography.TITLE_3,
+                    'flex h-12 w-[146px] items-center gap-x-1 px-8 py-3'
+                  )}>
                   <IconPlus fill='white' />
                   회원 등록하기
                 </Button>
@@ -152,7 +158,7 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
                 <div className='flex flex-col items-center gap-y-[36px]'>
                   <div className='flex flex-col items-center gap-y-[12px]'>
                     <IconCircleAlert />
-                    <p className='text-[16px]/[130%] font-bold text-gray-500'>
+                    <p className={cn(Typography.TITLE_1_BOLD, 'text-gray-500')}>
                       검색 결과가 없습니다.
                     </p>
                   </div>
@@ -161,13 +167,13 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
             </div>
           )}
           {studentList !== null && processedStudentList.length > 0 && (
-            <div className='flex w-full flex-col gap-y-[10px] pb-8'>
+            <div className='flex w-full flex-col gap-y-4 pb-8'>
               {processedStudentList.map((item) => {
                 return (
                   <button
                     key={item.memberId}
                     onClick={() => onClickStudent(item.memberId)}>
-                    <div className='flex justify-between rounded-lg bg-white px-[16px] py-[20px]'>
+                    <div className='flex justify-between rounded-lg bg-white px-6 py-7'>
                       <div className='flex items-center gap-x-[16px]'>
                         <div className='relative'>
                           {item.fileUrl ? (
@@ -182,23 +188,25 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
                             <IconDefaultProfile width={32} height={32} />
                           )}
                         </div>
-                        <div className='flex flex-col gap-y-[4px]'>
-                          <p className='typography-title-1 font-bold'>{item.name}</p>
-                          {item.nickName ?? (
-                            <span className='typography-body-4 text-gray-500'>
+                        <div className='flex flex-col gap-y-[4px] text-left'>
+                          <p className={cn(Typography.TITLE_1_BOLD)}>{item.name}</p>
+                          {item.nickName && (
+                            <span
+                              className={cn(Typography.BODY_4_REGULAR, 'text-gray-500')}>
                               {item.nickName}
                             </span>
                           )}
                         </div>
                       </div>
                       <div className='flex items-center'>
-                        <span className='typography-body-3 mr-[2px] text-primary-500'>
+                        <span
+                          className={cn(Typography.BODY_3, 'mr-[2px] text-primary-500')}>
                           잔여
                         </span>
-                        <span className='typography-title-3 text-primary-500'>
+                        <span className={cn(Typography.TITLE_3, 'text-primary-500')}>
                           {item.remainLessonCnt}
                         </span>
-                        <span className='typography-body-2 text-gray-400'>
+                        <span className={cn(Typography.BODY_2, 'text-gray-400')}>
                           /{item.lessonCnt}
                         </span>
                       </div>

@@ -26,7 +26,7 @@ export const useStudentLogListQuery = ({
       if (searchDate) {
         queryParams.append('searchDate', searchDate);
       }
-      const url = `/api/lessonhistory/v1/detail/${studentId}?${queryParams.toString()}`;
+      const url = `/api/lessonhistory/v1/student/${studentId}?${queryParams.toString()}`;
       const result = await authApi.get<BaseResponse<StudentLogListResponse>>(url);
       return result.data.data;
     },
