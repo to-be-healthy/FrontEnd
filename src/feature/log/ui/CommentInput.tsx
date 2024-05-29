@@ -33,19 +33,19 @@ const CommentInput = () => {
   const submitComment = () => {
     // 신규 댓글
     if (target === null) {
-      createComment({ comment: text, images }, commentCallback);
+      createComment({ content: text, images }, commentCallback);
     }
 
     // 신규 대댓글
     if (target && target.mode === 'create' && target.isReply) {
       const commentId = target.comment.parentId ?? target.comment.id;
-      createReply({ comment: text, images, commentId }, commentCallback);
+      createReply({ content: text, images, commentId }, commentCallback);
     }
 
     // 댓글, 대댓글 수정
     if (target && target.mode === 'edit') {
-      const commentId = target.comment.parentId ?? target.comment.id;
-      editComment({ comment: text, commentId }, commentCallback);
+      const commentId = target.comment.id;
+      editComment({ content: text, commentId }, commentCallback);
     }
   };
 

@@ -6,16 +6,16 @@ import { BaseError, BaseResponse } from '@/shared/api';
 
 interface CreateLogReplyRequest {
   images?: ImageType[];
-  comment: string;
+  content: string;
   commentId: number;
 }
 
 export const useCreateLogReplyMutation = (logId: number) => {
   return useMutation<BaseResponse<boolean>, BaseError, CreateLogReplyRequest>({
-    mutationFn: async ({ images, comment, commentId }) => {
+    mutationFn: async ({ images, content, commentId }) => {
       const payload = {
-        comment,
-        commandUploadFileResult: images,
+        content,
+        uploadFiles: images,
       };
       const result = await authApi.post<BaseResponse<boolean>>(
         `/api/lessonhistory/v1/${logId}/comment/${commentId}`,

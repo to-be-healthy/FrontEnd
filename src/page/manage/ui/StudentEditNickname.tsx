@@ -127,13 +127,17 @@ const StudentEditNickname = ({ memberId }: Props) => {
               </AlertDialogTitle>
             </AlertDialogHeader>
             <AlertDialogFooter className='grid w-full grid-cols-2 items-center justify-center gap-3'>
-              <AlertDialogCancel className='mt-0 h-[48px] rounded-md bg-gray-100 text-gray-600'>
+              <AlertDialogCancel
+                className={cn(
+                  Typography.TITLE_1_SEMIBOLD,
+                  'm-0 h-12 rounded-md bg-gray-100 p-4 text-gray-600'
+                )}>
                 아니요
               </AlertDialogCancel>
-              <AlertDialogAction asChild>
-                <Button variant='default' className='py-[10px]' onClick={onSubmit}>
-                  예
-                </Button>
+              <AlertDialogAction
+                className={cn(Typography.TITLE_1_SEMIBOLD, 'm-0 h-12 p-4 text-white')}
+                onClick={onSubmit}>
+                예
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
@@ -158,7 +162,7 @@ const StudentEditNickname = ({ memberId }: Props) => {
               className={cn(
                 Typography.BODY_1,
                 twSelector('placeholder', Typography.BODY_1),
-                'bg-transparent text-gray-500 read-only:bg-transparent'
+                'w-full bg-transparent text-gray-500 read-only:bg-transparent'
               )}
             />
           </div>
@@ -176,7 +180,7 @@ const StudentEditNickname = ({ memberId }: Props) => {
               className={cn(
                 Typography.BODY_1,
                 twSelector('placeholder', Typography.BODY_1),
-                'bg-transparent text-gray-800 placeholder:text-gray-500'
+                'w-full bg-transparent text-gray-800 placeholder:text-gray-500'
               )}
             />
           </div>

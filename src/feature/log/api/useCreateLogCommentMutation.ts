@@ -6,14 +6,14 @@ import { BaseError, BaseResponse } from '@/shared/api';
 
 interface CreateLogCommentRequest {
   images?: ImageType[];
-  comment: string;
+  content: string;
 }
 export const useCreateLogCommentMutation = (logId: number) => {
   return useMutation<BaseResponse<boolean>, BaseError, CreateLogCommentRequest>({
-    mutationFn: async ({ comment, images }) => {
+    mutationFn: async ({ content, images }) => {
       const result = await authApi.post<BaseResponse<boolean>>(
         `/api/lessonhistory/v1/${logId}/comment`,
-        { comment, uploadFileResponse: images }
+        { content, uploadFiles: images }
       );
       return result.data;
     },

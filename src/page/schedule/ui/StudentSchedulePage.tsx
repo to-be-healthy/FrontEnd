@@ -140,12 +140,12 @@ export const StudentSchedulePage = () => {
 
   return (
     <Layout type='student'>
-      <Layout.Header className='flex justify-end bg-[#fff]'>
+      <Layout.Header className='flex justify-end bg-white'>
         <IconAlarm />
       </Layout.Header>
       <Layout.Contents className='bg-gray-100'>
         <Tabs defaultValue='classReservation'>
-          <TabsList className='gap-8 bg-white px-8'>
+          <TabsList className='bg-white'>
             <TabsTrigger value='classReservation'>수업 예약</TabsTrigger>
             <TabsTrigger
               value='myReservation'
@@ -323,9 +323,9 @@ export const StudentSchedulePage = () => {
                       value='upcomingReservation'
                       className={cn(
                         Typography.BODY_3,
+                        twSelector('data-[state=active]', Typography.HEADING_5),
                         'w-fit rounded-full border-none bg-white px-5 py-[5px] text-gray-500',
-                        'data-[state=active]:bg-primary-500 data-[state=active]:text-white',
-                        twSelector('data-[state=active]', Typography.HEADING_5)
+                        'data-[state=active]:bg-primary-500 data-[state=active]:text-white'
                       )}>
                       다가오는 예약
                     </TabsTrigger>
@@ -333,9 +333,9 @@ export const StudentSchedulePage = () => {
                       value='awaitingReservation'
                       className={cn(
                         Typography.BODY_3,
+                        twSelector('data-[state=active]', Typography.HEADING_5),
                         'w-fit rounded-full border-none bg-white px-5 py-[5px] text-gray-500',
-                        'data-[state=active]:bg-primary-500 data-[state=active]:text-white',
-                        twSelector('data-[state=active]', Typography.HEADING_5)
+                        'data-[state=active]:bg-primary-500 data-[state=active]:text-white'
                       )}>
                       대기중 예약
                     </TabsTrigger>

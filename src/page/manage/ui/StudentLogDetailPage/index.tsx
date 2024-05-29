@@ -45,7 +45,7 @@ const StudentLogDetailPage = ({ memberId, logId }: Props) => {
             <Layout.Header>
               <Header />
             </Layout.Header>
-            <Layout.Contents className='px-7 py-6'>
+            <Layout.Contents className='hide-scrollbar px-7 py-6'>
               <Card className='w-full gap-0 px-0 pb-0 pt-7'>
                 <CardHeader className={cn(Typography.TITLE_3, 'px-6')}>
                   {formattedDate}

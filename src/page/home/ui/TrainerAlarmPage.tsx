@@ -81,7 +81,7 @@ const TrainerAlarmPage = () => {
           defaultValue='lesson'
           className='flex h-full w-full flex-col'
           onValueChange={(value) => setTabState(value)}>
-          <TabsList className='flex w-full px-7'>
+          <TabsList>
             <TabsTrigger value='lesson'>수업</TabsTrigger>
             <TabsTrigger value='community'>커뮤니티</TabsTrigger>
           </TabsList>

@@ -147,7 +147,10 @@ const CommentItem = ({
           </DropdownMenuItem>
           <DropdownMenuItem
             className='typography-title-3 px-[16px] py-[12px]'
-            onClick={() => deleteComment(comment.id)}>
+            onClick={() => {
+              deleteComment(comment.id);
+              setOpend(false);
+            }}>
             댓글 삭제
           </DropdownMenuItem>
         </DropdownMenuGroup>
