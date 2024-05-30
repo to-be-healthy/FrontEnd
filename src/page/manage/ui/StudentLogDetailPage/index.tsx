@@ -53,7 +53,7 @@ const StudentLogDetailPage = ({ memberId, logId }: Props) => {
                   {data.lessonTime}
                 </CardHeader>
                 <CardContent className='mt-4 px-6'>
-                  <ImageSlide images={data.files} />
+                  <ImageSlide images={data.files} enlargeMode />
                   <p className={cn(Typography.BODY_3, 'mt-5')}>{data.content}</p>
                 </CardContent>
                 <CardFooter className='mb-4 mt-6 flex flex-col gap-7'>
