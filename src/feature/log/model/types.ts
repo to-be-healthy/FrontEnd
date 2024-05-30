@@ -36,4 +36,14 @@ interface ImageFile {
   fileOrder: number;
 }
 
-export type { Comment, ImageFile, Log };
+interface Lesson {
+  scheduleId: number;
+  studentId: number;
+  studentName: string;
+  lessonDt: string;
+  lessonTime: string;
+  reservationStatus: '출석' | '미출석';
+  reviewStatus: '작성' | '미작성';
+}
+
+export type { Comment, ImageFile, Lesson, Log };

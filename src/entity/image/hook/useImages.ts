@@ -24,6 +24,7 @@ const useImages = ({ maxCount = 3 }: Options = {}) => {
       {
         onSuccess: (data) => {
           setImages((prev) => [...prev, ...data.data]);
+          e.target.value = '';
         },
       }
     );
