@@ -12,6 +12,10 @@ const useImages = ({ maxCount = 3 }: Options = {}) => {
 
   const { mutate } = useUploadImageMutation();
 
+  const updateImages = (images: ImageType[]) => {
+    setImages(images);
+  };
+
   const uploadFiles = (e: ChangeEvent<HTMLInputElement>) => {
     const uploadFiles = e.target.files;
     if (!uploadFiles) return;
@@ -24,6 +28,7 @@ const useImages = ({ maxCount = 3 }: Options = {}) => {
       {
         onSuccess: (data) => {
           setImages((prev) => [...prev, ...data.data]);
+          e.target.value = '';
         },
       }
     );
@@ -33,7 +38,7 @@ const useImages = ({ maxCount = 3 }: Options = {}) => {
     setImages([]);
   }, []);
 
-  return { images, uploadFiles, clearImages };
+  return { images, uploadFiles, clearImages, updateImages };
 };
 
 export { useImages };

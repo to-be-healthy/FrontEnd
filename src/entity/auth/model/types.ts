@@ -4,6 +4,7 @@ interface UserInfo {
   refreshToken: string;
   gymId: number | null;
   memberType: 'STUDENT' | 'TRAINER' | null;
+  memberId: number | null;
 }
 
 type SocialProvider = 'kakao' | 'naver' | 'google';

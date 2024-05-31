@@ -12,9 +12,10 @@ interface EditLogRequest {
 
 export const useEditLogCommentMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, EditLogRequest>({
-    mutationFn: async ({ content, commentId }) => {
+    mutationFn: async ({ content, commentId, images }) => {
       const payload = {
         content,
+        uploadFiles: images,
       };
       const result = await authApi.patch<BaseResponse<boolean>>(
         `/api/lessonhistory/v1/comment/${commentId}`,

@@ -9,10 +9,21 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-import { useStudentLogListQuery } from '@/feature/log';
+import { useLessonListQuery, useStudentLogListQuery } from '@/feature/log';
 import { IconBack, IconCalendarX, IconChat, IconPlus } from '@/shared/assets';
-import { Typography } from '@/shared/mixin';
-import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
+import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+} from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 import { ImageSlide } from '@/widget/image-slide';
@@ -24,11 +35,14 @@ interface Props {
 const StudentLogPage = ({ memberId }: Props) => {
   const pathname = usePathname();
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
-
   const { data } = useStudentLogListQuery({
     studentId: memberId,
     searchDate: dayjs(selectedMonth).format('YYYY-MM'),
   });
+  const { data: lessonList } = useLessonListQuery();
+  const hasUnwrittenLesson = lessonList
+    ? lessonList?.filter((item) => item.reviewStatus === '미작성').length > 0
+    : false;
 
   const contents = data?.content;
 
@@ -41,9 +55,32 @@ const StudentLogPage = ({ memberId }: Props) => {
         <h2 className={cn(Typography.HEADING_4_SEMIBOLD)}>
           {contents && data.studentName}님 수업 일지
         </h2>
-        <Link href={`/trainer/manage/${memberId}/log/write`}>
-          <IconPlus fill='black' width={20} height={20} />
-        </Link>
+        {hasUnwrittenLesson ? (
+          <Link href={`/trainer/manage/${memberId}/log/write`}>
+            <IconPlus fill='black' width={20} height={20} />
+          </Link>
+        ) : (
+          <AlertDialog>
+            <AlertDialogTrigger>
+              <IconPlus fill='black' width={20} height={20} />
+            </AlertDialogTrigger>
+            <AlertDialogContent className='gap-0 px-7 py-8'>
+              <AlertDialogTitle className={cn(Typography.HEADING_4_BOLD)}>
+                수업일지가 모두 작성 완료되었습니다.
+              </AlertDialogTitle>
+              <AlertDialogFooter className='mt-8 flex flex-row gap-3'>
+                <AlertDialogCancel
+                  className={cn(
+                    Typography.TITLE_1_SEMIBOLD,
+                    FLEX_CENTER,
+                    'h-full w-full bg-primary-500 py-[13px] text-white'
+                  )}>
+                  확인
+                </AlertDialogCancel>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        )}
       </Layout.Header>
       <Layout.Contents className='overflow-y-hidden py-7'>
         <div className='px-7'>
@@ -53,8 +90,8 @@ const StudentLogPage = ({ memberId }: Props) => {
           />
         </div>
         {contents && contents.length > 0 && (
-          <div className='mt-1 flex h-full flex-1 flex-grow flex-col overflow-y-auto px-7 pb-7'>
-            <div className='flex w-full flex-col gap-y-6 pb-6'>
+          <div className='hide-scrollbar mt-1 flex h-full flex-1 flex-grow flex-col overflow-y-auto px-7 pb-7'>
+            <div className='mb-7 flex w-full flex-col gap-y-6 pb-6'>
               {contents.length > 0 &&
                 contents.map((log) => {
                   const date = dayjs(log.createdAt);

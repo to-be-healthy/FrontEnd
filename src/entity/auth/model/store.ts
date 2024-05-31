@@ -20,6 +20,7 @@ const DEFAULT_AUTH_STATE: AuthState = {
   refreshToken: undefined,
   gymId: undefined,
   memberType: null,
+  memberId: null,
 };
 
 const authStore = () => DEFAULT_AUTH_STATE;
@@ -32,6 +33,7 @@ const useAuthStore = createWithEqualityFn(
       'refreshToken',
       'accessToken',
       'gymId',
+      'memberId',
     ]),
     { name: AUTH_STATE_NAME }
   )

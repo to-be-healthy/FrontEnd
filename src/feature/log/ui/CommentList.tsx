@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { Fragment, PropsWithChildren, useState } from 'react';
 
+import { useAuthSelector } from '@/entity/auth';
 import IconProfile from '@/shared/assets/images/icon_default_profile_small.svg';
 import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
@@ -54,6 +55,7 @@ const CommentItem = ({
   const [opend, setOpend] = useState(false);
 
   const { target, changeTarget, focusOnInput, refreshComments } = useCommentContext();
+  const { memberId } = useAuthSelector(['memberId']);
   const { mutate } = useDeleteCommentMutation();
 
   const active = opend || target?.comment.id === comment.id;
@@ -74,6 +76,7 @@ const CommentItem = ({
       open={opend}
       onOpenChange={(state) => {
         if (comment.delYn) return;
+        if (comment.member.memberId === memberId) return;
         setOpend(state);
       }}
       modal={false}>
