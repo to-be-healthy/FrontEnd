@@ -46,4 +46,15 @@ interface Lesson {
   reviewStatus: '작성' | '미작성';
 }
 
-export type { Comment, ImageFile, Lesson, Log };
+interface UnwrittenLesson {
+  scheduleId: number;
+  studentId: number;
+  studentName: string;
+  lessonDt: string;
+  lessonTime: string;
+  reservationStatus: string;
+  lessonHistoryId: number | null;
+  reviewStatus: '작성' | '미작성';
+}
+
+export type { Comment, ImageFile, Lesson, Log, UnwrittenLesson };

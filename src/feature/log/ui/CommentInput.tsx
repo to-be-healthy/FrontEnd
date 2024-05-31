@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useEffect } from 'react';
 
 import { useImages } from '@/entity/image';
 import IconArrowTop from '@/shared/assets/images/icon_arrow_up_background.svg';
@@ -24,7 +25,7 @@ const CommentInput = () => {
     changeTarget,
     refreshComments,
   } = useCommentContext();
-  const { images, uploadFiles, clearImages } = useImages();
+  const { images, uploadFiles, clearImages, updateImages } = useImages();
   const { mutate: createComment } = useCreateLogCommentMutation(logId);
   const { mutate: createReply } = useCreateLogReplyMutation(logId);
   const { mutate: editComment } = useEditLogCommentMutation();
@@ -45,7 +46,7 @@ const CommentInput = () => {
     // 댓글, 대댓글 수정
     if (target && target.mode === 'edit') {
       const commentId = target.comment.id;
-      editComment({ content: text, commentId }, commentCallback);
+      editComment({ content: text, commentId, images }, commentCallback);
     }
   };
 
@@ -57,6 +58,15 @@ const CommentInput = () => {
       clearImages();
     },
   };
+
+  useEffect(() => {
+    if (target && target.comment.files.length > 0) {
+      updateImages(target.comment.files);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [target]);
+
+  console.log(images);
 
   return (
     <div
@@ -108,7 +118,7 @@ const CommentInput = () => {
       )}
       {/* Input 상단 업로드 할 이미지 */}
       {images.length > 0 && (
-        <div className='mb-[8px]'>
+        <div className='mb-[8px] flex gap-2'>
           {images.map((image, index) => (
             <div key={index} className='flex items-start space-x-[4px] overflow-hidden'>
               <Image
@@ -121,7 +131,7 @@ const CommentInput = () => {
               <IconCloseCircle
                 className='cursor-pointer'
                 onClick={() => {
-                  clearImages();
+                  updateImages(images.filter((_, idx) => idx !== index));
                 }}
               />
             </div>

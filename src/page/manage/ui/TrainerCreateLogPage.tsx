@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { useImages } from '@/entity/image';
-import { Lesson, useCreateLogMutation, useLessonListQuery } from '@/feature/log';
+import { UnwrittenLesson, useCreateLogMutation, useLessonListQuery } from '@/feature/log';
 import { IconBack } from '@/shared/assets';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
@@ -37,9 +37,12 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
   const router = useRouter();
   const { showErrorToast } = useShowErrorToast();
   const { data } = useLessonListQuery();
+  const unwrittenLessonList = data
+    ? data.filter((item) => item.reviewStatus === '미작성')
+    : null;
 
   const [selectLessonMode, setSelectLessonMode] = useState(false);
-  const [selectedLesson, setSelectedLesson] = useState<Lesson | null>();
+  const [selectedLesson, setSelectedLesson] = useState<UnwrittenLesson | null>();
   const [content, setContent] = useState('');
   const { images, uploadFiles } = useImages({ maxCount: MAX_IMAGES_COUNT });
 
@@ -68,7 +71,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
     );
   };
 
-  const selectLesson = (lesson: Lesson) => {
+  const selectLesson = (lesson: UnwrittenLesson) => {
     setSelectedLesson(lesson);
     setSelectLessonMode(false);
   };
@@ -76,10 +79,13 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
   const submitButtonDisabled = !content || !selectedLesson;
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      setSelectedLesson(data[0]);
+    if (unwrittenLessonList && unwrittenLessonList.length > 0) {
+      setSelectedLesson(unwrittenLessonList[0]);
     }
-  }, [data]);
+    if (unwrittenLessonList && unwrittenLessonList.length === 0) {
+      setSelectedLesson(null);
+    }
+  }, [unwrittenLessonList]);
 
   if (selectLessonMode) {
     return (
@@ -100,7 +106,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
           </p>
         </Layout.Header>
         <Layout.Contents className='flex flex-col gap-5 px-7 py-6'>
-          {data?.map((item) => (
+          {unwrittenLessonList?.map((item) => (
             <>
               <button key={item.scheduleId} onClick={() => selectLesson(item)}>
                 <Card className='flex w-full flex-col items-start gap-1'>
@@ -108,21 +114,24 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
                     {item.lessonDt}
                   </span>
                   <div className='flex flex-row gap-2'>
-                    <p>{item.lessonTime}</p>
-                    <span
-                      className={cn(
-                        Typography.BODY_4_MEDIUM,
-                        'select-none bg-blue-50 px-4 py-1 text-primary-500'
-                      )}>
-                      출석
-                    </span>
-                    <span
-                      className={cn(
-                        Typography.BODY_4_MEDIUM,
-                        'select-none bg-gray-100 px-4 py-1 text-gray-700'
-                      )}>
-                      미출석
-                    </span>
+                    <p className={cn(Typography.TITLE_1_BOLD)}>{item.lessonTime}</p>
+                    {item.reservationStatus === '출석' ? (
+                      <span
+                        className={cn(
+                          Typography.BODY_4_MEDIUM,
+                          'select-none rounded-sm bg-blue-50 px-4 py-1 text-primary-500'
+                        )}>
+                        출석
+                      </span>
+                    ) : (
+                      <span
+                        className={cn(
+                          Typography.BODY_4_MEDIUM,
+                          'select-none rounded-sm bg-gray-100 px-4 py-1 text-gray-700'
+                        )}>
+                        미출석
+                      </span>
+                    )}
                   </div>
                 </Card>
               </button>
@@ -150,7 +159,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
               className={cn(Typography.BODY_1, 'mt-3 text-gray-600')}>
               변경된 내용은 저장되지 않아요.
             </AlertDialogDescription>
-            <AlertDialogFooter className='mt-8'>
+            <AlertDialogFooter className='mt-8 flex flex-row gap-3'>
               <AlertDialogCancel
                 onClick={() => router.push(`/trainer/manage/${memberId}/log`)}
                 className={cn(
@@ -187,7 +196,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             </Button>
           </div>
           <div className='h-[85px] flex-col space-y-[10px] rounded-lg border border-gray-200 p-[16px]'>
-            {selectedLesson && selectedLesson === null && (
+            {selectedLesson === null && (
               <div
                 className={cn(Typography.HEADING_5, FLEX_CENTER, 'h-full text-gray-500')}>
                 수업일지가 모두 작성 완료되었습니다.
@@ -202,20 +211,23 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
                   <span className={cn(Typography.TITLE_1_BOLD)}>
                     {selectedLesson.lessonTime}
                   </span>
-                  <span
-                    className={cn(
-                      Typography.BODY_4_MEDIUM,
-                      'select-none bg-blue-50 px-4 py-1 text-primary-500'
-                    )}>
-                    출석
-                  </span>
-                  <span
-                    className={cn(
-                      Typography.BODY_4_MEDIUM,
-                      'select-none bg-gray-100 px-4 py-1 text-gray-700'
-                    )}>
-                    미출석
-                  </span>
+                  {selectedLesson.reservationStatus === '출석' ? (
+                    <span
+                      className={cn(
+                        Typography.BODY_4_MEDIUM,
+                        'select-none rounded-sm bg-blue-50 px-4 py-1 text-primary-500'
+                      )}>
+                      출석
+                    </span>
+                  ) : (
+                    <span
+                      className={cn(
+                        Typography.BODY_4_MEDIUM,
+                        'select-none rounded-sm bg-gray-100 px-4 py-1 text-gray-700'
+                      )}>
+                      미출석
+                    </span>
+                  )}
                 </div>
               </>
             )}

@@ -10,6 +10,6 @@ export {
   useComment as useLogComment,
   useCommentContext as useLogCommentContext,
 } from './hooks/useComment';
-export type { Comment, ImageFile, Lesson, Log } from './model/types';
+export type { Comment, ImageFile, Lesson, Log, UnwrittenLesson } from './model/types';
 export { CommentInput as LogCommentInput } from './ui/CommentInput';
 export { CommentList as LogCommentList } from './ui/CommentList';
