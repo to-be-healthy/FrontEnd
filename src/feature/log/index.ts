@@ -5,6 +5,8 @@ export { useDeleteCommentMutation } from './api/useDeleteCommentMutation';
 export { useDeleteLogMutation } from './api/useDeleteLogMutation';
 export { useLessonListQuery } from './api/useLessonListQuery';
 export { useStudentLogListQuery } from './api/useStudentLogListQuery';
+export { useTrainerLogDetailQuery } from './api/useTrainerLogDetailQuery';
+export { useTrainerLogListQuery } from './api/useTrainerLogListQuery';
 export {
   CommentContext as LogCommentContext,
   useComment as useLogComment,

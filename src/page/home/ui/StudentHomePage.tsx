@@ -304,18 +304,22 @@ export const StudentHomePage = () => {
                         {/* todo: 수업 전체에 들어가서 보는순간 없어짐..? */}
                       </span>
                     </h2>
-                    <Link href='/' className={cn(Typography.BODY_3, 'gray-500 h-auto')}>
+                    <Link
+                      href='/student/log'
+                      className={cn(Typography.BODY_3, 'gray-500 h-auto')}>
                       수업전체
                     </Link>
                   </CardHeader>
-                  <CardContent className='flex items-start justify-start'>
-                    <IconAvatar width={28} height={28} />
-                    <div className='ml-2 w-full overflow-hidden rounded-lg rounded-tl-none bg-gray-100 p-6'>
-                      <p className={cn(Typography.BODY_4, 'line-clamp-2 text-black')}>
-                        {data?.lessonHistory.content}
-                      </p>
-                    </div>
-                  </CardContent>
+                  <Link href={`/student/log/${data?.lessonHistory.id}`}>
+                    <CardContent className='flex items-start justify-start'>
+                      <IconAvatar width={28} height={28} />
+                      <div className='ml-2 w-full overflow-hidden rounded-lg rounded-tl-none bg-gray-100 p-6'>
+                        <p className={cn(Typography.BODY_4, 'line-clamp-2 text-black')}>
+                          {data?.lessonHistory.content}
+                        </p>
+                      </div>
+                    </CardContent>
+                  </Link>
                 </Card>
               </article>
             )}

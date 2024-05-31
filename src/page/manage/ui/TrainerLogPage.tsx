@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-import { useLessonListQuery, useStudentLogListQuery } from '@/feature/log';
+import { useLessonListQuery, useTrainerLogListQuery } from '@/feature/log';
 import { IconBack, IconCalendarX, IconChat, IconPlus } from '@/shared/assets';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import {
@@ -35,7 +35,7 @@ interface Props {
 const TrainerLogPage = ({ memberId }: Props) => {
   const pathname = usePathname();
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
-  const { data } = useStudentLogListQuery({
+  const { data } = useTrainerLogListQuery({
     studentId: memberId,
     searchDate: dayjs(selectedMonth).format('YYYY-MM'),
   });

@@ -1,3 +1,4 @@
+export { ImageSlide } from './image-slide';
 export { Layout } from './layout';
 export { MonthPicker } from './month-picker';
 export { StudentNavigation, TrainerNavigation } from './navigation';

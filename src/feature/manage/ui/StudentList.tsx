@@ -153,6 +153,7 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
             </div>
           )}
           {studentList !== null && processedStudentList.length === 0 && (
+            // todo) ???
             <div className='mb-[30%] flex h-full flex-col items-center justify-center'>
               <div className='mb-[30%] flex h-full flex-col items-center justify-center'>
                 <div className='flex flex-col items-center gap-y-[36px]'>

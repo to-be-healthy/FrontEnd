@@ -12,8 +12,8 @@ import {
   LogCommentInput,
   LogCommentList,
   useLogComment,
+  useTrainerLogDetailQuery,
 } from '@/feature/log';
-import { useStudentLogDetailQuery } from '@/feature/log/api/useStudentLogDetailQuery';
 import { IconChat } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
@@ -29,7 +29,7 @@ interface Props {
 }
 
 const TrainerLogDetailPage = ({ memberId, logId }: Props) => {
-  const { data } = useStudentLogDetailQuery({ memberId, lessonHistoryId: logId });
+  const { data } = useTrainerLogDetailQuery({ memberId, lessonHistoryId: logId });
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const value = useLogComment({ memberId, logId, ref: inputRef });

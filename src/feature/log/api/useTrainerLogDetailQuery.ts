@@ -5,7 +5,7 @@ import { BaseError, BaseResponse } from '@/shared/api';
 
 import { Comment, Log } from '../model/types';
 
-interface StudentLogDetailRequest {
+interface TrainerLogDetailRequest {
   memberId: number;
   lessonHistoryId: number;
 }
@@ -14,12 +14,12 @@ interface LogDetail extends Log {
   comments: Comment[];
 }
 
-export const useStudentLogDetailQuery = ({
+export const useTrainerLogDetailQuery = ({
   memberId,
   lessonHistoryId,
-}: StudentLogDetailRequest) => {
+}: TrainerLogDetailRequest) => {
   return useQuery<LogDetail, BaseError>({
-    queryKey: ['studentLogDetail', memberId, lessonHistoryId],
+    queryKey: ['trainerLogDetail', memberId, lessonHistoryId],
     queryFn: async () => {
       const result = await authApi.get<BaseResponse<LogDetail>>(
         `/api/lessonhistory/v1/${lessonHistoryId}`

@@ -76,7 +76,7 @@ const CommentItem = ({
       open={opend}
       onOpenChange={(state) => {
         if (comment.delYn) return;
-        if (comment.member.memberId === memberId) return;
+        if (comment.member.memberId !== memberId) return;
         setOpend(state);
       }}
       modal={false}>
