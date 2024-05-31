@@ -28,7 +28,7 @@ interface Props {
   memberId: number;
 }
 
-const StudentLogDetailPage = ({ memberId, logId }: Props) => {
+const TrainerLogDetailPage = ({ memberId, logId }: Props) => {
   const { data } = useStudentLogDetailQuery({ memberId, lessonHistoryId: logId });
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -77,4 +77,4 @@ const StudentLogDetailPage = ({ memberId, logId }: Props) => {
   );
 };
 
-export { StudentLogDetailPage };
+export { TrainerLogDetailPage };
