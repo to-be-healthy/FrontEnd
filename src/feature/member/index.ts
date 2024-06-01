@@ -1,5 +1,6 @@
 export { useAddStudentCourseMutation } from './api/useAddStudentCourseMutation';
 export { useChangeMyNameMutation } from './api/useChangeMyNameMutation';
+export { useDeleteProfileImageMutation } from './api/useDeleteProfileImageMutation';
 export { useDeleteStudentCourseMutation } from './api/useDeleteStudentCourseMutation';
 export { useDeleteStudentMutation } from './api/useDeleteStudentMutation';
 export { useInviteStudentMutation } from './api/useInviteStudentMutation';
@@ -8,6 +9,7 @@ export { useMyInfoQuery } from './api/useMyInfoQuery';
 export { useNotRegisteredStudentsQuery } from './api/useNotRegisteredStudentsQuery';
 export { useRegisteredStudentsQuery } from './api/useRegisteredStudentsQuery';
 export { useRegisterStudentCourseMutation } from './api/useRegisterStudentCourseMutation';
+export { useSetProfileImageMutation } from './api/useSetProfileImageMutation';
 export { useStudentCourseDetailQuery } from './api/useStudentCourseDetailQuery';
 export { useStudentDetailQuery } from './api/useStudentDetailQuery';
 export { useStudentHomeDataQuery } from './api/useStudentHomeDataQuery';
