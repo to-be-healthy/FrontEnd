@@ -17,7 +17,7 @@ import {
 import { cn } from '@/shared/utils';
 
 import { useDeleteCommentMutation } from '../api/useDeleteCommentMutation';
-import { useCommentContext } from '../hooks/useComment';
+import { useTrainerCommentContext } from '../hooks/useTrainerComment';
 import type { Comment } from '../model/types';
 
 type Props = PropsWithChildren<{
@@ -25,7 +25,7 @@ type Props = PropsWithChildren<{
   depth?: number;
 }>;
 
-const CommentList = ({ comments, depth = 0 }: Props) => {
+const TrainerCommentList = ({ comments, depth = 0 }: Props) => {
   return (
     <ul className={cn('flex-col')}>
       {comments.map((comment) => (
@@ -33,7 +33,7 @@ const CommentList = ({ comments, depth = 0 }: Props) => {
           <CommentItem comment={comment} depth={depth} />
           {comment.replies && comment.replies.length > 0 && (
             <li>
-              <CommentList comments={comment.replies} depth={depth + 1} />
+              <TrainerCommentList comments={comment.replies} depth={depth + 1} />
             </li>
           )}
         </Fragment>
@@ -54,7 +54,8 @@ const CommentItem = ({
 }) => {
   const [opend, setOpend] = useState(false);
 
-  const { target, changeTarget, focusOnInput, refreshComments } = useCommentContext();
+  const { target, changeTarget, focusOnInput, refreshComments } =
+    useTrainerCommentContext();
   const { memberId } = useAuthSelector(['memberId']);
   const { mutate } = useDeleteCommentMutation();
 
@@ -162,4 +163,4 @@ const CommentItem = ({
   );
 };
 
-export { CommentList };
+export { TrainerCommentList };

@@ -15,7 +15,7 @@ interface Comment {
   parentId: number | null;
 }
 
-// For studentLogList
+// StudentLogList for trainer
 interface Log {
   id: number;
   title: string;

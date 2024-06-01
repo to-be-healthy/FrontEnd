@@ -10,12 +10,12 @@ import {
 
 import { Comment } from '../model/types';
 
-type ContextType = ReturnType<typeof useComment> | null;
+type ContextType = ReturnType<typeof useStudentComment> | null;
 
-const CommentContext = createContext<ContextType>(null);
+const StudentCommentContext = createContext<ContextType>(null);
 
-const useCommentContext = () => {
-  const context = useContext(CommentContext);
+const useStudentCommentContext = () => {
+  const context = useContext(StudentCommentContext);
 
   if (context === null) {
     throw new Error();
@@ -31,12 +31,11 @@ type CommentTarget = {
 } | null;
 
 interface Props {
-  memberId: number;
   logId: number;
   ref: MutableRefObject<HTMLInputElement | null>;
 }
 
-const useComment = ({ memberId, logId, ref }: Props) => {
+const useStudentComment = ({ logId, ref }: Props) => {
   const queryClient = useQueryClient();
 
   const [text, setText] = useState('');
@@ -44,7 +43,7 @@ const useComment = ({ memberId, logId, ref }: Props) => {
 
   const refreshComments = async () => {
     await queryClient.refetchQueries({
-      queryKey: ['studentLogDetail', memberId, logId],
+      queryKey: ['studentLogDetail', logId],
     });
   };
 
@@ -71,17 +70,16 @@ const useComment = ({ memberId, logId, ref }: Props) => {
   );
 
   return {
-    memberId,
     logId,
+    ref,
+    target,
     text,
     changeText,
     clearText,
-    ref,
     focusOnInput,
-    target,
     changeTarget,
     refreshComments,
   };
 };
 
-export { CommentContext, useComment, useCommentContext };
+export { StudentCommentContext, useStudentComment, useStudentCommentContext };

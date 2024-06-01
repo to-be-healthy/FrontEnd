@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { useDeleteLogMutation, useLogCommentContext } from '@/feature/log';
+import { useDeleteLogMutation, useLogTrainerCommentContext } from '@/feature/log';
 import {
   IconBack,
   IconCheck,
@@ -29,6 +29,7 @@ import {
   useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
+import { Layout } from '@/widget';
 
 const Header = () => {
   const router = useRouter();
@@ -36,7 +37,7 @@ const Header = () => {
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
   const { showErrorToast } = useShowErrorToast();
-  const { logId, memberId } = useLogCommentContext();
+  const { logId, memberId } = useLogTrainerCommentContext();
   const { mutate } = useDeleteLogMutation();
 
   const deleteLog = () => {
@@ -69,7 +70,7 @@ const Header = () => {
   };
 
   return (
-    <>
+    <Layout.Header>
       <Link href={`/trainer/manage/${memberId}/log`}>
         <IconBack />
       </Link>
@@ -113,7 +114,7 @@ const Header = () => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </>
+    </Layout.Header>
   );
 };
 

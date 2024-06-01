@@ -4,14 +4,21 @@ export { useCreateLogReplyMutation } from './api/useCreateLogReplyMutation';
 export { useDeleteCommentMutation } from './api/useDeleteCommentMutation';
 export { useDeleteLogMutation } from './api/useDeleteLogMutation';
 export { useLessonListQuery } from './api/useLessonListQuery';
+export { useLogDetailQuery } from './api/useLogDetailQuery';
 export { useStudentLogListQuery } from './api/useStudentLogListQuery';
-export { useTrainerLogDetailQuery } from './api/useTrainerLogDetailQuery';
 export { useTrainerLogListQuery } from './api/useTrainerLogListQuery';
 export {
-  CommentContext as LogCommentContext,
-  useComment as useLogComment,
-  useCommentContext as useLogCommentContext,
-} from './hooks/useComment';
+  StudentCommentContext as LogStudentCommentContext,
+  useStudentComment as useLogStudentComment,
+  useStudentCommentContext as useLogStudentCommentContext,
+} from './hooks/useStudentComment';
+export {
+  TrainerCommentContext as LogTrainerCommentContext,
+  useTrainerComment as useLogTrainerComment,
+  useTrainerCommentContext as useLogTrainerCommentContext,
+} from './hooks/useTrainerComment';
 export type { Comment, ImageFile, Lesson, Log, UnwrittenLesson } from './model/types';
-export { CommentInput as LogCommentInput } from './ui/CommentInput';
-export { CommentList as LogCommentList } from './ui/CommentList';
+export { StudentCommentInput as LogStudentCommentInput } from './ui/StudentCommentInput';
+export { StudentCommentList as LogStudentCommentList } from './ui/StudentCommentList';
+export { TrainerCommentInput as LogTrainerCommentInput } from './ui/TrainerCommentInput';
+export { TrainerCommentList as LogTrainerCommentList } from './ui/TrainerCommentList';

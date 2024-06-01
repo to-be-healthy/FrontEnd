@@ -8,11 +8,11 @@ dayjs.locale('ko');
 import { useRef } from 'react';
 
 import {
-  LogCommentContext,
-  LogCommentInput,
-  LogCommentList,
-  useLogComment,
-  useTrainerLogDetailQuery,
+  LogTrainerCommentContext,
+  LogTrainerCommentInput,
+  LogTrainerCommentList,
+  useLogDetailQuery,
+  useLogTrainerComment,
 } from '@/feature/log';
 import { IconChat } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
@@ -29,22 +29,20 @@ interface Props {
 }
 
 const TrainerLogDetailPage = ({ memberId, logId }: Props) => {
-  const { data } = useTrainerLogDetailQuery({ memberId, lessonHistoryId: logId });
+  const { data } = useLogDetailQuery({ lessonHistoryId: logId });
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const value = useLogComment({ memberId, logId, ref: inputRef });
+  const value = useLogTrainerComment({ memberId, logId, ref: inputRef });
 
   const date = dayjs(data?.createdAt);
   const formattedDate = date.format('M월 D일 (ddd)');
 
   return (
-    <LogCommentContext.Provider value={value}>
+    <LogTrainerCommentContext.Provider value={value}>
       <Layout>
         {data && (
           <>
-            <Layout.Header>
-              <Header />
-            </Layout.Header>
+            <Header />
             <Layout.Contents className='hide-scrollbar px-7 py-6'>
               <Card className='w-full gap-0 px-0 pb-0 pt-7'>
                 <CardHeader className={cn(Typography.TITLE_3, 'px-6')}>
@@ -63,17 +61,17 @@ const TrainerLogDetailPage = ({ memberId, logId }: Props) => {
                       댓글 <span>{data.comments.length}</span>
                     </p>
                   </div>
-                  <LogCommentList comments={data.comments} />
+                  <LogTrainerCommentList comments={data.comments} />
                 </CardFooter>
               </Card>
             </Layout.Contents>
             <Layout.BottomArea className='p-0'>
-              <LogCommentInput />
+              <LogTrainerCommentInput />
             </Layout.BottomArea>
           </>
         )}
       </Layout>
-    </LogCommentContext.Provider>
+    </LogTrainerCommentContext.Provider>
   );
 };
 
