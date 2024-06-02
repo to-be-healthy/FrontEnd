@@ -1,6 +1,7 @@
 export { useAddStudentCourseMutation } from './api/useAddStudentCourseMutation';
 export { useChangeEmailMutation } from './api/useChangeEmailMutation';
 export { useChangeMyNameMutation } from './api/useChangeMyNameMutation';
+export { useChangePasswordMutation } from './api/useChangePasswordMutation';
 export { useDeleteProfileImageMutation } from './api/useDeleteProfileImageMutation';
 export { useDeleteStudentCourseMutation } from './api/useDeleteStudentCourseMutation';
 export { useDeleteStudentMutation } from './api/useDeleteStudentMutation';
@@ -14,6 +15,7 @@ export { useSetProfileImageMutation } from './api/useSetProfileImageMutation';
 export { useStudentCourseDetailQuery } from './api/useStudentCourseDetailQuery';
 export { useStudentDetailQuery } from './api/useStudentDetailQuery';
 export { useStudentHomeDataQuery } from './api/useStudentHomeDataQuery';
+export { useVerifyPasswordMutation } from './api/useVerifyPasswordMutation';
 export { courseHistoryCodeDescription, pointHistoryCodeDescription } from './const';
 export {
   StudentDetailContext,

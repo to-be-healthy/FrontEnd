@@ -66,7 +66,7 @@ const EditAlarmPage = () => {
           {data?.scheduleNoticeStatus && (
             <Switch
               id='COMMUNITY'
-              checked={data.scheduleNoticeStatus === 'ENABLED'}
+              checked={data.communityAlarmStatus === 'ENABLED'}
               onCheckedChange={(checked) => changeAlarm(checked, 'COMMUNITY')}
             />
           )}

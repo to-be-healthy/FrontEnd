@@ -42,6 +42,7 @@ interface Member {
   pushAlarmStatus: 'ENABLED' | 'DISABLE';
   feedbackAlarmStatus: 'ENABLED' | 'DISABLE';
   scheduleNoticeStatus: 'ENABLED' | 'DISABLE';
+  communityAlarmStatus: 'ENABLED' | 'DISABLE';
   gym: Gym;
   socialType: 'NONE' | Uppercase<SocialProvider>;
 }

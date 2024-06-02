@@ -4,7 +4,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
+import { useChangePasswordMutation, useVerifyPasswordMutation } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
+import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { Button, Input } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -12,18 +14,45 @@ import { Layout } from '@/widget';
 
 const EditPasswordPage = () => {
   const router = useRouter();
+  const { showErrorToast } = useShowErrorToast();
   const [step, setStep] = useState(1);
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const { mutate: verifyPassword } = useVerifyPasswordMutation();
+  const { mutate: changePassword } = useChangePasswordMutation();
 
-  const verifyPassword = () => {
-    console.log('verify password');
-    setStep(2);
+  const handleVerifyPassword = () => {
+    verifyPassword(password, {
+      onSuccess: ({ data }) => {
+        if (data) {
+          setStep(2);
+        }
+      },
+      onError: (error) => {
+        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+        showErrorToast(message);
+        setPassword('');
+      },
+    });
   };
 
-  const changePassword = () => {
-    console.log(newPassword);
+  const handleChangePassword = () => {
+    changePassword(
+      {
+        changePassword1: newPassword,
+        changePassword2: confirmPassword,
+      },
+      {
+        onSuccess: () => {
+          router.replace('/trainer/mypage/info');
+        },
+        onError: (error) => {
+          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+          showErrorToast(message);
+        },
+      }
+    );
     router.replace('/trainer/mypage/info');
   };
 
@@ -48,6 +77,12 @@ const EditPasswordPage = () => {
                 className={cn('w-full')}
               />
             </div>
+            <p className={cn(Typography.BODY_4_REGULAR, 'mt-7 text-gray-500')}>
+              비밀번호가 기억나지 않으세요?
+              <Link href={'/find/password'} className='ml-3 text-primary-500'>
+                비밀번호 찾기
+              </Link>
+            </p>
           </section>
         )}
         {step === 2 && (
@@ -74,14 +109,18 @@ const EditPasswordPage = () => {
       </Layout.Contents>
       <Layout.BottomArea>
         {step === 1 && (
-          <Button size='full' disabled={!password} onClick={verifyPassword}>
+          <Button
+            formTarget=''
+            size='full'
+            disabled={!password}
+            onClick={handleVerifyPassword}>
             비밀번호 확인
           </Button>
         )}
         {step === 2 && (
           <Button
             size='full'
-            onClick={changePassword}
+            onClick={handleChangePassword}
             disabled={
               !newPassword || !confirmPassword || newPassword !== confirmPassword
             }>
