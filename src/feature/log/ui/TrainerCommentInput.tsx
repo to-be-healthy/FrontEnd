@@ -12,9 +12,9 @@ import { cn } from '@/shared/utils';
 import { useCreateLogCommentMutation } from '../api/useCreateLogCommentMutation';
 import { useCreateLogReplyMutation } from '../api/useCreateLogReplyMutation';
 import { useEditLogCommentMutation } from '../api/useEditLogCommentMutation';
-import { useCommentContext } from '../hooks/useComment';
+import { useTrainerCommentContext } from '../hooks/useTrainerComment';
 
-const CommentInput = () => {
+const TrainerCommentInput = () => {
   const {
     logId,
     ref,
@@ -24,7 +24,7 @@ const CommentInput = () => {
     target,
     changeTarget,
     refreshComments,
-  } = useCommentContext();
+  } = useTrainerCommentContext();
   const { images, uploadFiles, clearImages, updateImages } = useImages();
   const { mutate: createComment } = useCreateLogCommentMutation(logId);
   const { mutate: createReply } = useCreateLogReplyMutation(logId);
@@ -65,8 +65,6 @@ const CommentInput = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [target]);
-
-  console.log(images);
 
   return (
     <div
@@ -162,4 +160,4 @@ const CommentInput = () => {
   );
 };
 
-export { CommentInput };
+export { TrainerCommentInput };

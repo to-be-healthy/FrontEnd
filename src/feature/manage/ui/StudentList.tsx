@@ -154,14 +154,12 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
           )}
           {studentList !== null && processedStudentList.length === 0 && (
             <div className='mb-[30%] flex h-full flex-col items-center justify-center'>
-              <div className='mb-[30%] flex h-full flex-col items-center justify-center'>
-                <div className='flex flex-col items-center gap-y-[36px]'>
-                  <div className='flex flex-col items-center gap-y-[12px]'>
-                    <IconCircleAlert />
-                    <p className={cn(Typography.TITLE_1_BOLD, 'text-gray-500')}>
-                      검색 결과가 없습니다.
-                    </p>
-                  </div>
+              <div className='flex flex-col items-center gap-y-[36px]'>
+                <div className='flex flex-col items-center gap-y-[12px]'>
+                  <IconCircleAlert />
+                  <p className={cn(Typography.TITLE_1_BOLD, 'text-gray-500')}>
+                    검색 결과가 없습니다.
+                  </p>
                 </div>
               </div>
             </div>

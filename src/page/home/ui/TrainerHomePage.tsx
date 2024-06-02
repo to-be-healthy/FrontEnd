@@ -83,7 +83,7 @@ export const TrainerHomePage = () => {
             </h3>
             {hasTodaySchedule && (
               <div className='hide-scrollbar z-10 overflow-x-auto'>
-                <div className='flex w-fit gap-4'>
+                <div className='flex w-fit gap-0 px-7'>
                   {homeInfo?.todaySchedule.before.map((item) => {
                     return (
                       <Link
@@ -92,7 +92,7 @@ export const TrainerHomePage = () => {
                         <div
                           className={cn(
                             FLEX_CENTER,
-                            'h-[100px] w-[100px] flex-col gap-1 rounded-md border border-gray-200 bg-white p-8 shadow-sm first:ml-7 last:mr-7'
+                            'mr-4 h-[100px] w-[100px] flex-col gap-4 rounded-md border border-gray-200 bg-white p-8 shadow-sm'
                           )}>
                           <span className={cn(Typography.BODY_2, 'text-gray-500')}>
                             {item.lessonStartTime}
@@ -112,7 +112,7 @@ export const TrainerHomePage = () => {
                         <div
                           className={cn(
                             FLEX_CENTER,
-                            'h-[100px] w-[100px] flex-col gap-1 rounded-md border border-gray-200 bg-white p-8 shadow-sm first:ml-7 last:mr-7'
+                            'h-[100px] w-[100px] flex-col gap-1 rounded-md border border-gray-200 bg-white p-8 shadow-sm'
                           )}>
                           <span className={cn(Typography.BODY_2, 'text-gray-500')}>
                             {item.lessonStartTime}

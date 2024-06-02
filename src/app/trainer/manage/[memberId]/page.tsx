@@ -1,11 +1,11 @@
-import { StudentDetailPage } from '@/page/manage';
+import { TrainerStudentDetailPage } from '@/page/manage';
 
 interface Props {
   params: { memberId: number };
 }
 
 const Page = ({ params }: Readonly<Props>) => {
-  return <StudentDetailPage memberId={params.memberId} />;
+  return <TrainerStudentDetailPage memberId={params.memberId} />;
 };
 
 export default Page;

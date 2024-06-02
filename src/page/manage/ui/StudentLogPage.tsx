@@ -1,88 +1,41 @@
 'use client';
 
-import 'dayjs/locale/ko';
-
 import dayjs from 'dayjs';
 dayjs.locale('ko');
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 import { useState } from 'react';
 
-import { useLessonListQuery, useStudentLogListQuery } from '@/feature/log';
-import { IconBack, IconCalendarX, IconChat, IconPlus } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '@/shared/ui';
+import { useStudentLogListQuery } from '@/feature/log';
+import { IconBack, IconCalendarX, IconChat } from '@/shared/assets';
+import { Typography } from '@/shared/mixin';
+import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
-import { Layout, MonthPicker } from '@/widget';
-import { ImageSlide } from '@/widget/image-slide';
+import { ImageSlide, Layout, MonthPicker } from '@/widget';
 
-interface Props {
-  memberId: number;
-}
-
-const StudentLogPage = ({ memberId }: Props) => {
-  const pathname = usePathname();
+const StudentLogPage = () => {
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
   const { data } = useStudentLogListQuery({
-    studentId: memberId,
     searchDate: dayjs(selectedMonth).format('YYYY-MM'),
   });
-  const { data: lessonList } = useLessonListQuery();
-  const hasUnwrittenLesson = lessonList
-    ? lessonList?.filter((item) => item.reviewStatus === '미작성').length > 0
-    : false;
 
   const contents = data?.content;
 
   return (
     <Layout>
       <Layout.Header>
-        <Link href={`/trainer/manage/${memberId}`}>
+        <Link href={'/student'}>
           <IconBack />
         </Link>
-        <h2 className={cn(Typography.HEADING_4_SEMIBOLD)}>
-          {contents && data.studentName}님 수업 일지
-        </h2>
-        {hasUnwrittenLesson ? (
-          <Link href={`/trainer/manage/${memberId}/log/write`}>
-            <IconPlus fill='black' width={20} height={20} />
-          </Link>
-        ) : (
-          <AlertDialog>
-            <AlertDialogTrigger>
-              <IconPlus fill='black' width={20} height={20} />
-            </AlertDialogTrigger>
-            <AlertDialogContent className='gap-0 px-7 py-8'>
-              <AlertDialogTitle className={cn(Typography.HEADING_4_BOLD)}>
-                수업일지가 모두 작성 완료되었습니다.
-              </AlertDialogTitle>
-              <AlertDialogFooter className='mt-8 flex flex-row gap-3'>
-                <AlertDialogCancel
-                  className={cn(
-                    Typography.TITLE_1_SEMIBOLD,
-                    FLEX_CENTER,
-                    'h-full w-full bg-primary-500 py-[13px] text-white'
-                  )}>
-                  확인
-                </AlertDialogCancel>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-        )}
+        <h1
+          className={cn(
+            Typography.HEADING_4_SEMIBOLD,
+            'absolute left-1/2 my-auto -translate-x-1/2'
+          )}>
+          수업일지
+        </h1>
       </Layout.Header>
-      <Layout.Contents className='overflow-y-hidden py-7'>
+      <Layout.Contents className='relative overflow-y-hidden py-7'>
         <div className='px-7'>
           <MonthPicker
             date={selectedMonth}
@@ -97,7 +50,7 @@ const StudentLogPage = ({ memberId }: Props) => {
                   const date = dayjs(log.createdAt);
                   const formattedDate = date.format('M월 D일 (ddd)');
                   return (
-                    <Link key={log.id} href={`${pathname}/${log.id}`}>
+                    <Link key={log.id} href={`/student/log/${log.id}`}>
                       <Card className='w-full gap-0 px-6 py-7'>
                         <CardHeader className={cn(Typography.TITLE_3)}>
                           {formattedDate}
@@ -128,7 +81,7 @@ const StudentLogPage = ({ memberId }: Props) => {
           </div>
         )}
         {contents && contents.length === 0 && (
-          <div className='flex h-full flex-col items-center justify-center space-y-4'>
+          <div className='absolute left-0 top-1/2 flex w-full -translate-y-1/2 flex-col items-center justify-center gap-4'>
             <IconCalendarX width={42} height={42} />
             <p className={cn(Typography.HEADING_4_SEMIBOLD, 'text-gray-400')}>
               수업일지 내역이 없습니다.

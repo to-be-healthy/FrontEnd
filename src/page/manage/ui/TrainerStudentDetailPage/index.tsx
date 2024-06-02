@@ -36,7 +36,7 @@ interface Props {
   memberId: number;
 }
 
-export const StudentDetailPage = ({ memberId }: Props) => {
+const TrainerStudentDetailPage = ({ memberId }: Props) => {
   const { memberInfo } = useStudentInfo(memberId);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -351,3 +351,5 @@ export const StudentDetailPage = ({ memberId }: Props) => {
     </Layout>
   );
 };
+
+export { TrainerStudentDetailPage };

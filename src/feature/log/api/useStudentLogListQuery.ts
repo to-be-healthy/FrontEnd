@@ -6,7 +6,6 @@ import { BaseError, BaseResponse, Pageable } from '@/shared/api';
 import { Log } from '../model/types';
 
 interface StudentLogListRequest {
-  studentId: number;
   searchDate?: string;
 }
 
@@ -15,18 +14,15 @@ interface StudentLogListResponse extends Pageable {
   content: Log[];
 }
 
-export const useStudentLogListQuery = ({
-  studentId,
-  searchDate,
-}: StudentLogListRequest) => {
+export const useStudentLogListQuery = ({ searchDate }: StudentLogListRequest) => {
   return useQuery<StudentLogListResponse, BaseError>({
-    queryKey: ['studentLogList', studentId, searchDate],
+    queryKey: ['studentLogList', searchDate],
     queryFn: async () => {
       const queryParams = new URLSearchParams();
       if (searchDate) {
         queryParams.append('searchDate', searchDate);
       }
-      const url = `/api/lessonhistory/v1/student/${studentId}?${queryParams.toString()}`;
+      const url = `/api/lessonhistory/v1?${queryParams.toString()}`;
       const result = await authApi.get<BaseResponse<StudentLogListResponse>>(url);
       return result.data.data;
     },
