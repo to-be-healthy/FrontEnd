@@ -6,7 +6,10 @@ export const useSendVerificationCodeMutation = () => {
   return useMutation<BaseResponse<string>, BaseError, string>({
     mutationFn: async (email) => {
       const result = await api.post<BaseResponse<string>>(
-        `/api/auth/v1/validation/send-email?email=${email}`
+        '/api/auth/v1/validation/send-email',
+        {
+          email,
+        }
       );
       return result.data;
     },

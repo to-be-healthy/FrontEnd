@@ -1,27 +1,30 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import {
-  useCheckVerificationCodeMutation,
-  useSendVerificationCodeMutation,
-} from '@/entity/auth';
-import { useMyInfoQuery } from '@/feature/member';
+import { useSendVerificationCodeMutation } from '@/entity/auth';
+import { useChangeEmailMutation, useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
+import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { Button, Input } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const EditEmailPage = () => {
+  const router = useRouter();
   const { data } = useMyInfoQuery();
   const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
   const [code, setCode] = useState('');
 
   const { mutate: sendCode } = useSendVerificationCodeMutation();
-  const { mutate: confirmCode } = useCheckVerificationCodeMutation();
+  const { mutate: changeEmail } = useChangeEmailMutation();
+  const { showErrorToast } = useShowErrorToast();
+  const queryClient = useQueryClient();
 
   const sendVerificationCode = () => {
     sendCode(email, {
@@ -29,27 +32,28 @@ const EditEmailPage = () => {
         setStep(2);
       },
       onError: (error) => {
-        console.error(error);
+        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+        showErrorToast(message);
       },
     });
   };
 
   const confirmVerificationCode = () => {
-    confirmCode(
+    changeEmail(
       { email, emailKey: code },
       {
-        onSuccess: () => {
-          submitNewEmail();
+        onSuccess: async () => {
+          await queryClient.refetchQueries({
+            queryKey: ['myinfo'],
+          });
+          router.replace('/trainer/mypage/info');
         },
         onError: (error) => {
-          console.error(error);
+          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+          showErrorToast(message);
         },
       }
     );
-  };
-
-  const submitNewEmail = () => {
-    alert('이메일 변경 성공');
   };
 
   return (
