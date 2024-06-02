@@ -9,13 +9,9 @@ import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/shared/ui/d
 import { Layout } from '@/widget';
 
 export const AddStudentDialog = ({ children }: { children?: React.ReactNode }) => {
-  const addStudent = () => {
-    console.log('Add member');
-  };
-
   return (
     <Dialog>
-      <DialogTrigger asChild onClick={addStudent}>
+      <DialogTrigger asChild>
         {children ?? (
           <Button variant='ghost' className='h-[20px] w-[20px]' size='icon'>
             <IconPlus fill='black' width={17} height={16} />
