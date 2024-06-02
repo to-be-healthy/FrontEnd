@@ -3,9 +3,7 @@ import {
   KAKAO_SOCIAL_AUTH_URL,
   NAVER_SOCIAL_AUTH_URL,
 } from '@/entity/auth';
-import GoogleLogo from '@/shared/assets/images/google_logo.svg';
-import KakaoLogo from '@/shared/assets/images/kakao_logo.svg';
-import NaverLogo from '@/shared/assets/images/naver_logo.svg';
+import { IconGoogleLogo, IconKakaoLogo, IconNaverLogo } from '@/shared/assets';
 import { Button } from '@/shared/ui';
 
 interface Props {
@@ -33,7 +31,7 @@ export const SocialSignIn = ({ memberType, uuid }: Props) => {
         onClick={() => {
           window.location.href = `${KAKAO_SOCIAL_AUTH_URL}&state=${generateClientState()}`;
         }}>
-        <KakaoLogo />
+        <IconKakaoLogo />
         카카오로 시작하기
       </Button>
       <Button
@@ -41,7 +39,7 @@ export const SocialSignIn = ({ memberType, uuid }: Props) => {
         onClick={() => {
           window.location.href = `${NAVER_SOCIAL_AUTH_URL}&state=${generateClientState()}`;
         }}>
-        <NaverLogo />
+        <IconNaverLogo />
         네이버로 시작하기
       </Button>
       <Button
@@ -49,7 +47,7 @@ export const SocialSignIn = ({ memberType, uuid }: Props) => {
         onClick={() => {
           window.location.href = `${GOOGLE_SOCIAL_AUTH_URL}&state=${generateClientState()}`;
         }}>
-        <GoogleLogo />
+        <IconGoogleLogo />
         Google로 시작하기
       </Button>
     </div>
