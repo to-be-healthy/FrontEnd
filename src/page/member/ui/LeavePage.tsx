@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 
-import { useDeleteAccountMutation } from '@/entity/auth';
+import { useAuthAction, useDeleteAccountMutation } from '@/entity/auth';
 import { useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
 import NoCircleCheckIcon from '@/shared/assets/images/noCircleCheck.svg';
@@ -20,6 +20,7 @@ const LeavePage = () => {
   const [agreement, setAgreement] = useState(false);
   const { mutate } = useDeleteAccountMutation();
   const { showErrorToast } = useShowErrorToast();
+  const { deleteUserInfo } = useAuthAction();
 
   const changeAgreement = (e: ChangeEvent<HTMLInputElement>) => {
     setAgreement(e.target.checked);
@@ -28,6 +29,7 @@ const LeavePage = () => {
   const deleteAccount = () => {
     mutate(undefined, {
       onSuccess: () => {
+        deleteUserInfo();
         router.replace('/');
       },
       onError: (error) => {
