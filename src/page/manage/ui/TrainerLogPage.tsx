@@ -92,38 +92,37 @@ const TrainerLogPage = ({ memberId }: Props) => {
         {contents && contents.length > 0 && (
           <div className='hide-scrollbar mt-1 flex h-full flex-1 flex-grow flex-col overflow-y-auto px-7 pb-7'>
             <div className='mb-7 flex w-full flex-col gap-y-6 pb-6'>
-              {contents.length > 0 &&
-                contents.map((log) => {
-                  const date = dayjs(log.createdAt);
-                  const formattedDate = date.format('M월 D일 (ddd)');
-                  return (
-                    <Link key={log.id} href={`${pathname}/${log.id}`}>
-                      <Card className='w-full gap-0 px-6 py-7'>
-                        <CardHeader className={cn(Typography.TITLE_3)}>
-                          {formattedDate}
-                          {` `}
-                          {log.lessonTime}
-                        </CardHeader>
-                        <CardContent className='mt-4'>
-                          <ImageSlide images={log.files} />
-                          <p
-                            className={cn(
-                              Typography.BODY_3,
-                              'mt-5 line-clamp-2 h-full overflow-ellipsis text-black'
-                            )}>
-                            {log.content}
-                          </p>
-                        </CardContent>
-                        <CardFooter className='mt-6 flex items-center gap-2'>
-                          <IconChat />
-                          <p className={cn(Typography.BODY_4_MEDIUM, 'text-gray-500')}>
-                            댓글 <span>{log.commentTotalCount}</span>
-                          </p>
-                        </CardFooter>
-                      </Card>
-                    </Link>
-                  );
-                })}
+              {contents.map((log) => {
+                const date = dayjs(log.createdAt);
+                const formattedDate = date.format('M월 D일 (ddd)');
+                return (
+                  <Link key={log.id} href={`${pathname}/${log.id}`}>
+                    <Card className='w-full gap-0 px-6 py-7'>
+                      <CardHeader className={cn(Typography.TITLE_3)}>
+                        {formattedDate}
+                        {` `}
+                        {log.lessonTime}
+                      </CardHeader>
+                      <CardContent className='mt-4'>
+                        <ImageSlide images={log.files} />
+                        <p
+                          className={cn(
+                            Typography.BODY_3,
+                            'mt-5 line-clamp-2 h-full overflow-ellipsis text-black'
+                          )}>
+                          {log.content}
+                        </p>
+                      </CardContent>
+                      <CardFooter className='mt-6 flex items-center gap-2'>
+                        <IconChat />
+                        <p className={cn(Typography.BODY_4_MEDIUM, 'text-gray-500')}>
+                          댓글 <span>{log.commentTotalCount}</span>
+                        </p>
+                      </CardFooter>
+                    </Card>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         )}
