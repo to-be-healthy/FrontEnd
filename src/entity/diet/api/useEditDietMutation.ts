@@ -6,10 +6,13 @@ import { BaseError, BaseResponse } from '@/shared/api';
 
 import { RegisterAndEditDiet } from '../model/types';
 
-export const useRegisterDietMutation = () => {
+export const useEditDietMutation = (dietId: number) => {
   return useMutation<BaseResponse<Diet>, BaseError, RegisterAndEditDiet>({
     mutationFn: async (params) => {
-      const result = await authApi.post<BaseResponse<Diet>>(`/api/diets/v1`, params);
+      const result = await authApi.patch<BaseResponse<Diet>>(
+        `/api/diets/v1/${dietId}`,
+        params
+      );
       return result.data;
     },
   });

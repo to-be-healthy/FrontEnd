@@ -13,4 +13,13 @@ interface Diet {
   type: 'BREAKFAST' | 'LUNCH' | 'DINNER';
 }
 
-export type { DailyDiet, Diet };
+interface RegisterAndEditDiet {
+  breakfastFile: string | null;
+  lunchFile: string | null;
+  dinnerFile: string | null;
+  breakfastFast: boolean;
+  lunchFast: boolean;
+  dinnerFast: boolean;
+  eatDate?: string;
+}
+export type { DailyDiet, Diet, RegisterAndEditDiet };
