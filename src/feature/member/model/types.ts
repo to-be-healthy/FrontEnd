@@ -1,6 +1,8 @@
 import { SocialProvider } from '@/entity/auth';
 import { DailyDiet } from '@/entity/diet';
 import { Gym } from '@/entity/gym';
+import { DietWithFasting } from '@/feature/diet';
+import { Pageable } from '@/shared/api';
 
 import { courseHistoryCodeDescription } from '../const';
 
@@ -88,10 +90,12 @@ interface CourseHistoryItem {
   createdAt: string;
 }
 
-interface StudentCourse {
-  course: CourseItem;
-  gymName: string;
-  courseHistories: CourseHistoryItem[];
+interface StudentCourse extends Pageable {
+  mainData: {
+    course: CourseItem;
+    gymName: string;
+  };
+  content: CourseHistoryItem[];
 }
 
 interface pointHistoryType {
@@ -132,35 +136,15 @@ interface Diet {
     gym: null | Gym;
     socialType: ['NONE', 'KAKAO', 'NAVER', 'GOOGLE'];
   };
+  eatDate: string;
   likeCnt: number;
+  liked: boolean;
   commentCnt: number;
-  breakfast: {
-    fast: boolean;
-    dietFile: null | {
-      id: number;
-      dietId: number;
-      fileUrl: string;
-      type: string;
-    };
-  };
-  lunch: {
-    fast: boolean;
-    dietFile: null | {
-      id: number;
-      dietId: number;
-      fileUrl: string;
-      type: string;
-    };
-  };
-  dinner: {
-    fast: boolean;
-    dietFile: null | {
-      id: number;
-      dietId: number;
-      fileUrl: string;
-      type: string;
-    };
-  };
+  createdAt: string;
+  updatedAt: string;
+  breakfast: DietWithFasting;
+  lunch: DietWithFasting;
+  dinner: DietWithFasting;
 }
 export type {
   AppendMemberForm,

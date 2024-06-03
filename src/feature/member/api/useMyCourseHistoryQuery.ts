@@ -22,7 +22,7 @@ export const useMyCourseHistoryQuery = ({ searchDate, size }: MyCourseHistoryReq
     initialPageParam: 0,
 
     getNextPageParam: (lastPage: StudentCourse, allPages: StudentCourse[]) => {
-      return lastPage.courseHistories ? allPages.length : undefined;
+      return !lastPage.isLast ? allPages.length : undefined;
     },
   });
 };

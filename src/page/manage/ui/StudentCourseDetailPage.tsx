@@ -79,11 +79,12 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
     size: ITEMS_PER_PAGE,
     searchDate: dayjs(searchMonth).format('YYYY-MM'),
   });
-  const studentCourseId = Number(historyData?.pages[0]?.course?.courseId);
 
   const { mutate: addMutation } = useAddStudentCourseMutation();
   const { mutate: deleteMutation } = useDeleteStudentCourseMutation();
   const { mutate: registerMutation } = useRegisterStudentCourseMutation();
+
+  const studentCourseId = Number(historyData?.pages[0]?.mainData.course?.courseId);
 
   const registerCourseCount = () => {
     registerMutation(
@@ -201,8 +202,8 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           {name}님 수강권
         </h2>
 
-        {historyData?.pages[0]?.course?.totalLessonCnt ===
-          historyData?.pages[0]?.course?.completedLessonCnt && (
+        {historyData?.pages[0]?.mainData.course?.totalLessonCnt ===
+          historyData?.pages[0]?.mainData.course?.completedLessonCnt && (
           <CourseSheet isOpen={isRegisterSheetOpen} setIsOpen={setIsRegisterSheetOpen}>
             <CourseSheetTrigger className='absolute right-7'>
               <IconPlus width={20} height={20} fill='black' />
@@ -229,26 +230,37 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
         ) : (
           <>
             {/* 수강권 있을때 */}
-            {historyData?.pages[0]?.course && (
+            {historyData?.pages[0]?.mainData.course && (
               <div className='bg-[#fff] p-7 pb-0'>
                 <CourseCard
                   className='mb-6'
                   expiration={
-                    historyData?.pages[0]?.course?.totalLessonCnt ===
-                    historyData?.pages[0]?.course?.completedLessonCnt
+                    historyData?.pages[0]?.mainData.course?.totalLessonCnt ===
+                    historyData?.pages[0]?.mainData.course?.completedLessonCnt
                   }>
                   <CourseCardHeader
-                    gymName={historyData?.pages[0]?.gymName}
-                    totalLessonCnt={historyData?.pages[0]?.course?.totalLessonCnt}
-                    remainLessonCnt={historyData?.pages[0]?.course?.remainLessonCnt}
-                    completedLessonCnt={historyData?.pages[0]?.course?.completedLessonCnt}
+                    gymName={historyData?.pages[0]?.mainData.gymName}
+                    totalLessonCnt={
+                      historyData?.pages[0]?.mainData.course?.totalLessonCnt
+                    }
+                    remainLessonCnt={
+                      historyData?.pages[0]?.mainData.course?.remainLessonCnt
+                    }
+                    completedLessonCnt={
+                      historyData?.pages[0]?.mainData.course?.completedLessonCnt
+                    }
                   />
                   <CourseCardContent
-                    totalLessonCnt={historyData?.pages[0]?.course?.totalLessonCnt}
-                    completedLessonCnt={historyData?.pages[0]?.course?.completedLessonCnt}
+                    totalLessonCnt={
+                      historyData?.pages[0]?.mainData.course?.totalLessonCnt
+                    }
+                    completedLessonCnt={
+                      historyData?.pages[0]?.mainData.course?.completedLessonCnt
+                    }
                     progressClassName={cn(
-                      historyData?.pages[0]?.course?.completedLessonCnt ===
-                        historyData?.pages[0]?.course?.totalLessonCnt && 'bg-gray-400'
+                      historyData?.pages[0]?.mainData.course?.completedLessonCnt ===
+                        historyData?.pages[0]?.mainData.course?.totalLessonCnt &&
+                        'bg-gray-400'
                     )}
                   />
                 </CourseCard>
@@ -258,8 +270,8 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                     <CourseSheetTrigger
                       className={cn('h-[46px] w-[160px]', Typography.HEADING_5)}
                       disabled={
-                        historyData?.pages[0]?.course?.totalLessonCnt ===
-                        historyData?.pages[0]?.course?.completedLessonCnt
+                        historyData?.pages[0]?.mainData.course?.totalLessonCnt ===
+                        historyData?.pages[0]?.mainData.course?.completedLessonCnt
                       }>
                       수업 횟수 추가
                     </CourseSheetTrigger>
@@ -319,7 +331,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             )}
 
             {/* 수강권 없을때 */}
-            {!historyData?.pages[0]?.course && (
+            {!historyData?.pages[0]?.mainData.course && (
               <div className='flex flex-col items-center justify-center bg-[#fff] py-[88px]'>
                 <p className={cn('mb-3 text-gray-500', Typography.TITLE_3)}>
                   등록된 수강권이 없습니다.
@@ -353,8 +365,26 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
 
             <ul className='bg-gray-100'>
               {historyData?.pages?.map((data, index) => {
-                return data.courseHistories !== null ? (
-                  data.courseHistories?.map((item) => {
+                if (data.content === null || data.content.length === 0) {
+                  return (
+                    <li
+                      key={`courseHistories_${index}`}
+                      className={cn(
+                        Typography.TITLE_1_BOLD,
+                        'flex flex-col items-center justify-center py-28 text-gray-700'
+                      )}>
+                      <span className='mb-5 w-[35px]'>
+                        <IconNotification
+                          width={33}
+                          height={33}
+                          stroke='var(--gray-300)'
+                        />
+                      </span>
+                      수강권 내역이 없습니다.
+                    </li>
+                  );
+                } else {
+                  return data.content?.map((item) => {
                     const date = dayjs(item.createdAt);
                     const formattedDate = date.format('YY.MM.DD');
 
@@ -374,30 +404,16 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                         </dl>
                       </li>
                     );
-                  })
-                ) : (
-                  <li
-                    key={`courseHistories_${index}`}
-                    className={cn(
-                      Typography.TITLE_1_BOLD,
-                      'flex flex-col items-center justify-center py-28 text-gray-700'
-                    )}>
-                    <span className='mb-5 w-[35px]'>
-                      <IconNotification width={33} height={33} stroke='var(--gray-300)' />
-                    </span>
-                    수강권 내역이 없습니다.
-                  </li>
-                );
+                  });
+                }
               })}
             </ul>
 
-            {historyData?.pages[0].courseHistories !== null &&
-              historyData?.pages[0].courseHistories.length === ITEMS_PER_PAGE &&
-              hasNextPage && (
-                <div ref={ref} className='h-[20px] p-3 text-center'>
-                  loading...
-                </div>
-              )}
+            {!historyData?.pages[historyData?.pages.length - 1].isLast && hasNextPage && (
+              <div ref={ref} className='h-[20px] p-3 text-center'>
+                loading...
+              </div>
+            )}
           </>
         )}
       </Layout.Contents>
