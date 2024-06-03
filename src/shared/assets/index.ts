@@ -9,6 +9,7 @@ export { default as IconAvatar } from './images/avatar.svg';
 export { default as IconBack } from './images/back.svg';
 export { default as IconCalendarCancel } from './images/calendar_cancel.svg';
 export { default as IconCalendarCheck } from './images/calendar_check.svg';
+export { default as IconCalendarCheckProfile } from './images/calendar_check_profile.svg';
 export { default as IconCalendarFilled } from './images/calendar_filled.svg';
 export { default as IconCalendarOutlined } from './images/calendar_outlined.svg';
 export { default as IconCalendarX } from './images/calendar_x.svg';

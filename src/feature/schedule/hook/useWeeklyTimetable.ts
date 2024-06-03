@@ -7,6 +7,7 @@ import {
   HOURS_FROM,
   SCHEDULE_ACTIVE_COLORS,
   SCHEDULE_AVAILABLE_COLOR,
+  SCHEDULE_DISABLED_COLORS,
   SCHEDULE_NOSHOW_COLOR,
 } from '../consts';
 import {
@@ -38,6 +39,10 @@ const useWeeklyTimetable = ({
 
     if (status === 'AVAILABLE') {
       return SCHEDULE_AVAILABLE_COLOR;
+    }
+
+    if (status === 'DISABLED') {
+      return SCHEDULE_DISABLED_COLORS;
     }
 
     if (status === 'NO_SHOW') {

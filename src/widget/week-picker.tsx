@@ -93,7 +93,7 @@ const WeekPicker = ({ startDate, onWeekChange }: WeekPickerProps) => {
   const currentDate = getStartOfWeek();
 
   const endDate = dayjs(startDate).add(6, 'day');
-  const isCurrentWeek = dayjs(startDate).isSame(currentDate, 'day');
+  const isCurrentWeek = dayjs(startDate).isSame(dayjs(currentDate).add(7, 'day'), 'day');
 
   const changeWeek = (date: Date) => {
     onWeekChange(date);
