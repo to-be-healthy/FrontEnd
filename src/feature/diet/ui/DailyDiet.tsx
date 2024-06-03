@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element */
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 
 import {
+  IconAlbum,
   IconCameraUpload,
   IconCheck,
   IconDelete,
@@ -23,7 +24,6 @@ import { useDietContext } from '../hooks/useDiet';
 import { DietImageType, MealType } from '../model/types';
 
 interface SelectImageProps {
-  children?: ReactNode;
   type: MealType;
   setIsSheetOpen: (value: boolean) => void;
 }
@@ -51,7 +51,7 @@ const TakePhoto = ({ type, setIsSheetOpen }: SelectImageProps) => {
   );
 };
 
-const SelectAlbum = ({ type, children, setIsSheetOpen }: SelectImageProps) => {
+const SelectAlbum = ({ type, setIsSheetOpen }: SelectImageProps) => {
   const { uploadFiles } = useDietContext();
   return (
     <label htmlFor={`new-${type}-image-input`} className='cursor-pointer'>
@@ -66,8 +66,8 @@ const SelectAlbum = ({ type, children, setIsSheetOpen }: SelectImageProps) => {
         }}
       />
       <p className='flex items-center justify-start px-7 py-6'>
-        <IconCameraUpload width={24} height={24} />
-        <span className={cn(Typography.BODY_1, 'ml-4')}>{children}</span>
+        <IconAlbum width={23} height={23} />
+        <span className={cn(Typography.BODY_1, 'ml-4')}>앨범에서 선택</span>
       </p>
     </label>
   );
@@ -172,9 +172,7 @@ export const DailyDiet = ({ diet }: DailyDietProps) => {
                   <TakePhoto type={diet.type} setIsSheetOpen={setIsSheetOpen} />
                 </li>
                 <li className='h-[56px] border-t border-gray-100'>
-                  <SelectAlbum type={diet.type} setIsSheetOpen={setIsSheetOpen}>
-                    사진 업로드
-                  </SelectAlbum>
+                  <SelectAlbum type={diet.type} setIsSheetOpen={setIsSheetOpen} />
                 </li>
                 <li className='h-[56px] border-t border-gray-100'>
                   <CancelFasting type={diet.type} setIsSheetOpen={setIsSheetOpen} />
@@ -218,9 +216,7 @@ export const DailyDiet = ({ diet }: DailyDietProps) => {
                   <TakePhoto type={diet.type} setIsSheetOpen={setIsSheetOpen} />
                 </li>
                 <li className='h-[56px] border-t border-gray-100'>
-                  <SelectAlbum type={diet.type} setIsSheetOpen={setIsSheetOpen}>
-                    {diet.fileUrl ? '사진 재업로드' : '사진 업로드'}
-                  </SelectAlbum>
+                  <SelectAlbum type={diet.type} setIsSheetOpen={setIsSheetOpen} />
                 </li>
                 {diet.fileUrl ? (
                   <>

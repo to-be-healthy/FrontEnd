@@ -8,7 +8,13 @@ import {
   useEditDietMutation,
   useStudentDietDetailQuery,
 } from '@/entity/diet';
-import { DailyDiet, DietContext, DietImageData, useDiet } from '@/feature/diet';
+import {
+  DailyDiet,
+  defaultRequestData,
+  DietContext,
+  DietImageData,
+  useDiet,
+} from '@/feature/diet';
 import { IconCheck, IconClose } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
@@ -34,15 +40,6 @@ interface Props {
 }
 
 export const StudentDietEditPage = ({ dietId }: Props) => {
-  const defaultRequestData: RegisterAndEditDiet = {
-    breakfastFile: null,
-    breakfastFast: false,
-    lunchFile: null,
-    lunchFast: false,
-    dinnerFile: null,
-    dinnerFast: false,
-  };
-
   const { showErrorToast } = useShowErrorToast();
   const { toast } = useToast();
   const searchParams = useSearchParams();
@@ -113,28 +110,11 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
 
   useEffect(() => {
     if (dietData) {
-      dietContextValue.setImages([
-        {
-          fast: dietData?.breakfast.fast,
-          fileOrder: 1,
-          fileUrl: dietData?.breakfast.dietFile
-            ? dietData?.breakfast.dietFile?.fileUrl
-            : null,
-          type: dietData?.breakfast.type,
-        },
-        {
-          fast: dietData?.lunch.fast,
-          fileOrder: 1,
-          fileUrl: dietData?.lunch.dietFile ? dietData?.lunch.dietFile?.fileUrl : null,
-          type: dietData?.lunch.type,
-        },
-        {
-          fast: dietData?.dinner.fast,
-          fileOrder: 1,
-          fileUrl: dietData?.dinner.dietFile ? dietData?.dinner.dietFile?.fileUrl : null,
-          type: dietData?.dinner.type,
-        },
-      ]);
+      dietContextValue.InitialImages({
+        breakfast: dietData?.breakfast,
+        lunch: dietData?.lunch,
+        dinner: dietData?.dinner,
+      });
     }
   }, [dietData]);
 

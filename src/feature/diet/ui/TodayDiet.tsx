@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-img-element */
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { ChangeEvent, ReactNode, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 
 import { useDietUploadImageMutation, useRegisterHomeDietMutation } from '@/entity/diet';
 import {
+  IconAlbum,
   IconCameraUpload,
   IconCheck,
   IconDelete,
@@ -26,7 +27,6 @@ import { cn } from '@/shared/utils';
 import { DietWithFasting, MealType } from '../model/types';
 
 interface SelectImageProps {
-  children?: ReactNode;
   type: MealType;
   uploadFiles: (e: ChangeEvent<HTMLInputElement>) => void;
 }
@@ -50,7 +50,7 @@ const TakePhoto = ({ type, uploadFiles }: SelectImageProps) => {
   );
 };
 
-const SelectAlbum = ({ type, uploadFiles, children }: SelectImageProps) => {
+const SelectAlbum = ({ type, uploadFiles }: SelectImageProps) => {
   return (
     <label htmlFor={`new-${type}-image-input`} className='cursor-pointer'>
       <Input
@@ -61,8 +61,8 @@ const SelectAlbum = ({ type, uploadFiles, children }: SelectImageProps) => {
         onChange={uploadFiles}
       />
       <p className='flex items-center justify-start px-7 py-6'>
-        <IconCameraUpload width={24} height={24} />
-        <span className={cn(Typography.BODY_1, 'ml-4')}>{children}</span>
+        <IconAlbum width={23} height={23} />
+        <span className={cn(Typography.BODY_1, 'ml-4')}>앨범에서 선택</span>
       </p>
     </label>
   );
@@ -212,9 +212,7 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
                 <TakePhoto type={type} uploadFiles={uploadFiles} />
               </li>
               <li className='h-[56px] border-t border-gray-100'>
-                <SelectAlbum type={type} uploadFiles={uploadFiles}>
-                  사진 업로드
-                </SelectAlbum>
+                <SelectAlbum type={type} uploadFiles={uploadFiles} />
               </li>
               <li className='h-[56px] border-t border-gray-100'>
                 <CancelFasting registerDiet={registerDiet} />
@@ -258,9 +256,7 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
                 <TakePhoto type={type} uploadFiles={uploadFiles} />
               </li>
               <li className='h-[56px] border-t border-gray-100'>
-                <SelectAlbum type={diet.type} uploadFiles={uploadFiles}>
-                  {diet?.dietFile?.fileUrl ? '사진 재업로드' : '사진 업로드'}
-                </SelectAlbum>
+                <SelectAlbum type={diet.type} uploadFiles={uploadFiles} />
               </li>
               {diet?.dietFile?.fileUrl ? (
                 <>

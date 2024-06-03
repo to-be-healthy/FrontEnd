@@ -4,6 +4,7 @@ export {
   useCommentContext as useDietCommentContext,
 } from './hooks/useComment';
 export { DietContext, useDiet, useDietContext } from './hooks/useDiet';
+export { defaultRequestData } from './model/const';
 export type {
   Comment,
   ContentType,

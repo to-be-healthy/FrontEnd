@@ -25,6 +25,26 @@ import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
+interface NoDietProps {
+  index: number;
+}
+
+const NoDiet = ({ index }: NoDietProps) => {
+  return (
+    <li
+      key={`diet_${index}`}
+      className={cn(
+        Typography.TITLE_1_BOLD,
+        'flex flex-col items-center justify-center py-28 text-gray-700'
+      )}>
+      <span className='mb-5 w-[35px]'>
+        <IconNotification width={33} height={33} stroke='var(--gray-300)' />
+      </span>
+      등록된 식단이 없습니다.
+    </li>
+  );
+};
+
 const dietDay: MealType[] = ['breakfast', 'lunch', 'dinner'];
 
 const ITEMS_PER_PAGE = 10;
@@ -110,109 +130,97 @@ export const StudentDietListPage = () => {
           <ul>
             {data?.pages.map((item, index) => {
               if (item.content === null || item.content.length === 0) {
+                return <NoDiet key={`diet_${index}`} index={index} />;
+              }
+
+              return item.content.map((diet) => {
+                const date = dayjs(diet?.eatDate).format('MM월 DD일 (dd)');
+                const todayValue = dayjs(today).format('MM월 DD일 (dd)');
                 return (
-                  <li
-                    key={`diet_${index}`}
-                    className={cn(
-                      Typography.TITLE_1_BOLD,
-                      'flex flex-col items-center justify-center py-28 text-gray-700'
-                    )}>
-                    <span className='mb-5 w-[35px]'>
-                      <IconNotification width={33} height={33} stroke='var(--gray-300)' />
-                    </span>
-                    등록된 식단이 없습니다.
+                  <li key={diet.dietId}>
+                    <Button
+                      variant='ghost'
+                      size='full'
+                      className='p-0'
+                      onClick={() => onClickDiet(diet.dietId)}>
+                      <Card className='mb-5 w-full px-6 py-7'>
+                        <CardHeader
+                          className={
+                            (Typography.TITLE_3, 'mb-4 text-left text-gray-600')
+                          }>
+                          {date === todayValue ? '오늘' : date}
+                        </CardHeader>
+                        <CardContent>
+                          <article className='mb-6 flex justify-between gap-2'>
+                            {dietDay.map((mealType: MealType) => {
+                              const meal = diet[mealType];
+                              return (
+                                <div
+                                  key={mealType}
+                                  className='flex flex-1 items-center justify-center'>
+                                  {meal.fast && (
+                                    <div
+                                      className={cn(
+                                        Typography.TITLE_2,
+                                        'flex h-[88px] w-full flex-col items-center justify-center rounded-md bg-gray-100 p-0 text-center text-gray-400'
+                                      )}>
+                                      <span className='mb-1'>
+                                        <IconCheck fill={'var(--primary-500)'} />
+                                      </span>
+                                      단식
+                                    </div>
+                                  )}
+                                  {!meal.fast && meal.dietFile?.fileUrl && (
+                                    <div className='h-[88px] w-full'>
+                                      <img
+                                        src={meal.dietFile.fileUrl}
+                                        alt={`${meal.type} image`}
+                                        className='custom-image rounded-md'
+                                      />
+                                    </div>
+                                  )}
+                                  {!meal.fast && !meal.dietFile && (
+                                    <div className='h-[88px] w-full rounded-md bg-gray-100 p-0' />
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </article>
+
+                          <CardFooter className='flex items-center justify-start'>
+                            <div className='flex items-center'>
+                              {diet.liked ? (
+                                <IconLike
+                                  stroke='var(--point-color)'
+                                  fill='var(--point-color)'
+                                />
+                              ) : (
+                                <IconLike stroke='var(--gray-500)' />
+                              )}
+                              <span className='ml-1'>
+                                {diet.likeCnt ? diet.likeCnt : 0}
+                              </span>
+                            </div>
+                            <div className='ml-4 flex items-center'>
+                              <IconChat />
+                              <p
+                                className={cn(
+                                  Typography.BODY_4_MEDIUM,
+                                  'ml-1 text-gray-500'
+                                )}>
+                                댓글
+                                <span className='ml-[2px]'>
+                                  {diet.commentCnt ? diet.commentCnt : 0}
+                                </span>
+                              </p>
+                            </div>
+                          </CardFooter>
+                        </CardContent>
+                      </Card>
+                    </Button>
                   </li>
                 );
-              } else {
-                return item.content.map((diet) => {
-                  const date = dayjs(diet?.eatDate).format('MM월 DD일 (dd)');
-                  const todayValue = dayjs(today).format('MM월 DD일 (dd)');
-                  return (
-                    <li key={diet.dietId}>
-                      <Button
-                        variant='ghost'
-                        size='full'
-                        className='p-0'
-                        onClick={() => onClickDiet(diet.dietId)}>
-                        <Card className='mb-5 w-full px-6 py-7'>
-                          <CardHeader
-                            className={
-                              (Typography.TITLE_3, 'mb-4 text-left text-gray-600')
-                            }>
-                            {date === todayValue ? '오늘' : date}
-                          </CardHeader>
-                          <CardContent>
-                            <article className='mb-6 flex justify-between'>
-                              {dietDay.map((mealType: MealType) => {
-                                const meal = diet[mealType];
-                                return (
-                                  <div
-                                    key={mealType}
-                                    className='flex w-[calc((100%-12px)/3)] items-center justify-center'>
-                                    {meal.fast && (
-                                      <div
-                                        className={cn(
-                                          Typography.TITLE_2,
-                                          'flex h-[88px] w-full flex-col items-center justify-center rounded-md bg-gray-100 p-0 text-center text-gray-400'
-                                        )}>
-                                        <span className='mb-1'>
-                                          <IconCheck fill={'var(--primary-500)'} />
-                                        </span>
-                                        단식
-                                      </div>
-                                    )}
-                                    {!meal.fast && meal.dietFile?.fileUrl && (
-                                      <div className='h-[88px] w-full'>
-                                        <img
-                                          src={meal.dietFile.fileUrl}
-                                          alt='breakfast image'
-                                          className='custom-image rounded-md'
-                                        />
-                                      </div>
-                                    )}
-                                    {!meal.fast && !meal.dietFile && (
-                                      <div className='h-[88px] w-full rounded-md bg-gray-100 p-0' />
-                                    )}
-                                  </div>
-                                );
-                              })}
-                            </article>
-
-                            <CardFooter className='flex items-center justify-start'>
-                              <div className='flex items-center'>
-                                {diet.liked ? (
-                                  <IconLike
-                                    stroke='var(--point-color)'
-                                    fill='var(--point-color)'
-                                  />
-                                ) : (
-                                  <IconLike stroke='var(--gray-500)' />
-                                )}
-                                <span className='ml-1'>
-                                  {diet.likeCnt ? diet.likeCnt : 0}
-                                </span>
-                              </div>
-                              <div className='ml-4 flex items-center'>
-                                <IconChat />
-                                <p
-                                  className={cn(
-                                    Typography.BODY_4_MEDIUM,
-                                    'ml-1 text-gray-500'
-                                  )}>
-                                  댓글
-                                  <span className='ml-[2px]'>
-                                    {diet.commentCnt ? diet.commentCnt : 0}
-                                  </span>
-                                </p>
-                              </div>
-                            </CardFooter>
-                          </CardContent>
-                        </Card>
-                      </Button>
-                    </li>
-                  );
-                });
-              }
+              });
             })}
           </ul>
 

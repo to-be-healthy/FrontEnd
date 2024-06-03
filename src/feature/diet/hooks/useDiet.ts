@@ -4,7 +4,7 @@ import { useDietUploadImageMutation } from '@/entity/diet';
 import { ImageType } from '@/entity/image';
 import { useShowErrorToast } from '@/shared/hooks';
 
-import { DietImageType, MealType } from '../model/types';
+import { DietImageType, DietWithFasting, MealType } from '../model/types';
 
 type ContextType = ReturnType<typeof useDiet> | null;
 
@@ -115,6 +115,58 @@ const useDiet = () => {
     }
   };
 
+  interface InitialImagesProps {
+    breakfast: DietWithFasting;
+    lunch: DietWithFasting;
+    dinner: DietWithFasting;
+  }
+
+  const createDietImage = (
+    mealType: MealType,
+    mealData: DietWithFasting
+  ): DietImageType => {
+    return {
+      fast: mealData?.fast,
+      fileOrder: 1,
+      fileUrl: mealData?.dietFile ? mealData.dietFile.fileUrl : null,
+      type: mealType,
+    };
+  };
+
+  const InitialImages = (data?: InitialImagesProps) => {
+
+    const mealTypes: MealType[] = ['breakfast', 'lunch', 'dinner'];
+    const defaultSetting: DietImageType[] = [
+      {
+        fast: false,
+        fileOrder: 1,
+        fileUrl: null,
+        type: 'breakfast',
+      },
+      {
+        fast: false,
+        fileOrder: 1,
+        fileUrl: null,
+        type: 'lunch',
+      },
+      {
+        fast: false,
+        fileOrder: 1,
+        fileUrl: null,
+        type: 'dinner',
+      },
+    ];
+
+    if (!data) setSortedImages(defaultSetting);
+
+    if (data) {
+      const res = mealTypes.map((mealType) => {
+        return createDietImage(mealType, data[mealType]);
+      });
+      setSortedImages(res);
+    }
+  };
+
   return {
     images,
     uploadStates,
@@ -124,6 +176,7 @@ const useDiet = () => {
     onClickCheckFasting,
     onClickCancelFasting,
     clearImages,
+    InitialImages,
   };
 };
 

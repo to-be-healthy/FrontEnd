@@ -17,7 +17,13 @@ import {
   useRegisterDietMutation,
   useStudentCalendarMyDietListQuery,
 } from '@/entity/diet';
-import { DailyDiet, DietContext, DietImageData, useDiet } from '@/feature/diet';
+import {
+  DailyDiet,
+  defaultRequestData,
+  DietContext,
+  DietImageData,
+  useDiet,
+} from '@/feature/diet';
 import { IconCheck, IconClose, IconNotification } from '@/shared/assets';
 import DownIcon from '@/shared/assets/images/icon_arrow_bottom.svg';
 import { useShowErrorToast } from '@/shared/hooks';
@@ -27,16 +33,6 @@ import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 export const StudentDietRegisterPage = () => {
-  const defaultRequestData: RegisterAndEditDiet = {
-    breakfastFile: null,
-    breakfastFast: false,
-    lunchFile: null,
-    lunchFast: false,
-    dinnerFile: null,
-    dinnerFast: false,
-    eatDate: '',
-  };
-
   const { showErrorToast } = useShowErrorToast();
 
   const today = new Date();
@@ -204,26 +200,7 @@ export const StudentDietRegisterPage = () => {
   };
 
   useEffect(() => {
-    dietContextValue.setImages([
-      {
-        fast: false,
-        fileOrder: 1,
-        fileUrl: null,
-        type: 'breakfast',
-      },
-      {
-        fast: false,
-        fileOrder: 1,
-        fileUrl: null,
-        type: 'lunch',
-      },
-      {
-        fast: false,
-        fileOrder: 1,
-        fileUrl: null,
-        type: 'dinner',
-      },
-    ]);
+    dietContextValue.InitialImages();
   }, [calendarMyDietData]);
 
   return (
