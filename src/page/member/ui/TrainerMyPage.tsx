@@ -53,9 +53,12 @@ export const TrainerMyPage = () => {
             <span className={cn(Typography.BODY_1, 'text-gray-500')}>최신 버전</span>
           </div>
         </section>
-        <footer className='flex flex-col gap-4 bg-transparent p-7'>
+
+        <footer className='flex flex-col items-start gap-4 bg-transparent p-7'>
           <span className={cn(Typography.BODY_2, 'text-gray-500')}>앱 버전 0.0</span>
-          <Link href={'#'} className={cn(Typography.BODY_2, 'text-gray-500')}>
+          <Link
+            href={'#'}
+            className={cn(Typography.BODY_2, 'border-b border-gray-300 text-gray-500')}>
             오픈 소스 라이선스 보기
           </Link>
         </footer>

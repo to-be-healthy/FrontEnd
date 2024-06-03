@@ -277,4 +277,7 @@
     shape-outside: inset(calc(100% - 19px) 0 0 0);
     color: var(--gray-500);
   }
+  .mypage-box-shadow {
+    box-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.06);
+  }
 }
