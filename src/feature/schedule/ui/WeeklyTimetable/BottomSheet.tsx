@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import {
   IconCalendarCancel,
   IconCalendarCheck,
+  IconCalendarCheckProfile,
   IconCameraNegative,
   IconCameraPositive,
   IconDocumentProfile,
@@ -15,8 +16,9 @@ import { Typography } from '@/shared/mixin';
 import { Button, DialogClose, DialogContent, SheetContent } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-import { useEnableScheduleMutation } from '../../api/useEnableScheduleMutation';
-import { useTrainerCancelReservationScheduleMutation } from '../../api/useTrainerCancelReservationScheduleMutation';
+import { useTrainerCancelReservationMutation } from '../../api/useTrainerCancelReservationMutation';
+import { useTrainerChangeReservationMutation } from '../../api/useTrainerChangeReservationMutation';
+import { useTrainerChangeShowMutation } from '../../api/useTrainerChangeShowMutation';
 import { FlatSchedule } from '../../model/type';
 
 const BottomSheet = ({ schedule }: { schedule: FlatSchedule }) => {
@@ -33,7 +35,7 @@ const sheetMapper = (schedule: FlatSchedule) => ({
 });
 
 const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
-  const { mutate } = useTrainerCancelReservationScheduleMutation();
+  const { mutate } = useTrainerCancelReservationMutation();
   const { showErrorToast } = useShowErrorToast();
 
   const queryClient = useQueryClient();
@@ -115,7 +117,8 @@ const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
 
 const AvailableSheet = ({ schedule }: { schedule: FlatSchedule }) => {
   const { showErrorToast } = useShowErrorToast();
-  const { mutate } = useTrainerCancelReservationScheduleMutation();
+  const { mutate } = useTrainerChangeReservationMutation();
+
   const queryClient = useQueryClient();
 
   const { date, scheduleId } = schedule;
@@ -123,17 +126,20 @@ const AvailableSheet = ({ schedule }: { schedule: FlatSchedule }) => {
   const title = `${dayjs(date).format('M.DD(ddd) A')} ${schedule.lessonStartTime} ~ ${schedule.lessonEndTime}`;
 
   const cancelReservation = () => {
-    mutate(scheduleId, {
-      onSuccess: async () => {
-        await queryClient.refetchQueries({
-          queryKey: ['schedule'].filter(Boolean),
-        });
-      },
-      onError: (error) => {
-        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
-      },
-    });
+    mutate(
+      { status: 'DISABLED', scheduleIds: [scheduleId] },
+      {
+        onSuccess: async () => {
+          await queryClient.refetchQueries({
+            queryKey: ['schedule'].filter(Boolean),
+          });
+        },
+        onError: (error) => {
+          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+          showErrorToast(message);
+        },
+      }
+    );
   };
 
   return (
@@ -168,35 +174,14 @@ const AvailableSheet = ({ schedule }: { schedule: FlatSchedule }) => {
 };
 
 const NoShowSheet = ({ schedule }: { schedule: FlatSchedule }) => {
-  const date = schedule.date;
-  const title = `${dayjs(date).format('M.DD(ddd) A')} ${schedule.lessonStartTime} ~ ${schedule.lessonEndTime}`;
-
-  return (
-    <SheetContent side='bottom'>
-      <div className='flex w-full flex-col'>
-        <h3 className={cn(Typography.HEADING_3)}>{title}</h3>
-        <div className={cn('mt-7 flex w-full justify-center gap-6')}>No Show</div>
-      </div>
-    </SheetContent>
-  );
-};
-
-const DisabledSheet = ({ schedule }: { schedule: FlatSchedule }) => {
-  const { showErrorToast } = useShowErrorToast();
-  const { mutate } = useEnableScheduleMutation();
   const queryClient = useQueryClient();
-
-  const { date, lessonStartTime, lessonEndTime } = schedule;
+  const { showErrorToast } = useShowErrorToast();
+  const { date, applicantId, scheduleId, applicantName } = schedule;
   const title = `${dayjs(date).format('M.DD(ddd) A')} ${schedule.lessonStartTime} ~ ${schedule.lessonEndTime}`;
+  const { mutate } = useTrainerChangeShowMutation();
 
-  const enabledSchedule = () => {
-    const payload = {
-      lessonDt: date,
-      lessonStartTime,
-      lessonEndTime,
-    };
-
-    mutate(payload, {
+  const changeToShowStatus = () => {
+    mutate(scheduleId, {
       onSuccess: async () => {
         await queryClient.refetchQueries({
           queryKey: ['schedule'].filter(Boolean),
@@ -207,6 +192,70 @@ const DisabledSheet = ({ schedule }: { schedule: FlatSchedule }) => {
         showErrorToast(message);
       },
     });
+  };
+
+  return (
+    <SheetContent side='bottom'>
+      <div className='flex w-full flex-col'>
+        <h3 className={cn(Typography.HEADING_3)}>
+          {applicantName}
+          <span className='ml-4 text-point'>미출석</span>
+        </h3>
+        <p className={cn(Typography.BODY_1, 'mt-2')}>{title}</p>
+        <div className={cn('mt-7 flex w-full justify-center gap-6')}>
+          <Link
+            href={`/trainer/manage/${applicantId}`}
+            className={cn(
+              Typography.TITLE_1_SEMIBOLD,
+              'flex h-[120px] w-[120px] flex-col items-center justify-center gap-5 rounded-lg border border-gray-200'
+            )}>
+            <IconDocumentProfile />
+            회원 정보 보기
+          </Link>
+          <DialogClose asChild>
+            <button
+              className={cn(
+                Typography.TITLE_1_SEMIBOLD,
+                'flex h-[120px] w-[120px] flex-col items-center justify-center gap-5 rounded-lg border border-gray-200'
+              )}
+              onClick={changeToShowStatus}>
+              <IconCalendarCheckProfile />
+              출석 체크
+            </button>
+          </DialogClose>
+        </div>
+      </div>
+      <div></div>
+    </SheetContent>
+  );
+};
+
+const DisabledSheet = ({ schedule }: { schedule: FlatSchedule }) => {
+  const { showErrorToast } = useShowErrorToast();
+  const { mutate } = useTrainerChangeReservationMutation();
+  const queryClient = useQueryClient();
+
+  const { date, scheduleId } = schedule;
+  const title = `${dayjs(date).format('M.DD(ddd) A')} ${schedule.lessonStartTime} ~ ${schedule.lessonEndTime}`;
+
+  const enabledSchedule = () => {
+    mutate(
+      {
+        status: 'AVAILABLE',
+        scheduleIds: [scheduleId],
+      },
+      {
+        onSuccess: async () => {
+          await queryClient.refetchQueries({
+            queryKey: ['schedule'].filter(Boolean),
+          });
+        },
+        onError: (error) => {
+          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+          showErrorToast(message);
+        },
+      }
+    );
   };
 
   return (
