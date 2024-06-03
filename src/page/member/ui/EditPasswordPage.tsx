@@ -109,11 +109,7 @@ const EditPasswordPage = () => {
       </Layout.Contents>
       <Layout.BottomArea>
         {step === 1 && (
-          <Button
-            formTarget=''
-            size='full'
-            disabled={!password}
-            onClick={handleVerifyPassword}>
+          <Button size='full' disabled={!password} onClick={handleVerifyPassword}>
             비밀번호 확인
           </Button>
         )}
