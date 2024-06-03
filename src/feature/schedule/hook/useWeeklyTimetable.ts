@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { timeToDecimal } from '@/shared/utils';
 
@@ -56,21 +56,26 @@ const useWeeklyTimetable = ({
     setSelectedSchedule(schedules);
   };
 
-  const flatSchedules = schedules.flatMap(([date, trainerSchedules]) =>
-    trainerSchedules.map((item) => {
-      if (typeof item.applicantId === 'number') {
-        userList.push(item.applicantId);
-      }
+  const flatSchedules = useMemo(
+    () =>
+      schedules.flatMap(([date, trainerSchedules]) =>
+        trainerSchedules.map((item) => {
+          if (typeof item.applicantId === 'number') {
+            userList.push(item.applicantId);
+          }
 
-      const offset: ScheduleOffset = {
-        x: dayjs(new Date(date)).diff(startDate, 'day'),
-        y: timeToDecimal(item.lessonStartTime) - HOURS_FROM,
-      };
+          const offset: ScheduleOffset = {
+            x: dayjs(new Date(date)).diff(startDate, 'day'),
+            y: timeToDecimal(item.lessonStartTime) - HOURS_FROM,
+          };
 
-      const color = getScheduleColor(item);
+          const color = getScheduleColor(item);
 
-      return { ...item, date, offset, color };
-    })
+          return { ...item, date, offset, color };
+        })
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [getScheduleColor, schedules, startDate]
   );
 
   return {

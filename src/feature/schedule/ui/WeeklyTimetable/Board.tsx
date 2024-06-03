@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import { PropsWithChildren } from 'react';
 
 import { Typography } from '@/shared/mixin';
+import { SheetTrigger } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
 import { HOURS_FROM, HOURS_TO } from '../../consts';
@@ -11,9 +12,11 @@ import { HOURS_FROM, HOURS_TO } from '../../consts';
  */
 const Board = ({
   startDate,
+  openChangeClosedDay,
   children,
 }: PropsWithChildren<{
   startDate: Date;
+  openChangeClosedDay: (date: Date) => void;
 }>) => {
   const today = new Date();
   const hourAxis = Array.from(
@@ -38,18 +41,19 @@ const Board = ({
               const dayOfWeek = dayjs(day).format('ddd');
               const isToday = today.toDateString() === day.toDateString();
               return (
-                <div
+                <SheetTrigger
                   key={dayOfWeek}
                   className={cn(
                     Typography.BODY_4_MEDIUM,
                     'flex h-[48px] w-[64px] flex-col items-center justify-center border-b border-r border-t bg-white text-gray-700',
                     isToday && 'text-blue-300'
-                  )}>
+                  )}
+                  onClick={() => openChangeClosedDay(day)}>
                   {dayOfWeek}
                   <p className={cn(Typography.TITLE_3, isToday && 'text-primary-500')}>
                     {dayjs(day).format('D')}
                   </p>
-                </div>
+                </SheetTrigger>
               );
             })}
           </div>
