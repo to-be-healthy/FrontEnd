@@ -1,12 +1,12 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { useImages } from '@/entity/image';
-import { UnwrittenLesson, useCreateLogMutation, useLessonListQuery } from '@/feature/log';
-import { IconBack } from '@/shared/assets';
+import { useEditLogMutation, useLogDetailQuery } from '@/feature/log';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import { useShowErrorToast } from '@/shared/hooks';
@@ -20,7 +20,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
   Button,
-  Card,
   Input,
   Textarea,
 } from '@/shared/ui';
@@ -29,38 +28,38 @@ import { Layout } from '@/widget';
 
 interface Props {
   memberId: number;
+  logId: number;
 }
 
 const MAX_IMAGES_COUNT = 3;
 
-const TrainerCreateLogPage = ({ memberId }: Props) => {
+const TrainerEditLogPage = ({ memberId, logId }: Props) => {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { showErrorToast } = useShowErrorToast();
-  const { data } = useLessonListQuery();
-  const unwrittenLessonList = data
-    ? data.filter((item) => item.reviewStatus === '미작성')
-    : null;
 
-  const [selectLessonMode, setSelectLessonMode] = useState(false);
-  const [selectedLesson, setSelectedLesson] = useState<UnwrittenLesson | null>();
+  const { data } = useLogDetailQuery({ lessonHistoryId: logId });
+
   const [content, setContent] = useState('');
-  const { images, uploadFiles } = useImages({ maxCount: MAX_IMAGES_COUNT });
+  const { images, uploadFiles, updateImages } = useImages({ maxCount: MAX_IMAGES_COUNT });
 
-  const { mutate } = useCreateLogMutation();
+  const { mutate } = useEditLogMutation();
 
   const submit = () => {
-    if (submitButtonDisabled) return;
+    if (!data || submitButtonDisabled) return;
 
     mutate(
       {
+        logId,
         title: '무제',
         content,
-        studentId: memberId,
-        scheduleId: selectedLesson.scheduleId,
         uploadFiles: images,
       },
       {
-        onSuccess: () => {
+        onSuccess: async () => {
+          await queryClient.refetchQueries({
+            queryKey: ['logDetail', logId],
+          });
           router.push(`/trainer/manage/${memberId}/log`);
         },
         onError: (error) => {
@@ -71,79 +70,15 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
     );
   };
 
-  const selectLesson = (lesson: UnwrittenLesson) => {
-    setSelectedLesson(lesson);
-    setSelectLessonMode(false);
-  };
-
-  const submitButtonDisabled = !content || !selectedLesson;
-
   useEffect(() => {
-    if (selectedLesson) return;
-
-    if (unwrittenLessonList && unwrittenLessonList.length === 0) {
-      setSelectedLesson(null);
+    if (data) {
+      setContent(data.content);
+      updateImages(data.files);
     }
-
-    if (unwrittenLessonList && unwrittenLessonList.length > 0) {
-      setSelectedLesson(unwrittenLessonList[0]);
-    }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [unwrittenLessonList]);
+  }, [data]);
 
-  if (selectLessonMode) {
-    return (
-      <Layout>
-        <Layout.Header className='relative'>
-          <Button
-            variant='ghost'
-            className='p-0'
-            onClick={() => setSelectLessonMode(false)}>
-            <IconBack />
-          </Button>
-          <p
-            className={cn(
-              Typography.HEADING_4_SEMIBOLD,
-              'absolute left-1/2 flex h-full -translate-x-1/2 items-center'
-            )}>
-            작성할 수업 선택
-          </p>
-        </Layout.Header>
-        <Layout.Contents className='flex flex-col gap-5 px-7 py-6'>
-          {unwrittenLessonList?.map((item) => (
-            <button key={item.scheduleId} onClick={() => selectLesson(item)}>
-              <Card className='flex w-full flex-col items-start gap-1'>
-                <span className={cn(Typography.TITLE_3, 'text-gray-600')}>
-                  {item.lessonDt}
-                </span>
-                <div className='flex flex-row gap-2'>
-                  <p className={cn(Typography.TITLE_1_BOLD)}>{item.lessonTime}</p>
-                  {item.reservationStatus === '출석' ? (
-                    <span
-                      className={cn(
-                        Typography.BODY_4_MEDIUM,
-                        'select-none rounded-sm bg-blue-50 px-4 py-1 text-primary-500'
-                      )}>
-                      출석
-                    </span>
-                  ) : (
-                    <span
-                      className={cn(
-                        Typography.BODY_4_MEDIUM,
-                        'select-none rounded-sm bg-gray-100 px-4 py-1 text-gray-700'
-                      )}>
-                      미출석
-                    </span>
-                  )}
-                </div>
-              </Card>
-            </button>
-          ))}
-        </Layout.Contents>
-      </Layout>
-    );
-  }
+  const submitButtonDisabled = !content;
 
   return (
     <Layout>
@@ -156,11 +91,11 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
           </AlertDialogTrigger>
           <AlertDialogContent className='gap-0 px-7 py-8'>
             <AlertDialogTitle className={cn(Typography.HEADING_4_BOLD)}>
-              수업일지 작성을 그만둘까요?
+              수업일지 수정을 그만둘까요?
             </AlertDialogTitle>
             <AlertDialogDescription
               className={cn(Typography.BODY_1, 'mt-3 text-gray-600')}>
-              작성된 내용은 저장되지 않아요.
+              변경된 내용은 저장되지 않아요.
             </AlertDialogDescription>
             <AlertDialogFooter className='mt-8 flex flex-row gap-3'>
               <AlertDialogCancel
@@ -190,31 +125,14 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
         <div className='flex-col space-y-[8px]'>
           <div className='flex items-center justify-between'>
             <h3 className={cn(Typography.TITLE_3)}>작성할 수업</h3>
-            <Button
-              variant='ghost'
-              size='auto'
-              className='text-gray-500'
-              onClick={() => setSelectLessonMode(true)}>
-              변경하기
-            </Button>
           </div>
           <div className='h-[85px] flex-col space-y-[10px] rounded-lg border border-gray-200 p-[16px]'>
-            {selectedLesson === null && (
-              <div
-                className={cn(Typography.HEADING_5, FLEX_CENTER, 'h-full text-gray-500')}>
-                수업일지가 모두 작성 완료되었습니다.
-              </div>
-            )}
-            {selectedLesson && selectedLesson !== null && (
+            {data && (
               <>
-                <p className={cn(Typography.TITLE_3, 'text-gray-600')}>
-                  {selectedLesson.lessonDt}
-                </p>
+                <p className={cn(Typography.TITLE_3, 'text-gray-600')}>{data.lessonDt}</p>
                 <div className='space-x-[6px]'>
-                  <span className={cn(Typography.TITLE_1_BOLD)}>
-                    {selectedLesson.lessonTime}
-                  </span>
-                  {selectedLesson.reservationStatus === '출석' ? (
+                  <span className={cn(Typography.TITLE_1_BOLD)}>{data.lessonTime}</span>
+                  {data.attendanceStatus === '출석' ? (
                     <span
                       className={cn(
                         Typography.BODY_4_MEDIUM,
@@ -290,4 +208,4 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
   );
 };
 
-export { TrainerCreateLogPage };
+export { TrainerEditLogPage };
