@@ -81,7 +81,11 @@ const Header = () => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
           <DropdownMenuGroup className='flex flex-col'>
-            <DropdownMenuItem className='typography-title-3 flex items-center gap-[8px] px-[16px] py-[12px]'>
+            <DropdownMenuItem
+              className='typography-title-3 flex items-center gap-[8px] px-[16px] py-[12px]'
+              onClick={() =>
+                router.replace(`/trainer/manage/${memberId}/log/${logId}/edit`)
+              }>
               <IconEdit />
               수정
             </DropdownMenuItem>
