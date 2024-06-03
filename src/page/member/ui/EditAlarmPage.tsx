@@ -1,16 +1,40 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 
+import { useToggleAlarmStatusMutation } from '@/feature/manage';
+import { useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
+import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { Switch } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const EditAlarmPage = () => {
-  const changeAlarm = (checked: boolean, id: string) => {
-    console.log(id, checked);
+  const queryClient = useQueryClient();
+  const { data } = useMyInfoQuery();
+  const { showErrorToast } = useShowErrorToast();
+  const { mutate } = useToggleAlarmStatusMutation();
+
+  const changeAlarm = (
+    checked: boolean,
+    type: 'PUSH' | 'COMMUNITY' | 'FEEDBACK' | 'SCHEDULENOTICE'
+  ) => {
+    const status = checked ? 'ENABLED' : 'DISABLE';
+    mutate(
+      { type, status },
+      {
+        onSuccess: async () => {
+          await queryClient.refetchQueries({ queryKey: ['myinfo'] });
+        },
+        onError: (error) => {
+          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+          showErrorToast(message);
+        },
+      }
+    );
   };
 
   return (
@@ -24,11 +48,13 @@ const EditAlarmPage = () => {
         <h1 className={cn(Typography.HEADING_3, 'bg-white px-7 pb-7 pt-8')}>알림 설정</h1>
         <section className='flex items-center justify-between bg-white px-7 py-[18px]'>
           <p className={cn(Typography.BODY_1)}>앱 푸쉬 알림</p>
-          <Switch
-            id='push'
-            defaultChecked={true}
-            onCheckedChange={(checked) => changeAlarm(checked, 'push')}
-          />
+          {data?.pushAlarmStatus && (
+            <Switch
+              id='PUSH'
+              checked={data.pushAlarmStatus === 'ENABLED'}
+              onCheckedChange={(checked) => changeAlarm(checked, 'PUSH')}
+            />
+          )}
         </section>
         <section className='mt-3 flex items-center justify-between bg-white px-7 py-6'>
           <div className='flex flex-col'>
@@ -37,11 +63,13 @@ const EditAlarmPage = () => {
               내 글에 댓글, 좋아요
             </span>
           </div>
-          <Switch
-            id='community'
-            defaultChecked={true}
-            onCheckedChange={(checked) => changeAlarm(checked, 'community')}
-          />
+          {data?.scheduleNoticeStatus && (
+            <Switch
+              id='COMMUNITY'
+              checked={data.communityAlarmStatus === 'ENABLED'}
+              onCheckedChange={(checked) => changeAlarm(checked, 'COMMUNITY')}
+            />
+          )}
         </section>
         <section className='flex items-center justify-between bg-white px-7 py-6'>
           <div className='flex flex-col'>
@@ -50,11 +78,13 @@ const EditAlarmPage = () => {
               수업 일지, 식단 피드백 작성 알림
             </span>
           </div>
-          <Switch
-            id='feedback'
-            defaultChecked={true}
-            onCheckedChange={(checked) => changeAlarm(checked, 'feedback')}
-          />
+          {data?.feedbackAlarmStatus && (
+            <Switch
+              id='FEEDBACK'
+              checked={data.feedbackAlarmStatus === 'ENABLED'}
+              onCheckedChange={(checked) => changeAlarm(checked, 'FEEDBACK')}
+            />
+          )}
         </section>
       </Layout.Contents>
     </Layout>

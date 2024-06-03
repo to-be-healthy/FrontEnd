@@ -43,7 +43,7 @@ const useStudentComment = ({ logId, ref }: Props) => {
 
   const refreshComments = async () => {
     await queryClient.refetchQueries({
-      queryKey: ['studentLogDetail', logId],
+      queryKey: ['logDetail', logId],
     });
   };
 
