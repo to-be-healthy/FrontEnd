@@ -9,6 +9,7 @@ export { default as IconArrowRightSmall } from './images/arrow_right_small.svg';
 export { default as IconAvatar } from './images/avatar.svg';
 export { default as IconBack } from './images/back.svg';
 export { default as IconCalendarCancel } from './images/calendar_cancel.svg';
+export { default as IconCalendarCancelProfile } from './images/calendar_cancel_profile.svg';
 export { default as IconCalendarCheck } from './images/calendar_check.svg';
 export { default as IconCalendarCheckProfile } from './images/calendar_check_profile.svg';
 export { default as IconCalendarFilled } from './images/calendar_filled.svg';
