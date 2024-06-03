@@ -13,6 +13,7 @@ export { default as IconCalendarCheck } from './images/calendar_check.svg';
 export { default as IconCalendarCheckProfile } from './images/calendar_check_profile.svg';
 export { default as IconCalendarFilled } from './images/calendar_filled.svg';
 export { default as IconCalendarOutlined } from './images/calendar_outlined.svg';
+export { default as IconCalendarRefresh } from './images/calendar_refresh.svg';
 export { default as IconCalendarX } from './images/calendar_x.svg';
 export { default as IconCamera } from './images/camera.svg';
 export { default as IconCameraNegative } from './images/camera_negative.svg';
