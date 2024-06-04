@@ -90,8 +90,7 @@ const CheckFasting = ({ registerDiet }: SetFastingProps) => {
       variant='ghost'
       className='h-full w-full justify-start px-7 py-6'
       onClick={() => registerDiet(true)}>
-      {/* <IconCheck fill='var(--primary-500)' width={22} height={22} /> TODO:머지 후 모든 파일에 width height값 넣어주기 */}
-      <IconCheck fill='var(--primary-500)' />
+      <IconCheck fill='var(--primary-500)' width={24} height={24} />
       <span className={cn(Typography.BODY_1, 'ml-4')}>단식 체크</span>
     </Button>
   );
@@ -198,7 +197,7 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
                   'flex flex-col items-center text-gray-400'
                 )}>
                 <span className='mb-1'>
-                  <IconCheck fill={'var(--primary-500)'} />
+                  <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
                 </span>
                 단식
               </p>

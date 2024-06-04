@@ -66,7 +66,7 @@ export const ReservationBottomSheet = ({ data, date }: Props) => {
           className: 'h-12',
           description: (
             <div className='flex items-center justify-center'>
-              <IconCheck fill={'var(--primary-500)'} />
+              <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
               <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
             </div>
           ),
