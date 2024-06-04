@@ -8,9 +8,9 @@ const Cell = ({ schedule }: { schedule: FlatSchedule }) => {
 
   return (
     <div
-      className={
+      className={cn(
         'absolute flex w-[63px] flex-col items-center justify-center border-transparent'
-      }
+      )}
       style={{
         top: `${offset.y * 64}px`,
         left: `${offset.x * 64}px`,

@@ -1,5 +1,5 @@
 import dayjs from 'dayjs';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { timeToDecimal } from '@/shared/utils';
 
@@ -7,6 +7,7 @@ import {
   HOURS_FROM,
   SCHEDULE_ACTIVE_COLORS,
   SCHEDULE_AVAILABLE_COLOR,
+  SCHEDULE_DISABLED_COLORS,
   SCHEDULE_NOSHOW_COLOR,
 } from '../consts';
 import {
@@ -40,6 +41,10 @@ const useWeeklyTimetable = ({
       return SCHEDULE_AVAILABLE_COLOR;
     }
 
+    if (status === 'DISABLED') {
+      return SCHEDULE_DISABLED_COLORS;
+    }
+
     if (status === 'NO_SHOW') {
       return SCHEDULE_NOSHOW_COLOR;
     }
@@ -51,21 +56,26 @@ const useWeeklyTimetable = ({
     setSelectedSchedule(schedules);
   };
 
-  const flatSchedules = schedules.flatMap(([date, trainerSchedules]) =>
-    trainerSchedules.map((item) => {
-      if (typeof item.applicantId === 'number') {
-        userList.push(item.applicantId);
-      }
+  const flatSchedules = useMemo(
+    () =>
+      schedules.flatMap(([date, trainerSchedules]) =>
+        trainerSchedules.map((item) => {
+          if (typeof item.applicantId === 'number') {
+            userList.push(item.applicantId);
+          }
 
-      const offset: ScheduleOffset = {
-        x: dayjs(new Date(date)).diff(startDate, 'day'),
-        y: timeToDecimal(item.lessonStartTime) - HOURS_FROM,
-      };
+          const offset: ScheduleOffset = {
+            x: dayjs(new Date(date)).diff(startDate, 'day'),
+            y: timeToDecimal(item.lessonStartTime) - HOURS_FROM,
+          };
 
-      const color = getScheduleColor(item);
+          const color = getScheduleColor(item);
 
-      return { ...item, date, offset, color };
-    })
+          return { ...item, date, offset, color };
+        })
+      ),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [getScheduleColor, schedules, startDate]
   );
 
   return {

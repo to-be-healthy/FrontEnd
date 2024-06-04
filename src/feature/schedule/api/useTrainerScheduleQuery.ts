@@ -21,7 +21,7 @@ export const useTrainerScheduleQuery = ({
   lessonEndDt,
   lessonStartDt,
 }: TrainerScheduleRequest) => {
-  const queryKey = ['schedule', lessonDt, lessonStartDt, lessonEndDt].filter(Boolean);
+  const queryKey = ['schedule', lessonStartDt].filter(Boolean);
   const queryParams = new URLSearchParams({
     ...(lessonDt && { lessonDt }),
     ...(lessonStartDt && { lessonStartDt }),

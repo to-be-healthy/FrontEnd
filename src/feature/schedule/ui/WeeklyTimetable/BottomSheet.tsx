@@ -1,11 +1,15 @@
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+dayjs.locale('ko');
+
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 import {
   IconCalendarCancel,
+  IconCalendarCancelProfile,
   IconCalendarCheck,
+  IconCalendarCheckProfile,
   IconCameraNegative,
   IconCameraPositive,
   IconDocumentProfile,
@@ -15,8 +19,10 @@ import { Typography } from '@/shared/mixin';
 import { Button, DialogClose, DialogContent, SheetContent } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-import { useEnableScheduleMutation } from '../../api/useEnableScheduleMutation';
-import { useTrainerCancelReservationScheduleMutation } from '../../api/useTrainerCancelReservationScheduleMutation';
+import { useTrainerCancelReservationMutation } from '../../api/useTrainerCancelReservationMutation';
+import { useTrainerChangeNoShowMutation } from '../../api/useTrainerChangeNoShowMutation';
+import { useTrainerChangeReservationMutation } from '../../api/useTrainerChangeReservationMutation';
+import { useTrainerChangeShowMutation } from '../../api/useTrainerChangeShowMutation';
 import { FlatSchedule } from '../../model/type';
 
 const BottomSheet = ({ schedule }: { schedule: FlatSchedule }) => {
@@ -33,18 +39,34 @@ const sheetMapper = (schedule: FlatSchedule) => ({
 });
 
 const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
-  const { mutate } = useTrainerCancelReservationScheduleMutation();
-  const { showErrorToast } = useShowErrorToast();
-
   const queryClient = useQueryClient();
-
-  const { date, scheduleId, applicantId } = schedule;
-  const title = `${dayjs(date).format('M.DD(ddd) A')} ${schedule.lessonStartTime} ~ ${schedule.lessonEndTime}`;
+  const { showErrorToast } = useShowErrorToast();
+  const { mutate: cancelReservation } = useTrainerCancelReservationMutation();
+  const { mutate: changeNoShow } = useTrainerChangeNoShowMutation();
+  const { date, applicantName, scheduleId, applicantId, lessonStartTime, lessonEndTime } =
+    schedule;
+  const title = `${dayjs(date).format('M.DD(ddd) A')} ${lessonStartTime} ~ ${lessonEndTime}`;
+  const isBefore = dayjs(date + ' ' + lessonStartTime).isBefore(dayjs());
 
   const [confirm, setConfirm] = useState(false);
 
-  const cancelReservation = () => {
-    mutate(scheduleId, {
+  const handleCancelReservation = () => {
+    cancelReservation(scheduleId, {
+      onSuccess: async () => {
+        await queryClient.refetchQueries({
+          queryKey: ['schedule'].filter(Boolean),
+        });
+      },
+      onError: (error) => {
+        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+        showErrorToast(message);
+      },
+    });
+  };
+
+  const handleChangeToNoShow = () => {
+    if (!isBefore) return;
+    changeNoShow(scheduleId, {
       onSuccess: async () => {
         await queryClient.refetchQueries({
           queryKey: ['schedule'].filter(Boolean),
@@ -73,7 +95,7 @@ const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
             <Button
               variant='default'
               size={'full'}
-              onClick={cancelReservation}
+              onClick={handleCancelReservation}
               className='py-[13px]'>
               예
             </Button>
@@ -86,18 +108,20 @@ const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
   return (
     <SheetContent side='bottom'>
       <div className='flex w-full flex-col'>
-        <h3 className={cn(Typography.HEADING_3)}>{schedule.applicantName}</h3>
+        <h3 className={cn(Typography.HEADING_3)}>{applicantName}</h3>
         <p className={cn(Typography.BODY_1, 'mt-2')}>{title}</p>
         <div className={cn('mt-7 flex w-full justify-center gap-6')}>
-          <button
-            className={cn(
-              Typography.TITLE_1_SEMIBOLD,
-              'flex h-[120px] w-[120px] flex-col items-center justify-center gap-5 rounded-lg border border-gray-200'
-            )}
-            onClick={() => setConfirm(true)}>
-            <IconCalendarCancel />
-            수업 취소하기
-          </button>
+          {!isBefore && (
+            <button
+              className={cn(
+                Typography.TITLE_1_SEMIBOLD,
+                'flex h-[120px] w-[120px] flex-col items-center justify-center gap-5 rounded-lg border border-gray-200'
+              )}
+              onClick={() => setConfirm(true)}>
+              <IconCalendarCancel />
+              수업 취소하기
+            </button>
+          )}
           <Link
             href={`/trainer/manage/${applicantId}`}
             className={cn(
@@ -107,6 +131,17 @@ const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
             <IconDocumentProfile />
             회원 정보 보기
           </Link>
+          {isBefore && (
+            <DialogClose
+              className={cn(
+                Typography.TITLE_1_SEMIBOLD,
+                'flex h-[120px] w-[120px] flex-col items-center justify-center gap-5 rounded-lg border border-gray-200'
+              )}
+              onClick={handleChangeToNoShow}>
+              <IconCalendarCancelProfile />
+              미출석 체크
+            </DialogClose>
+          )}
         </div>
       </div>
     </SheetContent>
@@ -115,26 +150,35 @@ const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
 
 const AvailableSheet = ({ schedule }: { schedule: FlatSchedule }) => {
   const { showErrorToast } = useShowErrorToast();
-  const { mutate } = useTrainerCancelReservationScheduleMutation();
+  const { mutate } = useTrainerChangeReservationMutation();
+
   const queryClient = useQueryClient();
 
-  const { date, scheduleId } = schedule;
+  const { date, scheduleId, lessonStartTime, lessonEndTime } = schedule;
 
-  const title = `${dayjs(date).format('M.DD(ddd) A')} ${schedule.lessonStartTime} ~ ${schedule.lessonEndTime}`;
+  const title = `${dayjs(date).format('M.DD(ddd) A')} ${lessonStartTime} ~ ${lessonEndTime}`;
+  const isBefore = dayjs(date + ' ' + lessonStartTime).isBefore(dayjs());
 
   const cancelReservation = () => {
-    mutate(scheduleId, {
-      onSuccess: async () => {
-        await queryClient.refetchQueries({
-          queryKey: ['schedule'].filter(Boolean),
-        });
-      },
-      onError: (error) => {
-        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
-      },
-    });
+    mutate(
+      { status: 'DISABLED', scheduleIds: [scheduleId] },
+      {
+        onSuccess: async () => {
+          await queryClient.refetchQueries({
+            queryKey: ['schedule'].filter(Boolean),
+          });
+        },
+        onError: (error) => {
+          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+          showErrorToast(message);
+        },
+      }
+    );
   };
+
+  if (isBefore) {
+    return null;
+  }
 
   return (
     <SheetContent side='bottom'>
@@ -168,35 +212,15 @@ const AvailableSheet = ({ schedule }: { schedule: FlatSchedule }) => {
 };
 
 const NoShowSheet = ({ schedule }: { schedule: FlatSchedule }) => {
-  const date = schedule.date;
-  const title = `${dayjs(date).format('M.DD(ddd) A')} ${schedule.lessonStartTime} ~ ${schedule.lessonEndTime}`;
-
-  return (
-    <SheetContent side='bottom'>
-      <div className='flex w-full flex-col'>
-        <h3 className={cn(Typography.HEADING_3)}>{title}</h3>
-        <div className={cn('mt-7 flex w-full justify-center gap-6')}>No Show</div>
-      </div>
-    </SheetContent>
-  );
-};
-
-const DisabledSheet = ({ schedule }: { schedule: FlatSchedule }) => {
-  const { showErrorToast } = useShowErrorToast();
-  const { mutate } = useEnableScheduleMutation();
   const queryClient = useQueryClient();
+  const { showErrorToast } = useShowErrorToast();
+  const { date, applicantId, scheduleId, applicantName, lessonStartTime, lessonEndTime } =
+    schedule;
+  const title = `${dayjs(date).format('M.DD(ddd) A')} ${lessonStartTime} ~ ${lessonEndTime}`;
+  const { mutate } = useTrainerChangeShowMutation();
 
-  const { date, lessonStartTime, lessonEndTime } = schedule;
-  const title = `${dayjs(date).format('M.DD(ddd) A')} ${schedule.lessonStartTime} ~ ${schedule.lessonEndTime}`;
-
-  const enabledSchedule = () => {
-    const payload = {
-      lessonDt: date,
-      lessonStartTime,
-      lessonEndTime,
-    };
-
-    mutate(payload, {
+  const changeToShowStatus = () => {
+    mutate(scheduleId, {
       onSuccess: async () => {
         await queryClient.refetchQueries({
           queryKey: ['schedule'].filter(Boolean),
@@ -208,6 +232,76 @@ const DisabledSheet = ({ schedule }: { schedule: FlatSchedule }) => {
       },
     });
   };
+
+  return (
+    <SheetContent side='bottom'>
+      <div className='flex w-full flex-col'>
+        <h3 className={cn(Typography.HEADING_3)}>
+          {applicantName}
+          <span className='ml-4 text-point'>미출석</span>
+        </h3>
+        <p className={cn(Typography.BODY_1, 'mt-2')}>{title}</p>
+        <div className={cn('mt-7 flex w-full justify-center gap-6')}>
+          <Link
+            href={`/trainer/manage/${applicantId}`}
+            className={cn(
+              Typography.TITLE_1_SEMIBOLD,
+              'flex h-[120px] w-[120px] flex-col items-center justify-center gap-5 rounded-lg border border-gray-200'
+            )}>
+            <IconDocumentProfile />
+            회원 정보 보기
+          </Link>
+          <DialogClose asChild>
+            <button
+              className={cn(
+                Typography.TITLE_1_SEMIBOLD,
+                'flex h-[120px] w-[120px] flex-col items-center justify-center gap-5 rounded-lg border border-gray-200'
+              )}
+              onClick={changeToShowStatus}>
+              <IconCalendarCheckProfile />
+              출석 체크
+            </button>
+          </DialogClose>
+        </div>
+      </div>
+      <div></div>
+    </SheetContent>
+  );
+};
+
+const DisabledSheet = ({ schedule }: { schedule: FlatSchedule }) => {
+  const { showErrorToast } = useShowErrorToast();
+  const { mutate } = useTrainerChangeReservationMutation();
+  const queryClient = useQueryClient();
+
+  const { date, scheduleId, lessonStartTime, lessonEndTime } = schedule;
+  const title = `${dayjs(date).format('M.DD(ddd) A')} ${lessonStartTime} ~ ${lessonEndTime}`;
+
+  const isBefore = dayjs(date + ' ' + lessonStartTime).isBefore(dayjs());
+
+  const enabledSchedule = () => {
+    mutate(
+      {
+        status: 'AVAILABLE',
+        scheduleIds: [scheduleId],
+      },
+      {
+        onSuccess: async () => {
+          await queryClient.refetchQueries({
+            queryKey: ['schedule'].filter(Boolean),
+          });
+        },
+        onError: (error) => {
+          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+          showErrorToast(message);
+        },
+      }
+    );
+  };
+
+  if (isBefore) {
+    return null;
+  }
 
   return (
     <SheetContent side='bottom'>

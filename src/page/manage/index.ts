@@ -6,6 +6,7 @@ export { StudentLogDetailPage } from './ui/StudentLogDetailPage';
 export { StudentLogPage } from './ui/StudentLogPage';
 export { TrainerAppendStudentPage } from './ui/TrainerAppendStudentPage';
 export { TrainerCreateLogPage } from './ui/TrainerCreateLogPage';
+export { TrainerEditLogPage } from './ui/TrainerEditLogPage';
 export { TrainerFeedbackPage } from './ui/TrainerFeedbackPage';
 export { TrainerInvitePage } from './ui/TrainerInvitePage';
 export { TrainerLogDetailPage } from './ui/TrainerLogDetailPage';

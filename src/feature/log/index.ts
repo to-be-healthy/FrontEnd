@@ -3,6 +3,7 @@ export { useCreateLogMutation } from './api/useCreateLogMutation';
 export { useCreateLogReplyMutation } from './api/useCreateLogReplyMutation';
 export { useDeleteCommentMutation } from './api/useDeleteCommentMutation';
 export { useDeleteLogMutation } from './api/useDeleteLogMutation';
+export { useEditLogMutation } from './api/useEditLogMutation';
 export { useLessonListQuery } from './api/useLessonListQuery';
 export { useLogDetailQuery } from './api/useLogDetailQuery';
 export { useStudentLogListQuery } from './api/useStudentLogListQuery';
