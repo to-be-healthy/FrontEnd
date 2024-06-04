@@ -1,3 +1,5 @@
+'use clieint';
+
 import { createContext, useContext, useMemo } from 'react';
 
 import { useStudentDetailQuery } from '../api/useStudentDetailQuery';

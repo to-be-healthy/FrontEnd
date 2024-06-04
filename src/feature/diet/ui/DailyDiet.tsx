@@ -105,8 +105,7 @@ const CheckFasting = ({ type, setIsSheetOpen }: SetFastingProps) => {
         onClickCheckFasting(type);
         setIsSheetOpen(false);
       }}>
-      {/* <IconCheck fill='var(--primary-500)' width={22} height={22} /> TODO:머지 후 모든 파일에 width height값 넣어주기 */}
-      <IconCheck fill='var(--primary-500)' />
+      <IconCheck fill='var(--primary-500)' width={24} height={24} />
       <span className={cn(Typography.BODY_1, 'ml-4')}>단식 체크</span>
     </Button>
   );
@@ -160,7 +159,7 @@ export const DailyDiet = ({ diet }: DailyDietProps) => {
                 'flex h-[88px] w-full flex-col items-center justify-center rounded-md bg-gray-100 p-0 text-center text-gray-400'
               )}>
               <span className='mb-1'>
-                <IconCheck fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
               </span>
               단식
             </SheetTrigger>

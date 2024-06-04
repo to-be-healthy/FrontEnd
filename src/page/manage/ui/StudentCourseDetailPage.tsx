@@ -102,7 +102,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             className: 'h-12',
             description: (
               <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
                 <p className='typography-heading-5 ml-6 text-[#fff]'>{reslut.message}</p>
               </div>
             ),
@@ -135,7 +135,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             className: 'h-12',
             description: (
               <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
                 <p className='typography-heading-5 ml-6 text-[#fff]'>
                   {addInput}회가 연장되었습니다.
                 </p>
@@ -161,7 +161,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           className: 'h-12',
           description: (
             <div className='flex items-center justify-center'>
-              <IconCheck fill={'var(--primary-500)'} />
+              <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
               <p className='typography-heading-5 ml-6 text-[#fff]'>{result.message}</p>
             </div>
           ),

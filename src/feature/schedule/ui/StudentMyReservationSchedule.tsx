@@ -84,7 +84,7 @@ export const StudentMyReservationSchedule = ({ data }: Props) => {
           className: 'h-12',
           description: (
             <div className='flex items-center justify-center'>
-              <IconCheck fill={'var(--primary-500)'} />
+              <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
               <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
             </div>
           ),
@@ -139,7 +139,7 @@ export const StudentMyReservationSchedule = ({ data }: Props) => {
                       {`${convertTo12HourFormat(Number(startHours))}:${startMinutes}`}-
                       {`${convertTo12HourFormat(Number(endHours))}:${endMinutes}`}
                       <span className='ml-1'>
-                        <IconCheck fill={'var(--primary-500)'} />
+                        <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
                       </span>
                     </p>
                     {!isPastDate && (

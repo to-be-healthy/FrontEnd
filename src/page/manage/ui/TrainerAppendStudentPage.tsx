@@ -43,7 +43,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
             className: 'h-[48px]',
             description: (
               <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
                 <p className='typography-heading-5 ml-6 text-white'>
                   회원이 추가되었습니다.
                 </p>

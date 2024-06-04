@@ -124,7 +124,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
           className: 'h-12',
           description: (
             <div className='flex items-center justify-center'>
-              <IconCheck fill={'var(--primary-500)'} />
+              <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
               <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
             </div>
           ),
@@ -225,7 +225,11 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                                     'flex h-[88px] w-full flex-col items-center justify-center rounded-md bg-gray-100 p-0 text-center text-gray-400'
                                   )}>
                                   <span className='mb-1'>
-                                    <IconCheck fill={'var(--primary-500)'} />
+                                    <IconCheck
+                                      fill={'var(--primary-500)'}
+                                      width={17}
+                                      height={17}
+                                    />
                                   </span>
                                   단식
                                 </div>

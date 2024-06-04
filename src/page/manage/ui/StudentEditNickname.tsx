@@ -77,7 +77,7 @@ const StudentEditNickname = ({ memberId }: Props) => {
             className: 'py-5 px-6',
             description: (
               <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} />
+                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
                 <p className='typography-heading-5 ml-6 text-white'>{data.message}</p>
               </div>
             ),

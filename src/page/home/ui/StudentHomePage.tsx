@@ -253,7 +253,7 @@ export const StudentHomePage = () => {
                     </h2>
                   </CardHeader>
                   <CardContent className='flex items-center justify-start'>
-                    <IconCheck fill={'var(--primary-500)'} />
+                    <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
                     <p className={cn(Typography.HEADING_4_BOLD, 'ml-3 text-black')}>
                       {nextScheduledDay} {nextScheduledHour}
                     </p>
