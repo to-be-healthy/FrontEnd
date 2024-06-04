@@ -23,6 +23,7 @@ import {
   DietContext,
   DietImageData,
   useDiet,
+  useDietContext,
 } from '@/feature/diet';
 import { IconCheck, IconClose, IconNotification } from '@/shared/assets';
 import DownIcon from '@/shared/assets/images/icon_arrow_bottom.svg';
@@ -32,13 +33,23 @@ import { Button, Calendar, Card, CardContent, CardHeader, useToast } from '@/sha
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
+export const DietRegisterProvider = () => {
+  const dietContextValue = useDiet();
+
+  return (
+    <DietContext.Provider value={dietContextValue}>
+      <StudentDietRegisterPage />
+    </DietContext.Provider>
+  );
+};
+
 export const StudentDietRegisterPage = () => {
   const { showErrorToast } = useShowErrorToast();
 
   const today = new Date();
   const queryClient = useQueryClient();
   const { toast } = useToast();
-  const dietContextValue = useDiet();
+  const { images, initialImages } = useDietContext();
 
   const [hasMounted, setHasMounted] = useState(false);
   const [date, setDate] = useState<Date | undefined>();
@@ -147,7 +158,7 @@ export const StudentDietRegisterPage = () => {
 
   const onClickRegisterDiet = async () => {
     const updatedDataArray: Partial<RegisterAndEditDiet>[] = await Promise.all(
-      dietContextValue.images.map(updateRequestData)
+      images.map(updateRequestData)
     );
 
     const newRequestData = updatedDataArray.reduce(
@@ -200,117 +211,115 @@ export const StudentDietRegisterPage = () => {
   };
 
   useEffect(() => {
-    dietContextValue.InitialImages();
+    initialImages();
   }, [calendarMyDietData]);
 
   return (
-    <DietContext.Provider value={dietContextValue}>
-      <Layout>
-        <Layout.Header className='bg-white'>
-          <Link href={`/student/diet?month=${month}`}>
-            <IconClose />
-          </Link>
-          <h2
-            className={cn(
-              Typography.HEADING_4_SEMIBOLD,
-              'absolute left-1/2 translate-x-[-50%] text-black'
-            )}>
-            식단 올리기
-          </h2>
-        </Layout.Header>
-        <Layout.Contents>
-          <article className='calendar-shadow rounded-bl-lg rounded-br-lg bg-[#fff]'>
-            {calendarMyDietData?.dietNoticeStatus === 'ENABLED' && (
-              <div className='flex items-center justify-between bg-blue-50 px-7 py-5'>
-                <div className='flex items-center justify-center'>
-                  <IconNotification width={12} height={12} stroke='black' />
-                  <p className={cn(Typography.BODY_3, 'ml-3 text-black')}>
-                    식단을 등록하지 않은 지난 날짜만 업로드 가능합니다.
-                  </p>
-                </div>
-                <Button
-                  variant='ghost'
-                  className='h-auto p-0'
-                  onClick={handleCloseNotification}>
-                  <IconClose />
-                  {/* <IconClose width={12} height={12} /> TODO: 추후변경*/}
-                </Button>
+    <Layout>
+      <Layout.Header className='bg-white'>
+        <Link href={`/student/diet?month=${month}`}>
+          <IconClose />
+        </Link>
+        <h2
+          className={cn(
+            Typography.HEADING_4_SEMIBOLD,
+            'absolute left-1/2 translate-x-[-50%] text-black'
+          )}>
+          식단 올리기
+        </h2>
+      </Layout.Header>
+      <Layout.Contents>
+        <article className='calendar-shadow rounded-bl-lg rounded-br-lg bg-[#fff]'>
+          {calendarMyDietData?.dietNoticeStatus === 'ENABLED' && (
+            <div className='flex items-center justify-between bg-blue-50 px-7 py-5'>
+              <div className='flex items-center justify-center'>
+                <IconNotification width={12} height={12} stroke='black' />
+                <p className={cn(Typography.BODY_3, 'ml-3 text-black')}>
+                  식단을 등록하지 않은 지난 날짜만 업로드 가능합니다.
+                </p>
               </div>
-            )}
+              <Button
+                variant='ghost'
+                className='h-auto p-0'
+                onClick={handleCloseNotification}>
+                <IconClose />
+                {/* <IconClose width={12} height={12} /> TODO: 추후변경*/}
+              </Button>
+            </div>
+          )}
 
-            {calendarIsPending ? (
-              <div className='h-[364px] w-full px-7 pb-6 pt-8'>로딩중...</div>
-            ) : (
-              <div
-                className={cn(
-                  hasMounted
-                    ? isArrowToggle
-                      ? 'animate-calendar-accordion-up fill-mode-forwards'
-                      : 'animate-calendar-accordion-down fill-mode-forwards'
-                    : '',
-                  'overflow-hidden px-7 pb-6 pt-8'
-                )}>
-                <Calendar
-                  mode='single'
-                  required
-                  selected={date}
-                  onSelect={setDate}
-                  toDate={today}
-                  month={currentMonth}
-                  onDayClick={handleMonthChange}
-                  onMonthChange={handleMonthChange}
-                  formatters={{ formatCaption }}
-                  modifiersStyles={{
-                    hidden: { display: 'none' }, // 주간 표시할때 비활성화된 날짜 숨기기
-                  }}
-                  fixedWeeks={true}
-                  modifiers={{
-                    ...modifiers,
-                    reserved: dietDates,
-                  }}
-                  components={{
-                    DayContent: dietDay, //예약한 날 표시(블루닷)
-                  }}
-                  isToggle={isArrowToggle}
-                />
-              </div>
-            )}
+          {calendarIsPending ? (
+            <div className='h-[364px] w-full px-7 pb-6 pt-8'>로딩중...</div>
+          ) : (
+            <div
+              className={cn(
+                hasMounted
+                  ? isArrowToggle
+                    ? 'animate-calendar-accordion-up fill-mode-forwards'
+                    : 'animate-calendar-accordion-down fill-mode-forwards'
+                  : '',
+                'overflow-hidden px-7 pb-6 pt-8'
+              )}>
+              <Calendar
+                mode='single'
+                required
+                selected={date}
+                onSelect={setDate}
+                toDate={today}
+                month={currentMonth}
+                onDayClick={handleMonthChange}
+                onMonthChange={handleMonthChange}
+                formatters={{ formatCaption }}
+                modifiersStyles={{
+                  hidden: { display: 'none' }, // 주간 표시할때 비활성화된 날짜 숨기기
+                }}
+                fixedWeeks={true}
+                modifiers={{
+                  ...modifiers,
+                  reserved: dietDates,
+                }}
+                components={{
+                  DayContent: dietDay, //예약한 날 표시(블루닷)
+                }}
+                isToggle={isArrowToggle}
+              />
+            </div>
+          )}
 
-            <Button
-              className={cn(isArrowToggle ? '' : 'rotate-180', 'm-auto flex pb-7')}
-              variant='ghost'
-              onClick={clickCalendarArrow}>
-              <DownIcon width={16} height={17} stroke={'var(--gray-600)'} />
-            </Button>
-          </article>
-
-          <div className='flex flex-col justify-between px-7 pb-8 pt-6'>
-            {dietContextValue.images && date && (
-              <Card className='w-full'>
-                <CardHeader className={(Typography.TITLE_3, 'mb-4 text-gray-600')}>
-                  {dayjs(date).format('MM월 DD일 (dd)')}
-                </CardHeader>
-                <CardContent>
-                  <article className='flex items-center justify-between'>
-                    {dietContextValue.images.map((diet) => {
-                      return <DailyDiet key={diet.type} diet={diet} />;
-                    })}
-                  </article>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-        </Layout.Contents>
-        <Layout.BottomArea className='px-7 pb-10 pt-7'>
           <Button
-            size='full'
-            onClick={onClickRegisterDiet}
-            disabled={isRegisterPending}
-            className={cn(Typography.TITLE_1_BOLD, 'text-white')}>
-            {isRegisterPending ? '로딩중...' : '등록 완료'}
+            className={cn(isArrowToggle ? '' : 'rotate-180', 'm-auto flex pb-7')}
+            variant='ghost'
+            onClick={clickCalendarArrow}>
+            <DownIcon width={16} height={17} stroke={'var(--gray-600)'} />
           </Button>
-        </Layout.BottomArea>
-      </Layout>
-    </DietContext.Provider>
+        </article>
+
+        <div className='flex flex-col justify-between px-7 pb-8 pt-6'>
+          {images && date && (
+            <Card className='w-full'>
+              <CardHeader className={(Typography.TITLE_3, 'mb-4 text-gray-600')}>
+                {dayjs(date).format('MM월 DD일 (dd)')}
+              </CardHeader>
+              <CardContent>
+                <article className='flex items-center justify-between'>
+                  {images.map((diet) => {
+                    return <DailyDiet key={diet.type} diet={diet} />;
+                  })}
+                </article>
+              </CardContent>
+            </Card>
+          )}
+        </div>
+      </Layout.Contents>
+      <Layout.BottomArea className='px-7 pb-10 pt-7'>
+        <Button
+          size='full'
+          onClick={onClickRegisterDiet}
+          disabled={isRegisterPending}
+          className={cn(Typography.TITLE_1_BOLD, 'text-white')}>
+          {isRegisterPending ? '로딩중...' : '등록 완료'}
+        </Button>
+      </Layout.BottomArea>
+    </Layout>
   );
 };

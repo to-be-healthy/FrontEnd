@@ -1,9 +1,9 @@
 'use client';
 
-import { StudentDietRegisterPage } from '@/page/diet';
+import { DietRegisterProvider } from '@/page/diet';
 
 const Page = () => {
-  return <StudentDietRegisterPage />;
+  return <DietRegisterProvider />;
 };
 
 export default Page;

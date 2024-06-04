@@ -1,4 +1,7 @@
 export { StudentDietDetailPage } from './ui/StudentDietDetailPage';
-export { StudentDietEditPage } from './ui/StudentDietEditPage';
+export { DietEditProvider, StudentDietEditPage } from './ui/StudentDietEditPage';
 export { StudentDietListPage } from './ui/StudentDietListPage';
-export { StudentDietRegisterPage } from './ui/StudentDietRegisterPage';
+export {
+  DietRegisterProvider,
+  StudentDietRegisterPage,
+} from './ui/StudentDietRegisterPage';

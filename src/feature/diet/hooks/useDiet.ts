@@ -133,8 +133,7 @@ const useDiet = () => {
     };
   };
 
-  const InitialImages = (data?: InitialImagesProps) => {
-
+  const initialImages = (data?: InitialImagesProps) => {
     const mealTypes: MealType[] = ['breakfast', 'lunch', 'dinner'];
     const defaultSetting: DietImageType[] = [
       {
@@ -176,7 +175,7 @@ const useDiet = () => {
     onClickCheckFasting,
     onClickCancelFasting,
     clearImages,
-    InitialImages,
+    initialImages,
   };
 };
 

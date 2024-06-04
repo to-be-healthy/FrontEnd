@@ -14,6 +14,7 @@ import {
   DietContext,
   DietImageData,
   useDiet,
+  useDietContext,
 } from '@/feature/diet';
 import { IconCheck, IconClose } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
@@ -35,6 +36,16 @@ import {
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
+export const DietEditProvider = ({ dietId }: Props) => {
+  const dietContextValue = useDiet();
+
+  return (
+    <DietContext.Provider value={dietContextValue}>
+      <StudentDietEditPage dietId={dietId} />
+    </DietContext.Provider>
+  );
+};
+
 interface Props {
   dietId: number;
 }
@@ -45,7 +56,7 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
   const searchParams = useSearchParams();
   const month = searchParams.get('month');
   const router = useRouter();
-  const dietContextValue = useDiet();
+  const { images, initialImages } = useDietContext();
 
   const { data: dietData } = useStudentDietDetailQuery(dietId);
   const { mutate: editMutate, isPending: isEditPending } = useEditDietMutation(dietId);
@@ -76,7 +87,7 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
 
   const onClickEditDiet = async () => {
     const updatedDataArray: Partial<RegisterAndEditDiet>[] = await Promise.all(
-      dietContextValue.images.map(updateRequestData)
+      images.map(updateRequestData)
     );
 
     const newRequestData = updatedDataArray.reduce(
@@ -110,7 +121,7 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
 
   useEffect(() => {
     if (dietData) {
-      dietContextValue.InitialImages({
+      initialImages({
         breakfast: dietData?.breakfast,
         lunch: dietData?.lunch,
         dinner: dietData?.dinner,
@@ -119,75 +130,72 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
   }, [dietData]);
 
   return (
-    <DietContext.Provider value={dietContextValue}>
-      <Layout>
-        <Layout.Header>
-          <AlertDialog>
-            <AlertDialogTrigger>
-              <IconClose />
-            </AlertDialogTrigger>
-            <AlertDialogContent className='gap-y-8 px-7 py-8'>
-              <AlertDialogHeader
-                className={cn(Typography.HEADING_4_BOLD, 'mb-3 text-left text-black')}>
-                식단 수정을 그만둘까요?
-                <p className={cn(Typography.BODY_1, 'text-left text-gray-600')}>
-                  변경된 내용은 저장되지 않아요.
-                </p>
-              </AlertDialogHeader>
-              <AlertDialogFooter className='grid w-full grid-cols-2 items-center justify-center gap-3'>
-                <AlertDialogAction
-                  asChild
-                  className={cn(
-                    Typography.TITLE_1_SEMIBOLD,
-                    'mt-0 h-[48px] rounded-md bg-[#E2F1FF]  text-primary-500'
-                  )}>
-                  <Link href={`/student/diet?month=${month}`}>확인</Link>
-                </AlertDialogAction>
-                <AlertDialogCancel
-                  className={cn(
-                    Typography.TITLE_1_SEMIBOLD,
-                    'mt-0 h-[48px] rounded-md bg-primary-500 text-gray-600 text-white'
-                  )}>
-                  취소
-                </AlertDialogCancel>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
-          <h2
-            className={cn(
-              Typography.HEADING_4_SEMIBOLD,
-              'absolute left-1/2 translate-x-[-50%] text-black'
-            )}>
-            식단 수정
-          </h2>
-        </Layout.Header>
-        <Layout.Contents className='px-7 py-6'>
-          {dietDate && dietContextValue.images && (
-            <Card className='w-full'>
-              <CardHeader
-                className={(Typography.TITLE_3, 'mb-4 text-left text-gray-600')}>
-                {dietDate}
-              </CardHeader>
-              <CardContent>
-                <article className='flex items-center justify-between'>
-                  {dietContextValue.images.map((diet) => {
-                    return <DailyDiet key={diet.type} diet={diet} />;
-                  })}
-                </article>
-              </CardContent>
-            </Card>
-          )}
-        </Layout.Contents>
-        <Layout.BottomArea className='px-7 pb-10 pt-7'>
-          <Button
-            size='full'
-            disabled={isEditPending}
-            onClick={onClickEditDiet}
-            className={cn(Typography.TITLE_1_BOLD, 'text-white')}>
-            수정 완료
-          </Button>
-        </Layout.BottomArea>
-      </Layout>
-    </DietContext.Provider>
+    <Layout>
+      <Layout.Header>
+        <AlertDialog>
+          <AlertDialogTrigger>
+            <IconClose />
+          </AlertDialogTrigger>
+          <AlertDialogContent className='gap-y-8 px-7 py-8'>
+            <AlertDialogHeader
+              className={cn(Typography.HEADING_4_BOLD, 'mb-3 text-left text-black')}>
+              식단 수정을 그만둘까요?
+              <p className={cn(Typography.BODY_1, 'text-left text-gray-600')}>
+                변경된 내용은 저장되지 않아요.
+              </p>
+            </AlertDialogHeader>
+            <AlertDialogFooter className='grid w-full grid-cols-2 items-center justify-center gap-3'>
+              <AlertDialogAction
+                asChild
+                className={cn(
+                  Typography.TITLE_1_SEMIBOLD,
+                  'mt-0 h-[48px] rounded-md bg-[#E2F1FF]  text-primary-500'
+                )}>
+                <Link href={`/student/diet?month=${month}`}>확인</Link>
+              </AlertDialogAction>
+              <AlertDialogCancel
+                className={cn(
+                  Typography.TITLE_1_SEMIBOLD,
+                  'mt-0 h-[48px] rounded-md bg-primary-500 text-gray-600 text-white'
+                )}>
+                취소
+              </AlertDialogCancel>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+        <h2
+          className={cn(
+            Typography.HEADING_4_SEMIBOLD,
+            'absolute left-1/2 translate-x-[-50%] text-black'
+          )}>
+          식단 수정
+        </h2>
+      </Layout.Header>
+      <Layout.Contents className='px-7 py-6'>
+        {dietDate && images && (
+          <Card className='w-full'>
+            <CardHeader className={(Typography.TITLE_3, 'mb-4 text-left text-gray-600')}>
+              {dietDate}
+            </CardHeader>
+            <CardContent>
+              <article className='flex items-center justify-between'>
+                {images.map((diet) => {
+                  return <DailyDiet key={diet.type} diet={diet} />;
+                })}
+              </article>
+            </CardContent>
+          </Card>
+        )}
+      </Layout.Contents>
+      <Layout.BottomArea className='px-7 pb-10 pt-7'>
+        <Button
+          size='full'
+          disabled={isEditPending}
+          onClick={onClickEditDiet}
+          className={cn(Typography.TITLE_1_BOLD, 'text-white')}>
+          수정 완료
+        </Button>
+      </Layout.BottomArea>
+    </Layout>
   );
 };
