@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { useMyPointHistoryQuery } from '@/feature/member/api/useMyPointHistoryQuery';
+import { useStudentPointHistoryQuery } from '@/feature/member';
 import { pointHistoryCodeDescription } from '@/feature/member/const';
 import { IconClose, IconNotification, IconPoint } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
@@ -18,10 +18,17 @@ import { Card, CardContent, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
+import { useStudentInfo } from '../hooks/useStudentInfo';
+
+interface Props {
+  memberId: number;
+}
+
 const ITEMS_PER_PAGE = 20;
 
-export const StudentMyPointDetailPage = () => {
+export const StudentPointDetailPage = ({ memberId }: Props) => {
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
+  const { memberInfo } = useStudentInfo(memberId);
 
   const queryClient = useQueryClient();
   const [ref, inView] = useInView({
@@ -33,10 +40,11 @@ export const StudentMyPointDetailPage = () => {
     isPending,
     hasNextPage,
     fetchNextPage,
-  } = useMyPointHistoryQuery({
+  } = useStudentPointHistoryQuery({
     size: ITEMS_PER_PAGE,
     searchDate: dayjs(selectedMonth).format('YYYY-MM'),
-  });
+    memberId,
+  }); //api 변경
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -67,7 +75,7 @@ export const StudentMyPointDetailPage = () => {
             Typography.HEADING_4_SEMIBOLD,
             'absolute left-1/2 translate-x-[-50%] text-[$000]'
           )}>
-          포인트
+          {`${memberInfo?.name}님 포인트`}
         </h2>
       </Layout.Header>
       <Layout.Contents>

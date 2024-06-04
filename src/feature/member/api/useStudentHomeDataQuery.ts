@@ -4,11 +4,11 @@ import { authApi } from '@/entity/auth';
 import { Gym } from '@/entity/gym';
 import { BaseError, BaseResponse } from '@/shared/api';
 
-import { CourseItem, Diet, StudentPoint, StudentRank } from '../model/types';
+import { CourseItem, Diet, StudentPointItem, StudentRank } from '../model/types';
 
 interface HomeDataResponse {
   course: CourseItem;
-  point: StudentPoint;
+  point: StudentPointItem;
   rank: StudentRank;
   myReservation: {
     scheduleId: number;

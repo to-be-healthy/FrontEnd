@@ -8,14 +8,18 @@ import { StudentPoint } from '../model/types';
 interface MyPointHistory {
   searchDate: string;
   size: number;
+  memberId: number;
 }
-
-export const useMyPointHistoryQuery = ({ searchDate, size }: MyPointHistory) => {
+export const useStudentPointHistoryQuery = ({
+  searchDate,
+  size,
+  memberId,
+}: MyPointHistory) => {
   return useInfiniteQuery<StudentPoint, BaseError>({
-    queryKey: ['myPointHistory', { searchDate }],
+    queryKey: ['studentPointHistory', { searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentPoint>>(
-        `/api/members/v1/point?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
+        `/api/members/v1/${memberId}/point?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
       );
       return res.data.data;
     },

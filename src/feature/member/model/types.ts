@@ -60,7 +60,7 @@ interface StudentDetail {
   lessonStartTime: string | null;
   diet: DailyDiet | null;
   course: CourseItem | null;
-  point: StudentPoint;
+  point: StudentPointItem | null;
   rank: StudentRank;
   gym: Gym;
 }
@@ -95,7 +95,7 @@ interface StudentCourse extends Pageable {
     course: CourseItem;
     gymName: string;
   };
-  content: CourseHistoryItem[];
+  content: CourseHistoryItem[] | null;
 }
 
 interface pointHistoryType {
@@ -106,12 +106,17 @@ interface pointHistoryType {
   createdAt: string;
 }
 
-interface StudentPoint {
+interface StudentPointItem {
   monthPoint: number;
   totalPoint: number;
   searchDate: string;
-  pointHistories: null | pointHistoryType[];
 }
+
+interface StudentPoint extends Pageable {
+  mainData: StudentPointItem;
+  content: pointHistoryType[] | null;
+}
+
 interface StudentRank {
   ranking: number;
   totalMemberCnt: number;
@@ -159,5 +164,6 @@ export type {
   StudentCourse,
   StudentDetail,
   StudentPoint,
+  StudentPointItem,
   StudentRank,
 };

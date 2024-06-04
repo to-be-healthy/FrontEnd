@@ -15,6 +15,7 @@ export { useSetProfileImageMutation } from './api/useSetProfileImageMutation';
 export { useStudentCourseDetailQuery } from './api/useStudentCourseDetailQuery';
 export { useStudentDetailQuery } from './api/useStudentDetailQuery';
 export { useStudentHomeDataQuery } from './api/useStudentHomeDataQuery';
+export { useStudentPointHistoryQuery } from './api/useStudentPointHistoryQuery';
 export { useVerifyPasswordMutation } from './api/useVerifyPasswordMutation';
 export { courseHistoryCodeDescription, pointHistoryCodeDescription } from './const';
 export {
@@ -35,6 +36,7 @@ export type {
   StudentCourse,
   StudentDetail,
   StudentPoint,
+  StudentPointItem,
   StudentRank,
 } from './model/types';
 export { AddStudentDialog } from './ui/AddStudentDialog';

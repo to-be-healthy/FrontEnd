@@ -4,6 +4,7 @@ export { StudentEditMemo } from './ui/StudentEditMemo';
 export { StudentListPage } from './ui/StudentListPage';
 export { StudentLogDetailPage } from './ui/StudentLogDetailPage';
 export { StudentLogPage } from './ui/StudentLogPage';
+export { StudentPointDetailPage } from './ui/StudentPointDetailPage';
 export { TrainerAppendStudentPage } from './ui/TrainerAppendStudentPage';
 export { TrainerCreateLogPage } from './ui/TrainerCreateLogPage';
 export { TrainerEditLogPage } from './ui/TrainerEditLogPage';
