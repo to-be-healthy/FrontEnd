@@ -139,7 +139,13 @@ const StudentCommentInput = () => {
       <div className={cn('flex items-center justify-between space-x-[10px]')}>
         <label htmlFor='image-input' className='cursor-pointer'>
           <IconPicture />
-          <Input id='image-input' type='file' className='hidden' onChange={uploadFiles} />
+          <Input
+            id='image-input'
+            type='file'
+            className='hidden'
+            accept='image/*'
+            onChange={uploadFiles}
+          />
         </label>
         <div className='flex-1 rounded-md border px-[16px] py-[13px] focus-within:border-primary-500'>
           <Input
