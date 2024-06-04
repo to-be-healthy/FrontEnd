@@ -70,7 +70,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
   });
 
   const {
-    data: detailData,
+    data: historyData,
     isPending,
     hasNextPage,
     fetchNextPage,
@@ -79,11 +79,12 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
     size: ITEMS_PER_PAGE,
     searchDate: dayjs(searchMonth).format('YYYY-MM'),
   });
-  const studentCourseId = Number(detailData?.pages[0]?.course?.courseId);
 
   const { mutate: addMutation } = useAddStudentCourseMutation();
   const { mutate: deleteMutation } = useDeleteStudentCourseMutation();
   const { mutate: registerMutation } = useRegisterStudentCourseMutation();
+
+  const studentCourseId = Number(historyData?.pages[0]?.mainData.course?.courseId);
 
   const registerCourseCount = () => {
     registerMutation(
@@ -201,8 +202,8 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           {name}님 수강권
         </h2>
 
-        {detailData?.pages[0]?.course?.totalLessonCnt ===
-          detailData?.pages[0]?.course?.completedLessonCnt && (
+        {historyData?.pages[0]?.mainData.course?.totalLessonCnt ===
+          historyData?.pages[0]?.mainData.course?.completedLessonCnt && (
           <CourseSheet isOpen={isRegisterSheetOpen} setIsOpen={setIsRegisterSheetOpen}>
             <CourseSheetTrigger className='absolute right-7'>
               <IconPlus width={20} height={20} fill='black' />
@@ -228,177 +229,190 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           <div className='loading'>Loading..</div>
         ) : (
           <>
-            {detailData?.pages[0]?.course ? (
-              <>
-                <div className='bg-[#fff] p-7 pb-0'>
-                  <CourseCard
-                    className='mb-6'
-                    expiration={
-                      detailData?.pages[0]?.course?.totalLessonCnt ===
-                      detailData?.pages[0]?.course?.completedLessonCnt
-                    }>
-                    <CourseCardHeader
-                      gymName={detailData?.pages[0]?.gymName}
-                      totalLessonCnt={detailData?.pages[0]?.course?.totalLessonCnt}
-                      remainLessonCnt={detailData?.pages[0]?.course?.remainLessonCnt}
-                      completedLessonCnt={
-                        detailData?.pages[0]?.course?.completedLessonCnt
-                      }
-                    />
-                    <CourseCardContent
-                      totalLessonCnt={detailData?.pages[0]?.course?.totalLessonCnt}
-                      completedLessonCnt={
-                        detailData?.pages[0]?.course?.completedLessonCnt
-                      }
-                      progressClassName={cn(
-                        detailData?.pages[0]?.course?.completedLessonCnt ===
-                          detailData?.pages[0]?.course?.totalLessonCnt && 'bg-gray-400'
-                      )}
-                    />
-                  </CourseCard>
+            {/* 수강권 있을때 */}
+            {historyData?.pages[0]?.mainData.course && (
+              <div className='bg-[#fff] p-7 pb-0'>
+                <CourseCard
+                  className='mb-6'
+                  expiration={
+                    historyData?.pages[0]?.mainData.course?.totalLessonCnt ===
+                    historyData?.pages[0]?.mainData.course?.completedLessonCnt
+                  }>
+                  <CourseCardHeader
+                    gymName={historyData?.pages[0]?.mainData.gymName}
+                    totalLessonCnt={
+                      historyData?.pages[0]?.mainData.course?.totalLessonCnt
+                    }
+                    remainLessonCnt={
+                      historyData?.pages[0]?.mainData.course?.remainLessonCnt
+                    }
+                    completedLessonCnt={
+                      historyData?.pages[0]?.mainData.course?.completedLessonCnt
+                    }
+                  />
+                  <CourseCardContent
+                    totalLessonCnt={
+                      historyData?.pages[0]?.mainData.course?.totalLessonCnt
+                    }
+                    completedLessonCnt={
+                      historyData?.pages[0]?.mainData.course?.completedLessonCnt
+                    }
+                    progressClassName={cn(
+                      historyData?.pages[0]?.mainData.course?.completedLessonCnt ===
+                        historyData?.pages[0]?.mainData.course?.totalLessonCnt &&
+                        'bg-gray-400'
+                    )}
+                  />
+                </CourseCard>
 
-                  <div className='mb-7 flex items-center justify-center rounded-lg bg-gray-100 text-black'>
-                    <CourseSheet isOpen={isAddSheetOpen} setIsOpen={setIsAddSheetOpen}>
-                      <CourseSheetTrigger
-                        className={cn('h-[46px] w-[160px]', Typography.HEADING_5)}
-                        disabled={
-                          detailData?.pages[0]?.course?.totalLessonCnt ===
-                          detailData?.pages[0]?.course?.completedLessonCnt
-                        }>
-                        수업 횟수 추가
-                      </CourseSheetTrigger>
-                      <CourseSheetContent>
-                        <CourseSheetHeader>추가할 수업횟수</CourseSheetHeader>
-                        <CourseSheetInput
-                          courseInput={addInput}
-                          setCourseInput={setAddInput}
-                          isOpen={isAddSheetOpen}
-                        />
-                        <CourseSheetFooter
-                          courseInput={addInput}
-                          clickButtonHandler={addCourseCount}>
-                          수업 횟수 추가
-                        </CourseSheetFooter>
-                      </CourseSheetContent>
-                    </CourseSheet>
-
-                    <span className='h-[30px] w-[1px] bg-gray-200'></span>
-                    <AlertDialog>
-                      <AlertDialogTrigger asChild>
-                        <Button
-                          variant='ghost'
-                          className={cn('h-[46px] w-[160px]', Typography.HEADING_5)}>
-                          수강권 삭제
-                        </Button>
-                      </AlertDialogTrigger>
-                      <AlertDialogContent className='px-7 py-11'>
-                        <AlertDialogHeader className='mb-8 text-center'>
-                          <AlertDialogTitle className={cn(Typography.TITLE_1)}>
-                            수강권을 삭제하시겠습니까?
-                          </AlertDialogTitle>
-                        </AlertDialogHeader>
-                        <AlertDialogFooter className='grid w-full grid-cols-2 items-center justify-center gap-3'>
-                          <AlertDialogCancel className='mt-0 h-[48px] rounded-md bg-gray-100 text-base font-normal text-gray-600'>
-                            아니요
-                          </AlertDialogCancel>
-                          <AlertDialogAction
-                            asChild
-                            className='mt-0 h-[48px] rounded-md bg-point text-base font-normal text-[#fff]'>
-                            <Button variant='ghost' onClick={deleteStudentCourse}>
-                              예
-                            </Button>
-                          </AlertDialogAction>
-                        </AlertDialogFooter>
-                      </AlertDialogContent>
-                    </AlertDialog>
-                  </div>
-
-                  <div className='flex justify-end'>
-                    <MonthPicker
-                      date={searchMonth}
-                      onChangeDate={(newDate) => setSearchMonth(newDate)}
-                    />
-                  </div>
-                </div>
-
-                <ul className='bg-gray-100'>
-                  {detailData?.pages?.map((data) => {
-                    return data.courseHistories?.map((item) => {
-                      const date = dayjs(item.createdAt);
-                      const formattedDate = date.format('YY.MM.DD');
-
-                      return (
-                        <li className='px-7 py-8' key={item.courseHistoryId}>
-                          <p className={cn(Typography.BODY_4_MEDIUM, 'text-gray-500')}>
-                            {formattedDate}
-                          </p>
-                          <dl className='flex items-center justify-between'>
-                            <dt className={cn(Typography.TITLE_3, 'text-gray-700')}>
-                              {courseHistoryCodeDescription[item.type]}
-                            </dt>
-                            <dd className={cn(Typography.TITLE_3, 'text-black')}>
-                              {item.calculation === 'PLUS' ? '+' : '-'}
-                              {item.cnt}
-                            </dd>
-                          </dl>
-                        </li>
-                      );
-                    });
-                  })}
-                </ul>
-
-                {detailData?.pages[0].courseHistories !== null &&
-                  detailData?.pages[0].courseHistories.length === ITEMS_PER_PAGE &&
-                  hasNextPage && (
-                    <div ref={ref} className='h-[20px] p-3 text-center'>
-                      loading...
-                    </div>
-                  )}
-              </>
-            ) : (
-              <>
-                <div className='flex flex-col items-center justify-center bg-[#fff] py-[88px]'>
-                  <p className={cn('mb-3 text-gray-500', Typography.TITLE_3)}>
-                    등록된 수강권이 없습니다.
-                  </p>
-                  <CourseSheet
-                    isOpen={isRegisterSheetOpen}
-                    setIsOpen={setIsRegisterSheetOpen}>
+                <div className='mb-7 flex items-center justify-center rounded-lg bg-gray-100 text-black'>
+                  <CourseSheet isOpen={isAddSheetOpen} setIsOpen={setIsAddSheetOpen}>
                     <CourseSheetTrigger
-                      className={cn(
-                        'flex h-[37px] w-[112px] items-center justify-center rounded-[9999px] border border-primary-500 text-primary-500',
-                        Typography.TITLE_3
-                      )}>
-                      수강권 등록
+                      className={cn('h-[46px] w-[160px]', Typography.HEADING_5)}
+                      disabled={
+                        historyData?.pages[0]?.mainData.course?.totalLessonCnt ===
+                        historyData?.pages[0]?.mainData.course?.completedLessonCnt
+                      }>
+                      수업 횟수 추가
                     </CourseSheetTrigger>
                     <CourseSheetContent>
-                      <CourseSheetHeader>등록할 수업횟수</CourseSheetHeader>
+                      <CourseSheetHeader>추가할 수업횟수</CourseSheetHeader>
                       <CourseSheetInput
-                        courseInput={registerInput}
-                        setCourseInput={setRegisterInput}
-                        isOpen={isRegisterSheetOpen}
+                        courseInput={addInput}
+                        setCourseInput={setAddInput}
+                        isOpen={isAddSheetOpen}
                       />
                       <CourseSheetFooter
-                        courseInput={registerInput}
-                        clickButtonHandler={registerCourseCount}>
-                        수강권 등록
+                        courseInput={addInput}
+                        clickButtonHandler={addCourseCount}>
+                        수업 횟수 추가
                       </CourseSheetFooter>
                     </CourseSheetContent>
                   </CourseSheet>
+
+                  <span className='h-[30px] w-[1px] bg-gray-200'></span>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        variant='ghost'
+                        className={cn('h-[46px] w-[160px]', Typography.HEADING_5)}>
+                        수강권 삭제
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent className='px-7 py-11'>
+                      <AlertDialogHeader className='mb-8 text-center'>
+                        <AlertDialogTitle className={cn(Typography.TITLE_1)}>
+                          수강권을 삭제하시겠습니까?
+                        </AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter className='grid w-full grid-cols-2 items-center justify-center gap-3'>
+                        <AlertDialogCancel className='mt-0 h-[48px] rounded-md bg-gray-100 text-base font-normal text-gray-600'>
+                          아니요
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          asChild
+                          className='mt-0 h-[48px] rounded-md bg-point text-base font-normal text-[#fff]'>
+                          <Button variant='ghost' onClick={deleteStudentCourse}>
+                            예
+                          </Button>
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </div>
 
-                <div className='flex flex-col items-center justify-center pt-[124px]'>
-                  <IconNotification
-                    width={37}
-                    height={36}
-                    fill='transparent'
-                    stroke={'var(--gray-300)'}
+                <div className='flex justify-end'>
+                  <MonthPicker
+                    date={searchMonth}
+                    onChangeDate={(newDate) => setSearchMonth(newDate)}
                   />
-                  <p className={cn('mt-5 text-gray-700', Typography.TITLE_1)}>
-                    수강된 내역이 없습니다.
-                  </p>
                 </div>
-              </>
+              </div>
+            )}
+
+            {/* 수강권 없을때 */}
+            {!historyData?.pages[0]?.mainData.course && (
+              <div className='flex flex-col items-center justify-center bg-[#fff] py-[88px]'>
+                <p className={cn('mb-3 text-gray-500', Typography.TITLE_3)}>
+                  등록된 수강권이 없습니다.
+                </p>
+                <CourseSheet
+                  isOpen={isRegisterSheetOpen}
+                  setIsOpen={setIsRegisterSheetOpen}>
+                  <CourseSheetTrigger
+                    className={cn(
+                      'flex h-[37px] w-[112px] items-center justify-center rounded-[9999px] border border-primary-500 text-primary-500',
+                      Typography.TITLE_3
+                    )}>
+                    수강권 등록
+                  </CourseSheetTrigger>
+                  <CourseSheetContent>
+                    <CourseSheetHeader>등록할 수업횟수</CourseSheetHeader>
+                    <CourseSheetInput
+                      courseInput={registerInput}
+                      setCourseInput={setRegisterInput}
+                      isOpen={isRegisterSheetOpen}
+                    />
+                    <CourseSheetFooter
+                      courseInput={registerInput}
+                      clickButtonHandler={registerCourseCount}>
+                      수강권 등록
+                    </CourseSheetFooter>
+                  </CourseSheetContent>
+                </CourseSheet>
+              </div>
+            )}
+
+            <ul className='bg-gray-100'>
+              {historyData?.pages?.map((data, index) => {
+                if (data.content === null || data.content.length === 0) {
+                  return (
+                    <li
+                      key={`courseHistories_${index}`}
+                      className={cn(
+                        Typography.TITLE_1_BOLD,
+                        'flex flex-col items-center justify-center py-28 text-gray-700'
+                      )}>
+                      <span className='mb-5 w-[35px]'>
+                        <IconNotification
+                          width={33}
+                          height={33}
+                          stroke='var(--gray-300)'
+                        />
+                      </span>
+                      수강권 내역이 없습니다.
+                    </li>
+                  );
+                } else {
+                  return data.content?.map((item) => {
+                    const date = dayjs(item.createdAt);
+                    const formattedDate = date.format('YY.MM.DD');
+
+                    return (
+                      <li className='px-7 py-8' key={item.courseHistoryId}>
+                        <p className={cn(Typography.BODY_4_MEDIUM, 'text-gray-500')}>
+                          {formattedDate}
+                        </p>
+                        <dl className='flex items-center justify-between'>
+                          <dt className={cn(Typography.TITLE_3, 'text-gray-700')}>
+                            {courseHistoryCodeDescription[item.type]}
+                          </dt>
+                          <dd className={cn(Typography.TITLE_3, 'text-black')}>
+                            {item.calculation === 'PLUS' ? '+' : '-'}
+                            {item.cnt}
+                          </dd>
+                        </dl>
+                      </li>
+                    );
+                  });
+                }
+              })}
+            </ul>
+
+            {!historyData?.pages[historyData?.pages.length - 1].isLast && hasNextPage && (
+              <div ref={ref} className='h-[20px] p-3 text-center'>
+                loading...
+              </div>
             )}
           </>
         )}

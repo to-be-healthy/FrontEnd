@@ -17,7 +17,7 @@ export const useStudentCourseDetailQuery = ({
   size,
 }: StudentCourseDetailRequest) => {
   return useInfiniteQuery<StudentCourse, BaseError>({
-    queryKey: ['studentCourseDetail', { memberId, searchDate }],
+    queryKey: ['studentCourseHistory', { memberId, searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentCourse>>(
         `/api/members/v1/${memberId}/course?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
@@ -27,10 +27,7 @@ export const useStudentCourseDetailQuery = ({
     initialPageParam: 0,
 
     getNextPageParam: (lastPage: StudentCourse, allPages: StudentCourse[]) => {
-      if (lastPage.courseHistories && lastPage.courseHistories.length === size) {
-        return allPages.length;
-      }
-      return undefined;
+      return !lastPage.isLast ? allPages.length : undefined;
     },
   });
 };

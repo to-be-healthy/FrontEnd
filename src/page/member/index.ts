@@ -7,4 +7,5 @@ export { EditPasswordPage } from './ui/EditPasswordPage';
 export { LeavePage } from './ui/LeavePage';
 export { PolicyPage } from './ui/PolicyPage';
 export { SelectGymPage } from './ui/SelectGymPage';
+export { StudentMyPage } from './ui/StudentMyPage';
 export { TrainerMyPage } from './ui/TrainerMyPage';

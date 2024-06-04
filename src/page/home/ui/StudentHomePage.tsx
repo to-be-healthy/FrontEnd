@@ -8,6 +8,7 @@ import dayjs from 'dayjs';
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { TodayDiet } from '@/feature/diet';
 import {
   CourseCard,
   CourseCardContent,
@@ -42,32 +43,7 @@ const FEEDBACK_COUNT = 1;
 export const StudentHomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data, isPending } = useStudentHomeDataQuery();
-  // const { mutate: dietMutate } = useRegisterDietMutation();
-
-  // const [images, setImages] = useState([]);
-
-  //식단 api 완료후 진행예정
-  // const uploadFiles = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const uploadFiles = e.target.files;
-  //   if (!uploadFiles) return;
-  //   setImages(uploadFiles);
-
-  // dietMutate(
-  //   {
-  //     type: type,
-  //     file: file,
-  //     fast: fast,
-  //   },
-  //   {
-  //     onSuccess: ({ message }) => {
-  //       console.log(message);
-  //     },
-  //     onError: (error) => {
-  //       console.log(error?.response?.data.message);
-  //     },
-  //   }
-  // );
-  // };
+  const month = dayjs(new Date()).format('YYYY-MM');
 
   const toggleArrow = () => {
     setIsOpen((prev) => !prev);
@@ -85,7 +61,7 @@ export const StudentHomePage = () => {
       <Layout.Header>
         <IconLogo width='44px' height='44px' />
         <Link href='#'>
-          <IconAlarm />
+          <IconAlarm width={24} height={24} />
         </Link>
       </Layout.Header>
       <Layout.Contents className='p-7 pt-6'>
@@ -268,16 +244,13 @@ export const StudentHomePage = () => {
               )}
             </article>
 
-            <article className='mb-7'>
-              {data?.myReservation && (
+            {data?.myReservation && (
+              <article className='mb-7'>
                 <Card className='w-full gap-y-8 px-6 py-7'>
-                  <CardHeader className='flex items-center justify-between'>
+                  <CardHeader className='flex items-center justify-start'>
                     <h2 className={cn(Typography.TITLE_2, 'text-gray-800')}>
                       다음 PT예정일
                     </h2>
-                    <Link href='/' className={cn(Typography.BODY_3, 'gray-500 h-auto')}>
-                      예약전체
-                    </Link>
                   </CardHeader>
                   <CardContent className='flex items-center justify-start'>
                     <IconCheck fill={'var(--primary-500)'} />
@@ -286,8 +259,8 @@ export const StudentHomePage = () => {
                     </p>
                   </CardContent>
                 </Card>
-              )}
-            </article>
+              </article>
+            )}
 
             {data?.lessonHistory && (
               <article className='mb-7'>
@@ -328,199 +301,38 @@ export const StudentHomePage = () => {
               <Card className='w-full gap-y-8 px-6 py-7'>
                 <CardHeader className='flex items-center justify-between'>
                   <h2 className={cn(Typography.TITLE_1_BOLD, 'text-black')}>오늘 식단</h2>
-                  <Link href='/' className={cn(Typography.BODY_3, 'gray-500 h-auto')}>
+                  <Link
+                    href={`/student/diet?month=${month}`}
+                    className={cn(Typography.BODY_3, 'gray-500 h-auto')}>
                     식단전체
                   </Link>
                 </CardHeader>
                 <CardContent>
                   <div className='flex items-center justify-between'>
-                    {/* 식단 post -> response : url, 컴포넌트분리 */}
-                    {/* {data?.diet.breakfast?.fast ? (
-                      <div className='w-[calc((100%-12px)/3)]'>
-                        <div className='h-full min-h-[95px] w-full rounded-md bg-gray-100'></div>
-                        <Button
-                          variant='ghost'
-                          className={cn(
-                            Typography.TITLE_2,
-                            'text-Gray-400 mt-3 flex h-auto w-full items-center justify-center p-0 text-center'
-                          )}>
-                          단식
-                          <span className='ml-1'>
-                            <IconCheck fill={'var(--primary-500)'} />
-                          </span>
-                        </Button>
-                      </div>
-                    ) : data?.diet.breakfast.dietFile ? (
-                      <div className='w-[calc((100%-12px)/3)]'>
-                        <Image
-                          src={data?.diet.breakfast.dietFile.fileUrl}
-                          width={60}
-                          height={60}
-                          alt='breackfast'
-                          className='custom-image flex items-center justify-center rounded-md'
-                        />
-                        <Button
-                          variant='ghost'
-                          className={cn(
-                            Typography.TITLE_2,
-                            'text-Gray-400 mt-3 flex h-auto w-full items-center justify-center p-0 text-center'
-                          )}>
-                          단식
-                          <span className='ml-1'>
-                            <IconCheck fill={'var(--gray-400)'} />
-                          </span>
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className='w-[calc((100%-12px)/3)]'>
-                        <button className='flex h-[95px] w-full items-center justify-center rounded-md bg-gray-100'>
-                          <IconPlus width={20} height={20} fill={'var(--gray-500)'} />
-                        </button>
-                        <Button
-                          variant='ghost'
-                          className={cn(
-                            Typography.TITLE_2,
-                            'text-Gray-400 mt-3 flex h-auto w-full items-center justify-center p-0 text-center'
-                          )}>
-                          단식
-                          <span className='ml-1'>
-                            <IconCheck fill={'var(--gray-400)'} />
-                          </span>
-                        </Button>
-                      </div>
-                    )} */}
-
-                    {/* {data?.diet.lunch?.fast ? (
-                      <div className='w-[calc((100%-12px)/3)]'>
-                        <div className='min-h-[95px] w-full rounded-md bg-gray-100'></div>
-                        <Button
-                          variant='ghost'
-                          className={cn(
-                            Typography.TITLE_2,
-                            'text-Gray-400 mt-3 flex h-auto w-full items-center justify-center p-0 text-center'
-                          )}>
-                          단식
-                          <span className='ml-1'>
-                            <IconCheck fill={'var(--primary-500)'} />
-                          </span>
-                        </Button>
-                      </div>
-                    ) : data?.diet.lunch.dietFile ? (
-                      <div className='w-[calc((100%-12px)/3)]'>
-                        <Image
-                          src={data?.diet.lunch.dietFile.fileUrl}
-                          width={60}
-                          height={95}
-                          alt='lunch'
-                          className='custom-image flex min-h-[95px] items-center justify-center rounded-md'
-                        />
-                        <Button
-                          variant='ghost'
-                          className={cn(
-                            Typography.TITLE_2,
-                            'text-Gray-400 mt-3 flex h-auto w-full items-center justify-center p-0 text-center'
-                          )}>
-                          단식
-                          <span className='ml-1'>
-                            <IconCheck fill={'var(--gray-400)'} />
-                          </span>
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className='w-[calc((100%-12px)/3)]'>
-                        <Button
-                          variant='ghost'
-                          className='flex min-h-[95px] w-full items-center justify-center rounded-md bg-gray-100'>
-                          <IconPlus width={20} height={20} fill={'var(--gray-500)'} />
-                        </Button>
-                        <Button
-                          variant='ghost'
-                          className={cn(
-                            Typography.TITLE_2,
-                            'text-Gray-400 mt-3 flex h-auto w-full items-center justify-center p-0 text-center'
-                          )}
-                          // onClick={() =>
-                          //   uploadFiles(
-                          //     'LUNCH',
-                          //     data?.diet.lunch.fast,
-                          //     data?.diet.lunch.fast
-                          //   )
-                          // }
-                        >
-                          단식
-                          <span className='ml-1'>
-                            <IconCheck fill={'var(--gray-400)'} />
-                          </span>
-                        </Button>
-                      </div>
-                    )} */}
-
-                    {/* {data?.diet.dinner.fast ? (
-                      <div className='w-[calc((100%-12px)/3)]'>
-                        <div className='min-h-[95px] w-full rounded-md bg-gray-100'></div>
-                        <Button
-                          variant='ghost'
-                          className={cn(
-                            Typography.TITLE_2,
-                            'text-Gray-400 mt-3 flex h-auto w-full items-center justify-center p-0 text-center'
-                          )}>
-                          단식
-                          <span className='ml-1'>
-                            <IconCheck fill={'var(--primary-500)'} />
-                          </span>
-                        </Button>
-                      </div>
-                    ) : data?.diet.dinner.dietFile ? (
-                      <div className='w-[calc((100%-12px)/3)]'>
-                        <Image
-                          src={data?.diet.dinner.dietFile.fileUrl}
-                          width={60}
-                          height={60}
-                          alt='dinner'
-                          className='custom-image flex min-h-[95px] items-center justify-center rounded-md'
-                        />
-                        <Button
-                          variant='ghost'
-                          className={cn(
-                            Typography.TITLE_2,
-                            'text-Gray-400 mt-3 flex h-auto w-full items-center justify-center p-0 text-center'
-                          )}>
-                          단식
-                          <span className='ml-1'>
-                            <IconCheck fill={'var(--gray-400)'} />
-                          </span>
-                        </Button>
-                      </div>
-                    ) : (
-                      <div className='w-[calc((100%-12px)/3)]'>
-                        <button className='flex min-h-[95px] w-full items-center justify-center rounded-md bg-gray-100'>
-                          <IconPlus width={20} height={20} fill={'var(--gray-500)'} />
-                        </button>
-                        <Button
-                          variant='ghost'
-                          className={cn(
-                            Typography.TITLE_2,
-                            'text-Gray-400 mt-3 flex h-auto w-full items-center justify-center p-0 text-center'
-                          )}>
-                          단식
-                          <span className='ml-1'>
-                            <IconCheck fill={'var(--gray-400)'} />
-                          </span>
-                        </Button>
-                      </div>
-                    )} */}
+                    {data?.diet && (
+                      <>
+                        <TodayDiet diet={data?.diet.breakfast} type='breakfast' />
+                        <TodayDiet diet={data?.diet.lunch} type='lunch' />
+                        <TodayDiet diet={data?.diet.dinner} type='dinner' />
+                      </>
+                    )}
                   </div>
                 </CardContent>
               </Card>
             </article>
 
             <article>
-              <Card className='w-full gap-y-8 px-6 py-7'>
-                <CardHeader className='flex items-center justify-between'>
-                  <h2 className={cn(Typography.TITLE_1_BOLD, 'text-black')}>
-                    개인 운동 기록
-                  </h2>
-                  <Link href='/' className={cn(Typography.BODY_3, 'gray-500 h-auto')}>
+              <Card className='w-full p-0'>
+                <CardHeader>
+                  <Link
+                    href='/'
+                    className={cn(
+                      Typography.BODY_3,
+                      'gray-500 flex h-full items-center justify-between px-6 py-7'
+                    )}>
+                    <h2 className={cn(Typography.TITLE_1_BOLD, 'text-black')}>
+                      개인 운동 기록
+                    </h2>
                     <IconArrowRightSmall />
                   </Link>
                 </CardHeader>

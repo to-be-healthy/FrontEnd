@@ -5,6 +5,7 @@ interface UserInfo {
   gymId: number | null;
   memberType: 'STUDENT' | 'TRAINER' | null;
   memberId: number | null;
+  name: string | null;
 }
 
 type SocialProvider = 'kakao' | 'naver' | 'google';
