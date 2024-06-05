@@ -5,6 +5,7 @@ export { useChangePasswordMutation } from './api/useChangePasswordMutation';
 export { useDeleteProfileImageMutation } from './api/useDeleteProfileImageMutation';
 export { useDeleteStudentCourseMutation } from './api/useDeleteStudentCourseMutation';
 export { useDeleteStudentMutation } from './api/useDeleteStudentMutation';
+export { useFcmTokenMutation } from './api/useFcmTokenMutation';
 export { useInviteStudentMutation } from './api/useInviteStudentMutation';
 export { useMyCourseHistoryQuery } from './api/useMyCourseHistoryQuery';
 export { useMyInfoQuery } from './api/useMyInfoQuery';
