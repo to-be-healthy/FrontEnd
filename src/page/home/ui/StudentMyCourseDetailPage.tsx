@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { courseHistoryCodeDescription, useMyCourseHistoryQuery } from '@/feature/member';
+import { courseHistoryTypes, useMyCourseHistoryQuery } from '@/feature/member';
 import { CourseCard, CourseCardContent, CourseCardHeader } from '@/feature/member';
 import { IconClose, IconNotification } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
@@ -143,7 +143,7 @@ export const StudentMyCourseDetailPage = () => {
                         </p>
                         <dl className='flex items-center justify-between'>
                           <dt className={cn(Typography.TITLE_3, 'text-gray-700')}>
-                            {courseHistoryCodeDescription[item.type]}
+                            {courseHistoryTypes[item.type]}
                           </dt>
                           <dd className={cn(Typography.TITLE_3, 'text-black')}>
                             {item.calculation === 'PLUS' ? '+' : '-'}

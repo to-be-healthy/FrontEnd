@@ -61,8 +61,8 @@ interface TrainerSchedule {
 interface ClassTimeSettingData {
   lessonStartTime: string;
   lessonEndTime: string;
-  lunchStartTime: string;
-  lunchEndTime: string;
+  lunchStartTime: string | null;
+  lunchEndTime: string | null;
   closedDays: DayOfWeek[];
   lessonTime: number;
 }
