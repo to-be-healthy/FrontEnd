@@ -39,7 +39,16 @@ const SCHEDULE_NOSHOW_COLOR = {
   border: '#A7A9AE',
 };
 
+const CLASS_TIME_DEFAULT = {
+  lessonStartTime: '10:00',
+  lessonEndTime: '20:00',
+  lunchStartTime: '12:00',
+  lunchEndTime: '13:00',
+  lessonTime: 60,
+  closedDays: [],
+};
 export {
+  CLASS_TIME_DEFAULT,
   HOURS_FROM,
   HOURS_TO,
   SCHEDULE_ACTIVE_COLORS,

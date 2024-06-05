@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
 'use client';
 
 import 'dayjs/locale/ko';
@@ -5,9 +6,12 @@ dayjs.locale('ko');
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 import dayjs from 'dayjs';
+import { getMessaging, getToken } from 'firebase/messaging';
 import Link from 'next/link';
 import { useState } from 'react';
+import { useEffect } from 'react';
 
+import { firebaseApp } from '@/app/_providers/Firebase';
 import { TodayDiet } from '@/feature/diet';
 import {
   CourseCard,
@@ -15,6 +19,7 @@ import {
   CourseCardHeader,
   useStudentHomeDataQuery,
 } from '@/feature/member';
+import { useFcmTokenMutation } from '@/feature/member';
 import {
   IconAlarm,
   IconArrowDown,
@@ -26,6 +31,7 @@ import {
   IconLogo,
   IconPoint,
 } from '@/shared/assets';
+import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
   Card,
@@ -44,6 +50,7 @@ export const StudentHomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data, isPending } = useStudentHomeDataQuery();
   const month = dayjs(new Date()).format('YYYY-MM');
+  const { showErrorToast } = useShowErrorToast();
 
   const toggleArrow = () => {
     setIsOpen((prev) => !prev);
@@ -55,6 +62,71 @@ export const StudentHomePage = () => {
   const nextScheduledHour = data?.myReservation
     ? dayjs(data?.myReservation?.lessonStartTime, 'HH:mm:ss').format('A hh:mm')
     : '';
+  const { mutate } = useFcmTokenMutation();
+  const messaging = getMessaging(firebaseApp);
+
+  const attemptToGetToken = async (registration: ServiceWorkerRegistration) => {
+    try {
+      const currentToken = await getToken(messaging, {
+        vapidKey: process.env.VAPIDKEY,
+        serviceWorkerRegistration: registration,
+      });
+
+      if (currentToken) {
+        mutate(currentToken, {
+          onSuccess: () => {
+            localStorage.setItem('serviceWorkerRegistration', currentToken);
+          },
+          onError: (error) => {
+            throw new Error(error?.response?.data.message ?? 'Mutation error occurred.');
+          },
+        });
+      } else {
+        showErrorToast(
+          'No Instance ID token available. Request permission to generate one.'
+        );
+      }
+    } catch (error) {
+      showErrorToast(`Failed to get token:`);
+    }
+  };
+
+  const onMessageFCM = async () => {
+    //서비스워커의 토큰은 한번 등록하면 안바뀜
+    const registration = await navigator.serviceWorker.register(
+      '/firebase-messaging-sw.js'
+    );
+    if (!('serviceWorker' in navigator) && !('Notification' in window)) {
+      return;
+    }
+
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      alert('알림을 허용해 주세요.');
+      return;
+    } else {
+      navigator.serviceWorker.ready.then((registration) => {
+        registration.showNotification('Vibration Sample', {
+          body: '알림설정 완료',
+        });
+      });
+    }
+
+    if (!localStorage.getItem('serviceWorkerRegistration')) {
+      if (registration) {
+        try {
+          await attemptToGetToken(registration);
+        } catch (e) {
+          await attemptToGetToken(registration);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    onMessageFCM();
+  }, []);
 
   return (
     <Layout type='student'>

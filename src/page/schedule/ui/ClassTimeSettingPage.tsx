@@ -91,8 +91,12 @@ export const ClassTimeSettingPage = () => {
     return {
       lessonStartTime: formatTimeTo12Hour(classTimeData?.lessonStartTime),
       lessonEndTime: formatTimeTo12Hour(classTimeData?.lessonEndTime),
-      lunchStartTime: formatTimeTo12Hour(classTimeData?.lunchStartTime),
-      lunchEndTime: formatTimeTo12Hour(classTimeData?.lunchEndTime),
+      lunchStartTime: formatTimeTo12Hour(
+        classTimeData?.lunchStartTime ? classTimeData?.lunchStartTime : '12:00'
+      ),
+      lunchEndTime: formatTimeTo12Hour(
+        classTimeData?.lunchEndTime ? classTimeData?.lunchEndTime : '13:00'
+      ),
     };
   };
 
@@ -154,8 +158,8 @@ export const ClassTimeSettingPage = () => {
         const settings = {
           lessonStartTime: selectedTimeList[0],
           lessonEndTime: selectedTimeList[1],
-          lunchStartTime: isLunchTimeUnset ? '' : selectedTimeList[2],
-          lunchEndTime: isLunchTimeUnset ? '' : selectedTimeList[3],
+          lunchStartTime: isLunchTimeUnset ? null : selectedTimeList[2],
+          lunchEndTime: isLunchTimeUnset ? null : selectedTimeList[3],
           closedDays: dayOff,
           lessonTime: classTimeState,
         };
