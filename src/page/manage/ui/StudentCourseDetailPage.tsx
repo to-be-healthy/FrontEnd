@@ -20,7 +20,7 @@ import {
   CourseCard,
   CourseCardContent,
   CourseCardHeader,
-  courseHistoryCodeDescription,
+  courseHistoryTypes,
   useAddStudentCourseMutation,
   useDeleteStudentCourseMutation,
   useRegisterStudentCourseMutation,
@@ -398,7 +398,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                         </p>
                         <dl className='flex items-center justify-between'>
                           <dt className={cn(Typography.TITLE_3, 'text-gray-700')}>
-                            {courseHistoryCodeDescription[item.type]}
+                            {courseHistoryTypes[item.type]}
                           </dt>
                           <dd className={cn(Typography.TITLE_3, 'text-black')}>
                             {item.calculation === 'PLUS' ? '+' : '-'}

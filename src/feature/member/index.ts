@@ -17,7 +17,7 @@ export { useStudentDetailQuery } from './api/useStudentDetailQuery';
 export { useStudentHomeDataQuery } from './api/useStudentHomeDataQuery';
 export { useStudentPointHistoryQuery } from './api/useStudentPointHistoryQuery';
 export { useVerifyPasswordMutation } from './api/useVerifyPasswordMutation';
-export { courseHistoryCodeDescription, pointHistoryCodeDescription } from './const';
+export { courseHistoryTypes, pointHistoryTypes } from './const';
 export {
   StudentDetailContext,
   useStudentDetail,

@@ -4,7 +4,7 @@ import { Gym } from '@/entity/gym';
 import { DietWithFasting } from '@/feature/diet';
 import { Pageable } from '@/shared/api';
 
-import { courseHistoryCodeDescription } from '../const';
+import { courseHistoryTypes } from '../const';
 
 interface RegisteredStudent {
   memberId: number;
@@ -70,7 +70,7 @@ interface AppendMemberForm {
   lessonCnt: number;
 }
 
-type CourseHistory = keyof typeof courseHistoryCodeDescription;
+type CourseHistory = keyof typeof courseHistoryTypes;
 
 type HistoryType = 'NO_SHOW' | 'NO_SHOW_CANCEL' | 'WORKOUT' | 'DIET';
 

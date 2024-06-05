@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { useStudentPointHistoryQuery } from '@/feature/member';
-import { pointHistoryCodeDescription } from '@/feature/member/const';
+import { pointHistoryTypes } from '@/feature/member';
 import { IconClose, IconNotification, IconPoint } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Card, CardContent, CardHeader } from '@/shared/ui';
@@ -44,7 +44,7 @@ export const StudentPointDetailPage = ({ memberId }: Props) => {
     size: ITEMS_PER_PAGE,
     searchDate: dayjs(selectedMonth).format('YYYY-MM'),
     memberId,
-  }); //api 변경
+  });
 
   useEffect(() => {
     if (inView && hasNextPage) {
@@ -148,7 +148,7 @@ export const StudentPointDetailPage = ({ memberId }: Props) => {
                         <p className='typography-body-4 text-gray-500'>{formattedDate}</p>
                         <dl className='flex items-center justify-between'>
                           <dt className='typography-title-3 text-gray-700'>
-                            {pointHistoryCodeDescription[item.type]}
+                            {pointHistoryTypes[item.type]}
                           </dt>
                           <dd className='typography-title-3 text-black'>
                             {item.calculation === 'PLUS' ? '+' : '-'}
