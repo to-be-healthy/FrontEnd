@@ -39,7 +39,9 @@ const TrainerLogPage = ({ memberId }: Props) => {
     studentId: memberId,
     searchDate: dayjs(selectedMonth).format('YYYY-MM'),
   });
-  const { data: lessonList } = useLessonListQuery();
+  const { data: lessonList } = useLessonListQuery({
+    studentId: memberId,
+  });
   const hasUnwrittenLesson = lessonList
     ? lessonList?.filter((item) => item.reviewStatus === '미작성').length > 0
     : false;

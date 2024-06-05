@@ -1,5 +1,4 @@
 import { useQueryClient } from '@tanstack/react-query';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -71,9 +70,9 @@ const Header = () => {
 
   return (
     <Layout.Header>
-      <Link href={`/trainer/manage/${memberId}/log`}>
+      <button onClick={() => router.back()}>
         <IconBack />
-      </Link>
+      </button>
       <DropdownMenu>
         <DropdownMenuTrigger
           className={cn(Typography.TITLE_1_SEMIBOLD, FLEX_CENTER, 'w-6')}>

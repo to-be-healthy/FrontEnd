@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { useImages } from '@/entity/image';
@@ -36,7 +36,11 @@ const MAX_IMAGES_COUNT = 3;
 const TrainerCreateLogPage = ({ memberId }: Props) => {
   const router = useRouter();
   const { showErrorToast } = useShowErrorToast();
-  const { data } = useLessonListQuery();
+  const searchParams = useSearchParams();
+  const name = searchParams.get('name');
+  const lessonDate = searchParams.get('lessonDate');
+  const scheduleId = searchParams.get('scheduleId');
+  const { data } = useLessonListQuery({ studentId: memberId, lessonDate });
   const unwrittenLessonList = data
     ? data.filter((item) => item.reviewStatus === '미작성')
     : null;
@@ -86,7 +90,10 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
     }
 
     if (unwrittenLessonList && unwrittenLessonList.length > 0) {
-      setSelectedLesson(unwrittenLessonList[0]);
+      const index = scheduleId
+        ? unwrittenLessonList.findIndex((item) => item.scheduleId === Number(scheduleId))
+        : 0;
+      setSelectedLesson(unwrittenLessonList[index]);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -183,7 +190,9 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-        <p className='typography-heading-4 flex h-full items-center'>수업 일지 작성</p>
+        <p className='typography-heading-4 flex h-full items-center'>
+          {`${name ? `${name}님 ` : ''}`}수업일지 작성
+        </p>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
       </Layout.Header>
       <Layout.Contents className='p-[20px]'>

@@ -6,9 +6,9 @@ import { BaseError, BaseResponse } from '@/shared/api';
 export const useChangeMyNameMutation = () => {
   return useMutation<BaseResponse<string>, BaseError, string>({
     mutationFn: async (name) => {
-      const result = await authApi.patch<BaseResponse<string>>(
-        `/api/members/v1/name?name=${name}`
-      );
+      const result = await authApi.patch<BaseResponse<string>>(`/api/members/v1/name`, {
+        name,
+      });
       return result.data;
     },
   });

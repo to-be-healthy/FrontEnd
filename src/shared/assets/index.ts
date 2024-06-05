@@ -22,6 +22,7 @@ export { default as IconCameraPositive } from './images/camera_positive.svg';
 export { default as IconCameraUpload } from './images/camera_upload.svg';
 export { default as IconChat } from './images/chat.svg';
 export { default as IconCheck } from './images/check.svg';
+export { default as IconCheckCircle } from './images/check_circle.svg';
 export { default as IconClassLog } from './images/class_log.svg';
 export { default as IconClose } from './images/close.svg';
 export { default as IconCommunityFilled } from './images/community_filled.svg';

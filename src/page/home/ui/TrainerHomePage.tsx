@@ -33,7 +33,7 @@ export const TrainerHomePage = () => {
   const { mutate } = useAddStudentCourseMutation();
   const { data: userInfo } = useMyInfoQuery();
   const { data: homeInfo } = useTrainerHomeQuery();
-
+  console.log(homeInfo);
   const addCourse = ({ courseId, memberId }: { courseId: number; memberId: number }) => {
     mutate(
       {
@@ -85,6 +85,7 @@ export const TrainerHomePage = () => {
               <div className='hide-scrollbar z-10 overflow-x-auto'>
                 <div className='flex w-fit gap-0 px-7'>
                   {homeInfo?.todaySchedule.before.map((item) => {
+                    console.log(item.applicantName);
                     return (
                       <Link
                         href={`/trainer/manage/${item.applicantId}`}
@@ -112,7 +113,7 @@ export const TrainerHomePage = () => {
                         <div
                           className={cn(
                             FLEX_CENTER,
-                            'h-[100px] w-[100px] flex-col gap-1 rounded-md border border-gray-200 bg-white p-8 shadow-sm'
+                            'mr-4 h-[100px] w-[100px] flex-col gap-4 rounded-md border border-gray-200 bg-white p-8 shadow-sm'
                           )}>
                           <span className={cn(Typography.BODY_2, 'text-gray-500')}>
                             {item.lessonStartTime}
