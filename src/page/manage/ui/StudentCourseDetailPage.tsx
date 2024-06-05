@@ -2,6 +2,7 @@
 
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -19,7 +20,7 @@ import {
   CourseCard,
   CourseCardContent,
   CourseCardHeader,
-  courseHistoryCodeDescription,
+  courseHistoryTypes,
   useAddStudentCourseMutation,
   useDeleteStudentCourseMutation,
   useRegisterStudentCourseMutation,
@@ -226,7 +227,9 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
       </Layout.Header>
       <Layout.Contents>
         {isPending ? (
-          <div className='loading'>Loading..</div>
+          <div className='flex h-full items-center justify-center'>
+            <Image src='/images/loading.gif' width={30} height={30} alt='loading' />
+          </div>
         ) : (
           <>
             {/* 수강권 있을때 */}
@@ -395,7 +398,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                         </p>
                         <dl className='flex items-center justify-between'>
                           <dt className={cn(Typography.TITLE_3, 'text-gray-700')}>
-                            {courseHistoryCodeDescription[item.type]}
+                            {courseHistoryTypes[item.type]}
                           </dt>
                           <dd className={cn(Typography.TITLE_3, 'text-black')}>
                             {item.calculation === 'PLUS' ? '+' : '-'}
@@ -410,8 +413,8 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             </ul>
 
             {!historyData?.pages[historyData?.pages.length - 1].isLast && hasNextPage && (
-              <div ref={ref} className='h-[20px] p-3 text-center'>
-                loading...
+              <div ref={ref} className='flex items-center justify-center py-3'>
+                <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               </div>
             )}
           </>

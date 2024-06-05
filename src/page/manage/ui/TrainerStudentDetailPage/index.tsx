@@ -125,7 +125,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                 }>
                 <Link
                   href={{
-                    pathname: `/trainer/manage/${memberId}/course-detail`,
+                    pathname: `/trainer/manage/${memberId}/course-history`,
                     query: { name: memberInfo.name },
                   }}>
                   <CourseCardHeader
@@ -150,8 +150,8 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                       onClick={toggleArrow}>
                       <div className='flex items-center justify-between p-6'>
                         <p className={cn(Typography.HEADING_5)}>
-                          {memberInfo?.point.searchDate.split('-')[1].split('')[1]}월 활동
-                          포인트
+                          {memberInfo?.point?.searchDate.split('-')[1].split('')[1]}월
+                          활동 포인트
                         </p>
                         <div
                           className={cn(
@@ -169,7 +169,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                               <p className='mr-2 flex items-center justify-center'>
                                 <IconPoint />
                                 <span className='ml-[3px]'>
-                                  {memberInfo?.point.monthPoint}
+                                  {memberInfo?.point?.monthPoint}
                                 </span>
                               </p>
                               <IconArrowDown widht={14} height={14} />
@@ -181,8 +181,11 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                     <CollapsibleContent className='p-6 pt-3'>
                       <ul className='flex'>
                         <li className='w-[130px]'>
-                          {/* todo:링크 회원 트레이너 공통으로 써야함 api 완료후 작업예정 */}
-                          <Link href='./student/point-history'>
+                          <Link
+                            href={{
+                              pathname: `/trainer/manage/${memberId}/point-history`,
+                              query: { name: memberInfo.name },
+                            }}>
                             <Card className='h-full w-full gap-y-7 p-6'>
                               <CardHeader>
                                 <p
@@ -200,7 +203,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                                     Typography.HEADING_2,
                                     'mb-7 flex items-center text-black'
                                   )}>
-                                  {memberInfo?.point.monthPoint}
+                                  {memberInfo?.point?.monthPoint}
                                   <span
                                     className={cn(
                                       Typography.HEADING_5,
@@ -210,7 +213,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                                   </span>
                                 </p>
                                 <span className={cn(Typography.BODY_4, 'text-gray-400')}>
-                                  누적 {memberInfo?.point.totalPoint}
+                                  누적 {memberInfo?.point?.totalPoint}
                                 </span>
                               </CardContent>
                             </Card>
@@ -265,7 +268,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                   <div className='w-full rounded-bl-lg rounded-br-lg bg-gray-400 text-white'>
                     <div className='flex items-center justify-between p-6'>
                       <p className={cn(Typography.HEADING_5)}>
-                        {memberInfo?.point.searchDate.split('-')[1].split('')[1]}월 활동
+                        {memberInfo?.point?.searchDate.split('-')[1].split('')[1]}월 활동
                         포인트
                       </p>
                       <div
@@ -275,7 +278,9 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                         )}>
                         <p className='mr-2 flex items-center justify-center'>
                           <IconPoint />
-                          <span className='ml-[3px]'>{memberInfo?.point.monthPoint}</span>
+                          <span className='ml-[3px]'>
+                            {memberInfo?.point?.monthPoint}
+                          </span>
                         </p>
                       </div>
                     </div>
@@ -286,19 +291,13 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
 
             {/* 수강권 없는 경우 */}
             {!memberInfo.course && (
-              <Link
-                href={{
-                  pathname: `/trainer/manage/${memberId}/course-detail`,
-                  query: { name: memberInfo.name },
-                }}>
-                <Card
-                  className={cn(
-                    Typography.TITLE_3,
-                    'mb-6 flex h-[127px] w-full items-center justify-center rounded-lg bg-gray-500 text-white'
-                  )}>
-                  현재 등록된 수강권이 없습니다.
-                </Card>
-              </Link>
+              <Card
+                className={cn(
+                  Typography.TITLE_3,
+                  'mb-6 flex h-[127px] w-full items-center justify-center rounded-lg bg-gray-500 text-white'
+                )}>
+                현재 등록된 수강권이 없습니다.
+              </Card>
             )}
 
             {memberInfo.diet !== null && (

@@ -1,4 +1,4 @@
-export const courseHistoryCodeDescription = {
+export const courseHistoryTypes = {
   COURSE_CREATE: '수강권 생성',
   PLUS_CNT: '수강권 연장',
   MINUS_CNT: '수강권 차감',
@@ -7,7 +7,7 @@ export const courseHistoryCodeDescription = {
   RESERVATION_CANCEL: '수업 예약 취소',
 };
 
-export const pointHistoryCodeDescription = {
+export const pointHistoryTypes = {
   NO_SHOW: '노쇼',
   NO_SHOW_CANCEL: '노쇼취소',
   WORKOUT: '개인운동',

@@ -2,6 +2,7 @@
 
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -63,7 +64,9 @@ export const StudentMyCourseDetailPage = () => {
       </Layout.Header>
       <Layout.Contents>
         {isPending ? (
-          <div className='loading'>Loading..</div>
+          <div className='flex h-full items-center justify-center'>
+            <Image src='/images/loading.gif' width={30} height={30} alt='loading' />
+          </div>
         ) : (
           <>
             <div className='bg-[#fff] p-7 pb-0 pt-6'>
@@ -155,8 +158,8 @@ export const StudentMyCourseDetailPage = () => {
             </ul>
 
             {!historyData?.pages[historyData?.pages.length - 1].isLast && hasNextPage && (
-              <div ref={ref} className='h-[20px] p-3 text-center'>
-                loading...
+              <div ref={ref} className='flex items-center justify-center py-3'>
+                <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               </div>
             )}
           </>
