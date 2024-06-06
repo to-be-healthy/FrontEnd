@@ -1,7 +1,6 @@
 import { SocialProvider } from '@/entity/auth';
-import { DailyDiet } from '@/entity/diet';
+import { HomeDietData } from '@/entity/diet';
 import { Gym } from '@/entity/gym';
-import { DietWithFasting } from '@/feature/diet';
 import { Pageable } from '@/shared/api';
 
 import { courseHistoryTypes } from '../const';
@@ -58,7 +57,7 @@ interface StudentDetail {
   ranking: number;
   lessonDt: string | null;
   lessonStartTime: string | null;
-  diet: DailyDiet | null;
+  diet: HomeDietData;
   course: CourseItem | null;
   point: StudentPointItem | null;
   rank: StudentRank;
@@ -123,39 +122,10 @@ interface StudentRank {
   lastMonthRanking: number;
 }
 
-interface Diet {
-  dietId: number;
-  member: {
-    id: number;
-    userId: string;
-    email: string;
-    name: string;
-    age: number;
-    height: number;
-    weight: number;
-    delYn: boolean;
-    profile: null | { id: number; fileUrl: string };
-    memberType: 'STUDENT' | 'TRAINER';
-    pushAlarmStatus: null | 'ENABLED' | 'DISABLE';
-    feedbackAlarmStatus: null | 'ENABLED' | 'DISABLE';
-    gym: null | Gym;
-    socialType: ['NONE', 'KAKAO', 'NAVER', 'GOOGLE'];
-  };
-  eatDate: string;
-  likeCnt: number;
-  liked: boolean;
-  commentCnt: number;
-  createdAt: string;
-  updatedAt: string;
-  breakfast: DietWithFasting;
-  lunch: DietWithFasting;
-  dinner: DietWithFasting;
-}
 export type {
   AppendMemberForm,
   CourseHistoryItem,
   CourseItem,
-  Diet,
   HistoryType,
   InviteForm,
   Member,

@@ -1,3 +1,4 @@
+'use client';
 /* eslint-disable react/prop-types */
 import 'react-day-picker/dist/style.css';
 import './react-calendar.css';

@@ -1,14 +1,18 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 
+import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 
+import { MealType } from '@/entity/diet';
 import { CourseCard, CourseCardContent, CourseCardHeader } from '@/feature/member';
 import {
   IconArrowDown,
   IconArrowFilledDown,
   IconArrowFilledUp,
+  IconCheck,
   IconPoint,
 } from '@/shared/assets';
 import IconArrowRight from '@/shared/assets/images/icon_arrow_right.svg';
@@ -36,10 +40,12 @@ interface Props {
   memberId: number;
 }
 
+const dietDay: MealType[] = ['breakfast', 'lunch', 'dinner'];
+
 const TrainerStudentDetailPage = ({ memberId }: Props) => {
   const { memberInfo } = useStudentInfo(memberId);
-
   const [isOpen, setIsOpen] = useState(false);
+  const month = dayjs(new Date()).format('YYYY-MM');
 
   const toggleArrow = () => {
     setIsOpen((prev) => !prev);
@@ -300,33 +306,62 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
               </Card>
             )}
 
-            {memberInfo.diet !== null && (
+            {memberInfo.diet.dietId && (
               <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
-                <CardHeader className='flex items-center justify-between text-gray-800'>
+                <CardHeader className='mb-7 flex items-center justify-between text-gray-800'>
                   <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>오늘 식단</h4>
-                  <Link href='#'>
-                    <p className={cn(Typography.BODY_3, 'text-gray-500')}>
-                      등록 식단 전체
-                    </p>
+                  <Link href={`/trainer/manage/${memberId}/diet/list?month=${month}`}>
+                    <p className={cn(Typography.BODY_3, 'text-gray-500')}>식단전체</p>
                   </Link>
                 </CardHeader>
                 <CardContent className='flex justify-center gap-x-[6px]'>
-                  <div className='h-[95px] w-[95px] bg-gray-300'></div>
-                  <div className='h-[95px] w-[95px] bg-gray-300'></div>
-                  <div className='h-[95px] w-[95px] bg-gray-300'></div>
+                  <article className='mb-6 flex w-full justify-between gap-2'>
+                    {dietDay.map((mealType: MealType) => {
+                      const meal = memberInfo.diet[mealType];
+                      return (
+                        <div
+                          key={mealType}
+                          className='flex flex-1 items-center justify-center'>
+                          {meal.fast && (
+                            <div
+                              className={cn(
+                                Typography.TITLE_2,
+                                'flex h-[88px] w-full flex-col items-center justify-center rounded-md bg-gray-100 p-0 text-center text-gray-400'
+                              )}>
+                              <span className='mb-1'>
+                                <IconCheck
+                                  fill={'var(--primary-500)'}
+                                  width={17}
+                                  height={17}
+                                />
+                              </span>
+                              단식
+                            </div>
+                          )}
+                          {!meal.fast && meal.dietFile?.fileUrl && (
+                            <div className='h-[88px] w-full'>
+                              <img
+                                src={meal.dietFile.fileUrl}
+                                alt={`${meal.type} image`}
+                                className='custom-image rounded-md'
+                              />
+                            </div>
+                          )}
+                          {!meal.fast && !meal.dietFile && (
+                            <div className='h-[88px] w-full rounded-md bg-gray-100 p-0' />
+                          )}
+                        </div>
+                      );
+                    })}
+                  </article>
                 </CardContent>
               </Card>
             )}
 
-            {memberInfo.diet === null && (
+            {memberInfo.diet.dietId === null && (
               <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
                 <CardHeader className='flex items-center justify-between text-gray-800'>
-                  <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>
-                    오늘 식단
-                    <span className={cn(Typography.BODY_3, 'ml-[10px] text-gray-600')}>
-                      오늘 등록된 식단이 없습니다.
-                    </span>
-                  </h4>
+                  <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>등록 식단</h4>
                   <Link href='#'>
                     <IconArrowRight />
                   </Link>

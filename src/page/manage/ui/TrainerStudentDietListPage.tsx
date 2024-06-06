@@ -1,25 +1,21 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
-import 'dayjs/locale/ko';
-
-import dayjs from 'dayjs';
-dayjs.locale('ko');
+/* eslint-disable @next/next/no-img-element */
 import { useQueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { useAuthSelector } from '@/entity/auth';
-import { MealType, useDietListQuery } from '@/entity/diet';
+import { MealType, useTrainerStudentDietListQuery } from '@/entity/diet';
 import {
   IconArrowLeft,
   IconChat,
   IconCheck,
   IconLike,
   IconNotification,
-  IconPlus,
 } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
@@ -46,11 +42,14 @@ const NoDiet = ({ index }: NoDietProps) => {
   );
 };
 
-const dietDay: MealType[] = ['breakfast', 'lunch', 'dinner'];
+interface Props {
+  memberId: number;
+}
 
 const ITEMS_PER_PAGE = 10;
+const dietDay: MealType[] = ['breakfast', 'lunch', 'dinner'];
 
-export const StudentDietListPage = () => {
+export const TrainerStudentDietListPage = ({ memberId }: Props) => {
   const today = new Date();
   const searchParams = useSearchParams();
   const month = searchParams.get('month');
@@ -63,7 +62,8 @@ export const StudentDietListPage = () => {
     threshold: 0.5,
   });
 
-  const { data, hasNextPage, fetchNextPage, isPending } = useDietListQuery({
+  const { data, hasNextPage, fetchNextPage, isPending } = useTrainerStudentDietListQuery({
+    memberId,
     searchDate: dayjs(selectedMonth).format('YYYY-MM'),
     size: ITEMS_PER_PAGE,
   });
@@ -71,11 +71,11 @@ export const StudentDietListPage = () => {
   const onChangeMonth = (month: Date) => {
     setSelectedMonth(month);
     const formattedMonth = dayjs(month).format('YYYY-MM');
-    router.push(`/student/diet?month=${formattedMonth}`);
+    router.push(`/trainer/manage/${memberId}/diet/list?month=${formattedMonth}`);
   };
 
   const onClickDiet = (dietId: number) => {
-    router.push(`/student/diet/${dietId}/detail?month=${month}`);
+    router.push(`/trainer/manage/${memberId}/diet/${dietId}/detail?month=${month}`);
   };
 
   useEffect(() => {
@@ -101,9 +101,9 @@ export const StudentDietListPage = () => {
   return isPending ? (
     <div>로딩중...</div>
   ) : (
-    <Layout type='student'>
-      <Layout.Header className='bg-gray-100'>
-        <Link href='/student'>
+    <Layout type='trainer'>
+      <Layout.Header className='justify-start'>
+        <Link href={`/trainer/manage/${memberId}`}>
           <IconArrowLeft stroke='black' />
         </Link>
         <h2
@@ -113,9 +113,6 @@ export const StudentDietListPage = () => {
           )}>
           {name}님 식단
         </h2>
-        <Link href='/student/diet/register'>
-          <IconPlus width={20} height={20} />
-        </Link>
       </Layout.Header>
       <Layout.Contents className='bg-gray-100'>
         <article className='bg-gray-100 px-7 pb-[52px] pt-7'>

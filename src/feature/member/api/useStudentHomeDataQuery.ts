@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { authApi } from '@/entity/auth';
+import { HomeDietData } from '@/entity/diet';
 import { Gym } from '@/entity/gym';
 import { BaseError, BaseResponse } from '@/shared/api';
 
-import { CourseItem, Diet, StudentPointItem, StudentRank } from '../model/types';
+import { CourseItem, StudentPointItem, StudentRank } from '../model/types';
 
 interface HomeDataResponse {
   course: CourseItem;
@@ -32,7 +33,7 @@ interface HomeDataResponse {
     attendanceStatus: string;
     files: { fileUrl: string; fileOrder: number; createdAt: string };
   };
-  diet: Diet;
+  diet: HomeDietData;
   gym: Gym;
 }
 

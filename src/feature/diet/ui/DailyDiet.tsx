@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 
+import { MealType } from '@/entity/diet';
 import {
   IconAlbum,
   IconCameraUpload,
@@ -21,7 +22,7 @@ import {
 import { cn } from '@/shared/utils';
 
 import { useDietContext } from '../hooks/useDiet';
-import { DietImageType, MealType } from '../model/types';
+import { DietImageType } from '../model/types';
 
 interface SelectImageProps {
   type: MealType;
@@ -60,6 +61,7 @@ const SelectAlbum = ({ type, setIsSheetOpen }: SelectImageProps) => {
         type='file'
         className='hidden'
         accept='image/*'
+        capture='user'
         onChange={(e) => {
           uploadFiles(e, type);
           setIsSheetOpen(false);

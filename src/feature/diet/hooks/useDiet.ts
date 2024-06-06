@@ -1,10 +1,10 @@
 import { ChangeEvent, createContext, useContext, useState } from 'react';
 
-import { useDietUploadImageMutation } from '@/entity/diet';
+import { DietWithFasting, MealType, useDietUploadImageMutation } from '@/entity/diet';
 import { ImageType } from '@/entity/image';
 import { useShowErrorToast } from '@/shared/hooks';
 
-import { DietImageType, DietWithFasting, MealType } from '../model/types';
+import { DietImageType } from '../model/types';
 
 type ContextType = ReturnType<typeof useDiet> | null;
 
