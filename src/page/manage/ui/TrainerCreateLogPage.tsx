@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 
 import { useImages } from '@/entity/image';
 import { UnwrittenLesson, useCreateLogMutation, useLessonListQuery } from '@/feature/log';
-import { IconBack } from '@/shared/assets';
+import { IconBack, IconCloseBlack } from '@/shared/assets';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import { useShowErrorToast } from '@/shared/hooks';
@@ -48,7 +48,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
   const [selectLessonMode, setSelectLessonMode] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState<UnwrittenLesson | null>();
   const [content, setContent] = useState('');
-  const { images, uploadFiles } = useImages({ maxCount: MAX_IMAGES_COUNT });
+  const { images, uploadFiles, updateImages } = useImages({ maxCount: MAX_IMAGES_COUNT });
 
   const { mutate } = useCreateLogMutation();
 
@@ -245,7 +245,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             )}
           </div>
         </div>
-        <div className='mt-10 flex gap-2'>
+        <div className='mt-10 flex gap-3'>
           <div>
             <Input
               id='image-input'
@@ -267,7 +267,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             </label>
           </div>
           {images.map((image, index) => (
-            <div key={index} className='overflow-hidden'>
+            <div key={index} className='relative'>
               <Image
                 src={image.fileUrl}
                 width={60}
@@ -275,6 +275,11 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
                 alt='staged image'
                 className='rounded-sm'
               />
+              <button
+                className='absolute -right-3 -top-3 z-10'
+                onClick={() => updateImages(images.filter((item, idx) => index !== idx))}>
+                <IconCloseBlack />
+              </button>
             </div>
           ))}
         </div>

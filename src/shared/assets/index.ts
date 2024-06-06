@@ -26,6 +26,7 @@ export { default as IconCheck } from './images/check.svg';
 export { default as IconCheckCircle } from './images/check_circle.svg';
 export { default as IconClassLog } from './images/class_log.svg';
 export { default as IconClose } from './images/close.svg';
+export { default as IconCloseBlack } from './images/close_black.svg';
 export { default as IconCommunityFilled } from './images/community_filled.svg';
 export { default as IconCommunityOutlined } from './images/community_outlined.svg';
 export { default as IconDelete } from './images/delete.svg';
