@@ -32,9 +32,9 @@ interface SelectImageProps {
 const TakePhoto = ({ type, setIsSheetOpen }: SelectImageProps) => {
   const { uploadFiles } = useDietContext();
   return (
-    <label htmlFor={`new-${type}-image-input`} className='cursor-pointer'>
+    <label htmlFor={`new-${type}-camera-input`} className='cursor-pointer'>
       <Input
-        id={`new-${type}-image-input`}
+        id={`new-${type}-camera-input`}
         type='file'
         className='hidden'
         accept='image/*'
@@ -55,13 +55,12 @@ const TakePhoto = ({ type, setIsSheetOpen }: SelectImageProps) => {
 const SelectAlbum = ({ type, setIsSheetOpen }: SelectImageProps) => {
   const { uploadFiles } = useDietContext();
   return (
-    <label htmlFor={`new-${type}-image-input`} className='cursor-pointer'>
+    <label htmlFor={`new-${type}-album-input`} className='cursor-pointer'>
       <Input
-        id={`new-${type}-image-input`}
+        id={`new-${type}-album-input`}
         type='file'
         className='hidden'
         accept='image/*'
-        capture='user'
         onChange={(e) => {
           uploadFiles(e, type);
           setIsSheetOpen(false);
