@@ -72,8 +72,6 @@ const TrainerScheduleSettingPage = () => {
   const { data: classTimeData } = useGetTrainerClassTimeSettingQuery();
   const { mutate } = useTrainerClassTimeSettingMutation();
 
-  console.log(classTimeData);
-
   //TODO:utils함수로 변경예정
   const formatTo24HourTime = (timeList: TimeListType) => {
     const isPM = timeList.timePeriods === '오후';

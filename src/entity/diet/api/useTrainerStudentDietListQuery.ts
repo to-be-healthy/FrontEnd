@@ -9,16 +9,21 @@ interface DietResponse extends Pageable {
   content: HomeDietData[];
 }
 interface DietRequest {
+  memberId: number;
   searchDate: string;
   size: number;
 }
 
-export const useDietListQuery = ({ searchDate, size }: DietRequest) => {
+export const useTrainerStudentDietListQuery = ({
+  memberId,
+  searchDate,
+  size,
+}: DietRequest) => {
   return useInfiniteQuery<DietResponse, BaseError>({
-    queryKey: ['dietList', { searchDate }],
+    queryKey: ['trainerStudentdietList', { searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<DietResponse>>(
-        `/api/members/v1/me/diets?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
+        `/api/members/v1/${memberId}/diets?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
       );
       return res.data.data;
     },

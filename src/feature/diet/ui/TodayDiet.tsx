@@ -3,7 +3,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { ChangeEvent, useState } from 'react';
 
-import { useDietUploadImageMutation, useRegisterHomeDietMutation } from '@/entity/diet';
+import {
+  DietWithFasting,
+  MealType,
+  useDietUploadImageMutation,
+  useRegisterHomeDietMutation,
+} from '@/entity/diet';
 import {
   IconAlbum,
   IconCameraUpload,
@@ -23,8 +28,6 @@ import {
   SheetTrigger,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
-
-import { DietWithFasting, MealType } from '../model/types';
 
 interface SelectImageProps {
   type: MealType;
