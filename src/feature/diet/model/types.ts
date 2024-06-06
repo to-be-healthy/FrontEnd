@@ -1,6 +1,6 @@
+import { MealType } from '@/entity/diet';
 import { Pageable } from '@/shared/api';
 
-type MealType = 'breakfast' | 'lunch' | 'dinner';
 interface DietImageData {
   fast: boolean;
   fileOrder: number;
@@ -13,17 +13,6 @@ interface DietImageType {
   fileOrder: number;
   type: MealType;
   fast: boolean;
-}
-
-interface DietWithFasting {
-  fast: boolean;
-  type: MealType;
-  dietFile: null | {
-    id: number;
-    dietId: number;
-    fileUrl: string;
-    type: string;
-  };
 }
 
 interface ContentType {
@@ -47,11 +36,4 @@ interface Comment extends Pageable {
   mainData: null;
 }
 
-export type {
-  Comment,
-  ContentType,
-  DietImageData,
-  DietImageType,
-  DietWithFasting,
-  MealType,
-};
+export type { Comment, ContentType, DietImageData, DietImageType };

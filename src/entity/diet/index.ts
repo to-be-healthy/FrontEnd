@@ -13,4 +13,12 @@ export { useRegisterDietMutation } from './api/useRegisterDietMutation';
 export { useRegisterHomeDietMutation } from './api/useRegisterHomeDietMutation';
 export { useStudentCalendarMyDietListQuery } from './api/useStudentCalendarMyDietListQuery';
 export { useStudentDietDetailQuery } from './api/useStudentDietDetailQuery';
-export type { DailyDiet, Diet, RegisterAndEditDiet } from './model/types';
+export { useTrainerStudentDietListQuery } from './api/useTrainerStudentDietListQuery';
+export type {
+  DailyDiet,
+  Diet,
+  DietWithFasting,
+  HomeDietData,
+  MealType,
+  RegisterAndEditDiet,
+} from './model/types';

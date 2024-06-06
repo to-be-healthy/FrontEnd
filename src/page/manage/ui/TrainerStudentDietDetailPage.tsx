@@ -1,16 +1,14 @@
 'use client';
 /* eslint-disable @next/next/no-img-element */
 import { DialogTrigger } from '@radix-ui/react-dialog';
-import { DropdownMenuTrigger } from '@radix-ui/react-dropdown-menu';
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useRef, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useRef } from 'react';
 
 import {
   MealType,
-  useDeleteDietMutation,
   useDietCancelLikeMutation,
   useDietCommentListQuery,
   useDietLikeMutation,
@@ -26,21 +24,12 @@ import {
   IconArrowLeft,
   IconChat,
   IconCheck,
-  IconEdit,
-  IconKebabMenu,
   IconLike,
-  IconTrash,
   IconWhiteClose,
 } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogFooter,
-  AlertDialogHeader,
   Button,
   Card,
   CardContent,
@@ -48,20 +37,12 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const dietDay: MealType[] = ['breakfast', 'lunch', 'dinner'];
 
-interface Props {
-  dietId: number;
-}
 const ITEMS_PER_PAGE = 20;
 
 const dietText = {
@@ -70,21 +51,20 @@ const dietText = {
   dinner: '저녁',
 };
 
-export const StudentDietDetailPage = ({ dietId }: Props) => {
-  const [open, setOpen] = useState(false);
-
-  const router = useRouter();
+interface Props {
+  memberId: number;
+  dietId: number;
+}
+export const TrainerStudentDietDetailPage = ({ memberId, dietId }: Props) => {
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const month = searchParams.get('month');
-  const { toast } = useToast();
   const { showErrorToast } = useShowErrorToast();
 
   const { data: dietData } = useStudentDietDetailQuery(dietId);
   const { data: commentData } = useDietCommentListQuery({ dietId, size: ITEMS_PER_PAGE });
   const { mutate: likeMutate } = useDietLikeMutation();
   const { mutate: cancelLikeMutate } = useDietCancelLikeMutation();
-  const { mutate: deleteDietMutate } = useDeleteDietMutation();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const value = useDietComment({ dietId, ref: inputRef });
@@ -117,34 +97,13 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
     });
   };
 
-  const deleteDiet = (dietId: number) => {
-    deleteDietMutate(dietId, {
-      onSuccess: ({ message }) => {
-        router.push(`/student/diet?month=${month}`);
-        toast({
-          className: 'h-12',
-          description: (
-            <div className='flex items-center justify-center'>
-              <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-              <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
-            </div>
-          ),
-          duration: 2000,
-        });
-      },
-      onError: (error) => {
-        showErrorToast(error?.response?.data.message ?? 'error');
-      },
-    });
-  };
-
   return (
     <DietCommentContext.Provider value={value}>
       <Layout>
         {dietData && commentData && (
           <>
-            <Layout.Header>
-              <Link href={`/student/diet?month=${month}`}>
+            <Layout.Header className='justify-start'>
+              <Link href={`/trainer/manage/${memberId}/diet/list?month=${month}`}>
                 <IconArrowLeft stroke='black' />
               </Link>
               <h2
@@ -157,50 +116,6 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                   : `${dietDate.split(' ')[0]} ${dietDate.split(' ')[1]} `}
                 식단
               </h2>
-              <DropdownMenu>
-                <DropdownMenuTrigger
-                  className={cn(Typography.TITLE_1_SEMIBOLD, FLEX_CENTER, 'w-6')}>
-                  <IconKebabMenu />
-                </DropdownMenuTrigger>
-                <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
-                  <DropdownMenuGroup className='flex flex-col'>
-                    <DropdownMenuItem
-                      className='typography-title-3 flex items-center gap-[8px] px-[16px] py-[12px]'
-                      asChild>
-                      <Link href={`/student/diet/${dietId}/edit?month=${month}`}>
-                        <IconEdit />
-                        수정
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      className='typography-title-3 flex items-center gap-[8px] px-[16px] py-[12px] text-point'
-                      onClick={() => setOpen(true)}>
-                      <IconTrash />
-                      삭제
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <AlertDialog open={open} onOpenChange={setOpen}>
-                <AlertDialogContent className='space-y-[24px] px-7 py-11'>
-                  <AlertDialogHeader
-                    className={cn(Typography.TITLE_1_SEMIBOLD, 'mx-auto text-center')}>
-                    식단을 삭제하시겠습니까?
-                  </AlertDialogHeader>
-                  <AlertDialogFooter className='grid w-full grid-cols-2 items-center justify-center gap-3'>
-                    <AlertDialogCancel className='mt-0 h-[48px] rounded-md bg-gray-100 text-base font-normal text-gray-600'>
-                      취소
-                    </AlertDialogCancel>
-                    <AlertDialogAction
-                      asChild
-                      className='mt-0 h-[48px] rounded-md bg-point text-base font-normal text-[#fff]'>
-                      <Button variant='ghost' onClick={() => deleteDiet(dietId)}>
-                        삭제
-                      </Button>
-                    </AlertDialogAction>
-                  </AlertDialogFooter>
-                </AlertDialogContent>
-              </AlertDialog>
             </Layout.Header>
             <Layout.Contents>
               <div className='px-7 py-6'>
