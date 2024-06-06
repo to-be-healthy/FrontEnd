@@ -10,9 +10,8 @@ import {
   useRegisteredStudentsQuery,
 } from '@/feature/member';
 import { profileBorderStyleMapper } from '@/page/manage/utils';
-import { IconPlus } from '@/shared/assets';
+import { IconAlertCircle, IconPlus } from '@/shared/assets';
 import IconArrowDownUp from '@/shared/assets/images/icon_arrow_down_up.svg';
-import IconCircleAlert from '@/shared/assets/images/icon_circle_alert.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile_small.svg';
 import IconSearch from '@/shared/assets/images/icon_search.svg';
 import { Typography } from '@/shared/mixin';
@@ -134,7 +133,7 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
           {studentList === null && (
             <div className='mb-[30%] flex h-full flex-col items-center justify-center gap-y-11'>
               <div className='flex flex-col items-center gap-y-[12px]'>
-                <IconCircleAlert />
+                <IconAlertCircle />
                 <p className={cn(Typography.TITLE_1_BOLD, 'text-gray-700')}>
                   등록된 회원이 없습니다.
                 </p>
@@ -156,7 +155,7 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
             <div className='mb-[30%] flex h-full flex-col items-center justify-center'>
               <div className='flex flex-col items-center gap-y-[36px]'>
                 <div className='flex flex-col items-center gap-y-[12px]'>
-                  <IconCircleAlert />
+                  <IconAlertCircle />
                   <p className={cn(Typography.TITLE_1_BOLD, 'text-gray-500')}>
                     검색 결과가 없습니다.
                   </p>

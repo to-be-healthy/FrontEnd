@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { ChangeEvent, useState } from 'react';
 
 import { Member, useNotRegisteredStudentsQuery } from '@/feature/member';
-import IconCircleAlert from '@/shared/assets/images/icon_circle_alert.svg';
+import { IconAlertCircle } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import IconSearch from '@/shared/assets/images/icon_search.svg';
 import { Typography } from '@/shared/mixin';
@@ -69,7 +69,7 @@ export const NotRegisteredStudentListPage = () => {
             <div className='mb-[30%] flex h-full flex-col items-center justify-center'>
               <div className='flex flex-col items-center gap-y-[36px]'>
                 <div className='flex flex-col items-center gap-y-[12px]'>
-                  <IconCircleAlert />
+                  <IconAlertCircle />
                   <p className='text-[16px]/[130%] font-bold text-gray-500'>
                     {data === null ? '등록된 회원이 없습니다.' : '검색 결과가 없습니다.'}
                   </p>

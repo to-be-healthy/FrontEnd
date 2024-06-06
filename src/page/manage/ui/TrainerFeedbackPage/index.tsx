@@ -30,7 +30,7 @@ const TrainerFeedbackPage = () => {
   const setQueryString = (key: string, value: string) => {
     const params = new URLSearchParams(searchParams);
     params.set(key, value);
-    router.push(`?${params.toString()}`);
+    router.replace(`?${params.toString()}`);
   };
 
   return (
@@ -97,16 +97,16 @@ const TrainerFeedbackPage = () => {
           </div>
         </div>
         <Tabs
-          className='hide-scrollbar h-full gap-0 overflow-y-auto px-7 pb-0 pt-6'
+          className='hide-scrollbar h-full gap-0 overflow-y-auto pb-0 pt-6'
           defaultValue='lesson'>
           <TabsList>
             <TabsTrigger value='lesson'>수업</TabsTrigger>
             <TabsTrigger value='diet'>식단</TabsTrigger>
           </TabsList>
-          <TabsContent value='lesson' className='mt-0 '>
+          <TabsContent value='lesson' className='mt-0 px-7'>
             <LessonFeedbackList lessonDate={date} />
           </TabsContent>
-          <TabsContent value='diet'>
+          <TabsContent value='diet' className='mt-0 px-7'>
             <DietFeedbackList />
           </TabsContent>
         </Tabs>
