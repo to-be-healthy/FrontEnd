@@ -61,7 +61,6 @@ const SelectAlbum = ({ type, setIsSheetOpen }: SelectImageProps) => {
         type='file'
         className='hidden'
         accept='image/*'
-        capture='user'
         onChange={(e) => {
           uploadFiles(e, type);
           setIsSheetOpen(false);
