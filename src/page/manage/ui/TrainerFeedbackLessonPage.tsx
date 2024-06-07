@@ -10,7 +10,7 @@ const TrainerFeedbackLessonPage = () => {
   if (!scheduleId) {
     throw new Error();
   }
-  console.log(scheduleId);
+
   return (
     <Layout>
       <Layout.Header></Layout.Header>

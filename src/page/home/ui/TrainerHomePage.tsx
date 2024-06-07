@@ -33,7 +33,7 @@ export const TrainerHomePage = () => {
   const { mutate } = useAddStudentCourseMutation();
   const { data: userInfo } = useMyInfoQuery();
   const { data: homeInfo } = useTrainerHomeQuery();
-  console.log(homeInfo);
+
   const addCourse = ({ courseId, memberId }: { courseId: number; memberId: number }) => {
     mutate(
       {
@@ -85,7 +85,6 @@ export const TrainerHomePage = () => {
               <div className='hide-scrollbar z-10 overflow-x-auto'>
                 <div className='flex w-fit gap-0 px-7'>
                   {homeInfo?.todaySchedule.before.map((item) => {
-                    console.log(item.applicantName);
                     return (
                       <Link
                         href={`/trainer/manage/${item.applicantId}`}

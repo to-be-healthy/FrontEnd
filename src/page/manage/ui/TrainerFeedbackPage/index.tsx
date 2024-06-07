@@ -6,9 +6,10 @@ import weekOfYear from 'dayjs/plugin/weekOfYear';
 dayjs.extend(isBetween);
 dayjs.extend(weekOfYear);
 
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
 import { IconArrowLeft, IconArrowRight, IconBack } from '@/shared/assets';
+import { useQueryString } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { Calendar, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 import { cn, getStartOfWeek } from '@/shared/utils';
@@ -18,19 +19,12 @@ import { DietFeedbackList } from './DietFeedbackList';
 import { LessonFeedbackList } from './LessonFeedbackList';
 
 const TrainerFeedbackPage = () => {
-  const searchParams = useSearchParams();
-  const date = searchParams?.get('date') ?? dayjs().format('YYYY-MM-DD');
   const router = useRouter();
+  const { getQueryString, setQueryString } = useQueryString();
+  const date = getQueryString('date') ?? dayjs().format('YYYY-MM-DD');
 
   const changeDate = (date: Date | string) => {
     setQueryString('date', dayjs(date).format('YYYY-MM-DD'));
-  };
-
-  // TODO) utils로 옮기기? 쿼리스트링 관리 hook 만들기?
-  const setQueryString = (key: string, value: string) => {
-    const params = new URLSearchParams(searchParams);
-    params.set(key, value);
-    router.replace(`?${params.toString()}`);
   };
 
   return (
