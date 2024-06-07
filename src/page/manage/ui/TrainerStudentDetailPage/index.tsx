@@ -368,8 +368,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                 </Card>
               </Link>
             )}
-
-            <Link href='#'>
+            <Link href={`/trainer/manage/${memberId}/workout`}>
               <Card className='w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
                 <CardHeader className='flex items-center justify-between'>
                   <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>

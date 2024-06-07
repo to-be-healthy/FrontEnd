@@ -1,4 +1,4 @@
-import { SocialProvider } from '@/entity/auth';
+import { SocialType } from '@/entity/auth';
 import { HomeDietData } from '@/entity/diet';
 import { Gym } from '@/entity/gym';
 import { Pageable } from '@/shared/api';
@@ -45,7 +45,7 @@ interface Member {
   scheduleNoticeStatus: 'ENABLED' | 'DISABLE';
   communityAlarmStatus: 'ENABLED' | 'DISABLE';
   gym: Gym;
-  socialType: 'NONE' | Uppercase<SocialProvider>;
+  socialType: SocialType;
 }
 
 interface StudentDetail {

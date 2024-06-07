@@ -54,7 +54,7 @@ const Header = ({ children, className, ...props }: HTMLAttributes<HTMLDivElement
 Header.displayName = 'Header';
 
 const Contents = ({ children, className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <main className={cn('h-full w-full flex-grow overflow-y-auto', className)} {...props}>
+  <main className={cn('h-full w-full flex-1 overflow-y-auto', className)} {...props}>
     {children}
   </main>
 );
