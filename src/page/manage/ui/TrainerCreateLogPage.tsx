@@ -1,12 +1,12 @@
 'use client';
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { useImages } from '@/entity/image';
 import { UnwrittenLesson, useCreateLogMutation, useLessonListQuery } from '@/feature/log';
-import { IconBack } from '@/shared/assets';
+import { IconBack, IconCloseBlack } from '@/shared/assets';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import { useShowErrorToast } from '@/shared/hooks';
@@ -36,7 +36,11 @@ const MAX_IMAGES_COUNT = 3;
 const TrainerCreateLogPage = ({ memberId }: Props) => {
   const router = useRouter();
   const { showErrorToast } = useShowErrorToast();
-  const { data } = useLessonListQuery();
+  const searchParams = useSearchParams();
+  const name = searchParams.get('name');
+  const lessonDate = searchParams.get('lessonDate');
+  const scheduleId = searchParams.get('scheduleId');
+  const { data } = useLessonListQuery({ studentId: memberId, lessonDate });
   const unwrittenLessonList = data
     ? data.filter((item) => item.reviewStatus === '미작성')
     : null;
@@ -44,7 +48,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
   const [selectLessonMode, setSelectLessonMode] = useState(false);
   const [selectedLesson, setSelectedLesson] = useState<UnwrittenLesson | null>();
   const [content, setContent] = useState('');
-  const { images, uploadFiles } = useImages({ maxCount: MAX_IMAGES_COUNT });
+  const { images, uploadFiles, updateImages } = useImages({ maxCount: MAX_IMAGES_COUNT });
 
   const { mutate } = useCreateLogMutation();
 
@@ -86,7 +90,10 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
     }
 
     if (unwrittenLessonList && unwrittenLessonList.length > 0) {
-      setSelectedLesson(unwrittenLessonList[0]);
+      const index = scheduleId
+        ? unwrittenLessonList.findIndex((item) => item.scheduleId === Number(scheduleId))
+        : 0;
+      setSelectedLesson(unwrittenLessonList[index]);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -183,7 +190,9 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-        <p className='typography-heading-4 flex h-full items-center'>수업 일지 작성</p>
+        <p className='typography-heading-4 flex h-full items-center'>
+          {`${name ? `${name}님 ` : ''}`}수업일지 작성
+        </p>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
       </Layout.Header>
       <Layout.Contents className='p-[20px]'>
@@ -236,7 +245,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             )}
           </div>
         </div>
-        <div className='mt-10 flex gap-2'>
+        <div className='mt-10 flex gap-3'>
           <div>
             <Input
               id='image-input'
@@ -258,7 +267,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             </label>
           </div>
           {images.map((image, index) => (
-            <div key={index} className='overflow-hidden'>
+            <div key={index} className='relative'>
               <Image
                 src={image.fileUrl}
                 width={60}
@@ -266,6 +275,11 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
                 alt='staged image'
                 className='rounded-sm'
               />
+              <button
+                className='absolute -right-3 -top-3 z-10'
+                onClick={() => updateImages(images.filter((item, idx) => index !== idx))}>
+                <IconCloseBlack />
+              </button>
             </div>
           ))}
         </div>

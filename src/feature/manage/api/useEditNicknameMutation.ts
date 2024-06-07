@@ -12,7 +12,8 @@ export const useEditNicknameMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, EditNicknameRequest>({
     mutationFn: async ({ studentId, nickname }) => {
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/members/v1/nickname/${studentId}?nickname=${nickname}`
+        `/api/members/v1/nickname/${studentId}`,
+        { nickname }
       );
       return result.data;
     },

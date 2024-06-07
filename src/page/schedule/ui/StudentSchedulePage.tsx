@@ -157,7 +157,7 @@ export const StudentSchedulePage = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value='classReservation' className='mt-0'>
-            <article className='calendar-shadow rounded-bl-lg rounded-br-lg bg-[#fff]'>
+            <article className='calendar-shadow rounded-bl-lg rounded-br-lg bg-white'>
               {scheduleListData?.scheduleNoticeStatus === 'ENABLED' && (
                 <div className='flex items-center justify-between bg-blue-50 px-7 py-5'>
                   <div className='flex items-center justify-center'>

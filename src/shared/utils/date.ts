@@ -1,6 +1,6 @@
 import dayjs from 'dayjs';
 
-const getStartOfWeek = (date?: Date) => {
+const getStartOfWeek = (date?: Date | string) => {
   return dayjs(date).subtract(1, 'days').startOf('week').add(1, 'days').toDate();
 };
 

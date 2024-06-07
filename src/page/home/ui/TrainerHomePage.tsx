@@ -112,7 +112,7 @@ export const TrainerHomePage = () => {
                         <div
                           className={cn(
                             FLEX_CENTER,
-                            'h-[100px] w-[100px] flex-col gap-1 rounded-md border border-gray-200 bg-white p-8 shadow-sm'
+                            'mr-4 h-[100px] w-[100px] flex-col gap-4 rounded-md border border-gray-200 bg-white p-8 shadow-sm'
                           )}>
                           <span className={cn(Typography.BODY_2, 'text-gray-500')}>
                             {item.lessonStartTime}
