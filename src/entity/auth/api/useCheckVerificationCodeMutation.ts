@@ -9,9 +9,10 @@ interface CheckVerificationCodeRequest {
 
 export const useCheckVerificationCodeMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, CheckVerificationCodeRequest>({
-    mutationFn: async (params) => {
+    mutationFn: async (payload) => {
       const result = await api.post<BaseResponse<boolean>>(
-        `/api/auth/v1/validation/confirm-email?email=${params.email}&&emailKey=${params.emailKey}`
+        `/api/auth/v1/validation/confirm-email`,
+        payload
       );
       return result.data;
     },
