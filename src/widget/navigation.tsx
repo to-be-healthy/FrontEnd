@@ -112,7 +112,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
       } else {
         showErrorToast('트레이너가 지정된 후에 예약 가능합니다');
       }
-    } catch (error: any) {
+    } catch (error) {
       showErrorToast('트레이너가 지정된 후에 예약 가능합니다');
     }
   };
