@@ -12,9 +12,10 @@ interface RegisterGymRequest {
 export const useRegisterGymMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, RegisterGymRequest>({
     mutationFn: async ({ gymId, memberType, joinCode }) => {
-      const queryParams = memberType === 'TRAINER' ? `?joinCode=${joinCode}` : '';
+      const payload = memberType === 'TRAINER' ? { joinCode } : undefined;
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/gyms/v1/${gymId}${queryParams}`
+        `/api/gyms/v1/${gymId}`,
+        payload
       );
       return result.data;
     },

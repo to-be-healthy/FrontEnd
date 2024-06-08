@@ -53,9 +53,10 @@ authApi.interceptors.response.use(
 );
 
 const requestRefreshToken = async (userId: string, refreshToken: string) => {
-  const result = await api.post<BaseResponse<UserInfo>>(
-    `/api/auth/v1/refresh-token?userId=${userId}&refreshToken=${refreshToken}`
-  );
+  const result = await api.post<BaseResponse<UserInfo>>(`/api/auth/v1/refresh-token`, {
+    userId,
+    refreshToken,
+  });
   return result.data;
 };
 

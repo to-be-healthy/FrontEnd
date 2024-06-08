@@ -34,6 +34,7 @@ import {
 import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
+  Button,
   Card,
   CardContent,
   CardHeader,
@@ -49,6 +50,7 @@ const FEEDBACK_COUNT = 1;
 export const StudentHomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { data, isPending } = useStudentHomeDataQuery();
+  const [token, setToken] = useState('');
   const month = dayjs(new Date()).format('YYYY-MM');
   const { showErrorToast } = useShowErrorToast();
 
@@ -71,7 +73,7 @@ export const StudentHomePage = () => {
         vapidKey: process.env.VAPIDKEY,
         serviceWorkerRegistration: registration,
       });
-
+      setToken(currentToken);
       if (currentToken) {
         mutate(currentToken, {
           onSuccess: () => {
@@ -104,12 +106,6 @@ export const StudentHomePage = () => {
     if (permission !== 'granted') {
       alert('알림을 허용해 주세요.');
       return;
-    } else {
-      navigator.serviceWorker.ready.then((registration) => {
-        registration.showNotification('Vibration Sample', {
-          body: '알림설정 완료',
-        });
-      });
     }
 
     if (!localStorage.getItem('serviceWorkerRegistration')) {
@@ -126,7 +122,17 @@ export const StudentHomePage = () => {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     onMessageFCM();
+
+    const data = localStorage.getItem('serviceWorkerRegistration');
+    if (data) {
+      setToken(data);
+    }
   }, []);
+
+  const copyFCMToken = async () => {
+    if (window === undefined) return;
+    await navigator.clipboard.writeText(token);
+  };
 
   return (
     <Layout type='student'>
@@ -141,6 +147,9 @@ export const StudentHomePage = () => {
           <span>로딩중...</span>
         ) : (
           <>
+            <Button variant='secondary' className='my-3' onClick={copyFCMToken}>
+              FCM 토큰 복사하기
+            </Button>
             <article className='mb-7'>
               {/* 수강권 있을때 */}
               {data?.course && (
