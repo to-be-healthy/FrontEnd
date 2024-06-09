@@ -7,18 +7,19 @@ import { HomeDietData } from '../model/types';
 
 interface DietResponse extends Pageable {
   content: HomeDietData[];
+  mainData: null;
 }
 interface DietRequest {
   searchDate: string;
   size: number;
 }
 
-export const useDietListQuery = ({ searchDate, size }: DietRequest) => {
+export const useStudentFeedbackDietListQuery = ({ searchDate, size }: DietRequest) => {
   return useInfiniteQuery<DietResponse, BaseError>({
-    queryKey: ['dietList', { searchDate }],
+    queryKey: ['trainerStudentFeedbackDietList', { searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<DietResponse>>(
-        `/api/members/v1/me/diets?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
+        `/api/trainers/v1/diets?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
       );
       return res.data.data;
     },

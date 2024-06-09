@@ -1,39 +1,30 @@
-/* eslint-disable @next/next/no-img-element */
 'use client';
 
-import 'dayjs/locale/ko';
-
-import dayjs from 'dayjs';
-dayjs.locale('ko');
+/* eslint-disable @next/next/no-img-element */
 import { useQueryClient } from '@tanstack/react-query';
-import Link from 'next/link';
+import dayjs from 'dayjs';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { useAuthSelector } from '@/entity/auth';
-import { MealType, useDietListQuery } from '@/entity/diet';
+import { MealType, useTrainerStudentDietListQuery } from '@/entity/diet';
 import {
   IconArrowLeft,
   IconChat,
   IconCheck,
   IconLike,
   IconNotification,
-  IconPlus,
 } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
-interface NoDietProps {
-  index: number;
-}
+import { useStudentInfo } from '../hooks/useStudentInfo';
 
-const NoDiet = ({ index }: NoDietProps) => {
+const NoDiet = () => {
   return (
     <li
-      key={`diet_${index}`}
       className={cn(
         Typography.TITLE_1_BOLD,
         'flex flex-col items-center justify-center py-28 text-gray-700'
@@ -46,24 +37,29 @@ const NoDiet = ({ index }: NoDietProps) => {
   );
 };
 
-const dietDay: MealType[] = ['breakfast', 'lunch', 'dinner'];
+interface Props {
+  memberId: number;
+}
 
 const ITEMS_PER_PAGE = 10;
+const dietDay: MealType[] = ['breakfast', 'lunch', 'dinner'];
 
-export const StudentDietListPage = () => {
+export const TrainerStudentDietListPage = ({ memberId }: Props) => {
   const today = new Date();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const month = searchParams.get('month');
-  const queryClient = useQueryClient();
-  const router = useRouter();
-  const { name } = useAuthSelector(['name']);
+  const name = searchParams.get('name');
+  const { memberInfo } = useStudentInfo(memberId);
 
   const [selectedMonth, setSelectedMonth] = useState<Date>(dayjs(month).toDate());
   const [ref, inView] = useInView({
     threshold: 0.5,
   });
 
-  const { data, hasNextPage, fetchNextPage, isPending } = useDietListQuery({
+  const { data, hasNextPage, fetchNextPage, isPending } = useTrainerStudentDietListQuery({
+    memberId,
     searchDate: dayjs(selectedMonth).format('YYYY-MM'),
     size: ITEMS_PER_PAGE,
   });
@@ -71,11 +67,23 @@ export const StudentDietListPage = () => {
   const onChangeMonth = (month: Date) => {
     setSelectedMonth(month);
     const formattedMonth = dayjs(month).format('YYYY-MM');
-    router.push(`/student/diet?month=${formattedMonth}`);
+    if (name) {
+      router.push(
+        `/trainer/manage/${memberId}/diet?month=${formattedMonth}&name=${name}`
+      );
+    } else {
+      router.push(`/trainer/manage/${memberId}/diet?month=${formattedMonth}`);
+    }
   };
 
   const onClickDiet = (dietId: number) => {
-    router.push(`/student/diet/${dietId}?month=${month}`);
+    if (name) {
+      router.push(
+        `/trainer/manage/${memberId}/diet/${dietId}?month=${month}&name=${name}`
+      );
+    } else {
+      router.push(`/trainer/manage/${memberId}/diet/${dietId}?month=${month}`);
+    }
   };
 
   useEffect(() => {
@@ -101,21 +109,19 @@ export const StudentDietListPage = () => {
   return isPending ? (
     <div>로딩중...</div>
   ) : (
-    <Layout type='student'>
-      <Layout.Header className='bg-gray-100'>
-        <Link href='/student'>
+    <Layout type='trainer'>
+      <Layout.Header className='justify-start'>
+        <button onClick={() => router.back()}>
           <IconArrowLeft stroke='black' />
-        </Link>
+        </button>
+
         <h2
           className={cn(
             Typography.HEADING_4_SEMIBOLD,
             'absolute left-1/2 translate-x-[-50%] text-[$000]'
           )}>
-          {name}님 식단
+          {name ? name : memberInfo?.name}님 식단
         </h2>
-        <Link href='/student/diet/register'>
-          <IconPlus width={20} height={20} />
-        </Link>
       </Layout.Header>
       <Layout.Contents className='bg-gray-100'>
         <article className='bg-gray-100 px-7 pb-[52px] pt-7'>
@@ -131,7 +137,7 @@ export const StudentDietListPage = () => {
           <ul>
             {data?.pages.map((item, index) => {
               if (item.content === null || item.content.length === 0) {
-                return <NoDiet key={`diet_${index}`} index={index} />;
+                return <NoDiet key={`diet_${index}`} />;
               }
 
               return item.content.map((diet) => {
@@ -230,7 +236,7 @@ export const StudentDietListPage = () => {
           </ul>
 
           {!data?.pages[data?.pages.length - 1].isLast && hasNextPage && (
-            <div ref={ref} className='h-[20px] p-3 text-center'>
+            <div ref={ref} className='h-7 p-3 text-center'>
               loading...
             </div>
           )}

@@ -3,7 +3,12 @@ import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { ChangeEvent, useState } from 'react';
 
-import { useDietUploadImageMutation, useRegisterHomeDietMutation } from '@/entity/diet';
+import {
+  DietWithFasting,
+  MealType,
+  useDietUploadImageMutation,
+  useRegisterHomeDietMutation,
+} from '@/entity/diet';
 import {
   IconAlbum,
   IconCameraUpload,
@@ -24,8 +29,6 @@ import {
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-import { DietWithFasting, MealType } from '../model/types';
-
 interface SelectImageProps {
   type: MealType;
   uploadFiles: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -33,9 +36,9 @@ interface SelectImageProps {
 
 const TakePhoto = ({ type, uploadFiles }: SelectImageProps) => {
   return (
-    <label htmlFor={`new-${type}-image-input`} className='cursor-pointer'>
+    <label htmlFor={`today-${type}-camera-input`} className='cursor-pointer'>
       <Input
-        id={`new-${type}-image-input`}
+        id={`today-${type}-camera-input`}
         type='file'
         className='hidden'
         accept='image/*'
@@ -52,9 +55,9 @@ const TakePhoto = ({ type, uploadFiles }: SelectImageProps) => {
 
 const SelectAlbum = ({ type, uploadFiles }: SelectImageProps) => {
   return (
-    <label htmlFor={`new-${type}-image-input`} className='cursor-pointer'>
+    <label htmlFor={`today-${type}-album-input`} className='cursor-pointer'>
       <Input
-        id={`new-${type}-image-input`}
+        id={`today-${type}-album-input`}
         type='file'
         className='hidden'
         accept='image/*'
@@ -183,6 +186,7 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
   return (
     <div className='flex w-[calc((100%-12px)/3)] items-center justify-center'>
       {/* 단식일때 */}
+
       {diet.fast && (
         <Sheet open={issheetOpen} onOpenChange={setIsSheetOpen}>
           <SheetTrigger className='flex h-[88px] w-full items-center justify-center rounded-md bg-gray-100 p-0'>

@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { useState } from 'react';
 
+import { MealType } from '@/entity/diet';
 import {
   IconAlbum,
   IconCameraUpload,
@@ -21,7 +22,7 @@ import {
 import { cn } from '@/shared/utils';
 
 import { useDietContext } from '../hooks/useDiet';
-import { DietImageType, MealType } from '../model/types';
+import { DietImageType } from '../model/types';
 
 interface SelectImageProps {
   type: MealType;
@@ -31,9 +32,9 @@ interface SelectImageProps {
 const TakePhoto = ({ type, setIsSheetOpen }: SelectImageProps) => {
   const { uploadFiles } = useDietContext();
   return (
-    <label htmlFor={`new-${type}-image-input`} className='cursor-pointer'>
+    <label htmlFor={`new-${type}-camera-input`} className='cursor-pointer'>
       <Input
-        id={`new-${type}-image-input`}
+        id={`new-${type}-camera-input`}
         type='file'
         className='hidden'
         accept='image/*'
@@ -54,9 +55,9 @@ const TakePhoto = ({ type, setIsSheetOpen }: SelectImageProps) => {
 const SelectAlbum = ({ type, setIsSheetOpen }: SelectImageProps) => {
   const { uploadFiles } = useDietContext();
   return (
-    <label htmlFor={`new-${type}-image-input`} className='cursor-pointer'>
+    <label htmlFor={`new-${type}-album-input`} className='cursor-pointer'>
       <Input
-        id={`new-${type}-image-input`}
+        id={`new-${type}-album-input`}
         type='file'
         className='hidden'
         accept='image/*'

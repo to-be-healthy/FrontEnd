@@ -1,5 +1,50 @@
-interface DailyDiet {
+import { Gym } from '@/entity/gym';
+
+type MealType = 'breakfast' | 'lunch' | 'dinner';
+
+interface HomeDietData {
   dietId: number;
+  member: {
+    id: number;
+    userId: string;
+    email: string;
+    name: string;
+    age: number;
+    height: number;
+    weight: number;
+    delYn: boolean;
+    profile: null | { id: number; fileUrl: string };
+    memberType: 'STUDENT' | 'TRAINER';
+    pushAlarmStatus: null | 'ENABLED' | 'DISABLE';
+    feedbackAlarmStatus: null | 'ENABLED' | 'DISABLE';
+    gym: null | Gym;
+    socialType: ['NONE', 'KAKAO', 'NAVER', 'GOOGLE'];
+  };
+  eatDate: string;
+  likeCnt: number;
+  liked: boolean;
+  commentCnt: number;
+  feedbackChecked: boolean;
+  createdAt: string;
+  updatedAt: string;
+  breakfast: DietWithFasting;
+  lunch: DietWithFasting;
+  dinner: DietWithFasting;
+}
+
+interface DietWithFasting {
+  fast: boolean;
+  type: MealType;
+  dietFile: null | {
+    id: number;
+    dietId: number;
+    fileUrl: string;
+    type: string;
+  };
+}
+
+interface DailyDiet {
+  dietId: number | null;
   dietFiles: Diet[];
 }
 
@@ -22,4 +67,11 @@ interface RegisterAndEditDiet {
   dinnerFast: boolean;
   eatDate?: string;
 }
-export type { DailyDiet, Diet, RegisterAndEditDiet };
+export type {
+  DailyDiet,
+  Diet,
+  DietWithFasting,
+  HomeDietData,
+  MealType,
+  RegisterAndEditDiet,
+};
