@@ -97,11 +97,11 @@ const TrainerFeedbackPage = () => {
             <TabsTrigger value='lesson'>수업</TabsTrigger>
             <TabsTrigger value='diet'>식단</TabsTrigger>
           </TabsList>
-          <TabsContent value='lesson' className='mt-0 px-7'>
+          <TabsContent value='lesson' className='mt-0 px-7 py-6'>
             <LessonFeedbackList lessonDate={date} />
           </TabsContent>
-          <TabsContent value='diet' className='mt-0 px-7'>
-            <DietFeedbackList />
+          <TabsContent value='diet' className='mt-0 px-7 py-6'>
+            <DietFeedbackList dietDate={date} />
           </TabsContent>
         </Tabs>
       </Layout.Contents>

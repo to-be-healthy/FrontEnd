@@ -13,6 +13,7 @@ export { useRegisterDietMutation } from './api/useRegisterDietMutation';
 export { useRegisterHomeDietMutation } from './api/useRegisterHomeDietMutation';
 export { useStudentCalendarMyDietListQuery } from './api/useStudentCalendarMyDietListQuery';
 export { useStudentDietDetailQuery } from './api/useStudentDietDetailQuery';
+export { useStudentFeedbackDietListQuery } from './api/useStudentFeedbackDietListQuery';
 export { useTrainerStudentDietListQuery } from './api/useTrainerStudentDietListQuery';
 export type {
   DailyDiet,
