@@ -24,6 +24,7 @@ interface HomeDietData {
   likeCnt: number;
   liked: boolean;
   commentCnt: number;
+  feedbackChecked: boolean;
   createdAt: string;
   updatedAt: string;
   breakfast: DietWithFasting;

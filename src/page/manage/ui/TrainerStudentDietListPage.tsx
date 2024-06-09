@@ -3,12 +3,10 @@
 /* eslint-disable @next/next/no-img-element */
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { useAuthSelector } from '@/entity/auth';
 import { MealType, useTrainerStudentDietListQuery } from '@/entity/diet';
 import {
   IconArrowLeft,
@@ -21,6 +19,8 @@ import { Typography } from '@/shared/mixin';
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
+
+import { useStudentInfo } from '../hooks/useStudentInfo';
 
 interface NoDietProps {
   index: number;
@@ -51,11 +51,12 @@ const dietDay: MealType[] = ['breakfast', 'lunch', 'dinner'];
 
 export const TrainerStudentDietListPage = ({ memberId }: Props) => {
   const today = new Date();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const month = searchParams.get('month');
-  const queryClient = useQueryClient();
-  const router = useRouter();
-  const { name } = useAuthSelector(['name']);
+  const name = searchParams.get('name');
+  const { memberInfo } = useStudentInfo(memberId);
 
   const [selectedMonth, setSelectedMonth] = useState<Date>(dayjs(month).toDate());
   const [ref, inView] = useInView({
@@ -71,11 +72,23 @@ export const TrainerStudentDietListPage = ({ memberId }: Props) => {
   const onChangeMonth = (month: Date) => {
     setSelectedMonth(month);
     const formattedMonth = dayjs(month).format('YYYY-MM');
-    router.push(`/trainer/manage/${memberId}/diet/list?month=${formattedMonth}`);
+    if (name) {
+      router.push(
+        `/trainer/manage/${memberId}/diet/list?month=${formattedMonth}&name=${name}`
+      );
+    } else {
+      router.push(`/trainer/manage/${memberId}/diet/list?month=${formattedMonth}`);
+    }
   };
 
   const onClickDiet = (dietId: number) => {
-    router.push(`/trainer/manage/${memberId}/diet/${dietId}/detail?month=${month}`);
+    if (name) {
+      router.push(
+        `/trainer/manage/${memberId}/diet/${dietId}/detail?month=${month}&name=${name}`
+      );
+    } else {
+      router.push(`/trainer/manage/${memberId}/diet/${dietId}/detail?month=${month}`);
+    }
   };
 
   useEffect(() => {
@@ -103,15 +116,16 @@ export const TrainerStudentDietListPage = ({ memberId }: Props) => {
   ) : (
     <Layout type='trainer'>
       <Layout.Header className='justify-start'>
-        <Link href={`/trainer/manage/${memberId}`}>
+        <button onClick={() => router.back()}>
           <IconArrowLeft stroke='black' />
-        </Link>
+        </button>
+
         <h2
           className={cn(
             Typography.HEADING_4_SEMIBOLD,
             'absolute left-1/2 translate-x-[-50%] text-[$000]'
           )}>
-          {name}님 식단
+          {name ? name : memberInfo?.name}님 식단
         </h2>
       </Layout.Header>
       <Layout.Contents className='bg-gray-100'>

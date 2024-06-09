@@ -90,7 +90,7 @@ const CommentItem = ({
       }}
       modal={false}>
       <DropdownMenuTrigger asChild>
-        <li className={cn(active && 'bg-blue-10', className)} {...props}>
+        <li className={cn(active && 'bg-blue-10', className, 'px-6')} {...props}>
           <div className={cn('flex space-x-[6px] py-[10px]', depth !== 0 && 'ml-[47px]')}>
             <IconProfile width={24} height={24} />
             <div className='flex-col'>

@@ -359,26 +359,26 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
             )}
 
             {memberInfo.diet.dietId === null && (
-              <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
-                <CardHeader className='flex items-center justify-between text-gray-800'>
-                  <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>등록 식단</h4>
-                  <Link href='#'>
+              <Link href={`/trainer/manage/${memberId}/diet/list?month=${month}`}>
+                <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
+                  <CardHeader className='flex items-center justify-between text-gray-800'>
+                    <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>등록 식단</h4>
                     <IconArrowRight />
-                  </Link>
-                </CardHeader>
-              </Card>
+                  </CardHeader>
+                </Card>
+              </Link>
             )}
 
-            <Card className='w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
-              <CardHeader className='flex items-center justify-between'>
-                <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>
-                  개인 운동 기록
-                </h4>
-                <Link href='#'>
+            <Link href='#'>
+              <Card className='w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
+                <CardHeader className='flex items-center justify-between'>
+                  <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>
+                    개인 운동 기록
+                  </h4>
                   <IconArrowRight />
-                </Link>
-              </CardHeader>
-            </Card>
+                </CardHeader>
+              </Card>
+            </Link>
           </Layout.Contents>
         </>
       )}
