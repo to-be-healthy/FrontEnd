@@ -88,14 +88,14 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const value = useDietComment({ dietId, ref: inputRef });
-  const dietDate = dayjs(dietData?.eatDate).format('MM월 DD일 (dd)');
+  const dietValue = dayjs(dietData?.eatDate).format('MM월 DD일 (dd)');
   const todayValue = dayjs(new Date()).format('MM월 DD일 (dd)');
 
   const onClickLike = () => {
     likeMutate(dietId, {
       onSuccess: async () => {
         await queryClient.refetchQueries({
-          queryKey: ['studentDietDetail'],
+          queryKey: ['studentDietDetail', dietId],
         });
       },
       onError: (error) => {
@@ -152,9 +152,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                   Typography.HEADING_4_SEMIBOLD,
                   'absolute left-1/2 translate-x-[-50%] text-[$000]'
                 )}>
-                {dietDate === todayValue
-                  ? '오늘 '
-                  : `${dietDate.split(' ')[0]} ${dietDate.split(' ')[1]} `}
+                {dietValue === todayValue ? '오늘 ' : dayjs(dietValue).format('YYYY-MM')}
                 식단
               </h2>
               <DropdownMenu>
@@ -207,7 +205,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                 <Card className='w-full'>
                   <CardHeader
                     className={(Typography.TITLE_3, 'mb-4 text-left text-gray-600')}>
-                    {dietDate === todayValue ? '오늘' : dietDate}
+                    {dietValue === todayValue ? '오늘' : dietValue}
                   </CardHeader>
                   <CardContent>
                     <article className='mb-6 flex justify-between'>

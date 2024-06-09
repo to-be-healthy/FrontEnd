@@ -66,7 +66,7 @@ const DietFeedbackList = ({ dietDate }: { dietDate: string }) => {
               <li key={diet.dietId}>
                 <Link
                   href={{
-                    pathname: `/trainer/manage/${diet.member.id}/diet/${diet.dietId}/detail`,
+                    pathname: `/trainer/manage/${diet.member.id}/diet/${diet.dietId}`,
                     query: { month: month, name: diet.member.name },
                   }}>
                   <Card className='mb-5 w-full px-6 py-7'>

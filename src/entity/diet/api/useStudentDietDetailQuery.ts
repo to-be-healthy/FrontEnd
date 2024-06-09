@@ -7,7 +7,7 @@ import { HomeDietData } from '../model/types';
 
 export const useStudentDietDetailQuery = (dietId: number) => {
   return useQuery<HomeDietData, BaseError>({
-    queryKey: ['studentDietDetail'],
+    queryKey: ['studentDietDetail', dietId],
     queryFn: async () => {
       const result = await authApi.get<BaseResponse<HomeDietData>>(
         `/api/diets/v1/${dietId}`

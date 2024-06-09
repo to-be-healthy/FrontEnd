@@ -111,7 +111,7 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
             ),
             duration: 2000,
           });
-          router.push(`/student/diet/${dietId}/detail/?month=${month}`);
+          router.push(`/student/diet/${dietId}/?month=${month}`);
         },
         onError: (error) => {
           showErrorToast(error?.response?.data.message ?? '');

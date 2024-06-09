@@ -75,7 +75,7 @@ export const StudentDietListPage = () => {
   };
 
   const onClickDiet = (dietId: number) => {
-    router.push(`/student/diet/${dietId}/detail?month=${month}`);
+    router.push(`/student/diet/${dietId}?month=${month}`);
   };
 
   useEffect(() => {

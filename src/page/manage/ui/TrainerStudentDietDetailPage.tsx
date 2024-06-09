@@ -77,7 +77,7 @@ export const TrainerStudentDietDetailPage = ({ memberId, dietId }: Props) => {
     likeMutate(dietId, {
       onSuccess: async () => {
         await queryClient.refetchQueries({
-          queryKey: ['studentDietDetail'],
+          queryKey: ['studentDietDetail', dietId],
         });
       },
       onError: (error) => {
@@ -126,7 +126,7 @@ export const TrainerStudentDietDetailPage = ({ memberId, dietId }: Props) => {
                 {name && (
                   <Link
                     href={{
-                      pathname: `/trainer/manage/${memberId}/diet/list`,
+                      pathname: `/trainer/manage/${memberId}/diet`,
                       query: { month: month, name: name },
                     }}
                     className={cn(Typography.BODY_3, 'mb-5 block text-gray-600')}>

@@ -310,7 +310,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
               <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
                 <CardHeader className='mb-7 flex items-center justify-between text-gray-800'>
                   <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>오늘 식단</h4>
-                  <Link href={`/trainer/manage/${memberId}/diet/list?month=${month}`}>
+                  <Link href={`/trainer/manage/${memberId}/diet?month=${month}`}>
                     <p className={cn(Typography.BODY_3, 'text-gray-500')}>식단전체</p>
                   </Link>
                 </CardHeader>
@@ -359,7 +359,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
             )}
 
             {memberInfo.diet.dietId === null && (
-              <Link href={`/trainer/manage/${memberId}/diet/list?month=${month}`}>
+              <Link href={`/trainer/manage/${memberId}/diet?month=${month}`}>
                 <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
                   <CardHeader className='flex items-center justify-between text-gray-800'>
                     <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>등록 식단</h4>

@@ -22,14 +22,9 @@ import { Layout, MonthPicker } from '@/widget';
 
 import { useStudentInfo } from '../hooks/useStudentInfo';
 
-interface NoDietProps {
-  index: number;
-}
-
-const NoDiet = ({ index }: NoDietProps) => {
+const NoDiet = () => {
   return (
     <li
-      key={`diet_${index}`}
       className={cn(
         Typography.TITLE_1_BOLD,
         'flex flex-col items-center justify-center py-28 text-gray-700'
@@ -74,20 +69,20 @@ export const TrainerStudentDietListPage = ({ memberId }: Props) => {
     const formattedMonth = dayjs(month).format('YYYY-MM');
     if (name) {
       router.push(
-        `/trainer/manage/${memberId}/diet/list?month=${formattedMonth}&name=${name}`
+        `/trainer/manage/${memberId}/diet?month=${formattedMonth}&name=${name}`
       );
     } else {
-      router.push(`/trainer/manage/${memberId}/diet/list?month=${formattedMonth}`);
+      router.push(`/trainer/manage/${memberId}/diet?month=${formattedMonth}`);
     }
   };
 
   const onClickDiet = (dietId: number) => {
     if (name) {
       router.push(
-        `/trainer/manage/${memberId}/diet/${dietId}/detail?month=${month}&name=${name}`
+        `/trainer/manage/${memberId}/diet/${dietId}?month=${month}&name=${name}`
       );
     } else {
-      router.push(`/trainer/manage/${memberId}/diet/${dietId}/detail?month=${month}`);
+      router.push(`/trainer/manage/${memberId}/diet/${dietId}?month=${month}`);
     }
   };
 
@@ -142,7 +137,7 @@ export const TrainerStudentDietListPage = ({ memberId }: Props) => {
           <ul>
             {data?.pages.map((item, index) => {
               if (item.content === null || item.content.length === 0) {
-                return <NoDiet key={`diet_${index}`} index={index} />;
+                return <NoDiet key={`diet_${index}`} />;
               }
 
               return item.content.map((diet) => {
@@ -241,7 +236,7 @@ export const TrainerStudentDietListPage = ({ memberId }: Props) => {
           </ul>
 
           {!data?.pages[data?.pages.length - 1].isLast && hasNextPage && (
-            <div ref={ref} className='h-[20px] p-3 text-center'>
+            <div ref={ref} className='h-7 p-3 text-center'>
               loading...
             </div>
           )}
