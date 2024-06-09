@@ -19,7 +19,7 @@ export const StudentMyPage = () => {
     <Layout type='student'>
       <Layout.Header className='bg-white'></Layout.Header>
       <Layout.Contents>
-        <Link href={'/trainer/mypage/info'}>
+        <Link href={'/student/mypage/info'}>
           <article className='flex items-center justify-between bg-white px-7 pb-7 pt-6'>
             <div className='flex'>
               <IconAvatar width={82} height={82} />
@@ -56,7 +56,7 @@ export const StudentMyPage = () => {
         <ul>
           <li>
             <Link
-              href={'/trainer/mypage/alarm'}
+              href={'/student/mypage/alarm'}
               className='flex justify-between bg-white px-7 py-[15px]'>
               <p className={cn(Typography.BODY_1)}>지난 예약</p>
               <IconArrowRightSmall stroke={'var(--gray-400)'} />
@@ -64,7 +64,7 @@ export const StudentMyPage = () => {
           </li>
           <li>
             <Link
-              href={'/trainer/mypage/policy'}
+              href={'/student/mypage/policy'}
               className='flex justify-between bg-white px-7 py-[15px]'>
               <p className={cn(Typography.BODY_1)}>트레이너 정보</p>
               <IconArrowRightSmall stroke={'var(--gray-400)'} />
@@ -72,7 +72,7 @@ export const StudentMyPage = () => {
           </li>
           <li>
             <Link
-              href={'/trainer/mypage/policy'}
+              href={'/student/mypage/policy'}
               className='flex justify-between bg-white px-7 py-[15px]'>
               <p className={cn(Typography.BODY_1)}>랭킹</p>
               <IconArrowRightSmall stroke={'var(--gray-400)'} />
@@ -80,7 +80,7 @@ export const StudentMyPage = () => {
           </li>
           <li>
             <Link
-              href={'/trainer/mypage/policy'}
+              href={'/student/mypage/policy'}
               className='flex justify-between bg-white px-7 py-[15px]'>
               <p className={cn(Typography.BODY_1)}>알림 설정</p>
               <IconArrowRightSmall stroke={'var(--gray-400)'} />
@@ -88,7 +88,7 @@ export const StudentMyPage = () => {
           </li>
           <li>
             <Link
-              href={'/trainer/mypage/policy'}
+              href={'/student/mypage/policy'}
               className='flex justify-between bg-white px-7 py-[15px]'>
               <p className={cn(Typography.BODY_1)}>약관 및 정책</p>
               <IconArrowRightSmall stroke={'var(--gray-400)'} />
@@ -96,7 +96,7 @@ export const StudentMyPage = () => {
           </li>
           <li>
             <Link
-              href={'/trainer/mypage/cs'}
+              href={'/student/mypage/cs'}
               className='flex justify-between bg-white px-7 py-[15px]'>
               <p className={cn(Typography.BODY_1)}>고객센터</p>
               <IconArrowRightSmall stroke={'var(--gray-400)'} />
