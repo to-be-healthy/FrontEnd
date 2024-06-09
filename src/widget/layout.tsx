@@ -54,7 +54,9 @@ const Header = ({ children, className, ...props }: HTMLAttributes<HTMLDivElement
 Header.displayName = 'Header';
 
 const Contents = ({ children, className, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <main className={cn('h-full w-full flex-1 overflow-y-auto', className)} {...props}>
+  <main
+    className={cn('h-full w-full flex-1 flex-shrink-0 overflow-y-auto', className)}
+    {...props}>
     {children}
   </main>
 );
@@ -65,7 +67,7 @@ const BottomArea = ({
   className,
   ...props
 }: HTMLAttributes<HTMLDivElement>) => (
-  <footer className={cn('w-full p-[20px]', className)} {...props}>
+  <footer className={cn('w-full p-7', className)} {...props}>
     {children}
   </footer>
 );
