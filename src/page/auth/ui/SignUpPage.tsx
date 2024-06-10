@@ -29,7 +29,7 @@ const SignUpPage = () => {
   //뒤로가기 클릭시
   const clickBack = () => {
     if (step === 1) {
-      router.push(`/sign-in?type=${type}`);
+      router.back();
     } else if (step === 3) {
       setStep((prev) => prev - 1);
       setIsEmailVerified(false);
@@ -74,7 +74,7 @@ const SignUpPage = () => {
         <Button className='bg-transparent p-0' onClick={clickBack}>
           <BackIcon />
         </Button>
-        <h2 className={cn(Typography.HEADING_4, 'font-semibold')}>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD)}>
           {type === 'trainer' && '트레이너'} 회원가입
         </h2>
         <SignUpCancelDialog type={type} />

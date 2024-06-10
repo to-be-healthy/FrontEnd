@@ -111,10 +111,7 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
           <Button
             asChild
             variant='link'
-            className={cn(
-              Typography.TITLE_3,
-              'mt-5 font-semibold text-gray-500 hover:no-underline'
-            )}>
+            className={cn(Typography.TITLE_3, 'mt-5 text-gray-500 hover:no-underline')}>
             <Link href={`/sign-in?type=${memberType}`}>아이디 로그인</Link>
           </Button>
           <p className='w-2/3 break-keep pt-[32px] text-center text-[11px] font-normal text-gray-400'>

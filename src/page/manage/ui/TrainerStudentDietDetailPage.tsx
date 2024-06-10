@@ -112,7 +112,7 @@ export const TrainerStudentDietDetailPage = ({ memberId, dietId }: Props) => {
               <h2
                 className={cn(
                   Typography.HEADING_4_SEMIBOLD,
-                  'absolute left-1/2 translate-x-[-50%] text-[$000]'
+                  'absolute left-1/2 translate-x-[-50%] text-black'
                 )}>
                 {name
                   ? `${name}님 식단`
