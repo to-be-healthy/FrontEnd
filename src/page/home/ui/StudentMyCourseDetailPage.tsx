@@ -57,7 +57,7 @@ export const StudentMyCourseDetailPage = () => {
         <h2
           className={cn(
             Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 translate-x-[-50%] text-[$000]'
+            'absolute left-1/2 translate-x-[-50%] text-black'
           )}>
           내 수강권
         </h2>

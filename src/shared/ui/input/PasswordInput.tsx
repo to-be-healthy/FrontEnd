@@ -5,8 +5,9 @@ import { FormEvent, forwardRef, InputHTMLAttributes, useState } from 'react';
 import HidePasswordIcon from '@/shared/assets/images/icon_hide_password.svg';
 import ShowPasswordIcon from '@/shared/assets/images/icon_show_password.svg';
 import TextDeleteIcon from '@/shared/assets/images/icon_text_delete.svg';
+import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
-import { cn } from '@/shared/utils';
+import { cn, twSelector } from '@/shared/utils';
 
 interface PasswordInputProps extends InputHTMLAttributes<HTMLInputElement> {
   hasClear?: boolean;
@@ -23,12 +24,14 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
     };
 
     return (
-      <div className='relative h-[44px] w-full'>
+      <div className='relative flex h-[50px] w-full items-center'>
         <input
           ref={inputRef}
           type={isShowPassword ? 'password' : 'text'}
           className={cn(
-            'typography-body-3 placeholder:typography-body-3 h-full w-full rounded-md border border-solid border-gray-200 p-6 text-gray-800 outline-none placeholder:text-gray-500 autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] focus:visible focus:border focus:border-primary-500',
+            Typography.BODY_1,
+            twSelector('placeholder', Typography.BODY_1),
+            'h-full w-full rounded-md border border-solid border-gray-200 p-6 text-gray-800 outline-none placeholder:text-gray-500 autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] focus:visible focus:border focus:border-primary-500',
             className
           )}
           {...props}

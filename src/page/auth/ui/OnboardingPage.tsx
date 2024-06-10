@@ -5,9 +5,11 @@ import Link from 'next/link';
 import { redirect, useRouter, useSearchParams } from 'next/navigation';
 
 import { SocialSignIn } from '@/feature/auth';
+import { IconLogo } from '@/shared/assets';
 import IconBack from '@/shared/assets/images/icon_back.svg';
-import Logo from '@/shared/assets/images/logo.svg';
+import { Typography } from '@/shared/mixin';
 import { Button, RollingBanner } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const SelectMemberTypePage = () => {
@@ -16,17 +18,27 @@ const SelectMemberTypePage = () => {
       <Layout.Contents>
         <div className='flex h-full flex-col items-center justify-around px-7'>
           <div className='flex flex-col items-center gap-y-9'>
-            <Logo width='88px' height='88px' />
-            <h1 className='typography-heading-1 whitespace-pre-wrap break-keep text-center'>{`안녕하세요!\n건강해짐입니다!`}</h1>
+            <IconLogo width={64} height={64} />
+            <h1
+              className={cn(
+                Typography.HEADING_1,
+                'whitespace-pre-wrap break-keep text-center'
+              )}>{`안녕하세요!\n건강해짐입니다!`}</h1>
           </div>
-          <div className='typography-heading-4 flex w-full flex-col gap-y-3'>
+          <div className={cn(Typography.HEADING_4, 'flex w-full flex-col gap-y-3')}>
             <Button
-              className='typography-heading-4 h-20 bg-gray-100 p-0 px-[42px] py-[10px] text-black'
+              className={cn(
+                Typography.HEADING_4,
+                'h-20 bg-gray-100 p-0 px-[42px] py-[10px] text-black'
+              )}
               asChild>
               <Link href='?type=trainer'>트레이너로 시작</Link>
             </Button>
             <Button
-              className='typography-heading-4 h-20 bg-gray-100 p-0 px-[42px] py-[10px] text-black'
+              className={cn(
+                Typography.HEADING_4,
+                'h-20 bg-gray-100 p-0 px-[42px] py-[10px] text-black'
+              )}
               asChild>
               <Link href='?type=student'>회원으로 시작</Link>
             </Button>
@@ -57,7 +69,11 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
       </Layout.Header>
       <Layout.Contents>
         <div className={'mt-[48px] flex flex-col items-center gap-y-9'}>
-          <h1 className='typography-heading-1 whitespace-pre-wrap break-keep text-center'>
+          <h1
+            className={cn(
+              Typography.HEADING_1,
+              'whitespace-pre-wrap break-keep text-center'
+            )}>
             {`차별화된 PT 서비스를\n경험해보세요!`}
           </h1>
           <RollingBanner>
@@ -68,7 +84,7 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
                 height={80}
                 alt='Slide image of money'
               />
-              <p className='typography-body-1 text-white'>일정관리</p>
+              <p className={cn(Typography.BODY_1, 'text-white')}>일정관리</p>
             </div>
             <div className='mx-[5px] flex w-[120px] flex-col  items-center gap-y-[14px] rounded-[12px] bg-[#82C3FF] px-4 py-[17px]'>
               <Image
@@ -77,7 +93,7 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
                 height={80}
                 alt='Slide image of calendar'
               />
-              <p className='typography-body-1 text-white'>회원관리</p>
+              <p className={cn(Typography.BODY_1, 'text-white')}>회원관리</p>
             </div>
             <div className='mx-[5px] flex w-[120px] flex-col items-center gap-y-[14px] rounded-[12px] bg-[#FFBFDB] px-4 py-[17px]'>
               <Image
@@ -86,7 +102,7 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
                 height={80}
                 alt='Slide image of calendar'
               />
-              <p className='typography-body-1 text-white'>루틴생성</p>
+              <p className={cn(Typography.BODY_1, 'text-white')}>루틴생성</p>
             </div>
           </RollingBanner>
         </div>
@@ -95,7 +111,7 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
           <Button
             asChild
             variant='link'
-            className='typography-title-3 mt-5 font-semibold text-gray-500 hover:no-underline'>
+            className={cn(Typography.TITLE_3, 'mt-5 text-gray-500 hover:no-underline')}>
             <Link href={`/sign-in?type=${memberType}`}>아이디 로그인</Link>
           </Button>
           <p className='w-2/3 break-keep pt-[32px] text-center text-[11px] font-normal text-gray-400'>

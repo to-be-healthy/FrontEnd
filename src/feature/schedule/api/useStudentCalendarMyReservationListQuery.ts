@@ -10,7 +10,7 @@ export const useStudentCalendarMyReservationListQuery = (lessonDt: string) => {
     queryKey: ['StudentCalendarMyReservationList', lessonDt],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<MyReservationResponse>>(
-        `/api/schedule/v1/student/my-reservation?lessonDt=${lessonDt}`
+        `/api/schedule/v1/student/my-reservation/old?lessonDt=${lessonDt}`
       );
       return res.data.data;
     },

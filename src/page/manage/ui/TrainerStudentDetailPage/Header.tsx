@@ -52,7 +52,7 @@ const Header = ({ name, memberId }: { name: string; memberId: number }) => {
       <h2
         className={cn(
           Typography.HEADING_4_SEMIBOLD,
-          'absolute left-1/2 translate-x-[-50%] text-[$000]'
+          'absolute left-1/2 translate-x-[-50%] text-black'
         )}>
         회원 정보
       </h2>

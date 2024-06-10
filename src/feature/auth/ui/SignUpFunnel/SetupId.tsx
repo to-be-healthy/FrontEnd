@@ -2,7 +2,9 @@ import { FormEvent } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { ID_REGEXP, SignUpFormType } from '@/entity/auth';
+import { Typography } from '@/shared/mixin';
 import { Button, TextInput } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 interface Props {
   idSuccessMsg: string;
@@ -21,13 +23,13 @@ export const SetupId = ({ idSuccessMsg, isPending, handleIsIdAvailable }: Props)
 
   return (
     <div className='mb-[16px] flex flex-col'>
-      <label htmlFor='id' className='typography-title-3 mb-3 text-gray-800'>
+      <label htmlFor='id' className={cn(Typography.TITLE_3, 'mb-3 text-gray-800')}>
         아이디
       </label>
       <div className='flex items-center justify-between'>
         <TextInput
           id='userId'
-          containerClassName='h-[44px] w-[calc(100%-76px-6px)]'
+          containerClassName='h-[50px] w-[calc(100%-76px-6px)]'
           className={
             (errors.userId && 'border-point focus:border-point') ??
             (idSuccessMsg && 'border-primary-500')
@@ -44,7 +46,7 @@ export const SetupId = ({ idSuccessMsg, isPending, handleIsIdAvailable }: Props)
         />
         <Button
           type='button'
-          className='typography-heading-5 h-[44px] w-[76px] rounded-md'
+          className={cn(Typography.HEADING_5, 'h-[50px] w-[76px] rounded-md')}
           onClick={handleIsIdAvailable}
           disabled={isPending}>
           중복확인
@@ -52,10 +54,14 @@ export const SetupId = ({ idSuccessMsg, isPending, handleIsIdAvailable }: Props)
       </div>
 
       {errors.userId && (
-        <p className='typography-body-4 mt-[8px] text-point'>{errors.userId.message}</p>
+        <p className={cn(Typography.BODY_4, 'mt-[8px] text-point')}>
+          {errors.userId.message}
+        </p>
       )}
       {idSuccessMsg && (
-        <p className='typography-body-4 mt-[8px] text-primary-500'>{idSuccessMsg}</p>
+        <p className={cn(Typography.BODY_4, 'mt-[8px] text-primary-500')}>
+          {idSuccessMsg}
+        </p>
       )}
     </div>
   );

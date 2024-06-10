@@ -1,8 +1,13 @@
+import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { NAME_REGEXP, SignUpFormType } from '@/entity/auth';
+import { Typography } from '@/shared/mixin';
 import { TextInput } from '@/shared/ui';
+import { cn } from '@/shared/utils';
+
+import { useInvitationInfoQuery } from '../../api/useInvitationInfoQuery';
 
 export const SetupName = () => {
   const {
@@ -13,6 +18,11 @@ export const SetupName = () => {
     formState: { errors },
   } = useFormContext<SignUpFormType>();
 
+  const searchParams = useSearchParams();
+  const uuid = searchParams?.get('uuid');
+
+  const { data } = useInvitationInfoQuery(uuid);
+
   const nameValue = watch('name');
 
   useEffect(() => {
@@ -20,18 +30,24 @@ export const SetupName = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [nameValue]);
 
+  useEffect(() => {
+    if (data) {
+      setValue('name', data.name);
+    }
+  }, [data]);
+
   return (
     <div className='flex flex-col'>
-      <label htmlFor='name' className='typography-title-3 mb-3 text-gray-800'>
+      <label htmlFor='name' className={cn(Typography.TITLE_3, 'mb-3 text-gray-800')}>
         이름
       </label>
       <TextInput
         id='name'
         inputMode='text'
-        containerClassName='h-[44px] w-full'
+        containerClassName='h-[50px] w-full'
         className={errors.name && 'border-point focus:border-point'}
         value={nameValue}
-        placeholder='실명'
+        placeholder='실명을 입력해주세요'
         clearValueButton={() => setValue('name', '')}
         {...register('name', {
           minLength: {
@@ -45,7 +61,7 @@ export const SetupName = () => {
         })}
       />
       {errors.name && (
-        <p className='typography-body-4 mt-[8px] text-point'>{errors.name.message}</p>
+        <p className={cn(Typography.BODY_4, 'mt-3 text-point')}>{errors.name.message}</p>
       )}
     </div>
   );

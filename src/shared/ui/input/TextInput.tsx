@@ -30,8 +30,8 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
       <div className={cn('relative', containerClassName)}>
         <input
           className={cn(
-            Typography.BODY_3,
-            twSelector('placeholder', Typography.BODY_3),
+            Typography.BODY_1,
+            twSelector('placeholder', Typography.BODY_1),
             'h-full w-full rounded-md border border-solid border-gray-200 p-6 text-gray-800 outline-none placeholder:text-gray-500 autofill:shadow-[inset_0_0_0px_1000px_rgb(255,255,255)] focus:visible focus:border focus:border-primary-500 disabled:bg-gray-100 disabled:shadow-gray-100',
             className
           )}

@@ -137,7 +137,7 @@ export const StudentHomePage = () => {
   return (
     <Layout type='student'>
       <Layout.Header>
-        <IconLogo width='44px' height='44px' />
+        <IconLogo width={28} height={28} />
         <Link href='#'>
           <IconAlarm width={24} height={24} />
         </Link>

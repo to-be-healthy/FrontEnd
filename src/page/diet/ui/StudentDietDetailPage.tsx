@@ -150,7 +150,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
               <h2
                 className={cn(
                   Typography.HEADING_4_SEMIBOLD,
-                  'absolute left-1/2 translate-x-[-50%] text-[$000]'
+                  'absolute left-1/2 translate-x-[-50%] text-black'
                 )}>
                 {dietValue === todayValue ? '오늘 ' : dayjs(dietValue).format('YYYY-MM')}
                 식단

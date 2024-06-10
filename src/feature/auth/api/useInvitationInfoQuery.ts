@@ -19,6 +19,7 @@ export const useInvitationInfoQuery = (uuid: string) => {
       );
       return result.data.data;
     },
+    enabled: !!uuid,
     refetchOnWindowFocus: false,
     retry: false,
   });
