@@ -1,5 +1,5 @@
 import { useCreateDietCommentMutation, useEditDietCommentMutation } from '@/entity/diet';
-import IconArrowTop from '@/shared/assets/images/icon_arrow_up_background.svg';
+import { IconArrowTop } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, Input } from '@/shared/ui';
 import { cn } from '@/shared/utils';

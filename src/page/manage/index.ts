@@ -16,4 +16,3 @@ export { TrainerLogPage } from './ui/TrainerLogPage';
 export { TrainerStudentDetailPage } from './ui/TrainerStudentDetailPage';
 export { TrainerStudentDietDetailPage } from './ui/TrainerStudentDietDetailPage';
 export { TrainerStudentDietListPage } from './ui/TrainerStudentDietListPage';
-export { TrainerWorkoutPage } from './ui/TrainerWorkoutPage';

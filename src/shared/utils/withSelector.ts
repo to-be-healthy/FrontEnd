@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
-import { type StoreApi, type UseBoundStore, useStore } from 'zustand';
+import { StoreApi, type UseBoundStore } from 'zustand';
 import { shallow } from 'zustand/shallow';
+import { useStoreWithEqualityFn } from 'zustand/traditional';
 
 export const withSelector = <StateType extends object>(
   store: UseBoundStore<StoreApi<StateType>>
@@ -19,6 +20,6 @@ export const withSelector = <StateType extends object>(
       [keys]
     );
 
-    return useStore(store, selectors, shallow);
+    return useStoreWithEqualityFn(store, selectors, shallow);
   };
 };

@@ -129,7 +129,7 @@ export const TrainerHomePage = () => {
             )}
             {!hasTodaySchedule && (
               <div className='px-7'>
-                <Card className={cn(FLEX_CENTER, 'h-[100px] w-full gap-1')}>
+                <Card className={cn(FLEX_CENTER, 'h-[100px] w-full gap-1 shadow-sm')}>
                   <IconCalendarX width={42} />
                   <p className={cn(Typography.HEADING_5, 'text-gray-500')}>
                     예약된 수업이 없습니다.

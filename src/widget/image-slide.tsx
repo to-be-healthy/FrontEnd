@@ -58,6 +58,7 @@ const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
                         ? 'aspect-auto h-full w-full rounded-none'
                         : 'aspect-square'
                     )}
+                    priority
                   />
                 </CardContent>
               </Card>

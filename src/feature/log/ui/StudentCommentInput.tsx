@@ -2,9 +2,8 @@ import Image from 'next/image';
 import { useEffect } from 'react';
 
 import { useImages } from '@/entity/image';
-import IconArrowTop from '@/shared/assets/images/icon_arrow_up_background.svg';
+import { IconArrowTop, IconPicture } from '@/shared/assets';
 import IconCloseCircle from '@/shared/assets/images/icon_close_circle.svg';
-import IconPicture from '@/shared/assets/images/icon_picture.svg';
 import { Typography } from '@/shared/mixin';
 import { Button, Input } from '@/shared/ui';
 import { cn } from '@/shared/utils';

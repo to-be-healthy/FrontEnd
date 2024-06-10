@@ -21,7 +21,13 @@ export default function Page() {
   if (role === undefined) {
     return (
       <div className={cn(FLEX_CENTER, 'h-[100vh] w-[100vw] bg-primary-500')}>
-        <Image src='/images/loading_splash.gif' width={88} height={88} alt='loading' />
+        <Image
+          src='/images/loading_splash.gif'
+          width={88}
+          height={88}
+          alt='loading'
+          priority
+        />
       </div>
     );
   }

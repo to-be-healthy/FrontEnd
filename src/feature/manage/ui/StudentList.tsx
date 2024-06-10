@@ -10,9 +10,8 @@ import {
   useRegisteredStudentsQuery,
 } from '@/feature/member';
 import { profileBorderStyleMapper } from '@/page/manage/utils';
-import { IconAlertCircle, IconPlus } from '@/shared/assets';
+import { IconAlertCircle, IconPlus, IconProfileDefault } from '@/shared/assets';
 import IconArrowDownUp from '@/shared/assets/images/icon_arrow_down_up.svg';
-import IconDefaultProfile from '@/shared/assets/images/icon_default_profile_small.svg';
 import IconSearch from '@/shared/assets/images/icon_search.svg';
 import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
@@ -182,7 +181,7 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
                               className={profileBorderStyleMapper(item.ranking)}
                             />
                           ) : (
-                            <IconDefaultProfile width={32} height={32} />
+                            <IconProfileDefault width={32} height={32} />
                           )}
                         </div>
                         <div className='flex flex-col gap-y-[4px] text-left'>

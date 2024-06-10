@@ -1,4 +1,4 @@
-import { TrainerWorkoutPage } from '@/page/manage';
+import { TrainerWorkoutPage } from '@/page/workout';
 
 interface Props {
   params: { memberId: number };

@@ -21,4 +21,20 @@ interface Workout {
   completedExercises: Exercise[];
 }
 
-export type { Exercise, Workout };
+interface WorkoutComment {
+  id: number;
+  member: {
+    memberId: number;
+    name: string;
+    fileUrl: string;
+  };
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  parentId: number | null;
+  orderNum: number;
+  delYn: boolean;
+  replies: WorkoutComment[] | null;
+}
+
+export type { Exercise, Workout, WorkoutComment };
