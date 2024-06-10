@@ -4,7 +4,9 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 
+import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 export const SignUpCompletePage = () => {
@@ -27,17 +29,21 @@ export const SignUpCompletePage = () => {
               height={100}
               alt='signUp complete'
             />
-            <span className='typography-heading-4 mb-[4px] text-primary-500'>
+            <span className={cn(Typography.HEADING_4_BOLD, 'mb-[4px] text-primary-500')}>
               가입완료
             </span>
-            <p className='typography-heading-1 text-gray-800'>{`${name}님, 환영합니다!`}</p>
+            <p
+              className={cn(
+                Typography.HEADING_1,
+                'text-gray-800'
+              )}>{`${name}님, 환영합니다!`}</p>
           </div>
 
           <div className='w-full'>
             <Button asChild>
               <Link
                 href={`/sign-in?type=${type}`}
-                className='typography-title-1 h-[57px] w-full rounded-lg'>
+                className={cn(Typography.TITLE_1_BOLD, 'h-[57px] w-full rounded-lg')}>
                 확인
               </Link>
             </Button>
