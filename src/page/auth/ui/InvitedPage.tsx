@@ -55,7 +55,7 @@ const InvitedPage = () => {
             }}>
             일반 계정 회원가입
           </Button>
-          <p className='w-2/3 break-keep pt-[32px] text-center text-[11px] font-normal text-gray-400'>
+          <p className='w-2/3 break-keep pt-[32px] text-center text-[11px] text-gray-400'>
             로그인 시{' '}
             <Link href='#' className='underline'>
               개인정보 처리방침

@@ -114,7 +114,7 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
             className={cn(Typography.TITLE_3, 'mt-5 text-gray-500 hover:no-underline')}>
             <Link href={`/sign-in?type=${memberType}`}>아이디 로그인</Link>
           </Button>
-          <p className='w-2/3 break-keep pt-[32px] text-center text-[11px] font-normal text-gray-400'>
+          <p className='w-2/3 break-keep pt-[32px] text-center text-[11px] text-gray-400'>
             로그인 시{' '}
             <Link href='#' className='underline'>
               개인정보 처리방침

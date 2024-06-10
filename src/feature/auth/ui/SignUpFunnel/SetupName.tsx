@@ -21,7 +21,7 @@ export const SetupName = () => {
   const searchParams = useSearchParams();
   const uuid = searchParams?.get('uuid');
 
-  const { data } = useInvitationInfoQuery(uuid);
+  const { data } = useInvitationInfoQuery(uuid ?? '');
 
   const nameValue = watch('name');
 
