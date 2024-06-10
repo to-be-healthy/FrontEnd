@@ -1,5 +1,7 @@
 'use cilent';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import {
   useWorkoutCancelLikeMutation,
   useWorkoutCommentContext,
@@ -21,17 +23,30 @@ const PostMetrics = ({
   likeCnt: number;
   commentCnt: number;
 }) => {
+  const queryClient = useQueryClient();
   const { showErrorToast } = useShowErrorToast();
   const { refetch } = useWorkoutCommentContext();
 
   const { mutate: like } = useWorkoutLikeMutation();
   const { mutate: dislike } = useWorkoutCancelLikeMutation();
 
+  const refreshMetrics = async () => {
+    await refetch();
+
+    const queryKey = ['workoutDetail', workoutHistoryId];
+    const cachedData = queryClient.getQueryData(queryKey);
+    if (cachedData) {
+      await queryClient.refetchQueries({
+        queryKey,
+      });
+    }
+  };
+
   const toggleLike = () => {
     if (!liked) {
       like(workoutHistoryId, {
         onSuccess: async () => {
-          await refetch();
+          await refreshMetrics();
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
@@ -43,7 +58,7 @@ const PostMetrics = ({
     if (liked) {
       dislike(workoutHistoryId, {
         onSuccess: async () => {
-          await refetch();
+          await refreshMetrics();
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';

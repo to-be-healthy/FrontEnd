@@ -1,0 +1,102 @@
+'use client';
+
+import dayjs from 'dayjs';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
+
+import { useAuthSelector } from '@/entity/auth';
+import { NoWorkout, useTrainerWorkoutQuery, WorkoutPost } from '@/feature/workout';
+import { IconBack, IconPlus } from '@/shared/assets';
+import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { cn } from '@/shared/utils';
+import { Layout, MonthPicker } from '@/widget';
+
+const StudentWorkoutPage = () => {
+  const { name, memberId } = useAuthSelector(['name', 'memberId']);
+
+  if (!name || !memberId) {
+    throw new Error();
+  }
+
+  const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
+  const searchDate = dayjs(selectedMonth).format('YYYY-MM');
+
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useTrainerWorkoutQuery(
+    {
+      memberId,
+      searchDate,
+    }
+  );
+
+  const [ref, inView] = useInView({
+    threshold: 0.5,
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage().catch(() => {
+        throw new Error('Error fetching next page');
+      });
+    }
+  }, [fetchNextPage, hasNextPage, inView]);
+
+  return (
+    <Layout>
+      <Layout.Header>
+        <Link href={'/student'}>
+          <IconBack />
+        </Link>
+        <h1
+          className={cn(
+            Typography.HEADING_4_SEMIBOLD,
+            'absolute left-1/2 -translate-x-1/2'
+          )}>
+          {name}님 운동기록
+        </h1>
+        <Link href={'/student/workout/edit'}>
+          <IconPlus width={20} height={20} fill='black' />
+        </Link>
+      </Layout.Header>
+      <Layout.Contents className='flex flex-col flex-wrap py-7'>
+        <MonthPicker
+          date={selectedMonth}
+          onChangeDate={(newDate) => setSelectedMonth(newDate)}
+          className='px-7'
+        />
+        {data && (
+          <div className='hide-scrollbar mt-1 flex h-full flex-1 flex-grow flex-col overflow-y-auto px-7 pb-7'>
+            <div>
+              {data.pages.map((page, pageIndex) => (
+                <div key={pageIndex} className='flex w-full flex-col gap-y-6 pb-6'>
+                  {page.content &&
+                    page.content.length > 0 &&
+                    page.content.map((workout) => {
+                      return (
+                        <Link
+                          key={workout.workoutHistoryId}
+                          href={`/student/workout/${workout.workoutHistoryId}`}>
+                          <WorkoutPost workout={workout} />
+                        </Link>
+                      );
+                    })}
+                </div>
+              ))}
+            </div>
+            <div ref={ref}>
+              {isFetchingNextPage && (
+                <div className={cn(FLEX_CENTER, 'w-full')}>
+                  <Image src='/images/loading.gif' width={30} height={30} alt='loading' />
+                </div>
+              )}
+            </div>
+            {data.pages[0].content === null && <NoWorkout />}
+          </div>
+        )}
+      </Layout.Contents>
+    </Layout>
+  );
+};
+
+export { StudentWorkoutPage };

@@ -1,4 +1,5 @@
 export { useCancelLikeMutation as useWorkoutCancelLikeMutation } from './api/useCancelLikeMutation';
+export { useDeleteWorkoutMutation } from './api/useDeleteWorkoutMutation';
 export { useLikeMutation as useWorkoutLikeMutation } from './api/useLikeMutation';
 export { useTrainerWorkoutCommentQuery } from './api/useTrainerWorkoutCommentQuery';
 export { useTrainerWorkoutDetailQuery } from './api/useTrainerWorkoutDetailQuery';

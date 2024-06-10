@@ -47,6 +47,7 @@ const useWorkoutComment = ({ memberId, workoutHistoryId, ref }: Props) => {
     memberId,
     workoutHistoryId,
   });
+  const comments = data?.pages.flatMap((page) => page.content).filter(Boolean);
 
   const { mutate: createComment } = useCreateWorkoutCommentMutation(workoutHistoryId);
   const { mutate: editComment } = useEditWorkoutCommentMutation(workoutHistoryId);
@@ -107,7 +108,7 @@ const useWorkoutComment = ({ memberId, workoutHistoryId, ref }: Props) => {
   return {
     target,
     text,
-    comments: data?.pages.flatMap((page) => page.content).filter(Boolean),
+    comments,
     ref,
     memberId,
     workoutHistoryId,

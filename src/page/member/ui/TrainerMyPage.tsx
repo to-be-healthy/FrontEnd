@@ -25,7 +25,7 @@ export const TrainerMyPage = () => {
                   alt='profile'
                   width={80}
                   height={80}
-                  className='h-[80px] w-[80px] rounded-full border border-gray-300 object-contain'
+                  className='h-[80px] w-[80px] rounded-full border border-gray-300 object-cover'
                   priority
                 />
               ) : (
