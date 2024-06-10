@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { EMAIL_REGEXP, SignUpFormType } from '@/entity/auth';
+import { Typography } from '@/shared/mixin';
 import { EmailInput } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 interface SetupEmailProps {
   step: number;
@@ -27,7 +29,7 @@ export const SetupEmail = ({ isEmailVerified }: SetupEmailProps) => {
 
   return (
     <div className='mb-[16px] flex flex-col'>
-      <label htmlFor='email' className='typography-title-3 mb-3 text-gray-800'>
+      <label htmlFor='email' className={cn(Typography.TITLE_3, 'mb-3 text-gray-800')}>
         이메일
       </label>
       <EmailInput
@@ -47,7 +49,9 @@ export const SetupEmail = ({ isEmailVerified }: SetupEmailProps) => {
       />
 
       {errors.email && (
-        <p className='typography-body-4 mt-[8px] text-point'>{errors.email.message}</p>
+        <p className={cn(Typography.BODY_4, '4 mt-[8px] text-point')}>
+          {errors.email.message}
+        </p>
       )}
     </div>
   );

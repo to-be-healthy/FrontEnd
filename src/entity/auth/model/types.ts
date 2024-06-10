@@ -17,7 +17,7 @@ interface SignUpRequest {
   passwordConfirm: string;
   name: string;
   memberType: string;
-  uuid?: string;
+  uuid: string | null;
 }
 
 interface SignUpFormType {

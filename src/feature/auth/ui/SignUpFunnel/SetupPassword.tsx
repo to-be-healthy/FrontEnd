@@ -2,7 +2,9 @@ import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { PASSWORD_REGEXP, SignUpFormType } from '@/entity/auth';
+import { Typography } from '@/shared/mixin';
 import { PasswordInput } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 export const SetupPassword = () => {
   const {
@@ -25,7 +27,9 @@ export const SetupPassword = () => {
   return (
     <div>
       <div className='mb-[16px] flex flex-col'>
-        <label htmlFor='password' className='typography-title-3 mb-3 text-gray-800'>
+        <label
+          htmlFor='password'
+          className={cn(Typography.TITLE_3, 'mb-3 text-gray-800')}>
           비밀번호
         </label>
         <PasswordInput
@@ -46,7 +50,7 @@ export const SetupPassword = () => {
           })}
         />
         {errors.password && (
-          <p className='typography-body-4 mt-[8px] text-point'>
+          <p className={cn(Typography.BODY_4, 'mt-[8px] text-point')}>
             {errors.password.message}
           </p>
         )}
@@ -55,7 +59,7 @@ export const SetupPassword = () => {
       <div className='mb-[16px] flex flex-col'>
         <label
           htmlFor='passwordConfirm'
-          className='typography-title-3 mb-3 text-gray-800'>
+          className={cn(Typography.TITLE_3, 'mb-3 text-gray-800')}>
           비밀번호 확인
         </label>
         <PasswordInput
@@ -70,7 +74,7 @@ export const SetupPassword = () => {
           })}
         />
         {errors.passwordConfirm && (
-          <p className='typography-body-4 mt-[8px] text-point'>
+          <p className={cn(Typography.BODY_4, 'mt-[8px] text-point')}>
             {errors.passwordConfirm.message}
           </p>
         )}

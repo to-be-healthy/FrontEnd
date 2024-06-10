@@ -2,7 +2,9 @@ import { FormEvent, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 import { EXCLUDE_SPACE_REGEXP, SignUpFormType } from '@/entity/auth';
+import { Typography } from '@/shared/mixin';
 import { Button, TextInput } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 interface SetupEmailProps {
   step: number;
@@ -36,7 +38,7 @@ export const SetupEmailVerificationCode = ({
     <div className='mb-[16px] flex flex-col'>
       <label
         htmlFor='emailVerifiedCode'
-        className='typography-title-3 mb-3 text-gray-800'>
+        className={cn(Typography.TITLE_3, 'mb-3 text-gray-800')}>
         인증번호 입력
       </label>
       <div className='flex items-center justify-between'>
@@ -45,7 +47,7 @@ export const SetupEmailVerificationCode = ({
           id='emailVerifiedCode'
           inputMode='numeric'
           pattern='[0-9]*'
-          containerClassName='h-[44px] w-[calc(100%-76px-6px)]'
+          containerClassName='h-[50px] w-[calc(100%-76px-6px)]'
           className={errors.emailVerifiedCode && 'border-point focus:border-point'}
           placeholder='인증번호 6자리를 입력해주세요.'
           isEmailVerified={isEmailVerified}
@@ -60,7 +62,7 @@ export const SetupEmailVerificationCode = ({
         />
         <Button
           type='button'
-          className='typography-heading-5 h-[44px] w-[76px] rounded-md bg-gray-700'
+          className={cn(Typography.HEADING_5, 'h-[50px] w-[76px] rounded-md bg-gray-700')}
           onClick={handleSendVerificationCode}
           disabled={(step > 3 && isEmailVerified) || isPending}>
           재전송
@@ -68,7 +70,7 @@ export const SetupEmailVerificationCode = ({
       </div>
 
       {errors.emailVerifiedCode && (
-        <p className='typography-body-4 mt-[8px] text-point'>
+        <p className={cn(Typography.BODY_4, 'mt-[8px] text-point')}>
           {errors.emailVerifiedCode.message}
         </p>
       )}

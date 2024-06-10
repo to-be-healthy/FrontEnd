@@ -27,7 +27,6 @@ const InvitedPage = () => {
     !isPending &&
     data && (
       <Layout>
-        <Layout.Header></Layout.Header>
         <Layout.Contents className='flex flex-col items-center px-[20px]'>
           <h1
             className={cn(
@@ -52,7 +51,7 @@ const InvitedPage = () => {
               'h-fit bg-transparent p-0 pt-[20px] text-gray-500'
             )}
             onClick={() => {
-              router.push(`/sign-up?uuid=${uuid}`);
+              router.push(`/sign-up?type=student&uuid=${uuid}`);
             }}>
             일반 계정 회원가입
           </Button>

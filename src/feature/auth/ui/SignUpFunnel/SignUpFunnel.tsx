@@ -15,11 +15,13 @@ import {
   NAME_REGEXP,
   SignUpFormType,
   useCheckVailableIdMutation,
+  useCheckVerificationCodeMutation,
+  useSendVerificationCodeMutation,
 } from '@/entity/auth';
-import { useCheckVerificationCodeMutation } from '@/entity/auth/api/useCheckVerificationCodeMutation';
-import { useSendVerificationCodeMutation } from '@/entity/auth/api/useSendVerificationCodeMutation';
-import SendEmailIcon from '@/shared/assets/images/icon_send_email.svg';
+import { IconSendEmail } from '@/shared/assets';
+import { Typography } from '@/shared/mixin';
 import { Button, useToast } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 import { FunnelProps, StepProps } from '../../hooks/useSignUpFunnel';
 import { SetupEmail } from './SetupEmail';
@@ -48,6 +50,8 @@ export const SignUpFunnel = ({
   isEmailVerified,
   setIsEmailVerified,
 }: Props) => {
+  const [idSuccessMsg, setIdSuccessMsg] = useState('');
+
   const { watch, setError, setValue, clearErrors } = useFormContext<SignUpFormType>();
   const { toast } = useToast();
 
@@ -56,8 +60,6 @@ export const SignUpFunnel = ({
   const { mutate: checkVerificationCodeMutate } = useCheckVerificationCodeMutation();
   const { mutate: checkAvailableIdMutate, isPending: checkVailableIdPending } =
     useCheckVailableIdMutation();
-
-  const [idSuccessMsg, setIdSuccessMsg] = useState('');
 
   const clickNextStep = (e: FormEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -116,8 +118,8 @@ export const SignUpFunnel = ({
           className: 'h-12',
           description: (
             <div className='flex items-center justify-center'>
-              <SendEmailIcon />
-              <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
+              <IconSendEmail />
+              <p className={cn(Typography.HEADING_5, 'ml-6 text-[#fff]')}>{message}</p>
             </div>
           ),
           duration: 2000,
@@ -179,7 +181,7 @@ export const SignUpFunnel = ({
   return (
     <div className='flex h-full flex-col justify-between  pt-[38px]'>
       <div className='w-full overflow-auto'>
-        <h3 className='typography-heading-1 mb-[63px] text-center'>
+        <h3 className={cn(Typography.HEADING_1, 'mb-[63px] text-center')}>
           {step === 1 && '이름을 입력해주세요.'}
           {step === 2 && '이메일을 입력해주세요.'}
           {step === 3 && (
@@ -230,7 +232,7 @@ export const SignUpFunnel = ({
         {step < 5 ? (
           step === 2 ? (
             <Button
-              className='typography-title-1 h-[57px] w-full rounded-lg'
+              className={cn(Typography.TITLE_1, 'h-[57px] w-full rounded-lg')}
               type='button'
               onClick={handleSendVerificationCode}
               disabled={isNextButtonDisabled() || sendVerificationCodePending}>
@@ -238,7 +240,7 @@ export const SignUpFunnel = ({
             </Button>
           ) : step === 3 ? (
             <Button
-              className='typography-title-1 h-[57px] w-full rounded-lg'
+              className={cn(Typography.TITLE_1, 'h-[57px] w-full rounded-lg')}
               type='button'
               onClick={handleCheckVerificationCode}
               disabled={isNextButtonDisabled()}>
@@ -246,7 +248,7 @@ export const SignUpFunnel = ({
             </Button>
           ) : (
             <Button
-              className='typography-title-1 h-[57px] w-full rounded-lg'
+              className={cn(Typography.TITLE_1, 'h-[57px] w-full rounded-lg')}
               type='button'
               onClick={clickNextStep}
               disabled={isNextButtonDisabled()}>
@@ -255,7 +257,7 @@ export const SignUpFunnel = ({
           )
         ) : (
           <Button
-            className='typography-title-1 h-[57px] w-full rounded-lg'
+            className={cn(Typography.TITLE_1, 'h-[57px] w-full rounded-lg')}
             type='submit'
             form='submitSignUp'
             disabled={isNextButtonDisabled()}>
