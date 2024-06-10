@@ -25,7 +25,8 @@ export const TrainerMyPage = () => {
                   alt='profile'
                   width={80}
                   height={80}
-                  className='rounded-full border border-gray-300'
+                  className='h-[80px] w-[80px] rounded-full border border-gray-300 object-contain'
+                  priority
                 />
               ) : (
                 <IconAvatar width={82} height={82} />
