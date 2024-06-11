@@ -10,9 +10,13 @@ import {
   useRegisteredStudentsQuery,
 } from '@/feature/member';
 import { profileBorderStyleMapper } from '@/page/manage/utils';
-import { IconAlertCircle, IconPlus, IconProfileDefault } from '@/shared/assets';
+import {
+  IconAlertCircle,
+  IconPlus,
+  IconProfileDefault,
+  IconSearch,
+} from '@/shared/assets';
 import IconArrowDownUp from '@/shared/assets/images/icon_arrow_down_up.svg';
-import IconSearch from '@/shared/assets/images/icon_search.svg';
 import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import {

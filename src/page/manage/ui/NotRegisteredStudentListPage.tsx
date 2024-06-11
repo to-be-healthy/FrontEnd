@@ -4,9 +4,8 @@ import Link from 'next/link';
 import { ChangeEvent, useState } from 'react';
 
 import { Member, useNotRegisteredStudentsQuery } from '@/feature/member';
-import { IconAlertCircle } from '@/shared/assets';
+import { IconAlertCircle, IconSearch } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
-import IconSearch from '@/shared/assets/images/icon_search.svg';
 import { Typography } from '@/shared/mixin';
 import { Button, Card } from '@/shared/ui';
 import { cn } from '@/shared/utils';

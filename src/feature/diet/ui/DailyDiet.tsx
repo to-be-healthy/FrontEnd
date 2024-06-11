@@ -128,7 +128,7 @@ const DeleteImage = ({ type, setIsSheetOpen }: DeleteImageProps) => {
         clearImages(type);
         setIsSheetOpen(false);
       }}>
-      <IconDelete />
+      <IconDelete width={24} height={24} />
       <span className={cn(Typography.BODY_1, 'ml-4')}>사진 삭제</span>
     </Button>
   );

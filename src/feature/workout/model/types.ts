@@ -37,4 +37,27 @@ interface WorkoutComment {
   replies: WorkoutComment[] | null;
 }
 
-export type { Exercise, Workout, WorkoutComment };
+interface CompletedExercise {
+  exerciseId: number;
+  setNum: number;
+  weight: number;
+  numberOfCycles: number;
+
+  names: string;
+  category: string;
+  muscles: string;
+  custom: boolean;
+}
+
+type CompletedExerciseType = Omit<
+  CompletedExercise,
+  'setNum' | 'weight' | 'numberOfCycles'
+>;
+
+export type {
+  CompletedExercise,
+  CompletedExerciseType,
+  Exercise,
+  Workout,
+  WorkoutComment,
+};

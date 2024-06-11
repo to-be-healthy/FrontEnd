@@ -56,7 +56,7 @@ const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
                       'h-full w-full rounded-lg bg-white object-contain transition-all',
                       enlargeState
                         ? 'aspect-auto h-full w-full rounded-none'
-                        : 'aspect-square'
+                        : 'aspect-square object-cover'
                     )}
                     priority
                   />

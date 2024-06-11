@@ -1,7 +1,8 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 
+import { ImageType } from '@/entity/image';
+
 import { useUploadImageMutation } from '../api/useUploadImageMutation';
-import { ImageType } from '../model/types';
 
 const MAX_IMAGES_COUNT = 3;
 
