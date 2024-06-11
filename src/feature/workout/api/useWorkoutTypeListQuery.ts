@@ -3,23 +3,23 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { authApi } from '@/entity/auth';
 import { BaseError, BaseResponse, Pageable } from '@/shared/api';
 
-import { CompletedExerciseType } from '../model/types';
+import { ExerciseType } from '../model/types';
 
 const DEFAULT_SIZE = 10;
 
 interface WorkoutRequest {
-  searchValue: string;
+  searchValue?: string;
   size?: number;
 }
 
 interface WorkoutTypeListResponse extends Pageable {
-  content: CompletedExerciseType[];
+  content: ExerciseType[];
 }
 
 export const useWorkoutTypeListQuery = ({
-  searchValue,
+  searchValue = '',
   size = DEFAULT_SIZE,
-}: WorkoutRequest) => {
+}: WorkoutRequest = {}) => {
   return useInfiniteQuery<WorkoutTypeListResponse, BaseError>({
     queryKey: ['workoutList', { searchValue }],
     queryFn: async ({ pageParam }) => {

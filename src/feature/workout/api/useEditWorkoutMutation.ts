@@ -11,13 +11,14 @@ interface CreateWorkoutRequest {
   content: string;
   viewMySelf: boolean;
   completedExercises: ExerciseForCreate[];
+  workoutHistoryId: number;
 }
 
-export const useCreateWorkoutMutation = () => {
+export const useEditWorkoutMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, CreateWorkoutRequest>({
-    mutationFn: async (payload) => {
-      const result = await authApi.post<BaseResponse<null>>(
-        '/api/workout-histories/v1',
+    mutationFn: async ({ workoutHistoryId, ...payload }) => {
+      const result = await authApi.patch<BaseResponse<null>>(
+        `/api/workout-histories/v1/${workoutHistoryId}`,
         payload
       );
       return result.data;

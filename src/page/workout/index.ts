@@ -1,3 +1,4 @@
+export { CreateWorkoutPage } from './ui/CreateWorkoutPage';
 export { EditWorkoutPage } from './ui/EditWorkoutPage';
 export { StudentWorkoutDetailPage } from './ui/StudentWorkoutDetailPage';
 export { StudentWorkoutPage } from './ui/StudentWorkoutPage';

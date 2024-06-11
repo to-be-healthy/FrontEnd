@@ -11,8 +11,8 @@ import {
   ExerciseDetail,
   PostMetrics,
   useDeleteWorkoutMutation,
-  useTrainerWorkoutDetailQuery,
   useWorkoutComment,
+  useWorkoutDetailQuery,
   WorkoutCommentContext,
   WorkoutCommentInput,
   WorkoutCommentsWrapper,
@@ -48,7 +48,7 @@ const StudentWorkoutDetailPage = ({ workoutHistoryId }: Props) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const { data } = useTrainerWorkoutDetailQuery({ workoutHistoryId });
+  const { data } = useWorkoutDetailQuery(workoutHistoryId);
   const { mutate } = useDeleteWorkoutMutation();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -92,9 +92,7 @@ const StudentWorkoutDetailPage = ({ workoutHistoryId }: Props) => {
                 <DropdownMenuItem
                   className={cn(Typography.TITLE_3, 'flex items-center gap-3 px-6 py-5')}
                   onClick={() =>
-                    router.push(
-                      `/student/workout/edit?workoutHistoryId=${workoutHistoryId}`
-                    )
+                    router.push(`/student/workout/${workoutHistoryId}/edit`)
                   }>
                   <IconEdit />
                   수정

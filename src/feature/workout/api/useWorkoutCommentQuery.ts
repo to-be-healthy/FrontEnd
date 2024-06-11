@@ -17,7 +17,7 @@ interface WorkoutCommentRequest {
   size?: number;
 }
 
-export const useTrainerWorkoutCommentQuery = ({
+export const useWorkoutCommentQuery = ({
   memberId,
   workoutHistoryId,
   size = DEFAULT_SIZE,

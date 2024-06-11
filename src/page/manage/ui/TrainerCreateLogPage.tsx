@@ -273,7 +273,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
                 width={60}
                 height={60}
                 alt='staged image'
-                className='rounded-sm'
+                className='h-[60px] w-[60px] rounded-sm object-cover'
               />
               <button
                 className='absolute -right-2 -top-2 z-10'

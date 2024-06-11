@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { NoWorkout, useTrainerWorkoutQuery, WorkoutPost } from '@/feature/workout';
+import { NoWorkout, useWorkoutQuery, WorkoutPost } from '@/feature/workout';
 import { IconBack } from '@/shared/assets';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
@@ -16,12 +16,10 @@ const TrainerWorkoutPage = ({ memberId }: { memberId: number }) => {
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
   const searchDate = dayjs(selectedMonth).format('YYYY-MM');
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useTrainerWorkoutQuery(
-    {
-      memberId,
-      searchDate,
-    }
-  );
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useWorkoutQuery({
+    memberId,
+    searchDate,
+  });
 
   const name = data?.pages[0].mainData.name;
   const title = name && `${name}님 ` + '운동기록';

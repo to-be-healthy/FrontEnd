@@ -10,7 +10,7 @@ import {
 import { useCreateWorkoutCommentMutation } from '../api/useCreateWorkoutCommentMutation';
 import { useDeleteWorkoutCommentMutation } from '../api/useDeleteWorkoutCommentMutation';
 import { useEditWorkoutCommentMutation } from '../api/useEditWorkoutCommentMutation';
-import { useTrainerWorkoutCommentQuery } from '../api/useTrainerWorkoutCommentQuery';
+import { useWorkoutCommentQuery } from '../api/useWorkoutCommentQuery';
 import { WorkoutComment } from '../model/types';
 
 type ContextType = ReturnType<typeof useWorkoutComment> | null;
@@ -43,7 +43,7 @@ const useWorkoutComment = ({ memberId, workoutHistoryId, ref }: Props) => {
   const [text, setText] = useState('');
   const [target, setTarget] = useState<CommentTarget>(null);
 
-  const { data, refetch } = useTrainerWorkoutCommentQuery({
+  const { data, refetch } = useWorkoutCommentQuery({
     memberId,
     workoutHistoryId,
   });

@@ -1,3 +1,5 @@
+'use client';
+
 import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
 

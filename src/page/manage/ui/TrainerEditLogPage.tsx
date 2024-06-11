@@ -182,7 +182,7 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
                 width={60}
                 height={60}
                 alt='staged image'
-                className='rounded-sm'
+                className='h-[60px] w-[60px] rounded-sm object-cover'
               />
             </div>
           ))}

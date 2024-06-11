@@ -3,16 +3,14 @@
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import {
   AppendNewExerciseType,
   ComplexExercise,
   ExerciseType,
-  useEditWorkoutMutation,
-  useWorkoutDetailQuery,
+  useCreateWorkoutMutation,
   useWorkoutImages,
-  useWorkoutTypeListQuery,
 } from '@/feature/workout';
 import {
   IconCamera,
@@ -27,23 +25,25 @@ import { Button, Input, Switch, Textarea } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
-const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => {
+const CreateWorkoutPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { showErrorToast } = useShowErrorToast();
   const { images, uploadFiles, updateImages } = useWorkoutImages();
 
-  const { data, refetch } = useWorkoutDetailQuery(workoutHistoryId);
-  const { data: pagedTypes } = useWorkoutTypeListQuery();
-  const types = pagedTypes?.pages.flatMap((page) => page.content).filter(Boolean);
+  // const searchParams = useSearchParams();
+  // const workoutHistoryId = searchParams?.get('workoutHistoryId');
+  // const initData =
+  //   workoutHistoryId && queryClient.getQueryData(['workoutDetail', workoutHistoryId]);
 
-  const { mutate } = useEditWorkoutMutation();
+  const { mutate } = useCreateWorkoutMutation();
 
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState('');
   const [viewMySelf, setViewMySelf] = useState(true);
   const [completedExercises, setCompletedExercises] = useState<ComplexExercise[]>([]);
 
+  //CompletedExerciseType를 바꿔야할듯
   const appendExcercise = (newExcerciseTypes: ExerciseType[]) => {
     const newExcercises = newExcerciseTypes.map((item) => ({
       ...item,
@@ -67,11 +67,9 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
         content,
         viewMySelf,
         completedExercises,
-        workoutHistoryId,
       },
       {
         onSuccess: async () => {
-          await refetch();
           await queryClient.refetchQueries({
             queryKey: ['workoutList'],
           });
@@ -86,28 +84,6 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
   };
 
   const buttonDisabled = !content || completedExercises.length === 0;
-
-  useEffect(() => {
-    if (data && types) {
-      const { files, content, viewMySelf, completedExercises } = data;
-      updateImages(files);
-      setContent(content);
-      setViewMySelf(viewMySelf);
-      setCompletedExercises(
-        completedExercises.map((item) => {
-          const type = types.find((type) => type.exerciseId === item.exerciseId);
-          return {
-            ...item,
-            category: type?.category ?? '',
-            names: item.name,
-            muscles: type?.muscles ?? '',
-            custom: type?.custom ?? true,
-          };
-        })
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pagedTypes]);
 
   if (open) {
     return (
@@ -329,4 +305,4 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
   );
 };
 
-export { EditWorkoutPage };
+export { CreateWorkoutPage };

@@ -123,7 +123,7 @@ const TrainerCommentInput = () => {
                 width={80}
                 height={80}
                 alt='staged image'
-                className='rounded-sm'
+                className='h-[80px] w-[80px] rounded-sm object-cover'
               />
               <IconCloseCircle
                 className='cursor-pointer'

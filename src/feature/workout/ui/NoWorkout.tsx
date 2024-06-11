@@ -1,3 +1,5 @@
+'use client';
+
 import { IconAlertCircle } from '@/shared/assets';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';

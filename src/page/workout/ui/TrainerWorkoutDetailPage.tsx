@@ -11,8 +11,8 @@ import { useRef } from 'react';
 import {
   ExerciseDetail,
   PostMetrics,
-  useTrainerWorkoutDetailQuery,
   useWorkoutComment,
+  useWorkoutDetailQuery,
   WorkoutCommentContext,
   WorkoutCommentInput,
   WorkoutCommentsWrapper,
@@ -29,7 +29,7 @@ interface Props {
 }
 
 const TrainerWorkoutDetailPage = ({ workoutHistoryId, memberId }: Props) => {
-  const { data } = useTrainerWorkoutDetailQuery({ workoutHistoryId });
+  const { data } = useWorkoutDetailQuery(workoutHistoryId);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
   const value = useWorkoutComment({ memberId, workoutHistoryId, ref: inputRef });

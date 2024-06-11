@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { useAuthSelector } from '@/entity/auth';
-import { NoWorkout, useTrainerWorkoutQuery, WorkoutPost } from '@/feature/workout';
+import { NoWorkout, useWorkoutQuery, WorkoutPost } from '@/feature/workout';
 import { IconBack, IconPlus } from '@/shared/assets';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
@@ -23,12 +23,10 @@ const StudentWorkoutPage = () => {
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
   const searchDate = dayjs(selectedMonth).format('YYYY-MM');
 
-  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useTrainerWorkoutQuery(
-    {
-      memberId,
-      searchDate,
-    }
-  );
+  const { data, hasNextPage, fetchNextPage, isFetchingNextPage } = useWorkoutQuery({
+    memberId,
+    searchDate,
+  });
 
   const [ref, inView] = useInView({
     threshold: 0.5,
@@ -55,7 +53,7 @@ const StudentWorkoutPage = () => {
           )}>
           {name}님 운동기록
         </h1>
-        <Link href={'/student/workout/edit'}>
+        <Link href={'/student/workout/create'}>
           <IconPlus width={20} height={20} fill='black' />
         </Link>
       </Layout.Header>

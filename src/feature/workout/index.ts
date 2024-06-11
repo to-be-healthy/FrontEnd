@@ -3,11 +3,12 @@ export { useCreateExerciseMutation } from './api/useCreateExerciseMutation';
 export { useCreateWorkoutMutation } from './api/useCreateWorkoutMutation';
 export { useDeleteExerciseMutation } from './api/useDeleteExerciseMutation';
 export { useDeleteWorkoutMutation } from './api/useDeleteWorkoutMutation';
+export { useEditWorkoutMutation } from './api/useEditWorkoutMutation';
 export { useLikeMutation as useWorkoutLikeMutation } from './api/useLikeMutation';
-export { useTrainerWorkoutCommentQuery } from './api/useTrainerWorkoutCommentQuery';
-export { useTrainerWorkoutDetailQuery } from './api/useTrainerWorkoutDetailQuery';
-export { useTrainerWorkoutQuery } from './api/useTrainerWorkoutQuery';
 export { useWorkoutCategoryListQuery } from './api/useWorkoutCategoryListQuery';
+export { useWorkoutCommentQuery } from './api/useWorkoutCommentQuery';
+export { useWorkoutDetailQuery } from './api/useWorkoutDetailQuery';
+export { useWorkoutQuery } from './api/useWorkoutQuery';
 export { useWorkoutTypeListQuery } from './api/useWorkoutTypeListQuery';
 export {
   useWorkoutComment,
@@ -16,12 +17,14 @@ export {
 } from './hook/useComment';
 export { useImages as useWorkoutImages } from './hook/useImages';
 export type {
-  CompletedExercise,
-  CompletedExerciseType,
+  ComplexExercise,
   Exercise,
+  ExerciseForCreate,
+  ExerciseType,
   Workout,
   WorkoutCategory,
   WorkoutComment,
+  WorkoutDetail,
 } from './model/types';
 export { AppendNewExerciseType } from './ui/AppendNewExerciseType';
 export { CommentInput as WorkoutCommentInput } from './ui/CommentInput';

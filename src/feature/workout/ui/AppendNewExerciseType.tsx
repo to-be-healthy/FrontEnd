@@ -1,3 +1,5 @@
+'use client';
+
 import Image from 'next/image';
 import { useState } from 'react';
 
@@ -24,12 +26,12 @@ import { Layout } from '@/widget';
 import { useDeleteExerciseMutation } from '../api/useDeleteExerciseMutation';
 import { useWorkoutCategoryListQuery } from '../api/useWorkoutCategoryListQuery';
 import { useWorkoutTypeListQuery } from '../api/useWorkoutTypeListQuery';
-import { CompletedExerciseType } from '../model/types';
+import { ExerciseType } from '../model/types';
 import { CreateNewExerciseBottomSheet } from './CreateNewExerciseBottomSheet';
 
 interface Props {
   completedExerciseIds: number[];
-  appendExcercise: (newExcerciseType: CompletedExerciseType[]) => void;
+  appendExcercise: (newExcerciseType: ExerciseType[]) => void;
   close: () => void;
 }
 
