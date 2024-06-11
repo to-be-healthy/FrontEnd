@@ -1,5 +1,7 @@
 export { useCancelLikeMutation as useWorkoutCancelLikeMutation } from './api/useCancelLikeMutation';
+export { useCreateExerciseMutation } from './api/useCreateExerciseMutation';
 export { useCreateWorkoutMutation } from './api/useCreateWorkoutMutation';
+export { useDeleteExerciseMutation } from './api/useDeleteExerciseMutation';
 export { useDeleteWorkoutMutation } from './api/useDeleteWorkoutMutation';
 export { useLikeMutation as useWorkoutLikeMutation } from './api/useLikeMutation';
 export { useTrainerWorkoutCommentQuery } from './api/useTrainerWorkoutCommentQuery';
@@ -18,6 +20,7 @@ export type {
   CompletedExerciseType,
   Exercise,
   Workout,
+  WorkoutCategory,
   WorkoutComment,
 } from './model/types';
 export { AppendNewExerciseType } from './ui/AppendNewExerciseType';

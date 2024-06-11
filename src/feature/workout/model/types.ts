@@ -54,10 +54,16 @@ type CompletedExerciseType = Omit<
   'setNum' | 'weight' | 'numberOfCycles'
 >;
 
+interface WorkoutCategory {
+  category: string;
+  name: string;
+}
+
 export type {
   CompletedExercise,
   CompletedExerciseType,
   Exercise,
   Workout,
+  WorkoutCategory,
   WorkoutComment,
 };

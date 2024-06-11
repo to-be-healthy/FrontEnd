@@ -184,72 +184,91 @@ const EditWorkoutPage = () => {
                 <div className='grid grid-cols-3 flex-row gap-3'>
                   <div className='flex w-full flex-col items-center justify-between gap-2'>
                     <span className={cn(Typography.TITLE_3, 'text-gray-600')}>세트</span>
-                    <input
-                      type='number'
-                      value={completedExcercise.setNum}
+                    <div
                       className={cn(
-                        Typography.TITLE_1_BOLD,
-                        'w-full bg-gray-100 py-1 text-center'
-                      )}
-                      onChange={(e) => {
-                        setCompletedExercises((prev) =>
-                          prev.map((item) => {
-                            if (completedExcercise.exerciseId === item.exerciseId) {
-                              return {
-                                ...item,
-                                setNum: parseInt(e.target.value),
-                              };
-                            }
-                            return item;
-                          })
-                        );
-                      }}
-                    />
+                        'w-full rounded-sm border border-gray-100 bg-gray-100 p-1',
+                        'focus-within:border focus-within:border-primary focus-within:bg-white'
+                      )}>
+                      <input
+                        type='number'
+                        value={completedExcercise.setNum}
+                        className={cn(
+                          Typography.TITLE_1_BOLD,
+                          'w-full bg-transparent text-center outline-none ring-0'
+                        )}
+                        onChange={(e) => {
+                          setCompletedExercises((prev) =>
+                            prev.map((item) => {
+                              if (completedExcercise.exerciseId === item.exerciseId) {
+                                return {
+                                  ...item,
+                                  setNum: parseInt(e.target.value),
+                                };
+                              }
+                              return item;
+                            })
+                          );
+                        }}
+                      />
+                    </div>
                   </div>
                   <div className='flex w-full flex-col items-center justify-between gap-2'>
                     <span className={cn(Typography.TITLE_3, 'text-gray-600')}>회</span>
-                    <input
-                      type='number'
-                      value={completedExcercise.numberOfCycles}
+                    <div
                       className={cn(
-                        Typography.TITLE_1_BOLD,
-                        'w-full bg-gray-100 py-1 text-center'
-                      )}
-                      onChange={(e) => {
-                        setCompletedExercises((prev) =>
-                          prev.map((item) => {
-                            if (completedExcercise.exerciseId === item.exerciseId) {
-                              return {
-                                ...item,
-                                numberOfCycles: parseInt(e.target.value),
-                              };
-                            }
-                            return item;
-                          })
-                        );
-                      }}
-                    />
+                        'w-full rounded-sm border border-gray-100 bg-gray-100 p-1',
+                        'focus-within:border focus-within:border-primary focus-within:bg-white'
+                      )}>
+                      <input
+                        type='number'
+                        value={completedExcercise.numberOfCycles}
+                        className={cn(
+                          Typography.TITLE_1_BOLD,
+                          'w-full bg-transparent text-center outline-none ring-0'
+                        )}
+                        onChange={(e) => {
+                          setCompletedExercises((prev) =>
+                            prev.map((item) => {
+                              if (completedExcercise.exerciseId === item.exerciseId) {
+                                return {
+                                  ...item,
+                                  numberOfCycles: parseInt(e.target.value),
+                                };
+                              }
+                              return item;
+                            })
+                          );
+                        }}
+                      />
+                    </div>
                   </div>
                   <div className='flex w-full flex-col items-center justify-between gap-2'>
                     <span className={cn(Typography.TITLE_3, 'text-gray-600')}>KG</span>
-                    <input
-                      type='number'
-                      value={completedExcercise.weight}
+
+                    <div
                       className={cn(
-                        Typography.TITLE_1_BOLD,
-                        'w-full bg-gray-100 py-1 text-center'
-                      )}
-                      onChange={(e) => {
-                        setCompletedExercises((prev) =>
-                          prev.map((item) => {
-                            if (completedExcercise.exerciseId === item.exerciseId) {
-                              return { ...item, weight: parseInt(e.target.value) };
-                            }
-                            return item;
-                          })
-                        );
-                      }}
-                    />
+                        'w-full rounded-sm border border-gray-100 bg-gray-100 p-1',
+                        'focus-within:border focus-within:border-primary focus-within:bg-white'
+                      )}>
+                      <input
+                        type='number'
+                        value={completedExcercise.weight}
+                        className={cn(
+                          Typography.TITLE_1_BOLD,
+                          'w-full bg-transparent text-center outline-none ring-0'
+                        )}
+                        onChange={(e) => {
+                          setCompletedExercises((prev) =>
+                            prev.map((item) => {
+                              if (completedExcercise.exerciseId === item.exerciseId) {
+                                return { ...item, weight: parseInt(e.target.value) };
+                              }
+                              return item;
+                            })
+                          );
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

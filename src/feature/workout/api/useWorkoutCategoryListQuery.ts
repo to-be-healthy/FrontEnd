@@ -3,10 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { authApi } from '@/entity/auth';
 import { BaseError, BaseResponse } from '@/shared/api';
 
-interface WorkoutCategory {
-  category: string;
-  name: string;
-}
+import { WorkoutCategory } from '../model/types';
 
 export const useWorkoutCategoryListQuery = () => {
   return useQuery<WorkoutCategory[], BaseError>({
