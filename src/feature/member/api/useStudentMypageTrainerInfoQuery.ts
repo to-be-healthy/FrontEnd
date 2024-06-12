@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { authApi } from '@/entity/auth/api/authApi';
+import { Gym } from '@/entity/gym';
 import { BaseError, BaseResponse } from '@/shared/api';
 
 interface TrainerInfoResponse {
@@ -13,10 +14,7 @@ interface TrainerInfoResponse {
       id: number;
       fileUrl: string;
     } | null;
-    gym: {
-      id: number;
-      name: string;
-    };
+    gym: Gym;
   };
 }
 
