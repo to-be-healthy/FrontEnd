@@ -50,6 +50,7 @@ export { default as IconLike } from './images/like.svg';
 export { default as IconLogo } from './images/logo.svg';
 export { default as IconMedalGold } from './images/medal_gold.svg';
 export { default as IconNaverLogo } from './images/naver_logo.svg';
+export { default as IconNoSchedule } from './images/no_schedule.svg';
 export { default as IconNotification } from './images/notification.svg';
 export { default as IconPlus } from './images/plus.svg';
 export { default as IconPoint } from './images/point.svg';

@@ -1,19 +1,20 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { useToggleAlarmStatusMutation } from '@/feature/manage';
 import { useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Switch } from '@/shared/ui';
+import { Button, Switch } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const EditAlarmPage = () => {
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { data } = useMyInfoQuery();
   const { showErrorToast } = useShowErrorToast();
   const { mutate } = useToggleAlarmStatusMutation();
@@ -40,9 +41,9 @@ const EditAlarmPage = () => {
   return (
     <Layout>
       <Layout.Header className='bg-white'>
-        <Link href={'/trainer/mypage'}>
+        <Button variant='ghost' className='p-0' onClick={() => router.back()}>
           <IconBack />
-        </Link>
+        </Button>
       </Layout.Header>
       <Layout.Contents>
         <h1 className={cn(Typography.HEADING_3, 'bg-white px-7 pb-7 pt-8')}>알림 설정</h1>
