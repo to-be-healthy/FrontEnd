@@ -12,18 +12,16 @@ interface WorkoutCommentResponse extends Pageable {
 }
 
 interface WorkoutCommentRequest {
-  memberId: number;
   workoutHistoryId: number;
   size?: number;
 }
 
 export const useWorkoutCommentQuery = ({
-  memberId,
   workoutHistoryId,
   size = DEFAULT_SIZE,
 }: WorkoutCommentRequest) => {
   return useInfiniteQuery<WorkoutCommentResponse, BaseError>({
-    queryKey: ['workoutList', { memberId, workoutHistoryId }],
+    queryKey: ['workoutComment', { workoutHistoryId }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<WorkoutCommentResponse>>(
         `/api/workout-histories/v1/${workoutHistoryId}/comments?page=${pageParam as number}&size=${size}`

@@ -6,7 +6,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
-import { useAuthSelector } from '@/entity/auth';
 import {
   ExerciseDetail,
   PostMetrics,
@@ -40,10 +39,6 @@ interface Props {
 
 const StudentWorkoutDetailPage = ({ workoutHistoryId }: Props) => {
   const { showErrorToast } = useShowErrorToast();
-  const { memberId } = useAuthSelector(['memberId']);
-  if (!memberId) {
-    throw new Error();
-  }
 
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -52,7 +47,7 @@ const StudentWorkoutDetailPage = ({ workoutHistoryId }: Props) => {
   const { mutate } = useDeleteWorkoutMutation();
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const value = useWorkoutComment({ memberId, workoutHistoryId, ref: inputRef });
+  const value = useWorkoutComment({ workoutHistoryId, ref: inputRef });
 
   const formattedDate = dayjs(data?.createdAt).format('M월 D일 (ddd)');
 

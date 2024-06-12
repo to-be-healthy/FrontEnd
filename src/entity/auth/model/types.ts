@@ -8,6 +8,8 @@ interface UserInfo {
   name: string | null;
 }
 
+type LowercaseMemberType = Lowercase<Exclude<'STUDENT' | 'TRAINER', null>> | undefined;
+
 type SocialProvider = 'kakao' | 'naver' | 'google';
 
 type SocialType = 'NONE' | Uppercase<SocialProvider>;
@@ -50,6 +52,7 @@ interface Trainer {
 }
 
 export type {
+  LowercaseMemberType,
   SignUpFormType,
   SignUpRequest,
   SocialProvider,

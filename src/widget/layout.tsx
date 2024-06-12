@@ -1,12 +1,13 @@
 import { Children, HTMLAttributes, isValidElement, ReactNode } from 'react';
 
+import { LowercaseMemberType } from '@/entity/auth';
 import { Toaster } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
 import { StudentNavigation, TrainerNavigation } from './navigation';
 
 interface LayoutProps extends HTMLAttributes<HTMLDivElement> {
-  type?: 'student' | 'trainer';
+  type?: LowercaseMemberType;
 }
 
 export const Layout = ({ type, className, children, ...props }: LayoutProps) => {

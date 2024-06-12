@@ -58,7 +58,7 @@ const TrainerLogDetailPage = ({ memberId, logId }: Props) => {
                   <div className='flex items-center gap-2 px-6'>
                     <IconChat />
                     <p className={cn(Typography.BODY_4_MEDIUM, 'text-gray-500')}>
-                      댓글 <span>{data.comments.length}</span>
+                      댓글 <span>{data.commentTotalCount}</span>
                     </p>
                   </div>
                   <LogTrainerCommentList comments={data.comments} />

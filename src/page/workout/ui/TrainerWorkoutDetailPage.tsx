@@ -32,7 +32,7 @@ const TrainerWorkoutDetailPage = ({ workoutHistoryId, memberId }: Props) => {
   const { data } = useWorkoutDetailQuery(workoutHistoryId);
 
   const inputRef = useRef<HTMLInputElement | null>(null);
-  const value = useWorkoutComment({ memberId, workoutHistoryId, ref: inputRef });
+  const value = useWorkoutComment({ workoutHistoryId, ref: inputRef });
 
   const formattedDate = dayjs(data?.createdAt).format('M월 D일 (ddd)');
 
