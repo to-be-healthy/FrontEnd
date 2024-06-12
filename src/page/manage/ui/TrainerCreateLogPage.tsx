@@ -273,12 +273,12 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
                 width={60}
                 height={60}
                 alt='staged image'
-                className='rounded-sm'
+                className='h-[60px] w-[60px] rounded-sm object-cover'
               />
               <button
-                className='absolute -right-3 -top-3 z-10'
+                className='absolute -right-2 -top-2 z-10'
                 onClick={() => updateImages(images.filter((item, idx) => index !== idx))}>
-                <IconCloseBlack />
+                <IconCloseBlack width={20} height={20} />
               </button>
             </div>
           ))}

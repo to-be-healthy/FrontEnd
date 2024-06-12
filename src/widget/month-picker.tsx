@@ -13,6 +13,7 @@ import { cn } from '@/shared/utils';
 interface Props {
   date?: Date;
   onChangeDate: (date: Date) => void;
+  className?: string;
 }
 
 const MonthlyCalendar = ({ date, onChangeDate }: Props) => {
@@ -94,12 +95,17 @@ const MonthlyCalendar = ({ date, onChangeDate }: Props) => {
 /**
  * @description MonthlyCalendar에 Sheet를 감싸주는 컴포넌트
  */
-const MonthPicker = ({ date, onChangeDate, children }: PropsWithChildren<Props>) => {
+const MonthPicker = ({
+  date,
+  onChangeDate,
+  className,
+  children,
+}: PropsWithChildren<Props>) => {
   const currentDate = Date.now();
   const selectedDate = dayjs(date ?? currentDate).format('YYYY년 M월');
 
   return (
-    <div>
+    <div className={cn(className)}>
       <Sheet>
         <SheetTrigger>
           {children ?? (

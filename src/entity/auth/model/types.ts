@@ -10,6 +10,8 @@ interface UserInfo {
 
 type SocialProvider = 'kakao' | 'naver' | 'google';
 
+type SocialType = 'NONE' | Uppercase<SocialProvider>;
+
 interface SignUpRequest {
   userId: string;
   email: string;
@@ -47,4 +49,11 @@ interface Trainer {
   socialType: 'NONE';
 }
 
-export type { SignUpFormType, SignUpRequest, SocialProvider, Trainer, UserInfo };
+export type {
+  SignUpFormType,
+  SignUpRequest,
+  SocialProvider,
+  SocialType,
+  Trainer,
+  UserInfo,
+};

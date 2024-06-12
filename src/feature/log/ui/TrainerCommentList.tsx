@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Fragment, PropsWithChildren, useState } from 'react';
 
 import { useAuthSelector } from '@/entity/auth';
-import IconProfile from '@/shared/assets/images/icon_default_profile_small.svg';
+import { IconProfileDefault } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import {
@@ -88,7 +88,7 @@ const CommentItem = ({
               'flex space-x-[6px] px-[16px] py-[10px]',
               depth !== 0 && 'ml-[47px]'
             )}>
-            <IconProfile width={24} height={24} />
+            <IconProfileDefault width={24} height={24} />
             <div className='flex-col'>
               <div className='flex-col'>
                 <p className={cn(Typography.HEADING_5)}>{comment.member.name}</p>

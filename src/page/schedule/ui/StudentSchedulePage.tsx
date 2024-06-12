@@ -3,8 +3,11 @@
 /* eslint-disable react/prop-types */
 import 'react-day-picker/dist/style.css';
 import './react-calendar.css';
+import 'dayjs/locale/ko';
 
 import dayjs from 'dayjs';
+dayjs.locale('ko');
+
 import isBetween from 'dayjs/plugin/isBetween';
 import { useEffect, useState } from 'react';
 

@@ -16,6 +16,7 @@ export type {
   SignUpFormType,
   SignUpRequest,
   SocialProvider,
+  SocialType,
   Trainer,
   UserInfo,
 } from './model/types';

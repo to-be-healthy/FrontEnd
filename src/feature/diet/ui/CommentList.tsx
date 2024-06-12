@@ -4,7 +4,7 @@ import { Fragment, PropsWithChildren, useState } from 'react';
 
 import { useAuthSelector } from '@/entity/auth';
 import { useDeleteDietCommentMutation } from '@/entity/diet';
-import IconProfile from '@/shared/assets/images/icon_default_profile_small.svg';
+import { IconProfileDefault } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import {
@@ -92,7 +92,7 @@ const CommentItem = ({
       <DropdownMenuTrigger asChild>
         <li className={cn(active && 'bg-blue-10', className, 'px-6')} {...props}>
           <div className={cn('flex space-x-[6px] py-[10px]', depth !== 0 && 'ml-[47px]')}>
-            <IconProfile width={24} height={24} />
+            <IconProfileDefault width={24} height={24} />
             <div className='flex-col'>
               <div className='flex-col'>
                 <p className={cn(Typography.HEADING_5, 'text-black')}>

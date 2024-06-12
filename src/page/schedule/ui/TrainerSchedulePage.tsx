@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { useWeeklySchedules, WeeklyTimetable } from '@/feature/schedule';
@@ -22,7 +23,11 @@ export const TrainerSchedulePage = () => {
       </Layout.Header>
       <Layout.Contents className='mt-[16px] overflow-hidden'>
         <WeekPicker startDate={startDate} onWeekChange={changeWeek} />
-        {isPending && <>로딩중...</>}
+        {isPending && (
+          <div className={cn(FLEX_CENTER, 'h-full w-full')}>
+            <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
+          </div>
+        )}
         {!isPending && weeklySchedules !== null && (
           <WeeklyTimetable startDate={startDate} schedules={weeklySchedules} />
         )}

@@ -406,7 +406,7 @@ export const StudentHomePage = () => {
               <Card className='w-full p-0'>
                 <CardHeader>
                   <Link
-                    href='/'
+                    href='/student/workout'
                     className={cn(
                       Typography.BODY_3,
                       'gray-500 flex h-full items-center justify-between px-6 py-7'

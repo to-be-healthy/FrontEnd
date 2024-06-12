@@ -108,7 +108,7 @@ const DeleteImage = ({ registerDiet }: DeleteImage) => {
       variant='ghost'
       className='h-full w-full justify-start px-7 py-6'
       onClick={() => registerDiet(false)}>
-      <IconDelete />
+      <IconDelete width={24} height={24} />
       <span className={cn(Typography.BODY_1, 'ml-4')}>사진 삭제</span>
     </Button>
   );

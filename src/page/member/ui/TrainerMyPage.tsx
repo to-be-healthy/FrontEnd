@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 import { useMyInfoQuery } from '@/feature/member';
@@ -18,7 +19,18 @@ export const TrainerMyPage = () => {
         <Link href={'/trainer/mypage/info'}>
           <section className='flex items-center justify-between bg-white px-7 pb-7 pt-6'>
             <div className='flex'>
-              <IconAvatar width={82} height={82} />
+              {data?.profile ? (
+                <Image
+                  src={data.profile.fileUrl}
+                  alt='profile'
+                  width={80}
+                  height={80}
+                  className='h-[80px] w-[80px] rounded-full border border-gray-300 object-cover'
+                  priority
+                />
+              ) : (
+                <IconAvatar width={82} height={82} />
+              )}
               <div className='ml-5 flex flex-col justify-center'>
                 <p className={cn(Typography.HEADING_3)}>{data?.name ?? ''}</p>
                 <span className={cn(Typography.BODY_3, 'text-gray-500')}>

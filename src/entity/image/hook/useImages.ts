@@ -3,11 +3,13 @@ import { ChangeEvent, useCallback, useState } from 'react';
 import { useUploadImageMutation } from '../api/useUploadImageMutation';
 import { ImageType } from '../model/types';
 
+const MAX_IMAGES_COUNT = 3;
+
 interface Options {
   maxCount?: number;
 }
 
-const useImages = ({ maxCount = 3 }: Options = {}) => {
+const useImages = ({ maxCount = MAX_IMAGES_COUNT }: Options = {}) => {
   const [images, setImages] = useState<ImageType[]>([]);
 
   const { mutate } = useUploadImageMutation();
