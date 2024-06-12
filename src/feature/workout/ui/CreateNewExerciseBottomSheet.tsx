@@ -16,7 +16,7 @@ import {
   SheetHeader,
   SheetTrigger,
 } from '@/shared/ui';
-import { cn } from '@/shared/utils';
+import { cn, twSelector } from '@/shared/utils';
 
 import { useCreateExerciseMutation } from '../api/useCreateExerciseMutation';
 import { WorkoutCategory } from '../model/types';
@@ -84,13 +84,13 @@ const CreateNewExerciseBottomSheet = ({
           <IconPlus width={14} height={14} />
         </Button>
       </SheetTrigger>
-      <SheetContent headerType='thumb' className='flex flex-col gap-9 pt-8'>
-        <SheetHeader>
+      <SheetContent headerType='thumb' className='flex flex-col gap-9 px-0 pt-8'>
+        <SheetHeader className='border-b py-5'>
           <h3 className={cn(Typography.TITLE_1_SEMIBOLD, 'text-center')}>
             신규 운동 추가
           </h3>
         </SheetHeader>
-        <SheetDescription className='flex flex-col gap-7 text-black'>
+        <SheetDescription className='flex flex-col gap-7 px-7 text-black'>
           <div className='flex flex-col gap-3'>
             <p className={cn(Typography.TITLE_3)}>
               운동 이름 <span className='text-point'>*</span>
@@ -99,7 +99,10 @@ const CreateNewExerciseBottomSheet = ({
               <Input
                 type='text'
                 placeholder='추가할 운동 이름을 입력해주세요.'
-                className={cn('w-full')}
+                className={cn(
+                  'w-full',
+                  twSelector('placeholder', cn(Typography.BODY_1, 'text-gray-500'))
+                )}
                 onChange={(e) => setName(e.target.value)}
               />
             </div>
@@ -109,7 +112,7 @@ const CreateNewExerciseBottomSheet = ({
               카테고리 <span className='text-point'>*</span>
             </p>
             <div className='hide-scrollbar overflow-x-auto'>
-              <div className='flex w-full flex-nowrap gap-3 px-7'>
+              <div className='flex w-full flex-nowrap gap-3'>
                 {categories.map(({ category, name }) => {
                   const selected = category === selectedCategory;
                   return (
@@ -140,18 +143,22 @@ const CreateNewExerciseBottomSheet = ({
               <Input
                 type='text'
                 placeholder='사용 근육을 입력해주세요.'
-                className={cn('w-full')}
+                className={cn(
+                  'w-full',
+                  twSelector('placeholder', cn(Typography.BODY_1, 'text-gray-500'))
+                )}
                 onChange={(e) => setMuscles(e.target.value)}
               />
             </div>
           </div>
         </SheetDescription>
-        <SheetFooter>
+        <SheetFooter className='px-7'>
           <Button
             variant='default'
             size='full'
             onClick={submit}
-            disabled={buttonDisabled}>
+            disabled={buttonDisabled}
+            className={cn(Typography.TITLE_1_BOLD)}>
             운동 추가하기
           </Button>
         </SheetFooter>

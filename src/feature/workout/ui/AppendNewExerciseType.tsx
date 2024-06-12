@@ -123,7 +123,7 @@ const AppendNewExerciseType = ({
         {!isPending && (
           <>
             <div className='hide-scrollbar overflow-x-auto'>
-              <div className='flex w-full flex-nowrap gap-3 px-7'>
+              <div className='mt-2 flex w-full flex-nowrap space-x-3 px-7'>
                 {categories.map(({ category, name }) => {
                   const selected = selectedCategory === category;
                   return (
@@ -239,7 +239,12 @@ const AppendNewExerciseType = ({
         )}
       </Layout.Contents>
       <Layout.BottomArea>
-        <Button variant='default' size='full' onClick={submit} disabled={buttonDisabled}>
+        <Button
+          variant='default'
+          size='full'
+          onClick={submit}
+          disabled={buttonDisabled}
+          className={cn(Typography.TITLE_1_BOLD)}>
           {buttonDisabled ? '운동 추가하기' : `${selectedTypes.length}개의 운동 추가하기`}
         </Button>
       </Layout.BottomArea>

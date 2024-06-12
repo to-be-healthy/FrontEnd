@@ -31,11 +31,6 @@ const CreateWorkoutPage = () => {
   const { showErrorToast } = useShowErrorToast();
   const { images, uploadFiles, updateImages } = useWorkoutImages();
 
-  // const searchParams = useSearchParams();
-  // const workoutHistoryId = searchParams?.get('workoutHistoryId');
-  // const initData =
-  //   workoutHistoryId && queryClient.getQueryData(['workoutDetail', workoutHistoryId]);
-
   const { mutate } = useCreateWorkoutMutation();
 
   const [open, setOpen] = useState(false);
@@ -43,7 +38,6 @@ const CreateWorkoutPage = () => {
   const [viewMySelf, setViewMySelf] = useState(true);
   const [completedExercises, setCompletedExercises] = useState<ComplexExercise[]>([]);
 
-  //CompletedExerciseType를 바꿔야할듯
   const appendExcercise = (newExcerciseTypes: ExerciseType[]) => {
     const newExcercises = newExcerciseTypes.map((item) => ({
       ...item,
@@ -197,19 +191,24 @@ const CreateWorkoutPage = () => {
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
                       )}>
                       <input
-                        type='number'
+                        type='text'
                         value={completedExcercise.setNum}
+                        pattern='[0-9]*'
+                        inputMode='numeric'
                         className={cn(
                           Typography.TITLE_1_BOLD,
                           'w-full bg-transparent text-center outline-none ring-0'
                         )}
                         onChange={(e) => {
+                          const value =
+                            e.target.value.replace(/\D/g, '').replace(/^0+(?!$)/, '') ||
+                            '0';
                           setCompletedExercises((prev) =>
                             prev.map((item) => {
                               if (completedExcercise.exerciseId === item.exerciseId) {
                                 return {
                                   ...item,
-                                  setNum: parseInt(e.target.value),
+                                  setNum: parseInt(value),
                                 };
                               }
                               return item;
@@ -227,19 +226,24 @@ const CreateWorkoutPage = () => {
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
                       )}>
                       <input
-                        type='number'
+                        type='text'
+                        pattern='[0-9]*'
+                        inputMode='numeric'
                         value={completedExcercise.numberOfCycles}
                         className={cn(
                           Typography.TITLE_1_BOLD,
                           'w-full bg-transparent text-center outline-none ring-0'
                         )}
                         onChange={(e) => {
+                          const value =
+                            e.target.value.replace(/\D/g, '').replace(/^0+(?!$)/, '') ||
+                            '0';
                           setCompletedExercises((prev) =>
                             prev.map((item) => {
                               if (completedExcercise.exerciseId === item.exerciseId) {
                                 return {
                                   ...item,
-                                  numberOfCycles: parseInt(e.target.value),
+                                  numberOfCycles: parseInt(value),
                                 };
                               }
                               return item;
@@ -258,17 +262,22 @@ const CreateWorkoutPage = () => {
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
                       )}>
                       <input
-                        type='number'
+                        type='text'
                         value={completedExcercise.weight}
+                        pattern='[0-9]*'
+                        inputMode='numeric'
                         className={cn(
                           Typography.TITLE_1_BOLD,
                           'w-full bg-transparent text-center outline-none ring-0'
                         )}
                         onChange={(e) => {
+                          const value =
+                            e.target.value.replace(/\D/g, '').replace(/^0+(?!$)/, '') ||
+                            '0';
                           setCompletedExercises((prev) =>
                             prev.map((item) => {
                               if (completedExcercise.exerciseId === item.exerciseId) {
-                                return { ...item, weight: parseInt(e.target.value) };
+                                return { ...item, weight: parseInt(value) };
                               }
                               return item;
                             })
