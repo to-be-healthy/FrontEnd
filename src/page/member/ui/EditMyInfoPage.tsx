@@ -23,6 +23,7 @@ import {
 } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Button } from '@/shared/ui';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -81,9 +82,9 @@ const EditMyInfoPage = () => {
   return (
     <Layout className='bg-white'>
       <Layout.Header>
-        <Link href={'/trainer/mypage'}>
+        <Button variant='ghost' className='p-0' onClick={() => router.back()}>
           <IconBack />
-        </Link>
+        </Button>
       </Layout.Header>
       {data && (
         <Layout.Contents className='flex flex-col'>

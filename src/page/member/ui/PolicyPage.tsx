@@ -1,19 +1,22 @@
 'use client';
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { IconArrowRightSmall, IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
+import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const PolicyPage = () => {
+  const router = useRouter();
+
   return (
     <Layout className='bg-white'>
       <Layout.Header>
-        <Link href={'/trainer/mypage'}>
+        <Button variant='ghost' className='p-0' onClick={() => router.back()}>
           <IconBack />
-        </Link>
+        </Button>
       </Layout.Header>
       <Layout.Contents>
         <h1 className={cn(Typography.HEADING_3, 'bg-white px-7 pb-7 pt-8')}>

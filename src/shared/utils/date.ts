@@ -51,4 +51,23 @@ const timeToDecimal = (time: string): number => {
   return hours + minutes / 60;
 };
 
-export { formatTimestampToRelativeTime, getStartOfWeek, timeToDecimal };
+/**
+ * @description 24시간 형식을 12시간형식으로 변환
+ */
+
+const convertTo12HourFormat = (time: string) => {
+  const [hours, minutes] = time.split(':');
+  const hourNumber = Number(hours);
+
+  const period = hourNumber < 12 ? '오전' : '오후';
+  const hour = hourNumber % 12 || 12;
+
+  return [`${hour}:${minutes}`, period];
+};
+
+export {
+  convertTo12HourFormat,
+  formatTimestampToRelativeTime,
+  getStartOfWeek,
+  timeToDecimal,
+};

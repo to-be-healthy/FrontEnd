@@ -19,11 +19,10 @@ import {
   useStudentMyWaitingListQuery,
   WaitingBottomSheet,
 } from '@/feature/schedule';
-import { IconAlarm } from '@/shared/assets';
+import { IconAlarm, IconNoSchedule } from '@/shared/assets';
 import { IconNotification } from '@/shared/assets';
 import DownIcon from '@/shared/assets/images/icon_arrow_bottom.svg';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
-import ScheduleIcon from '@/shared/assets/images/icon_schedule.svg';
 import { Typography } from '@/shared/mixin';
 import { Calendar } from '@/shared/ui';
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
@@ -293,7 +292,7 @@ export const StudentSchedulePage = () => {
                 {scheduleListData?.morning === null &&
                   scheduleListData?.afternoon === null && (
                     <div className='flex flex-col items-center justify-center py-[70px]'>
-                      <ScheduleIcon />
+                      <IconNoSchedule />
                       <p className={cn(Typography.TITLE_1, 'mt-4 text-gray-400')}>
                         예약 가능한 수업이 없습니다.
                       </p>
@@ -305,17 +304,18 @@ export const StudentSchedulePage = () => {
           <TabsContent value='myReservation'>
             {myReservationData ? (
               <div className='px-7 py-6'>
-                {/* todo : api 완성 후 수정예정 수강권 없을시 course === null */}
-                {/* <article
-                  className={cn(
-                    'mb-8 flex items-center justify-between rounded-md bg-gray-200 px-6 py-3 text-gray-700',
-                    Typography.TITLE_3
-                  )}>
-                  <p>잔여 {myReservationData?.course.remainLessonCnt}회</p>
-                  <span className={cn(Typography.BODY_2)}>
-                    {myReservationData?.course.totalLessonCnt}회 PT수강권
-                  </span>
-                </article> */}
+                {myReservationData?.course && (
+                  <article
+                    className={cn(
+                      'mb-8 flex items-center justify-between rounded-md bg-gray-200 px-6 py-3 text-gray-700',
+                      Typography.TITLE_3
+                    )}>
+                    <p>잔여 {myReservationData?.course.remainLessonCnt}회</p>
+                    <span className={cn(Typography.BODY_2)}>
+                      {myReservationData?.course.totalLessonCnt}회 PT수강권
+                    </span>
+                  </article>
+                )}
 
                 <Tabs defaultValue='upcomingReservation'>
                   <TabsList className='mb-6 flex items-center justify-start gap-4 border-b-0 p-0'>

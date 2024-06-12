@@ -156,9 +156,9 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
         </li>
         <li>
           <Link
-            href='/student/mypage'
+            href='/student/community'
             className='flex flex-col items-center justify-between gap-y-[6px]'>
-            {pathname === '/student/mypage' ? (
+            {pathname === '/student/community' ? (
               <IconCommunityFilled />
             ) : (
               <IconCommunityOutlined />
@@ -166,7 +166,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             <span
               className={cn(
                 'text-[10px] font-semibold',
-                pathname === '/student/mypage' ? 'text-black' : 'text-gray-700'
+                pathname === '/student/community' ? 'text-black' : 'text-gray-700'
               )}>
               커뮤니티
             </span>

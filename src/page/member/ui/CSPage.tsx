@@ -1,14 +1,17 @@
 'use client';
 
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
+import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const CSPage = () => {
   const CS_EMAIL = 'tobehealthy0127@gmail.com';
+
+  const router = useRouter();
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText(CS_EMAIL);
@@ -17,9 +20,9 @@ const CSPage = () => {
   return (
     <Layout className='bg-white'>
       <Layout.Header>
-        <Link href={'/trainer/mypage'}>
+        <Button variant='ghost' className='p-0' onClick={() => router.back()}>
           <IconBack />
-        </Link>
+        </Button>
       </Layout.Header>
       <Layout.Contents className='px-7'>
         <h1 className={cn(Typography.HEADING_3, 'pb-6 pt-7')}>고객센터</h1>
