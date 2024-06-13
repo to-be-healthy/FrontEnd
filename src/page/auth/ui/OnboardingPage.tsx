@@ -4,6 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { redirect, useRouter, useSearchParams } from 'next/navigation';
 
+import { POLICY_URL, PRIVACY_URL } from '@/entity/auth/consts';
 import { SocialSignIn } from '@/feature/auth';
 import { IconLogo } from '@/shared/assets';
 import IconBack from '@/shared/assets/images/icon_back.svg';
@@ -116,14 +117,14 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
           </Button>
           <p className='w-2/3 break-keep pt-[32px] text-center text-[11px] text-gray-400'>
             로그인 시{' '}
-            <Link href='#' className='underline'>
+            <a target='_blank' href={PRIVACY_URL} className='underline' rel='noreferrer'>
               개인정보 처리방침
-            </Link>{' '}
+            </a>{' '}
             및{' '}
-            <Link href='#' className='underline'>
-              서비스 이용약관에
-            </Link>{' '}
-            동의함으로 간주합니다.
+            <a target='_blank' href={POLICY_URL} className='underline' rel='noreferrer'>
+              서비스 이용약관
+            </a>
+            에 동의함으로 간주합니다.
           </p>
         </div>
       </Layout.Contents>

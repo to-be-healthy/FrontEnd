@@ -18,10 +18,16 @@ const KAKAO_SOCIAL_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id
 const NAVER_SOCIAL_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?client_id=${NAVER_CLIENT_ID}&redirect_uri=${naverRedirectUri}&response_type=code`;
 const GOOGLE_SOCIAL_AUTH_URL = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${GOOGLE_CLIENT_ID}&redirect_uri=${googleRedirectUri}&response_type=code&scope=email profile`;
 
+const POLICY_URL = 'https://mewing-sun-887.notion.site/30a82fa5850c4a90b73f542f9916a735';
+const PRIVACY_URL =
+  'https://mewing-sun-887.notion.site/fcc610c6a4c04ae2813be8ff3d98c56b?pvs=4';
+
 export {
   GOOGLE_SOCIAL_AUTH_URL,
   googleRedirectUri,
   KAKAO_SOCIAL_AUTH_URL,
   kakaoRedirectUri,
   NAVER_SOCIAL_AUTH_URL,
+  POLICY_URL,
+  PRIVACY_URL,
 };

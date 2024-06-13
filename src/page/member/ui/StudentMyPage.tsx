@@ -100,7 +100,7 @@ export const StudentMyPage = () => {
           </li>
           <li>
             <Link
-              href={'/student/mypage/policy'}
+              href={'/policy'}
               className='flex items-center justify-between bg-white px-7 py-[15px]'>
               <p className={cn(Typography.BODY_1)}>약관 및 정책</p>
               <IconArrowRightSmall stroke={'var(--gray-400)'} />
@@ -108,7 +108,7 @@ export const StudentMyPage = () => {
           </li>
           <li>
             <Link
-              href={'/student/mypage/cs'}
+              href={'/cs'}
               className='flex items-center justify-between bg-white px-7 py-[15px]'>
               <p className={cn(Typography.BODY_1)}>고객센터</p>
               <IconArrowRightSmall stroke={'var(--gray-400)'} />
