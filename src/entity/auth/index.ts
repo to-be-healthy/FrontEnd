@@ -13,6 +13,7 @@ export {
 } from './consts';
 export { auth, useAuthAction, useAuthSelector } from './model/store';
 export type {
+  LowercaseMemberType,
   SignUpFormType,
   SignUpRequest,
   SocialProvider,

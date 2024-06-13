@@ -8,7 +8,7 @@ const useWeeklySchedules = () => {
   const currentStartOfWeek = getStartOfWeek();
   const [startDate, setStartDate] = useState(currentStartOfWeek);
 
-  const { data, isPending } = useTrainerScheduleQuery({
+  const { data, isPending, refetch } = useTrainerScheduleQuery({
     lessonEndDt: dayjs(startDate).add(6, 'days').format('YYYY-MM-DD'),
     lessonStartDt: dayjs(startDate).format('YYYY-MM-DD'),
   });
@@ -20,7 +20,7 @@ const useWeeklySchedules = () => {
   const weeklySchedules =
     data?.schedule && data ? Object.entries(data.schedule).map((daily) => daily) : null;
 
-  return { startDate, changeWeek, isPending, weeklySchedules };
+  return { startDate, isPending, weeklySchedules, refetch, changeWeek };
 };
 
 export { useWeeklySchedules };

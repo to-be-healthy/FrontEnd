@@ -48,15 +48,11 @@ export const TrainerMyPage = () => {
             <p className={cn(Typography.BODY_1)}>알림 설정</p>
             <IconArrowRightSmall stroke={'var(--gray-400)'} />
           </Link>
-          <Link
-            href={'/trainer/mypage/policy'}
-            className='flex justify-between bg-white px-7 py-[15px]'>
+          <Link href={'/policy'} className='flex justify-between bg-white px-7 py-[15px]'>
             <p className={cn(Typography.BODY_1)}>약관 및 정책</p>
             <IconArrowRightSmall stroke={'var(--gray-400)'} />
           </Link>
-          <Link
-            href={'/trainer/mypage/cs'}
-            className='flex justify-between bg-white px-7 py-[15px]'>
+          <Link href={'/cs'} className='flex justify-between bg-white px-7 py-[15px]'>
             <p className={cn(Typography.BODY_1)}>고객센터</p>
             <IconArrowRightSmall stroke={'var(--gray-400)'} />
           </Link>

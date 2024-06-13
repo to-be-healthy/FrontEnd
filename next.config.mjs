@@ -49,6 +49,7 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
+    dangerouslyAllowSVG: true,
   },
 };
 

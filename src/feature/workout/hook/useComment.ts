@@ -34,17 +34,15 @@ type CommentTarget = {
 } | null;
 
 interface Props {
-  memberId: number;
   workoutHistoryId: number;
   ref: MutableRefObject<HTMLInputElement | null>;
 }
 
-const useWorkoutComment = ({ memberId, workoutHistoryId, ref }: Props) => {
+const useWorkoutComment = ({ workoutHistoryId, ref }: Props) => {
   const [text, setText] = useState('');
   const [target, setTarget] = useState<CommentTarget>(null);
 
   const { data, refetch } = useWorkoutCommentQuery({
-    memberId,
     workoutHistoryId,
   });
   const comments = data?.pages.flatMap((page) => page.content).filter(Boolean);
@@ -110,7 +108,6 @@ const useWorkoutComment = ({ memberId, workoutHistoryId, ref }: Props) => {
     text,
     comments,
     ref,
-    memberId,
     workoutHistoryId,
     submitComment,
     changeText,

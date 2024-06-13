@@ -58,7 +58,7 @@ export const StudentMyPage = () => {
           <article className='mypage-box-shadow m-auto flex w-[320px] items-center justify-between rounded-lg bg-white px-8 py-5'>
             <div className='flex flex-col items-center justify-center gap-y-5'>
               <IconClassLog />
-              <Link href='/'>수업일지</Link>
+              <Link href='/student/log'>수업일지</Link>
             </div>
             <span className='mx-9 h-11 w-[1px] border border-gray-200' />
             <div className='flex flex-col items-center justify-center gap-y-5'>
@@ -68,7 +68,7 @@ export const StudentMyPage = () => {
             <span className='mx-9 h-11 w-[1px] border border-gray-200' />
             <div className='flex flex-col items-center justify-center gap-y-5'>
               <IconExerciseLog />
-              <Link href='/'>운동기록</Link>
+              <Link href='/student/workout'>운동기록</Link>
             </div>
           </article>
         </div>
@@ -100,7 +100,7 @@ export const StudentMyPage = () => {
           </li>
           <li>
             <Link
-              href={'/student/mypage/policy'}
+              href={'/policy'}
               className='flex items-center justify-between bg-white px-7 py-[15px]'>
               <p className={cn(Typography.BODY_1)}>약관 및 정책</p>
               <IconArrowRightSmall stroke={'var(--gray-400)'} />
@@ -108,7 +108,7 @@ export const StudentMyPage = () => {
           </li>
           <li>
             <Link
-              href={'/student/mypage/cs'}
+              href={'/cs'}
               className='flex items-center justify-between bg-white px-7 py-[15px]'>
               <p className={cn(Typography.BODY_1)}>고객센터</p>
               <IconArrowRightSmall stroke={'var(--gray-400)'} />

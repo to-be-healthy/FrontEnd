@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation';
 
+import { POLICY_URL, PRIVACY_URL } from '@/entity/auth/consts';
 import { IconArrowRightSmall, IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
@@ -25,7 +26,7 @@ const PolicyPage = () => {
         <section className='mt-7'>
           <a
             target='_blank'
-            href={'https://mewing-sun-887.notion.site/30a82fa5850c4a90b73f542f9916a735'}
+            href={POLICY_URL}
             className='flex items-center justify-between px-7 py-[15px]'
             rel='noreferrer'>
             <p className={cn(Typography.BODY_1)}>서비스 이용약관</p>
@@ -33,9 +34,7 @@ const PolicyPage = () => {
           </a>
           <a
             target='_blank'
-            href={
-              'https://mewing-sun-887.notion.site/fcc610c6a4c04ae2813be8ff3d98c56b?pvs=4'
-            }
+            href={PRIVACY_URL}
             className='flex items-center justify-between px-7 py-[15px]'
             rel='noreferrer'>
             <p className={cn(Typography.BODY_1)}>개인정보 처리방침</p>

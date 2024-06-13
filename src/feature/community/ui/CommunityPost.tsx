@@ -1,24 +1,51 @@
 'use client';
 
-import dayjs from 'dayjs';
+import Image from 'next/image';
 
-import { type Workout } from '@/feature/workout';
-import { IconChat, IconLike } from '@/shared/assets';
+import { IconAvatar, IconChat, IconLike } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
-import { cn } from '@/shared/utils';
+import { cn, formatTimestampToRelativeTime } from '@/shared/utils';
 import { ImageSlide } from '@/widget';
 
+import { Workout } from '../model/types';
 import { ExercisePreview } from './ExerciseInfo';
 
-const WorkoutPost = ({ workout }: { workout: Workout }) => {
-  const { createdAt, files, content, completedExercises, liked, likeCnt, commentCnt } =
-    workout;
-  const formattedDate = dayjs(createdAt).format('M월 D일 (ddd)');
+const CommunityPost = ({ workout }: { workout: Workout }) => {
+  const {
+    member,
+    files,
+    content,
+    completedExercises,
+    liked,
+    likeCnt,
+    commentCnt,
+    createdAt,
+  } = workout;
 
   return (
     <Card className={cn(Typography.TITLE_3, 'w-full gap-0')}>
-      <CardHeader className={cn(Typography.TITLE_3, 'mb-4')}>{formattedDate}</CardHeader>
+      <CardHeader
+        className={cn(Typography.TITLE_3, 'mb-6 flex flex-row items-center gap-3')}>
+        {member.profile.fileUrl ? (
+          <Image
+            src={member.profile.fileUrl}
+            alt='profile'
+            width={32}
+            height={32}
+            className='h-[32px] w-[32px] rounded-full border border-gray-300 object-cover'
+            priority
+          />
+        ) : (
+          <IconAvatar width={32} height={32} />
+        )}
+        <div className='flex flex-col'>
+          <h3 className={cn(Typography.TITLE_3)}>{member.name}</h3>
+          <p className={cn(Typography.BODY_4_REGULAR, 'text-gray-500')}>
+            {formatTimestampToRelativeTime(createdAt)}
+          </p>
+        </div>
+      </CardHeader>
       <CardContent>
         <p
           className={cn(
@@ -49,4 +76,4 @@ const WorkoutPost = ({ workout }: { workout: Workout }) => {
   );
 };
 
-export { WorkoutPost };
+export { CommunityPost };
