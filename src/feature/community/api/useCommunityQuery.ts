@@ -1,4 +1,5 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 
 import { authApi } from '@/entity/auth';
 import { BaseError, BaseResponse, Pageable } from '@/shared/api';
@@ -41,7 +42,12 @@ export const useCommunityQuery = ({
           `/api/community/v1?${queryParams.toString()}`
         );
         return res.data.data;
-      } catch (error) {
+      } catch (error: unknown) {
+        if (error instanceof AxiosError) {
+          const responseData = error.response?.data as { message?: string };
+          const message = responseData.message ?? '문제가 발생했습니다.';
+          throw new Error(message);
+        }
         throw new Error('문제가 발생했습니다.');
       }
     },

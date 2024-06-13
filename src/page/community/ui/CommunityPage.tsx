@@ -44,8 +44,7 @@ const CommunityPage = () => {
   }, [fetchNextPage, hasNextPage, inView]);
 
   if (isError) {
-    alert(error.message);
-    history.back();
+    throw new Error(error.message);
   }
 
   return (
