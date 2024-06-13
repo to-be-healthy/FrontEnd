@@ -19,7 +19,7 @@ const WorkoutPost = ({ workout }: { workout: Workout }) => {
   return (
     <Card className={cn(Typography.TITLE_3, 'w-full gap-0')}>
       <CardHeader className={cn(Typography.TITLE_3, 'mb-4')}>{formattedDate}</CardHeader>
-      <CardContent className=''>
+      <CardContent>
         <p
           className={cn(
             Typography.BODY_3,
