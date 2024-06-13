@@ -90,10 +90,7 @@ interface WeekPickerProps {
 }
 
 const WeekPicker = ({ startDate, onWeekChange }: WeekPickerProps) => {
-  const currentDate = getStartOfWeek();
-
   const endDate = dayjs(startDate).add(6, 'day');
-  const isCurrentWeek = dayjs(startDate).isSame(dayjs(currentDate).add(7, 'day'), 'day');
 
   const changeWeek = (date: Date) => {
     onWeekChange(date);
@@ -104,7 +101,6 @@ const WeekPicker = ({ startDate, onWeekChange }: WeekPickerProps) => {
   };
 
   const moveNextWeek = () => {
-    if (isCurrentWeek) return;
     changeWeek(dayjs(startDate).add(7, 'day').toDate());
   };
 
@@ -127,15 +123,8 @@ const WeekPicker = ({ startDate, onWeekChange }: WeekPickerProps) => {
           <DailyCalendar defaultStartDate={startDate} changeWeek={changeWeek} />
         </DialogContent>
       </Dialog>
-      <Button
-        variant='ghost'
-        size='auto'
-        className='disabled:bg-transparent'
-        onClick={moveNextWeek}
-        disabled={isCurrentWeek}>
-        <IconArrowRight
-          stroke={cn(isCurrentWeek ? 'var(--gray-400)' : 'var(--gray-600)')}
-        />
+      <Button variant='ghost' size='auto' onClick={moveNextWeek}>
+        <IconArrowRight stroke={'var(--gray-600)'} />
       </Button>
     </div>
   );

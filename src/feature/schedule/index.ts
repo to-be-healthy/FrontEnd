@@ -9,6 +9,7 @@ export { useStudentMyWaitingListQuery } from './api/useStudentMyWaitingListQuery
 export { useStudentReservationScheduleMutation } from './api/useStudentReservationScheduleMutation';
 export { useStudentWaitingScheduleMutation } from './api/useStudentWaitingScheduleMutation';
 export { useTrainerClassTimeSettingMutation } from './api/useTrainerClassTimeSettingMutation';
+export { useTrainerCreateSchedulesMutation } from './api/useTrainerCreateSchedulesMutation';
 export { CLASS_TIME_DEFAULT } from './consts';
 export { useWeeklySchedules } from './hook/useWeeklySchedules';
 export type {
