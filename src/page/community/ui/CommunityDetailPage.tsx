@@ -46,7 +46,7 @@ const CommunityDetailPage = ({ workoutHistoryId }: { workoutHistoryId: number })
                 <Link
                   href={`../community?memberId=${data.member.id}`}
                   className='flex w-fit items-center gap-3'>
-                  {data.member.profile.fileUrl ? (
+                  {data.member.profile ? (
                     <Image
                       src={data.member.profile.fileUrl}
                       alt='profile'

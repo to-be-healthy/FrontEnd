@@ -27,7 +27,7 @@ interface WorkoutMember {
   profile: {
     id: number;
     fileUrl: string;
-  };
+  } | null;
   memberType: 'STUDENT';
   pushAlarmStatus: 'ENABLED' | 'DISABLE';
   feedbackAlarmStatus: 'ENABLED' | 'DISABLE';

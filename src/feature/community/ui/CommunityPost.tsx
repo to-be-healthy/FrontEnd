@@ -27,7 +27,7 @@ const CommunityPost = ({ workout }: { workout: Workout }) => {
     <Card className={cn(Typography.TITLE_3, 'w-full gap-0')}>
       <CardHeader
         className={cn(Typography.TITLE_3, 'mb-6 flex flex-row items-center gap-3')}>
-        {member.profile.fileUrl ? (
+        {member.profile ? (
           <Image
             src={member.profile.fileUrl}
             alt='profile'
