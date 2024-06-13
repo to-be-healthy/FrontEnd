@@ -19,26 +19,32 @@ const formatTimestampToRelativeTime = (
   const diffInSeconds = now.diff(time, 'second');
   const diffInMinutes = now.diff(time, 'minute');
   const diffInHours = now.diff(time, 'hour');
+  const diffInDays = now.diff(time, 'day');
 
   if (diffInSeconds < 0) {
     const futureDiffInSeconds = Math.abs(diffInSeconds);
     const futureDiffInMinutes = Math.abs(diffInMinutes);
     const futureDiffInHours = Math.abs(diffInHours);
+    const futureDiffInDays = Math.abs(diffInDays);
 
     if (futureDiffInSeconds < 60) {
       return `${futureDiffInSeconds}초 후`;
     } else if (futureDiffInMinutes < 60) {
       return `${futureDiffInMinutes}분 후`;
-    } else {
+    } else if (futureDiffInHours < 24) {
       return `${futureDiffInHours}시간 후`;
+    } else {
+      return `${futureDiffInDays}일 후`;
     }
   } else {
     if (diffInSeconds < 60) {
       return `${diffInSeconds}초 전`;
     } else if (diffInMinutes < 60) {
       return `${diffInMinutes}분 전`;
-    } else {
+    } else if (diffInHours < 24) {
       return `${diffInHours}시간 전`;
+    } else {
+      return `${diffInDays}일 전`;
     }
   }
 };
