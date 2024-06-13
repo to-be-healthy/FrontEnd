@@ -122,10 +122,29 @@ interface StudentRank {
   lastMonthRanking: number;
 }
 
+interface FindIdRequest {
+  name: string;
+  email: string;
+}
+
+type FindPasswordRequest = FindIdRequest;
+
+interface FindIdResponse {
+  userId: string;
+  createdAt: Date;
+  socialType: SocialType;
+}
+
+type FindPasswordResponse = Pick<FindIdResponse, 'socialType'>;
+
 export type {
   AppendMemberForm,
   CourseHistoryItem,
   CourseItem,
+  FindIdRequest,
+  FindIdResponse,
+  FindPasswordRequest,
+  FindPasswordResponse,
   HistoryType,
   InviteForm,
   Member,

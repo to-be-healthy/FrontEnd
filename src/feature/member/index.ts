@@ -6,6 +6,7 @@ export { useDeleteProfileImageMutation } from './api/useDeleteProfileImageMutati
 export { useDeleteStudentCourseMutation } from './api/useDeleteStudentCourseMutation';
 export { useDeleteStudentMutation } from './api/useDeleteStudentMutation';
 export { useFcmTokenMutation } from './api/useFcmTokenMutation';
+export { useFindIdMutation } from './api/useFindIdMutation';
 export { useInviteStudentMutation } from './api/useInviteStudentMutation';
 export { useMyCourseHistoryQuery } from './api/useMyCourseHistoryQuery';
 export { useMyInfoQuery } from './api/useMyInfoQuery';
@@ -28,6 +29,10 @@ export type {
   AppendMemberForm,
   CourseHistoryItem,
   CourseItem,
+  FindIdRequest,
+  FindIdResponse,
+  FindPasswordRequest,
+  FindPasswordResponse,
   HistoryType,
   InviteForm,
   Member,

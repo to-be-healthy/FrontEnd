@@ -28,3 +28,4 @@ export {
   NAME_REGEXP,
   PASSWORD_REGEXP,
 } from './regexp';
+export { SocialIcon, socialProviders } from './ui/SocialIcon';
