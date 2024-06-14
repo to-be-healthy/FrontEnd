@@ -40,9 +40,9 @@ import { Layout } from '@/widget';
 
 export const StudentSchedulePage = () => {
   const searchParams = useSearchParams();
-  const tab = searchParams?.get('tab');
+  const initTab = searchParams?.get('tab') ?? 'classReservation';
 
-  const [activeTab, setActiveTab] = useState('classReservation');
+  const [activeTab, setActiveTab] = useState(initTab);
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
@@ -147,11 +147,6 @@ export const StudentSchedulePage = () => {
     });
   };
 
-  useEffect(() => {
-    if (tab) {
-      setActiveTab(tab);
-    }
-  }, []);
   return (
     <Layout type='student'>
       <Layout.Header className='flex justify-end bg-white'>

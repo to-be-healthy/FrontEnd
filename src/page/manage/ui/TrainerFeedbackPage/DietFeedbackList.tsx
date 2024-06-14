@@ -81,7 +81,7 @@ const DietFeedbackList = ({ dietDate }: { dietDate: string }) => {
                           className={
                             diet.feedbackChecked
                               ? ''
-                              : 'absolute ml-[2px] h-1 w-1 rounded-[9999px] bg-point'
+                              : 'absolute ml-[2px] h-1 w-1 rounded-full bg-point'
                           }
                         />
                       </p>

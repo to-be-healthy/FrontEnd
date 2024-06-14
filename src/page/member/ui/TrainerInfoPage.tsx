@@ -43,7 +43,7 @@ const TrainerInfoPage = () => {
         {data && (
           <section className='px-7 py-6'>
             <div className='flex flex-col items-center pb-11'>
-              <div className='mb-6 flex h-[80px] w-[80px] items-center justify-center overflow-hidden rounded-[9999px] border border-gray-300'>
+              <div className='mb-6 flex h-[80px] w-[80px] items-center justify-center overflow-hidden rounded-full border border-gray-300'>
                 {data.trainer.profile ? (
                   <Image
                     src={data?.trainer.profile.fileUrl}

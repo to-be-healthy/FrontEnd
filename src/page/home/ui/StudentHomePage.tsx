@@ -144,9 +144,7 @@ export const StudentHomePage = () => {
         <Link href={'/student/alarm'} className='relative'>
           <span
             className={
-              homeAlarmData
-                ? 't-0 absolute right-0 h-1 w-1 rounded-[9999px] bg-point'
-                : ''
+              homeAlarmData ? 't-0 absolute right-0 h-1 w-1 rounded-full bg-point' : ''
             }
           />
           <IconAlarm width={24} height={24} />
@@ -392,7 +390,7 @@ export const StudentHomePage = () => {
                             Typography.HEADING_5,
                             'ml-1 inline-block h-7 w-7 rounded-[50%] bg-primary-500 text-center text-[#fff]'
                           )}>
-                          1{/* todo: 수업 전체에 들어가서 보는순간 없어짐..? */}
+                          1
                         </span>
                       )}
                     </div>
@@ -405,7 +403,7 @@ export const StudentHomePage = () => {
                   <Link href={`/student/log/${data?.lessonHistory.id}`}>
                     <CardContent className='flex items-start justify-start'>
                       {data.lessonHistory.trainerProfile ? (
-                        <div className='h-[28px] w-[28px] overflow-hidden rounded-[9999px] border border-gray-100'>
+                        <div className='h-[28px] w-[28px] overflow-hidden rounded-full border border-gray-100'>
                           <Image
                             src={data.lessonHistory.trainerProfile}
                             width={28}
