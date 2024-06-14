@@ -26,7 +26,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
-import { cn } from '@/shared/utils';
+import { cn, twSelector } from '@/shared/utils';
 
 interface SortCondition<T> {
   label: string;
@@ -93,8 +93,12 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
           </Button>
           <input
             type='text'
-            className='w-full bg-transparent px-5'
+            className={cn(
+              'w-full bg-transparent px-5',
+              twSelector('placeholder', cn(Typography.BODY_1, 'text-gray-500 '))
+            )}
             onChange={handleSearchInput}
+            placeholder='이름 검색'
           />
         </div>
       </div>
@@ -173,7 +177,7 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
                   <button
                     key={item.memberId}
                     onClick={() => onClickStudent(item.memberId)}>
-                    <div className='flex justify-between rounded-lg bg-white px-6 py-7'>
+                    <div className='flex h-[72px] justify-between rounded-lg bg-white px-6 py-7'>
                       <div className='flex items-center gap-x-[16px]'>
                         <div className='relative'>
                           {item.fileUrl ? (
@@ -182,13 +186,16 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
                               height={32}
                               src={item.fileUrl}
                               alt='profile'
-                              className={profileBorderStyleMapper(item.ranking)}
+                              className={cn(
+                                'h-[32px] w-[32px] rounded-full border border-gray-300 object-contain',
+                                profileBorderStyleMapper(item.ranking)
+                              )}
                             />
                           ) : (
                             <IconProfileDefault width={32} height={32} />
                           )}
                         </div>
-                        <div className='flex flex-col gap-y-[4px] text-left'>
+                        <div className='flex flex-col text-left'>
                           <p className={cn(Typography.TITLE_1_BOLD)}>{item.name}</p>
                           {item.nickName && (
                             <span

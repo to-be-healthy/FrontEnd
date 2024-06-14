@@ -130,7 +130,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
         onSuccess: () => {
           setIsAddSheetOpen(false);
           void queryClient.invalidateQueries({
-            queryKey: ['studentCourseDetail'],
+            queryKey: ['studentCourseHistory'],
           });
           return toast({
             className: 'h-12',

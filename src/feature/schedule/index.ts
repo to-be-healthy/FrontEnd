@@ -10,6 +10,8 @@ export { useStudentReservationScheduleMutation } from './api/useStudentReservati
 export { useStudentWaitingScheduleMutation } from './api/useStudentWaitingScheduleMutation';
 export { useTrainerClassTimeSettingMutation } from './api/useTrainerClassTimeSettingMutation';
 export { useTrainerCreateSchedulesMutation } from './api/useTrainerCreateSchedulesMutation';
+export { useTrainerStudentLastReservationListQuery } from './api/useTrainerStudentLastReservationListQuery';
+export { useTrainerStudentReservationListQuery } from './api/useTrainerStudentReservationListQuery';
 export { CLASS_TIME_DEFAULT } from './consts';
 export { useWeeklySchedules } from './hook/useWeeklySchedules';
 export type {
@@ -25,5 +27,7 @@ export type {
 export { ReservationBottomSheet } from './ui/ReservationBottomSheet';
 export { StudentMyReservationSchedule } from './ui/StudentMyReservationSchedule';
 export { StudentMyWaitingSchedule } from './ui/StudentMyWaitingSchedule';
+export { TrainerStudentLastReservationSchedule } from './ui/TrainerStudentLastReservationSchedule';
+export { TrainerStudentReservationSchedule } from './ui/TrainerStudentReservationSchedule';
 export { WaitingBottomSheet } from './ui/WaitingBottomSheet';
 export { WeeklyTimetable } from './ui/WeeklyTimetable';

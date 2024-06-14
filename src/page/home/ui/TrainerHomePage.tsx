@@ -4,6 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 
+import { useHomeAlarmQuery } from '@/entity/alarm';
 import {
   AddStudentDialog,
   useAddStudentCourseMutation,
@@ -31,8 +32,10 @@ export const TrainerHomePage = () => {
   const queryClient = useQueryClient();
   const { showErrorToast } = useShowErrorToast();
   const { mutate } = useAddStudentCourseMutation();
+
   const { data: userInfo } = useMyInfoQuery();
   const { data: homeInfo } = useTrainerHomeQuery();
+  const { data: homeAlarmData } = useHomeAlarmQuery();
 
   const addCourse = ({ courseId, memberId }: { courseId: number; memberId: number }) => {
     mutate(
@@ -66,8 +69,14 @@ export const TrainerHomePage = () => {
       <div className='absolute left-0 top-0 z-0 h-[170px] w-full bg-primary' />
       <Layout.Header className='z-10'>
         <p className={cn(Typography.TITLE_2, 'text-white')}>{userInfo?.gym.name}</p>
-        <Link href={'/trainer/alarm'}>
-          {/* TODO) 읽지 않은 알람 있을 경우 레드닷 표시 필요 */}
+        <Link href={'/trainer/alarm'} className='relative'>
+          <span
+            className={
+              homeAlarmData
+                ? 't-0 absolute -right-[2px] h-1 w-1 rounded-[9999px] bg-point'
+                : ''
+            }
+          />
           <IconAlarmWhite />
         </Link>
       </Layout.Header>

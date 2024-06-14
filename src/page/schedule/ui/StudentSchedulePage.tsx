@@ -33,11 +33,16 @@ import { cn, twSelector } from '@/shared/utils';
 dayjs.extend(isBetween);
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
+import { useSearchParams } from 'next/navigation';
 import { DateFormatter, DayProps } from 'react-day-picker';
 
 import { Layout } from '@/widget';
 
 export const StudentSchedulePage = () => {
+  const searchParams = useSearchParams();
+  const tab = searchParams?.get('tab');
+
+  const [activeTab, setActiveTab] = useState('classReservation');
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
@@ -48,29 +53,28 @@ export const StudentSchedulePage = () => {
   const [scheduleListFormatDate, setScheduleListFormatDate] = useState(
     dayjs(date).format('YYYY-MM-DD')
   );
-  const [myReservationFormatDate, setMyReservationFormatDate] = useState(
-    dayjs(date).format('YYYYMM')
-  );
 
   useEffect(() => {
     const dateFormattedWithHyphen = dayjs(date).format('YYYY-MM-DD');
-    const dateFormattedWithoutHyphen = dayjs(date).format('YYYYMM');
     setScheduleListFormatDate(dateFormattedWithHyphen);
-    setMyReservationFormatDate(dateFormattedWithoutHyphen);
   }, [date]);
 
   const { data: scheduleListData, isPending } =
     useScheduleListQuery(scheduleListFormatDate);
-  const { data: calendarMyReservationData } = useStudentCalendarMyReservationListQuery(
-    myReservationFormatDate
-  );
+  const { data: calendarMyReservationData } = useStudentCalendarMyReservationListQuery({
+    lessonStartDt: dayjs(currentMonth)
+      .subtract(1, 'month')
+      .startOf('month')
+      .format('YYYY-MM-DD'),
+    lessonEndDt: dayjs(currentMonth).add(1, 'month').endOf('month').format('YYYY-MM-DD'),
+  });
   const { data: myReservationData } = useStudentMyReservationListQuery();
   const { data: myWaitingData } = useStudentMyWaitingListQuery();
   const { mutate } = useShowNoticeMutation();
 
   const reservedDates =
-    calendarMyReservationData?.reservations?.map((item) => {
-      return new Date(item.lessonDt);
+    calendarMyReservationData?.reservationDays?.map((item) => {
+      return new Date(item);
     }) ?? [];
 
   const newStartOfWeek = new Date();
@@ -136,17 +140,25 @@ export const StudentSchedulePage = () => {
         void queryClient.invalidateQueries({
           queryKey: ['scheduleList'],
         });
+        void queryClient.invalidateQueries({
+          queryKey: ['StudentCalendarMyReservationList'],
+        });
       },
     });
   };
 
+  useEffect(() => {
+    if (tab) {
+      setActiveTab(tab);
+    }
+  }, []);
   return (
     <Layout type='student'>
       <Layout.Header className='flex justify-end bg-white'>
         <IconAlarm />
       </Layout.Header>
       <Layout.Contents className='bg-gray-100'>
-        <Tabs defaultValue='classReservation'>
+        <Tabs defaultValue={activeTab} value={activeTab} onValueChange={setActiveTab}>
           <TabsList className='bg-white'>
             <TabsTrigger value='classReservation'>수업 예약</TabsTrigger>
             <TabsTrigger
@@ -230,7 +242,7 @@ export const StudentSchedulePage = () => {
                           '00',
                         ];
                         return (
-                          <li key={item.scheduleId}>
+                          <li key={item.scheduleId} className='w-[calc((100%-16px)/3)]'>
                             {item.reservationStatus === 'AVAILABLE' && date && (
                               <ReservationBottomSheet data={item} date={date} />
                             )}
@@ -243,7 +255,7 @@ export const StudentSchedulePage = () => {
                               <div
                                 className={cn(
                                   Typography.TITLE_3,
-                                  'flex h-full w-[102px] flex-col items-center justify-center rounded-lg bg-gray-200 py-[15px] text-gray-400'
+                                  'flex h-full w-full flex-col items-center justify-center rounded-lg bg-gray-200 py-[15px] text-gray-400'
                                 )}>
                                 <span>{`${hours}:${minutes}`}</span>
                                 <span>마감</span>
@@ -266,7 +278,7 @@ export const StudentSchedulePage = () => {
                           '00',
                         ];
                         return (
-                          <li key={item.scheduleId}>
+                          <li key={item.scheduleId} className='w-[calc((100%-16px)/3)]'>
                             {item.reservationStatus === 'AVAILABLE' && date && (
                               <ReservationBottomSheet data={item} date={date} />
                             )}
@@ -279,7 +291,7 @@ export const StudentSchedulePage = () => {
                               <div
                                 className={cn(
                                   Typography.TITLE_3,
-                                  'flex h-full w-[102px] flex-col items-center justify-center rounded-lg bg-gray-200 py-[15px] text-gray-400'
+                                  'flex h-full w-full flex-col items-center justify-center rounded-lg bg-gray-200 py-[15px] text-gray-400'
                                 )}>
                                 <span>{`${Number(hours) > 12 ? Number(hours) - 12 : 12}:${minutes}`}</span>
                                 <span>마감</span>

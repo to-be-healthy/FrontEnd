@@ -41,7 +41,7 @@ const NoReservation = () => {
   );
 };
 
-const LastReservationPage = () => {
+const StudentLastReservationPage = () => {
   const searchParams = useSearchParams();
   const month = searchParams.get('month');
 
@@ -145,7 +145,7 @@ const LastReservationPage = () => {
                               ? 'text-black'
                               : 'text-point'
                           }>
-                          {item.reservationStatus === 'COMPLETED' ? '출석' : '미출석'}
+                          {item.reservationStatus === 'COMPLETED' ? ' 출석' : ' 미출석'}
                         </span>
                       </SheetDescription>
 
@@ -170,4 +170,4 @@ const LastReservationPage = () => {
   );
 };
 
-export { LastReservationPage };
+export { StudentLastReservationPage };

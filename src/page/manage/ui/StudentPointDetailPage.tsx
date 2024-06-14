@@ -12,7 +12,7 @@ import { useInView } from 'react-intersection-observer';
 
 import { useStudentPointHistoryQuery } from '@/feature/member';
 import { pointHistoryTypes } from '@/feature/member';
-import { IconClose, IconNotification, IconPoint } from '@/shared/assets';
+import { IconClose, IconNotification } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Card, CardContent, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -95,7 +95,14 @@ export const StudentPointDetailPage = ({ memberId }: Props) => {
                   </p>
 
                   <div className='flex items-center justify-between'>
-                    <IconPoint />
+                    <Image
+                      src='/images/point.png'
+                      width={21}
+                      height={21}
+                      alt='point'
+                      className={cn('h-fit rounded-full')}
+                      priority
+                    />
                     <span className={cn(Typography.HEADING_4, 'ml-1 text-white')}>
                       {historyData?.pages[0].mainData.monthPoint}
                     </span>
