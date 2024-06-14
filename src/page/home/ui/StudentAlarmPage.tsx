@@ -94,7 +94,7 @@ const StudentAlarmPage = () => {
                   className={
                     data?.pages?.[0].redDotStatus?.[0].redDotStatus &&
                     data?.pages?.[0].redDotStatus?.[0].notificationCategory === 'SCHEDULE'
-                      ? 't-0 absolute -right-2 ml-[2px] h-1 w-1 rounded-[9999px] bg-point'
+                      ? 't-0 absolute -right-2 ml-[2px] h-1 w-1 rounded-full bg-point'
                       : ''
                   }
                 />
@@ -112,7 +112,7 @@ const StudentAlarmPage = () => {
                     data?.pages?.[0].redDotStatus?.[0].redDotStatus &&
                     data?.pages?.[0].redDotStatus?.[0].notificationCategory ===
                       'COMMUNITY'
-                      ? 'absolute ml-[2px] h-1 w-1 rounded-[9999px] bg-point'
+                      ? 'absolute ml-[2px] h-1 w-1 rounded-full bg-point'
                       : ''
                   }
                 />

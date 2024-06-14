@@ -1,12 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import {
-  AlarmData,
-  NotificationCategoryAndType,
-  SenderType,
-  useReadAlarmMutation,
-} from '@/entity/alarm';
+import { AlarmData, SenderType, useReadAlarmMutation } from '@/entity/alarm';
 import { Typography } from '@/shared/mixin';
 import { cn, formatTimestampToRelativeTime } from '@/shared/utils';
 
@@ -21,38 +16,35 @@ export const TrainerAlarmItem = ({ data, sender }: AlarmItemProps) => {
 
   const { mutate } = useReadAlarmMutation(data.notificationId);
 
-  const handleCheckAlarm = (
-    type: NotificationCategoryAndType,
-    notificationId: number,
-    memberId: number,
-    memberName: string,
-    targetId: number | null
-  ) => {
-    mutate(notificationId, {
+  const handleCheckAlarm = () => {
+    mutate(data.notificationId, {
       onSuccess: () => {
-        if (type === 'SCHEDULE-FEEDBACK') {
+        if (data.notificationCategoryAndType === 'SCHEDULE-FEEDBACK') {
           return router.push('/trainer/manage/feedback');
         }
         if (
-          type === 'COMMUNITY-COMMENT' ||
-          type === 'COMMUNITY-REPLY' ||
-          type === 'COMMUNITY-WRITE'
+          data.notificationCategoryAndType === 'COMMUNITY-COMMENT' ||
+          data.notificationCategoryAndType === 'COMMUNITY-REPLY' ||
+          data.notificationCategoryAndType === 'COMMUNITY-WRITE'
         ) {
-          return router.push(`/trainer/community/${targetId}`);
+          return router.push(`/trainer/community/${data.targetId}`);
         }
 
         if (
-          type === 'SCHEDULE-CANCEL' ||
-          type === 'SCHEDULE-RESERVE' ||
-          type === 'SCHEDULE-WAITING'
+          data.notificationCategoryAndType === 'SCHEDULE-CANCEL' ||
+          data.notificationCategoryAndType === 'SCHEDULE-RESERVE' ||
+          data.notificationCategoryAndType === 'SCHEDULE-WAITING'
         ) {
           return router.push(
-            `/trainer/manage/${memberId}/reservation?name=${memberName}`
+            `/trainer/manage/${data.receiverId}/reservation?name=${data.receiverName}`
           );
         }
 
-        if (type === 'SCHEDULE-WRITE' || type === 'SCHEDULE-REPLY') {
-          return router.push(`/trainer/manage/${memberId}/log/${targetId}`);
+        if (
+          data.notificationCategoryAndType === 'SCHEDULE-WRITE' ||
+          data.notificationCategoryAndType === 'SCHEDULE-REPLY'
+        ) {
+          return router.push(`/trainer/manage/${data.receiverId}/log/${data.targetId}`);
         }
       },
     });
@@ -66,15 +58,7 @@ export const TrainerAlarmItem = ({ data, sender }: AlarmItemProps) => {
             'flex h-auto w-full items-start justify-start p-7',
             data.isRead ? 'bg-white' : 'bg-blue-50'
           )}
-          onClick={() =>
-            handleCheckAlarm(
-              data.notificationCategoryAndType,
-              data.notificationId,
-              data.receiverId,
-              data.receiverName,
-              data.targetId
-            )
-          }>
+          onClick={handleCheckAlarm}>
           <Image
             src={sender ? sender?.profileUrl : ''}
             width={37}

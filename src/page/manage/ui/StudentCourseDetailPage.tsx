@@ -344,7 +344,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                   setIsOpen={setIsRegisterSheetOpen}>
                   <CourseSheetTrigger
                     className={cn(
-                      'flex h-[37px] w-[112px] items-center justify-center rounded-[9999px] border border-primary-500 text-primary-500',
+                      'flex h-[37px] w-[112px] items-center justify-center rounded-full border border-primary-500 text-primary-500',
                       Typography.TITLE_3
                     )}>
                     수강권 등록

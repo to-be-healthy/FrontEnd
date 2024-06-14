@@ -518,7 +518,7 @@ export const ClassTimeSettingPage = () => {
                             <Button
                               className={cn(
                                 Typography.TITLE_1_SEMIBOLD,
-                                `p-4} w-[40px] rounded-[9999px] ${isSelected}`
+                                `p-4} w-[40px] rounded-full ${isSelected}`
                               )}
                               onClick={() => selectedDayClick(eng as DayOfWeek)}>
                               {kor}

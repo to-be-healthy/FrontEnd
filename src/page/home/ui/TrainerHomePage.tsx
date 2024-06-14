@@ -73,7 +73,7 @@ export const TrainerHomePage = () => {
           <span
             className={
               homeAlarmData
-                ? 't-0 absolute -right-[2px] h-1 w-1 rounded-[9999px] bg-point'
+                ? 't-0 absolute -right-[2px] h-1 w-1 rounded-full bg-point'
                 : ''
             }
           />

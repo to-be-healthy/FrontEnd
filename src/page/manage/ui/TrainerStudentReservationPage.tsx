@@ -27,7 +27,7 @@ export const TrainerStudentReservationPage = ({ memberId }: Props) => {
   const name = searchParams.get('name');
   const today = new Date();
 
-  const [selectedMonth, setSelectedMonth] = useState<Date>(dayjs(today).toDate());
+  const [selectedMonth, setSelectedMonth] = useState<Date>(today);
 
   const { data: UpcomingReservationData } =
     useTrainerStudentReservationListQuery(memberId);

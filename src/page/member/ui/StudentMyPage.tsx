@@ -30,7 +30,7 @@ export const StudentMyPage = () => {
             <article className='flex items-center justify-between bg-white px-7 pb-7 pt-6'>
               <div className='flex'>
                 {data?.profile ? (
-                  <div className='h-[82px] w-[82px] overflow-hidden rounded-[9999px]'>
+                  <div className='h-[82px] w-[82px] overflow-hidden rounded-full'>
                     <Image
                       src={data?.profile.fileUrl}
                       width={82}
