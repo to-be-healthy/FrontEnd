@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { AlarmType, useAlarmQuery } from '@/entity/alarm';
-import { TrainerAlarmItem } from '@/feature/alarm';
+import { StudentAlarmItem } from '@/feature/alarm';
 import { IconAlarmBig, IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
@@ -33,7 +33,7 @@ const NoAlarm = () => {
 
 const ITEMS_PER_PAGE = 20;
 
-const TrainerAlarmPage = () => {
+const StudentAlarmPage = () => {
   const router = useRouter();
   const [tabState, setTabState] = useState<AlarmType>('SCHEDULE');
   const queryClient = useQueryClient();
@@ -134,7 +134,7 @@ const TrainerAlarmPage = () => {
 
                   return item.content.map((notification) => {
                     return (
-                      <TrainerAlarmItem
+                      <StudentAlarmItem
                         key={notification.notificationId}
                         data={notification}
                         sender={item.sender}
@@ -166,7 +166,7 @@ const TrainerAlarmPage = () => {
 
                   return item?.content?.map((notification) => {
                     return (
-                      <TrainerAlarmItem
+                      <StudentAlarmItem
                         key={notification.notificationId}
                         data={notification}
                         sender={item.sender}
@@ -189,4 +189,4 @@ const TrainerAlarmPage = () => {
   );
 };
 
-export { TrainerAlarmPage };
+export { StudentAlarmPage };

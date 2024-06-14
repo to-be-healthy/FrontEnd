@@ -7,11 +7,13 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 import dayjs from 'dayjs';
 import { getMessaging, getToken } from 'firebase/messaging';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
 import { firebaseApp } from '@/app/_providers/Firebase';
+import { useHomeAlarmQuery } from '@/entity/alarm';
 import { TodayDiet } from '@/feature/diet';
 import {
   CourseCard,
@@ -29,7 +31,6 @@ import {
   IconAvatar,
   IconCheck,
   IconLogo,
-  IconPoint,
 } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
@@ -45,26 +46,28 @@ import {
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
-const FEEDBACK_COUNT = 1;
-
 export const StudentHomePage = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { data, isPending } = useStudentHomeDataQuery();
-  const [token, setToken] = useState('');
-  const month = dayjs(new Date()).format('YYYY-MM');
   const { showErrorToast } = useShowErrorToast();
 
-  const toggleArrow = () => {
-    setIsOpen((prev) => !prev);
-  };
+  const [isOpen, setIsOpen] = useState(false);
+  const [token, setToken] = useState('');
 
+  const { data, isPending } = useStudentHomeDataQuery();
+  const { data: homeAlarmData } = useHomeAlarmQuery();
+  const { mutate } = useFcmTokenMutation();
+
+  const month = dayjs(new Date()).format('YYYY-MM');
   const nextScheduledDay = data?.myReservation
     ? dayjs(data?.myReservation?.lessonDt).format('MM.DD (ddd)')
     : '';
   const nextScheduledHour = data?.myReservation
     ? dayjs(data?.myReservation?.lessonStartTime, 'HH:mm:ss').format('A hh:mm')
     : '';
-  const { mutate } = useFcmTokenMutation();
+
+  const toggleArrow = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   const messaging = getMessaging(firebaseApp);
 
   const attemptToGetToken = async (registration: ServiceWorkerRegistration) => {
@@ -138,13 +141,22 @@ export const StudentHomePage = () => {
     <Layout type='student'>
       <Layout.Header>
         <IconLogo width={28} height={28} />
-        <Link href='#'>
+        <Link href={'/student/alarm'} className='relative'>
+          <span
+            className={
+              homeAlarmData
+                ? 't-0 absolute right-0 h-1 w-1 rounded-[9999px] bg-point'
+                : ''
+            }
+          />
           <IconAlarm width={24} height={24} />
         </Link>
       </Layout.Header>
       <Layout.Contents className='p-7 pt-6'>
         {isPending ? (
-          <span>로딩중...</span>
+          <div className='flex h-[500px] w-full items-center justify-center'>
+            <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
+          </div>
         ) : (
           <>
             <Button variant='secondary' className='my-3' onClick={copyFCMToken}>
@@ -178,7 +190,7 @@ export const StudentHomePage = () => {
                       <CollapsibleTrigger
                         className='w-full text-white'
                         onClick={toggleArrow}>
-                        <div className='flex items-center justify-between p-6'>
+                        <div className='flex h-[54px] items-center justify-between p-6'>
                           <p className={cn(Typography.HEADING_5)}>
                             {data?.point.searchDate.split('-')[1].split('')[1]}월 활동
                             포인트
@@ -197,7 +209,14 @@ export const StudentHomePage = () => {
                             ) : (
                               <>
                                 <p className='mr-2 flex items-center justify-center'>
-                                  <IconPoint />
+                                  <Image
+                                    src='/images/point.png'
+                                    width={21}
+                                    height={21}
+                                    alt='point'
+                                    className={cn('h-fit rounded-full')}
+                                    priority
+                                  />
                                   <span className='ml-[3px]'>
                                     {data?.point.monthPoint}
                                   </span>
@@ -219,7 +238,14 @@ export const StudentHomePage = () => {
                                       Typography.HEADING_5,
                                       'flex items-center justify-start text-black'
                                     )}>
-                                    <IconPoint />
+                                    <Image
+                                      src='/images/point.png'
+                                      width={21}
+                                      height={21}
+                                      alt='point'
+                                      className={cn('h-fit rounded-full')}
+                                      priority
+                                    />
                                     이번달 포인트
                                   </p>
                                 </CardHeader>
@@ -292,7 +318,7 @@ export const StudentHomePage = () => {
                     </Collapsible>
                   ) : (
                     <div className='w-full rounded-bl-lg rounded-br-lg bg-gray-400 text-white'>
-                      <div className='flex items-center justify-between p-6'>
+                      <div className='flex h-[54px] items-center justify-between p-6'>
                         <p className={cn(Typography.HEADING_5)}>
                           {data?.point.searchDate.split('-')[1].split('')[1]}월 활동
                           포인트
@@ -303,7 +329,14 @@ export const StudentHomePage = () => {
                             'flex items-center justify-center'
                           )}>
                           <p className='mr-2 flex items-center justify-center'>
-                            <IconPoint />
+                            <Image
+                              src='/images/point.png'
+                              width={21}
+                              height={21}
+                              alt='point'
+                              className={cn('h-fit rounded-full')}
+                              priority
+                            />
                             <span className='ml-[3px]'>{data?.point.monthPoint}</span>
                           </p>
                         </div>
@@ -327,19 +360,21 @@ export const StudentHomePage = () => {
 
             {data?.myReservation && (
               <article className='mb-7'>
-                <Card className='w-full gap-y-8 px-6 py-7'>
-                  <CardHeader className='flex items-center justify-start'>
-                    <h2 className={cn(Typography.TITLE_2, 'text-gray-800')}>
-                      다음 PT예정일
-                    </h2>
-                  </CardHeader>
-                  <CardContent className='flex items-center justify-start'>
-                    <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                    <p className={cn(Typography.HEADING_4_BOLD, 'ml-3 text-black')}>
-                      {nextScheduledDay} {nextScheduledHour}
-                    </p>
-                  </CardContent>
-                </Card>
+                <Link href={'/student/schedule?tab=myReservation'}>
+                  <Card className='w-full gap-y-8 px-6 py-7'>
+                    <CardHeader className='flex items-center justify-start'>
+                      <h2 className={cn(Typography.TITLE_2, 'text-gray-800')}>
+                        다음 PT예정일
+                      </h2>
+                    </CardHeader>
+                    <CardContent className='flex items-center justify-start'>
+                      <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
+                      <p className={cn(Typography.HEADING_4_BOLD, 'ml-3 text-black')}>
+                        {nextScheduledDay} {nextScheduledHour}
+                      </p>
+                    </CardContent>
+                  </Card>
+                </Link>
               </article>
             )}
 
@@ -347,17 +382,20 @@ export const StudentHomePage = () => {
               <article className='mb-7'>
                 <Card className='w-full gap-y-8 px-6 py-7'>
                   <CardHeader className='flex items-center justify-between'>
-                    <h2 className={cn(Typography.TITLE_1_BOLD, 'text-black')}>
-                      수업 일지
-                      <span
-                        className={cn(
-                          Typography.HEADING_5,
-                          'ml-1 inline-block h-7 w-7 rounded-[50%] bg-primary-500 text-center text-[#fff]'
-                        )}>
-                        {FEEDBACK_COUNT}
-                        {/* todo: 수업 전체에 들어가서 보는순간 없어짐..? */}
-                      </span>
-                    </h2>
+                    <div className='flex items-center justify-start'>
+                      <h2 className={cn(Typography.TITLE_1_BOLD, 'text-black')}>
+                        수업 일지
+                      </h2>
+                      {data.lessonHistory.feedbackChecked === 'UNREAD' && (
+                        <span
+                          className={cn(
+                            Typography.HEADING_5,
+                            'ml-1 inline-block h-7 w-7 rounded-[50%] bg-primary-500 text-center text-[#fff]'
+                          )}>
+                          1{/* todo: 수업 전체에 들어가서 보는순간 없어짐..? */}
+                        </span>
+                      )}
+                    </div>
                     <Link
                       href='/student/log'
                       className={cn(Typography.BODY_3, 'gray-500 h-auto')}>
@@ -366,8 +404,21 @@ export const StudentHomePage = () => {
                   </CardHeader>
                   <Link href={`/student/log/${data?.lessonHistory.id}`}>
                     <CardContent className='flex items-start justify-start'>
-                      <IconAvatar width={28} height={28} />
-                      <div className='ml-2 w-full overflow-hidden rounded-lg rounded-tl-none bg-gray-100 p-6'>
+                      {data.lessonHistory.trainerProfile ? (
+                        <div className='h-[28px] w-[28px] overflow-hidden rounded-[9999px] border border-gray-100'>
+                          <Image
+                            src={data.lessonHistory.trainerProfile}
+                            width={28}
+                            height={28}
+                            alt='trainer profile'
+                            className='h-full object-cover'
+                          />
+                        </div>
+                      ) : (
+                        <IconAvatar width={28} height={28} />
+                      )}
+
+                      <div className='ml-2 w-[calc(100%-34px)] overflow-hidden rounded-lg rounded-tl-none bg-gray-100 p-6'>
                         <p className={cn(Typography.BODY_4, 'line-clamp-2 text-black')}>
                           {data?.lessonHistory.content}
                         </p>
