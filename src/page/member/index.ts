@@ -4,6 +4,8 @@ export { EditEmailPage } from './ui/EditEmailPage';
 export { EditMyInfoPage } from './ui/EditMyInfoPage';
 export { EditNamePage } from './ui/EditNamePage';
 export { EditPasswordPage } from './ui/EditPasswordPage';
+export { FindIdPage } from './ui/FindIdPage';
+export { FindPasswordPage } from './ui/FindPasswordPage';
 export { LastReservationPage } from './ui/LastReservationPage';
 export { LeavePage } from './ui/LeavePage';
 export { PolicyPage } from './ui/PolicyPage';

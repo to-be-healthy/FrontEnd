@@ -79,7 +79,7 @@ const EditPasswordPage = () => {
             </div>
             <p className={cn(Typography.BODY_4_REGULAR, 'mt-7 text-gray-500')}>
               비밀번호가 기억나지 않으세요?
-              <Link href={'/find/password'} className='ml-3 text-primary-500'>
+              <Link href={'/find/pw'} className='ml-3 text-primary-500'>
                 비밀번호 찾기
               </Link>
             </p>
