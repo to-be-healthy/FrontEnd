@@ -88,7 +88,7 @@ export const ReservationBottomSheet = ({ data, date }: Props) => {
   return (
     <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
       <SheetTrigger asChild>
-        <Button variant='ghost' className='h-full w-[102px] flex-col bg-white py-[15px]'>
+        <Button variant='ghost' className='h-full w-full flex-col bg-white py-[15px] '>
           <span>{lessonStartTime}</span>
           <span className={cn(Typography.TITLE_3, 'block text-blue-400')}>예약하기</span>
         </Button>

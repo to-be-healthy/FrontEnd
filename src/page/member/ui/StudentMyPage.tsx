@@ -36,6 +36,7 @@ export const StudentMyPage = () => {
                       width={82}
                       height={82}
                       alt='profile'
+                      className='h-full object-cover'
                     />
                   </div>
                 ) : (

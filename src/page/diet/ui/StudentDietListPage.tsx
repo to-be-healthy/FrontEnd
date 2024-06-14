@@ -6,6 +6,7 @@ import 'dayjs/locale/ko';
 import dayjs from 'dayjs';
 dayjs.locale('ko');
 import { useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -26,14 +27,9 @@ import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
-interface NoDietProps {
-  index: number;
-}
-
-const NoDiet = ({ index }: NoDietProps) => {
+const NoDiet = () => {
   return (
     <li
-      key={`diet_${index}`}
       className={cn(
         Typography.TITLE_1_BOLD,
         'flex flex-col items-center justify-center py-28 text-gray-700'
@@ -131,7 +127,7 @@ export const StudentDietListPage = () => {
           <ul>
             {data?.pages.map((item, index) => {
               if (item.content === null || item.content.length === 0) {
-                return <NoDiet key={`diet_${index}`} index={index} />;
+                return <NoDiet key={`diet_${index}`} />;
               }
 
               return item.content.map((diet) => {
@@ -231,7 +227,7 @@ export const StudentDietListPage = () => {
 
           {!data?.pages[data?.pages.length - 1].isLast && hasNextPage && (
             <div ref={ref} className='h-[20px] p-3 text-center'>
-              loading...
+              <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
             </div>
           )}
         </article>
