@@ -27,9 +27,11 @@ interface HomeDataResponse {
     createdAt: string;
     student: string;
     trainer: string;
+    trainerProfile: string;
     scheduleId: number;
     lessonDt: string;
     lessonTime: string;
+    feedbackChecked: 'READ' | 'UNREAD';
     attendanceStatus: string;
     files: { fileUrl: string; fileOrder: number; createdAt: string };
   };

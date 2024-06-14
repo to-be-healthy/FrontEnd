@@ -13,7 +13,6 @@ import {
   IconArrowFilledDown,
   IconArrowFilledUp,
   IconCheck,
-  IconPoint,
 } from '@/shared/assets';
 import IconArrowRight from '@/shared/assets/images/icon_arrow_right.svg';
 import IconCalendar from '@/shared/assets/images/icon_calendar_blue.svg';
@@ -64,7 +63,10 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                   height={80}
                   src={memberInfo.fileUrl}
                   alt='profile'
-                  className={profileBorderStyleMapper(memberInfo.ranking)}
+                  className={cn(
+                    'h-[80px] w-[80px] rounded-full border border-gray-300 object-contain',
+                    profileBorderStyleMapper(memberInfo.ranking)
+                  )}
                 />
               ) : (
                 <IconDefaultProfile />
@@ -93,12 +95,12 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
             <div className='flex items-center justify-center gap-x-[8px]'>
               <Card className='mb-[16px] flex w-full flex-row items-center justify-between gap-y-[28px] px-[24px] py-[12px] shadow-sm'>
                 <Link
-                  href={'#'}
+                  href={`/trainer/manage/${memberId}/reservation?name=${memberInfo?.name}`}
                   className='flex flex-col items-center justify-between gap-y-[8px]'>
                   <div className='flex h-[20px] items-center justify-center'>
                     <IconCalendar />
                   </div>
-                  <p className={Typography.HEADING_5}>일정 등록</p>
+                  <p className={Typography.HEADING_5}>예약 내역</p>
                 </Link>
                 <div className='h-[36px] w-[1px] bg-gray-100' />
                 <Link
@@ -173,7 +175,14 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                           ) : (
                             <>
                               <p className='mr-2 flex items-center justify-center'>
-                                <IconPoint />
+                                <Image
+                                  src='/images/point.png'
+                                  width={21}
+                                  height={21}
+                                  alt='point'
+                                  className={cn('h-fit rounded-full')}
+                                  priority
+                                />
                                 <span className='ml-[3px]'>
                                   {memberInfo?.point?.monthPoint}
                                 </span>
@@ -199,7 +208,14 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                                     Typography.HEADING_5,
                                     'flex items-center justify-start text-black'
                                   )}>
-                                  <IconPoint />
+                                  <Image
+                                    src='/images/point.png'
+                                    width={21}
+                                    height={21}
+                                    alt='point'
+                                    className={cn('h-fit rounded-full')}
+                                    priority
+                                  />
                                   이번달 포인트
                                 </p>
                               </CardHeader>
@@ -283,7 +299,14 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                           'flex items-center justify-center'
                         )}>
                         <p className='mr-2 flex items-center justify-center'>
-                          <IconPoint />
+                          <Image
+                            src='/images/point.png'
+                            width={21}
+                            height={21}
+                            alt='point'
+                            className={cn('h-fit rounded-full')}
+                            priority
+                          />
                           <span className='ml-[3px]'>
                             {memberInfo?.point?.monthPoint}
                           </span>

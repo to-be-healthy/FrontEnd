@@ -59,7 +59,6 @@ export { default as IconNoSchedule } from './images/no_schedule.svg';
 export { default as IconNotification } from './images/notification.svg';
 export { default as IconPicture } from './images/picture.svg';
 export { default as IconPlus } from './images/plus.svg';
-export { default as IconPoint } from './images/point.svg';
 export { default as IconProfileDefault } from './images/profile_default.svg';
 export { default as IconProfileFilled } from './images/profile_filled.svg';
 export { default as IconProfileOutlined } from './images/profile_outlined.svg';
