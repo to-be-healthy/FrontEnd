@@ -221,19 +221,25 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
                       )}>
                       <input
-                        type='number'
+                        type='text'
                         value={completedExcercise.setNum}
+                        pattern='[0-9]*'
+                        inputMode='numeric'
                         className={cn(
                           Typography.TITLE_1_BOLD,
                           'w-full bg-transparent text-center outline-none ring-0'
                         )}
                         onChange={(e) => {
+                          const value =
+                            e.target.value.replace(/\D/g, '').replace(/^0+(?!$)/, '') ||
+                            '0';
+                          if (value.length > 4) return;
                           setCompletedExercises((prev) =>
                             prev.map((item) => {
                               if (completedExcercise.exerciseId === item.exerciseId) {
                                 return {
                                   ...item,
-                                  setNum: parseInt(e.target.value),
+                                  setNum: parseInt(value),
                                 };
                               }
                               return item;
@@ -251,19 +257,25 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
                       )}>
                       <input
-                        type='number'
+                        type='text'
                         value={completedExcercise.numberOfCycles}
+                        pattern='[0-9]*'
+                        inputMode='numeric'
                         className={cn(
                           Typography.TITLE_1_BOLD,
                           'w-full bg-transparent text-center outline-none ring-0'
                         )}
                         onChange={(e) => {
+                          const value =
+                            e.target.value.replace(/\D/g, '').replace(/^0+(?!$)/, '') ||
+                            '0';
+                          if (value.length > 4) return;
                           setCompletedExercises((prev) =>
                             prev.map((item) => {
                               if (completedExcercise.exerciseId === item.exerciseId) {
                                 return {
                                   ...item,
-                                  numberOfCycles: parseInt(e.target.value),
+                                  numberOfCycles: parseInt(value),
                                 };
                               }
                               return item;
@@ -282,17 +294,23 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
                       )}>
                       <input
-                        type='number'
+                        type='text'
                         value={completedExcercise.weight}
+                        pattern='[0-9]*'
+                        inputMode='numeric'
                         className={cn(
                           Typography.TITLE_1_BOLD,
                           'w-full bg-transparent text-center outline-none ring-0'
                         )}
                         onChange={(e) => {
+                          const value =
+                            e.target.value.replace(/\D/g, '').replace(/^0+(?!$)/, '') ||
+                            '0';
+                          if (value.length > 4) return;
                           setCompletedExercises((prev) =>
                             prev.map((item) => {
                               if (completedExcercise.exerciseId === item.exerciseId) {
-                                return { ...item, weight: parseInt(e.target.value) };
+                                return { ...item, weight: parseInt(value) };
                               }
                               return item;
                             })
