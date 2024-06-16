@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useDeleteStudentMutation } from '@/feature/member';
 import { IconBack, IconDotsVertical } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
-import { Typography } from '@/shared/mixin';
+import { HEADER_TITLE_CENTER, Typography } from '@/shared/mixin';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -46,14 +46,11 @@ const Header = ({ name, memberId }: { name: string; memberId: number }) => {
 
   return (
     <Layout.Header>
-      <Link href='/trainer/manage'>
+      <button onClick={() => router.back()}>
         <IconBack />
-      </Link>
+      </button>
       <h2
-        className={cn(
-          Typography.HEADING_4_SEMIBOLD,
-          'absolute left-1/2 translate-x-[-50%] text-black'
-        )}>
+        className={cn(Typography.HEADING_4_SEMIBOLD, HEADER_TITLE_CENTER, 'text-black')}>
         회원 정보
       </h2>
       <DropdownMenu open={open} onOpenChange={(state) => setOpen(state)}>
@@ -64,13 +61,11 @@ const Header = ({ name, memberId }: { name: string; memberId: number }) => {
         </DropdownMenuTrigger>
         <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
           <DropdownMenuGroup className='flex flex-col'>
-            <DropdownMenuItem
-              className={cn(Typography.TITLE_3, 'px-[16px] py-[12px]')}
-              asChild>
+            <DropdownMenuItem className={cn(Typography.TITLE_3, 'px-6 py-5')} asChild>
               <Link href={`/trainer/manage/${memberId}/edit/nickname`}>별칭 설정</Link>
             </DropdownMenuItem>
             <DropdownMenuItem
-              className={cn(Typography.TITLE_3, 'px-[16px] py-[12px] text-start')}
+              className={cn(Typography.TITLE_3, 'px-6 py-5 text-start')}
               onClick={() => setModal(true)}>
               회원 삭제
             </DropdownMenuItem>
@@ -88,7 +83,7 @@ const Header = ({ name, memberId }: { name: string; memberId: number }) => {
             <AlertDialogCancel
               className={cn(
                 Typography.TITLE_1_SEMIBOLD,
-                'mt-0 h-[48px] w-full rounded-md bg-gray-100 text-gray-600'
+                'mt-0 h-12 w-full rounded-md bg-gray-100 text-gray-600'
               )}>
               아니요
             </AlertDialogCancel>
@@ -96,7 +91,7 @@ const Header = ({ name, memberId }: { name: string; memberId: number }) => {
               asChild
               className={cn(
                 Typography.TITLE_1_SEMIBOLD,
-                'mt-0 h-[48px] w-full rounded-md bg-point text-white'
+                'mt-0 h-12 w-full rounded-md bg-point text-white'
               )}>
               <Button variant='ghost' onClick={deleteStudent}>
                 예
