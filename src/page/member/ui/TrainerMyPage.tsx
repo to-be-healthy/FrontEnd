@@ -29,7 +29,7 @@ export const TrainerMyPage = () => {
                   priority
                 />
               ) : (
-                <IconAvatar width={82} height={82} />
+                <IconAvatar width={80} height={80} />
               )}
               <div className='ml-5 flex flex-col justify-center'>
                 <p className={cn(Typography.HEADING_3)}>{data?.name ?? ''}</p>
