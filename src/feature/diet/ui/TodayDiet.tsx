@@ -208,7 +208,7 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
             )}
           </SheetTrigger>
           <SheetContent headerType='thumb' className='p-0 pb-9 pt-4'>
-            <SheetHeader>{type && dietText[type]}</SheetHeader>
+            <SheetHeader className='py-5'>{type && dietText[type]}</SheetHeader>
 
             <ul>
               <li className='h-[56px] border-t border-gray-100'>
@@ -249,7 +249,7 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
             <SheetHeader
               className={cn(
                 Typography.TITLE_1_SEMIBOLD,
-                '-mt-5 pb-5 text-black sm:text-center'
+                'py-5 text-black sm:text-center'
               )}>
               {type && dietText[type]}
             </SheetHeader>

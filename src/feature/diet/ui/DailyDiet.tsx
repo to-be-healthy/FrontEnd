@@ -46,7 +46,7 @@ const TakePhoto = ({ type, setIsSheetOpen }: SelectImageProps) => {
       />
       <p className='flex items-center justify-start px-7 py-6'>
         <IconCameraUpload width={24} height={24} />
-        <span className={cn(Typography.BODY_1, 'ml-4')}>사진찍기</span>
+        <span className={cn(Typography.BODY_1, 'ml-4')}>사진 찍기</span>
       </p>
     </label>
   );
@@ -165,7 +165,9 @@ export const DailyDiet = ({ diet }: DailyDietProps) => {
               단식
             </SheetTrigger>
             <SheetContent headerType='thumb' className='p-0 pb-9 pt-4'>
-              <SheetHeader>{diet.type && dietText[diet.type]}</SheetHeader>
+              <SheetHeader className='py-5'>
+                {diet.type && dietText[diet.type]}
+              </SheetHeader>
 
               <ul>
                 <li className='h-[56px] border-t border-gray-100'>
@@ -206,7 +208,7 @@ export const DailyDiet = ({ diet }: DailyDietProps) => {
               <SheetHeader
                 className={cn(
                   Typography.TITLE_1_SEMIBOLD,
-                  '-mt-5 pb-5 text-black sm:text-center'
+                  'py-5 text-black sm:text-center'
                 )}>
                 {diet.type && dietText[diet.type]}
               </SheetHeader>
