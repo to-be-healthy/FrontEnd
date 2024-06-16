@@ -139,6 +139,7 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
             <Input
               id='image-input'
               type='file'
+              multiple
               accept='image/*'
               className='hidden'
               onChange={uploadFiles}

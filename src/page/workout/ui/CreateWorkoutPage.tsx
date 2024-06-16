@@ -109,6 +109,7 @@ const CreateWorkoutPage = () => {
             <Input
               id='image-input'
               type='file'
+              multiple
               accept='image/*'
               className='hidden'
               onChange={uploadFiles}

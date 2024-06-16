@@ -160,6 +160,7 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
             <Input
               id='image-input'
               type='file'
+              multiple
               accept='image/*'
               className='hidden'
               onChange={uploadFiles}
