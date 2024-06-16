@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 dayjs.locale('ko');
 
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useLessonListQuery, useTrainerLogListQuery } from '@/feature/log';
@@ -34,6 +34,7 @@ interface Props {
 
 const TrainerLogPage = ({ memberId }: Props) => {
   const pathname = usePathname();
+  const router = useRouter();
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
   const { data } = useTrainerLogListQuery({
     studentId: memberId,
@@ -54,9 +55,9 @@ const TrainerLogPage = ({ memberId }: Props) => {
   return (
     <Layout>
       <Layout.Header>
-        <Link href={`/trainer/manage/${memberId}`}>
+        <button onClick={() => router.back()}>
           <IconBack />
-        </Link>
+        </button>
         <h2 className={cn(Typography.HEADING_4_SEMIBOLD)}>{title}</h2>
         {hasUnwrittenLesson ? (
           <Link href={`/trainer/manage/${memberId}/log/write`}>
