@@ -1,11 +1,9 @@
 'use client';
 
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 
 import { useAuthAction, useDeleteAccountMutation } from '@/entity/auth';
-import { useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
 import NoCircleCheckIcon from '@/shared/assets/images/noCircleCheck.svg';
 import { useShowErrorToast } from '@/shared/hooks';
@@ -16,7 +14,6 @@ import { Layout } from '@/widget';
 
 const LeavePage = () => {
   const router = useRouter();
-  const { data } = useMyInfoQuery();
   const [agreement, setAgreement] = useState(false);
   const { mutate } = useDeleteAccountMutation();
   const { showErrorToast } = useShowErrorToast();
@@ -42,23 +39,14 @@ const LeavePage = () => {
   return (
     <Layout className='bg-white'>
       <Layout.Header>
-        <Link href={'/trainer/mypage/info'}>
+        <button onClick={() => router.back()}>
           <IconBack />
-        </Link>
+        </button>
         <h1 className={cn(Typography.HEADING_4_SEMIBOLD)}>회원 탈퇴</h1>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
       </Layout.Header>
       <Layout.Contents className='flex flex-col gap-[72px] px-7 py-8'>
         <section className='flex flex-col gap-11'>
-          <div className='flex flex-col'>
-            <h3 className={cn(Typography.TITLE_3)}>탈퇴 계정</h3>
-            <p className={cn(Typography.BODY_3, 'mt-3 text-gray-600')}>
-              아래 계정을 탈퇴 처리합니다.
-            </p>
-            <span className={cn(Typography.BODY_3, 'mt-1 text-primary-500')}>
-              {data?.userId}
-            </span>
-          </div>
           <div>
             <h3 className={cn(Typography.TITLE_3)}>회원탈퇴 유의사항</h3>
             <ul className={cn(Typography.BODY_3, 'mt-3 text-gray-700')}>

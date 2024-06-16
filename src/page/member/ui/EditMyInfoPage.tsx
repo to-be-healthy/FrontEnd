@@ -223,9 +223,7 @@ const EditMyInfoPage = () => {
               로그아웃
             </button>
             <div className='h-[10px] w-[1px] bg-gray-300' />
-            <Link
-              href={'/trainer/mypage/leave'}
-              className={cn(Typography.BODY_2, 'text-gray-500')}>
+            <Link href={'./leave'} className={cn(Typography.BODY_2, 'text-gray-500')}>
               탈퇴하기
             </Link>
           </section>
