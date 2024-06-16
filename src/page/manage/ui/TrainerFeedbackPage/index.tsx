@@ -70,7 +70,7 @@ const TrainerFeedbackPage = () => {
             }}
             modifiersStyles={{
               hidden: { display: 'none' },
-              future: { color: '#A7A9AE' },
+              future: { color: 'var(--gray-400)' },
             }}
             modifiers={{
               hidden: (day) => {
