@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 
 import { IconArrowLeft, IconArrowRight, IconBack } from '@/shared/assets';
 import { useQueryString } from '@/shared/hooks';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { FLEX_CENTER, HEADER_TITLE_CENTER, Typography } from '@/shared/mixin';
 import { Calendar, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 import { cn, getStartOfWeek } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -24,8 +24,14 @@ const TrainerFeedbackPage = () => {
   const date = getQueryString('date') ?? dayjs().format('YYYY-MM-DD');
 
   const changeDate = (date: Date | string) => {
+    if (dayjs(date).isAfter(dayjs(), 'day')) return;
     setQueryString('date', dayjs(date).format('YYYY-MM-DD'));
   };
+
+  const weekStart = dayjs(getStartOfWeek(date));
+  const weekEnd = dayjs(weekStart).add(6, 'day');
+
+  const rightButtonDiabled = dayjs(weekEnd).add(1, 'days').isAfter(dayjs(), 'day');
 
   return (
     <Layout className='bg-gray-100'>
@@ -33,11 +39,7 @@ const TrainerFeedbackPage = () => {
         <button onClick={() => router.back()}>
           <IconBack />
         </button>
-        <h1
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 my-auto -translate-x-1/2'
-          )}>
+        <h1 className={cn(Typography.HEADING_4_SEMIBOLD, HEADER_TITLE_CENTER)}>
           피드백 작성
         </h1>
       </Layout.Header>
@@ -57,7 +59,7 @@ const TrainerFeedbackPage = () => {
               day_range_end: 'day-range-end',
               nav: 'hidden',
               nav_button: 'hidden',
-              cell: 'p-0 relative [&:has([aria-selected])]:bg-primary-500 [&:has([aria-selected])]:text-[#fff] [&:has([aria-selected])]:rounded-full focus-within:relative focus-within:z-20',
+              cell: 'p-0 relative [&:has([aria-selected])]:bg-primary-500 [&:has([aria-selected])]:text-white [&:has([aria-selected])]:rounded-full focus-within:relative focus-within:z-20',
               day_today: 'text-primary-500',
               day_selected: 'bg-primary text-white',
             }}
@@ -67,26 +69,27 @@ const TrainerFeedbackPage = () => {
               },
             }}
             modifiersStyles={{
-              hidden: { display: 'none' }, // 주간 표시할때 비활성화된 날짜 숨기기
+              hidden: { display: 'none' },
+              future: { color: '#A7A9AE' },
             }}
             modifiers={{
               hidden: (day) => {
-                const weekStart = dayjs(getStartOfWeek(date));
-                const weekEnd = dayjs(weekStart).add(6, 'day');
                 return !dayjs(day).isBetween(weekStart, weekEnd, null, '[]');
               },
+              future: (day) => dayjs(day).isAfter(dayjs()),
             }}
           />
           <div className='absolute right-7 top-6 flex items-center gap-8 py-[3.5px]'>
             <button
               onClick={() => changeDate(dayjs(date).subtract(7, 'days').toDate())}
-              className={cn(FLEX_CENTER, 'h-[16px] w-[16px]')}>
+              className={cn(FLEX_CENTER, 'h-6 w-6')}>
               <IconArrowLeft stroke={'#000'} />
             </button>
             <button
               onClick={() => changeDate(dayjs(date).add(7, 'days').toDate())}
-              className={cn(FLEX_CENTER, 'h-[16px] w-[16px]')}>
-              <IconArrowRight stroke={'#000'} />
+              className={cn(FLEX_CENTER, 'h-6 w-6')}
+              disabled={rightButtonDiabled}>
+              <IconArrowRight stroke={rightButtonDiabled ? 'var(--gray-400)' : '#000'} />
             </button>
           </div>
         </div>
