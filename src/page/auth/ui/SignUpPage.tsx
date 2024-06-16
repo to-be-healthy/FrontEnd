@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter, useSearchParams } from 'next/navigation';
-import { useState } from 'react';
+import { KeyboardEvent, useState } from 'react';
 import { SubmitHandler } from 'react-hook-form';
 
 import { SignUpRequest, useSignUpMutation } from '@/entity/auth';
@@ -68,6 +68,12 @@ const SignUpPage = () => {
     );
   };
 
+  const handleOnKeyDown = (event: KeyboardEvent<HTMLFormElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+    }
+  };
+
   return (
     <Layout className='bg-white'>
       <Layout.Header>
@@ -84,6 +90,7 @@ const SignUpPage = () => {
         <GenericForm
           id='submitSignUp'
           onSubmit={onSubmit}
+          onKeyDown={handleOnKeyDown}
           formOptions={{ mode: 'onChange' }}>
           <SignUpFunnel
             step={step}

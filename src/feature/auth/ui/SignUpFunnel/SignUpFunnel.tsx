@@ -52,12 +52,19 @@ export const SignUpFunnel = ({
 }: Props) => {
   const [idSuccessMsg, setIdSuccessMsg] = useState('');
 
-  const { watch, setError, setValue, clearErrors } = useFormContext<SignUpFormType>();
+  const {
+    watch,
+    setError,
+    setValue,
+    clearErrors,
+    formState: { errors },
+  } = useFormContext<SignUpFormType>();
   const { toast } = useToast();
 
   const { mutate: sendVerificationCodeMutate, isPending: sendVerificationCodePending } =
     useSendVerificationCodeMutation();
-  const { mutate: checkVerificationCodeMutate } = useCheckVerificationCodeMutation();
+  const { mutate: checkVerificationCodeMutate, isPending: checkVerificationCodePending } =
+    useCheckVerificationCodeMutation();
   const { mutate: checkAvailableIdMutate, isPending: checkVailableIdPending } =
     useCheckVailableIdMutation();
 
@@ -78,7 +85,7 @@ export const SignUpFunnel = ({
     clearErrors('userId');
 
     if (isIdVerified) {
-      setIsIdVerified(false); //todo: 중복확인 후 글자 입력시 focus아웃됨
+      setIsIdVerified(false); //TODO: 중복확인 후 글자 입력시 focus아웃됨
       setIdSuccessMsg('');
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -92,7 +99,7 @@ export const SignUpFunnel = ({
         return (!emailValue && !isEmailVerified) || !EMAIL_REGEXP.test(emailValue);
       case 3:
         return (
-          verificationCodeValue?.length < 6 ||
+          verificationCodeValue?.length !== 6 ||
           !EXCLUDE_SPACE_REGEXP.test(verificationCodeValue)
         );
       case 4:
@@ -243,7 +250,11 @@ export const SignUpFunnel = ({
               className={cn(Typography.TITLE_1, 'h-[57px] w-full rounded-lg')}
               type='button'
               onClick={handleCheckVerificationCode}
-              disabled={isNextButtonDisabled()}>
+              disabled={
+                isNextButtonDisabled() ||
+                checkVerificationCodePending ||
+                Boolean(errors.emailVerifiedCode)
+              }>
               인증완료
             </Button>
           ) : (

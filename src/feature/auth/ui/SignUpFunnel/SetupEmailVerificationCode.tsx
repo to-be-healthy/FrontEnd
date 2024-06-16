@@ -58,6 +58,10 @@ export const SetupEmailVerificationCode = ({
               value: EXCLUDE_SPACE_REGEXP,
               message: '공백 문자를 포함할 수 없습니다',
             },
+            maxLength: {
+              value: 6,
+              message: '최대 6자리 숫자만 입력할 수 있습니다',
+            },
           })}
         />
         <Button
