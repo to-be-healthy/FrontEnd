@@ -93,8 +93,7 @@ export const TrainerInvitePage = () => {
       content: {
         title: '초대장이 도착했어요!',
         description: `${gymName} ${trainerName} 트레이너님이 초대장을 보냈어요!`.trim(),
-        imageUrl:
-          'https://to-be-healthy-bucket.s3.ap-northeast-2.amazonaws.com/images/invitation.png',
+        imageUrl: '/images/invitation.png',
         link: {
           mobileWebUrl: invitationUrl,
           webUrl: invitationUrl,

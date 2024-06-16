@@ -44,6 +44,12 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: process.env.NEXT_PUBLIC_BUCKET_HOSTNAME,
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
         hostname: 'to-be-healthy-bucket.s3.ap-northeast-2.amazonaws.com',
         port: '',
         pathname: '/**',

@@ -107,7 +107,7 @@ const CommentItem = ({
                   {commentItem.content}
                 </p>
               </div>
-              {!commentItem.delYn && (
+              {!commentItem.delYn && depth === 0 && (
                 <Button
                   variant='ghost'
                   size='auto'

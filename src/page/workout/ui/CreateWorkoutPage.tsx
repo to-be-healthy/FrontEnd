@@ -77,7 +77,7 @@ const CreateWorkoutPage = () => {
     );
   };
 
-  const buttonDisabled = !content || completedExercises.length === 0;
+  const buttonDisabled = completedExercises.length === 0;
 
   if (open) {
     return (
@@ -203,6 +203,7 @@ const CreateWorkoutPage = () => {
                           const value =
                             e.target.value.replace(/\D/g, '').replace(/^0+(?!$)/, '') ||
                             '0';
+                          if (value.length > 4) return;
                           setCompletedExercises((prev) =>
                             prev.map((item) => {
                               if (completedExcercise.exerciseId === item.exerciseId) {
@@ -238,6 +239,7 @@ const CreateWorkoutPage = () => {
                           const value =
                             e.target.value.replace(/\D/g, '').replace(/^0+(?!$)/, '') ||
                             '0';
+                          if (value.length > 4) return;
                           setCompletedExercises((prev) =>
                             prev.map((item) => {
                               if (completedExcercise.exerciseId === item.exerciseId) {
@@ -274,6 +276,7 @@ const CreateWorkoutPage = () => {
                           const value =
                             e.target.value.replace(/\D/g, '').replace(/^0+(?!$)/, '') ||
                             '0';
+                          if (value.length > 4) return;
                           setCompletedExercises((prev) =>
                             prev.map((item) => {
                               if (completedExcercise.exerciseId === item.exerciseId) {

@@ -134,7 +134,7 @@ const EditMyInfoPage = () => {
           </section>
           {isSocialAccount ? (
             <section className='flex-grow'>
-              <div className='mx-7 mt-[36px] rounded-lg border border-gray-100'>
+              <div className='mx-7 mt-11 rounded-lg border border-gray-100'>
                 <div className='flex items-center justify-between border-b border-gray-100 px-6 py-7'>
                   <p className={cn(Typography.TITLE_1_SEMIBOLD)}>이름</p>
                   <div
@@ -177,8 +177,8 @@ const EditMyInfoPage = () => {
             </section>
           ) : (
             <section className='flex-grow'>
-              <div className='mx-7 mt-[36px] rounded-lg border border-gray-100'>
-                <Link href={'/trainer/mypage/info/edit/name'}>
+              <div className='mx-7 mt-11 rounded-lg border border-gray-100'>
+                <Link href={'./edit/name'}>
                   <div className='flex items-center justify-between border-b border-gray-100 px-6 py-7'>
                     <p className={cn(Typography.TITLE_1_SEMIBOLD)}>이름</p>
                     <div
@@ -191,7 +191,7 @@ const EditMyInfoPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link href={isSocialAccount ? '#' : '/trainer/mypage/info/edit/email'}>
+                <Link href={'./edit/email'}>
                   <div className='flex items-center justify-between border-b border-gray-100 px-6 py-7'>
                     <p className={cn(Typography.TITLE_1_SEMIBOLD)}>이메일</p>
                     <div
@@ -204,7 +204,7 @@ const EditMyInfoPage = () => {
                     </div>
                   </div>
                 </Link>
-                <Link href={'/trainer/mypage/info/edit/password'}>
+                <Link href={'./edit/password'}>
                   <div className='flex items-center justify-between px-6 py-7'>
                     <p className={cn(Typography.TITLE_1_SEMIBOLD)}>비밀번호 변경</p>
                     <IconArrowRightSmall />
@@ -222,10 +222,8 @@ const EditMyInfoPage = () => {
               }}>
               로그아웃
             </button>
-            <div className='h-[10px] w-[1px] bg-gray-300' />
-            <Link
-              href={'/trainer/mypage/leave'}
-              className={cn(Typography.BODY_2, 'text-gray-500')}>
+            <div className='h-4 w-[1px] bg-gray-300' />
+            <Link href={'./leave'} className={cn(Typography.BODY_2, 'text-gray-500')}>
               탈퇴하기
             </Link>
           </section>

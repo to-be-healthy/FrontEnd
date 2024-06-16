@@ -34,9 +34,10 @@ const CreateNewExerciseBottomSheet = ({
   const [name, setName] = useState('');
   const [selectedCategory, setCategory] = useState<string | null>(null);
   const [muscles, setMuscles] = useState('');
-  const { mutate } = useCreateExerciseMutation();
+  const { mutate, isPending } = useCreateExerciseMutation();
 
   const submit = () => {
+    if (isPending) return;
     if (buttonDisabled) return;
 
     mutate(

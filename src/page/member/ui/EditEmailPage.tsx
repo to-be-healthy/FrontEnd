@@ -1,7 +1,6 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -59,9 +58,9 @@ const EditEmailPage = () => {
   return (
     <Layout className='bg-white'>
       <Layout.Header>
-        <Link href={'/trainer/mypage/info'}>
+        <button onClick={() => router.back()}>
           <IconBack />
-        </Link>
+        </button>
         <h1 className={cn(Typography.HEADING_4_SEMIBOLD)}>이메일 변경</h1>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
       </Layout.Header>
