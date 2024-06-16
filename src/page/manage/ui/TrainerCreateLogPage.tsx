@@ -270,14 +270,14 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             <div key={index} className='relative'>
               <Image
                 src={image.fileUrl}
-                width={60}
-                height={60}
-                alt='staged image'
+                width={300}
+                height={300}
+                alt={'staged image'}
                 className='h-[60px] w-[60px] rounded-sm object-cover'
               />
               <button
                 className='absolute -right-2 -top-2 z-10'
-                onClick={() => updateImages(images.filter((item, idx) => index !== idx))}>
+                onClick={() => updateImages(images.filter((_, idx) => index !== idx))}>
                 <IconCloseBlack width={20} height={20} />
               </button>
             </div>

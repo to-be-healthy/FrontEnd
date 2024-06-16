@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 
 import { useImages } from '@/entity/image';
 import { useEditLogMutation, useLogDetailQuery } from '@/feature/log';
+import { IconCloseBlack } from '@/shared/assets';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import { useShowErrorToast } from '@/shared/hooks';
@@ -176,14 +177,20 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
             </label>
           </div>
           {images.map((image, index) => (
-            <div key={index} className='overflow-hidden'>
+            <div key={index} className='relative'>
               <Image
                 src={image.fileUrl}
-                width={60}
-                height={60}
-                alt='staged image'
+                alt={'staged image'}
+                width={300}
+                height={300}
                 className='h-[60px] w-[60px] rounded-sm object-cover'
+                priority
               />
+              <button
+                className='absolute -right-2 -top-2 z-10'
+                onClick={() => updateImages(images.filter((_, idx) => index !== idx))}>
+                <IconCloseBlack width={20} height={20} />
+              </button>
             </div>
           ))}
         </div>
