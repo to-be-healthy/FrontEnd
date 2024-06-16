@@ -47,6 +47,9 @@ const TrainerLogPage = ({ memberId }: Props) => {
     : false;
 
   const contents = data?.content;
+  const studentName = data?.studentName;
+
+  const title = (studentName ? `${studentName}님 ` : '') + '수업 일지';
 
   return (
     <Layout>
@@ -54,9 +57,7 @@ const TrainerLogPage = ({ memberId }: Props) => {
         <Link href={`/trainer/manage/${memberId}`}>
           <IconBack />
         </Link>
-        <h2 className={cn(Typography.HEADING_4_SEMIBOLD)}>
-          {contents && data.studentName}님 수업 일지
-        </h2>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD)}>{title}</h2>
         {hasUnwrittenLesson ? (
           <Link href={`/trainer/manage/${memberId}/log/write`}>
             <IconPlus fill='black' width={20} height={20} />
