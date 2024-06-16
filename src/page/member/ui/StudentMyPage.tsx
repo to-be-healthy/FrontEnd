@@ -30,17 +30,18 @@ export const StudentMyPage = () => {
             <article className='flex items-center justify-between bg-white px-7 pb-7 pt-6'>
               <div className='flex'>
                 {data?.profile ? (
-                  <div className='h-[82px] w-[82px] overflow-hidden rounded-full'>
+                  <div className='h-[80px] w-[80px] overflow-hidden rounded-full'>
                     <Image
                       src={data?.profile.fileUrl}
-                      width={82}
-                      height={82}
+                      width={80}
+                      height={80}
                       alt='profile'
-                      className='h-full object-cover'
+                      className='rounded-full border border-gray-300 object-cover'
+                      priority
                     />
                   </div>
                 ) : (
-                  <IconAvatar width={82} height={82} />
+                  <IconAvatar width={80} height={80} />
                 )}
 
                 <div className='ml-5 flex flex-col justify-center'>

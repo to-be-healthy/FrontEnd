@@ -5,7 +5,7 @@ import 'dayjs/locale/ko';
 import dayjs from 'dayjs';
 dayjs.locale('ko');
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 import { useStudentMypageTrainerInfoQuery } from '@/feature/member/api/useStudentMypageTrainerInfoQuery';
 import { IconAlertCircle, IconAvatar, IconBack } from '@/shared/assets';
@@ -29,14 +29,15 @@ const NoTrainer = () => {
 };
 
 const TrainerInfoPage = () => {
+  const router = useRouter();
   const { data } = useStudentMypageTrainerInfoQuery();
 
   return (
     <Layout>
       <Layout.Header>
-        <Link href={'/student/mypage'}>
+        <button onClick={() => router.back()}>
           <IconBack />
-        </Link>
+        </button>
       </Layout.Header>
       <Layout.Contents>
         {!data && <NoTrainer />}

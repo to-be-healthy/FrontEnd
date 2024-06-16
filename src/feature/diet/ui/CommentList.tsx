@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Fragment, PropsWithChildren, useState } from 'react';
 
 import { useAuthSelector } from '@/entity/auth';
@@ -91,8 +92,19 @@ const CommentItem = ({
       modal={false}>
       <DropdownMenuTrigger asChild>
         <li className={cn(active && 'bg-blue-10', className, 'px-6')} {...props}>
-          <div className={cn('flex space-x-[6px] py-[10px]', depth !== 0 && 'ml-[47px]')}>
-            <IconProfileDefault width={24} height={24} />
+          <div className={cn('flex space-x-2 py-4', depth !== 0 && 'ml-[47px]')}>
+            {commentItem.member.fileUrl ? (
+              <Image
+                src={commentItem.member.fileUrl}
+                width={80}
+                height={80}
+                alt='staged image'
+                className={cn('aspect-square h-8 w-8 rounded-full object-cover')}
+                priority
+              />
+            ) : (
+              <IconProfileDefault width={24} height={24} />
+            )}
             <div className='flex-col'>
               <div className='flex-col'>
                 <p className={cn(Typography.HEADING_5, 'text-black')}>
@@ -133,7 +145,7 @@ const CommentItem = ({
       <DropdownMenuContent className='absolute -top-11 right-4 flex w-[120px] flex-col bg-white'>
         <DropdownMenuGroup className='flex flex-col'>
           <DropdownMenuItem
-            className='typography-title-3 px-[16px] py-[12px]'
+            className='typography-title-3 px-6 py-5'
             onClick={() => {
               changeTarget({
                 comment: commentItem,
@@ -145,7 +157,7 @@ const CommentItem = ({
             댓글 수정
           </DropdownMenuItem>
           <DropdownMenuItem
-            className='typography-title-3 px-[16px] py-[12px]'
+            className='typography-title-3 px-6 py-5'
             onClick={() => {
               deleteComment(commentItem.id);
               setOpend(false);

@@ -139,6 +139,7 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
             <Input
               id='image-input'
               type='file'
+              multiple
               accept='image/*'
               className='hidden'
               onChange={uploadFiles}
@@ -159,8 +160,8 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
             <div key={index} className='relative'>
               <Image
                 src={image.fileUrl}
-                width={60}
-                height={60}
+                width={300}
+                height={300}
                 alt='staged image'
                 className='h-[60px] w-[60px] rounded-sm object-cover'
                 priority

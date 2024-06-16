@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 import {
   IconBack,
@@ -45,14 +46,21 @@ const AppendNewExerciseType = ({
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 500);
 
-  const { data: categories } = useWorkoutCategoryListQuery();
-  const { data: pagedTypes, refetch } = useWorkoutTypeListQuery({
-    searchValue: debouncedSearch,
-  });
-  const { mutate } = useDeleteExerciseMutation();
-
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [selectedTypes, setSelectedTypes] = useState<number[]>([]);
+
+  const { data: categories } = useWorkoutCategoryListQuery();
+  const {
+    data: pagedTypes,
+    refetch,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useWorkoutTypeListQuery({
+    searchValue: debouncedSearch,
+    exerciseCategory: selectedCategory,
+  });
+  const { mutate } = useDeleteExerciseMutation();
 
   const types = pagedTypes?.pages.flatMap((page) => page.content).filter(Boolean);
   const filteredTypes = types
@@ -83,6 +91,18 @@ const AppendNewExerciseType = ({
     appendExcercise(selectedExercises);
     close();
   };
+
+  const [ref, inView] = useInView({
+    threshold: 0.5,
+  });
+
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      fetchNextPage().catch(() => {
+        throw new Error('Error fetching next page');
+      });
+    }
+  }, [fetchNextPage, hasNextPage, inView]);
 
   const isPending = !categories || !filteredTypes;
   const buttonDisabled = selectedTypes.length === 0;
@@ -235,6 +255,20 @@ const AppendNewExerciseType = ({
                 })}
               </ul>
             )}
+            <div ref={ref}>
+              {isFetchingNextPage && (
+                <div className={cn(FLEX_CENTER, 'w-full')}>
+                  <div className={cn(FLEX_CENTER, 'mt-4 w-full')}>
+                    <Image
+                      src='/images/loading.gif'
+                      alt='loading'
+                      width={20}
+                      height={20}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
           </>
         )}
       </Layout.Contents>

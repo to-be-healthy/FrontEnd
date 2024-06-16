@@ -74,10 +74,11 @@ const CommunityPage = () => {
           </h1>
         </Layout.Header>
       )}
-      <Layout.Contents className='flex flex-col flex-wrap pt-6'>
+      d
+      <Layout.Contents className='overflow-y-hidden pt-6'>
         {posts && (
           <div className='hide-scrollbar mt-1 flex h-full flex-1 flex-grow flex-col overflow-y-auto px-7 pb-7'>
-            <div className='flex flex-col gap-5'>
+            <div className='flex w-full flex-col gap-5'>
               {posts.length === 0 && <NoPosts />}
               {posts.length > 0 &&
                 posts.map((workout) => {

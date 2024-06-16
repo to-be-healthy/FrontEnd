@@ -53,7 +53,7 @@ const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
                     width={300}
                     height={300}
                     className={cn(
-                      'h-full w-full rounded-lg bg-white object-contain transition-all',
+                      'h-full w-full rounded-lg bg-white object-cover transition-all',
                       enlargeState
                         ? 'aspect-auto h-full w-full rounded-none'
                         : 'aspect-square object-cover'

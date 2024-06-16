@@ -141,6 +141,7 @@ const TrainerCommentInput = () => {
           <Input
             id='image-input'
             type='file'
+            multiple
             className='hidden'
             accept='image/*'
             onChange={uploadFiles}

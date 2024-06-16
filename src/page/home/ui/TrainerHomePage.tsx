@@ -1,6 +1,7 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
+import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -10,6 +11,7 @@ import {
   useAddStudentCourseMutation,
   useMyInfoQuery,
 } from '@/feature/member';
+import { TrainerSchedule } from '@/feature/schedule';
 import { IconAlarmWhite, IconCalendarX, IconMedalGold, IconPlus } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
@@ -60,9 +62,40 @@ export const TrainerHomePage = () => {
     );
   };
 
-  const hasTodaySchedule =
-    homeInfo?.todaySchedule &&
-    (homeInfo.todaySchedule.before.length > 0 || homeInfo.todaySchedule.after.length > 0);
+  const findClosestSchedule = (
+    schedules: TrainerSchedule[] = []
+  ): TrainerSchedule | null => {
+    const now = dayjs().startOf('hour'); // 현재 시간을 "시" 단위로만 고려
+    let closestSchedule: TrainerSchedule | null = null;
+
+    schedules.forEach((schedule) => {
+      const lessonStartTime = dayjs(schedule.lessonStartTime).startOf('hour');
+
+      // 현재 시간보다 이전에 시작한 수업은 무시
+      if (lessonStartTime.isBefore(now)) {
+        return;
+      }
+
+      // 현재 시간과 동일하거나 이후에 시작하는 수업 중 가장 가까운 수업을 찾음
+      if (
+        !closestSchedule ||
+        lessonStartTime.isBefore(dayjs(closestSchedule.lessonStartTime).startOf('hour'))
+      ) {
+        closestSchedule = schedule;
+      }
+    });
+
+    return closestSchedule;
+  };
+
+  const todaySchedule = homeInfo && [
+    ...homeInfo.todaySchedule.before,
+    ...homeInfo.todaySchedule.after,
+  ];
+
+  const closestSchedule = findClosestSchedule(todaySchedule);
+
+  const hasTodaySchedule = Array.isArray(todaySchedule) && todaySchedule.length > 0;
 
   return (
     <Layout type='trainer' className='relative'>
@@ -93,7 +126,9 @@ export const TrainerHomePage = () => {
             {hasTodaySchedule && (
               <div className='hide-scrollbar z-10 overflow-x-auto'>
                 <div className='flex w-fit gap-0 px-7'>
-                  {homeInfo?.todaySchedule.before.map((item) => {
+                  {todaySchedule?.map((item) => {
+                    const isClosestSchedule =
+                      item.scheduleId === closestSchedule?.scheduleId;
                     return (
                       <Link
                         href={`/trainer/manage/${item.applicantId}`}
@@ -101,27 +136,8 @@ export const TrainerHomePage = () => {
                         <div
                           className={cn(
                             FLEX_CENTER,
-                            'mr-4 h-[100px] w-[100px] flex-col gap-4 rounded-md border border-gray-200 bg-white p-8 shadow-sm'
-                          )}>
-                          <span className={cn(Typography.BODY_2, 'text-gray-500')}>
-                            {item.lessonStartTime}
-                          </span>
-                          <p className={cn(Typography.TITLE_1_BOLD)}>
-                            {item.applicantName}
-                          </p>
-                        </div>
-                      </Link>
-                    );
-                  })}
-                  {homeInfo.todaySchedule.after.map((item) => {
-                    return (
-                      <Link
-                        href={`/trainer/manage/${item.applicantId}`}
-                        key={item.scheduleId}>
-                        <div
-                          className={cn(
-                            FLEX_CENTER,
-                            'mr-4 h-[100px] w-[100px] flex-col gap-4 rounded-md border border-gray-200 bg-white p-8 shadow-sm'
+                            'mr-4 h-[100px] w-[100px] flex-col gap-4 rounded-md border border-gray-200 bg-white p-8 shadow-sm',
+                            isClosestSchedule && 'border-[#00D1FF]'
                           )}>
                           <span className={cn(Typography.BODY_2, 'text-gray-500')}>
                             {item.lessonStartTime}

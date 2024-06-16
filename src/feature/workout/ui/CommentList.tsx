@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { Fragment, useState } from 'react';
 
 import { useAuthSelector } from '@/entity/auth';
@@ -82,7 +83,18 @@ const CommentLi = ({ comment, depth, className, ...props }: CommentLiProps) => {
       <DropdownMenuTrigger asChild>
         <li className={cn(active && 'bg-blue-10', className)} {...props}>
           <div className={cn('flex space-x-2 px-6 py-4', depth !== 0 && 'ml-[47px]')}>
-            <IconProfileDefault width={24} height={24} />
+            {comment.member.fileUrl ? (
+              <Image
+                src={comment.member.fileUrl}
+                width={80}
+                height={80}
+                alt='staged image'
+                className={cn('aspect-square h-8 w-8 rounded-full object-cover')}
+                priority
+              />
+            ) : (
+              <IconProfileDefault width={24} height={24} />
+            )}
             <div className='flex-col'>
               <div className='flex-col'>
                 <p className={cn(Typography.HEADING_5)}>{comment.member.name}</p>
