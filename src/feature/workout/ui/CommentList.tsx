@@ -90,7 +90,7 @@ const CommentLi = ({ comment, depth, className, ...props }: CommentLiProps) => {
                   {comment.content}
                 </p>
               </div>
-              {!comment.delYn && (
+              {!comment.delYn && depth === 0 && (
                 <Button
                   variant='ghost'
                   size='auto'
