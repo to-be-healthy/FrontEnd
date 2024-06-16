@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -119,7 +120,7 @@ const StudentEditNickname = ({ memberId }: Props) => {
               완료
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent className='space-y-[24px]'>
+          <AlertDialogContent className='space-y-8'>
             <AlertDialogHeader className='text-left'>
               <AlertDialogTitle
                 className={cn(Typography.TITLE_1_SEMIBOLD, 'mx-auto mb-3')}>
@@ -143,17 +144,28 @@ const StudentEditNickname = ({ memberId }: Props) => {
           </AlertDialogContent>
         </AlertDialog>
       </Layout.Header>
-      <Layout.Contents className='mt-[36px] flex flex-col gap-y-[36px] px-[20px]'>
-        <Button variant='ghost' size='auto' className='mx-auto pt-[24px]'>
-          <IconDefaultProfile />
+      <Layout.Contents className='mt-11 flex flex-col gap-y-11 px-7'>
+        <Button variant='ghost' size='auto' className='mx-auto pt-8'>
+          {memberInfo?.fileUrl && (
+            <Image
+              width={80}
+              height={80}
+              src={memberInfo.fileUrl}
+              alt='profile'
+              className={cn(
+                'h-[80px] w-[80px] rounded-full border border-gray-300 object-cover'
+              )}
+            />
+          )}
+          {memberInfo && !memberInfo.fileUrl && <IconDefaultProfile />}
         </Button>
-        <div className='flex w-full flex-col space-y-[8px]'>
+        <div className='flex w-full flex-col space-y-3'>
           <label htmlFor='name' className={Typography.TITLE_3}>
             이름
           </label>
           <div
             className={cn(
-              'rounded-md border border-gray-200 bg-gray-100 px-[16px] py-[13px]'
+              'rounded-md border border-gray-200 bg-gray-100 px-6 py-[13px]'
             )}>
             <Input
               defaultValue={memberInfo?.name}
@@ -167,11 +179,11 @@ const StudentEditNickname = ({ memberId }: Props) => {
             />
           </div>
         </div>
-        <div className='flex w-full flex-col space-y-[8px]'>
+        <div className='flex w-full flex-col space-y-3'>
           <label htmlFor='name' className={Typography.TITLE_3}>
             별칭
           </label>
-          <div className={cn('rounded-md border border-gray-200 px-[16px] py-[13px]')}>
+          <div className={cn('rounded-md border border-gray-200 px-6 py-[13px]')}>
             <Input
               defaultValue={newNickName}
               id='name'

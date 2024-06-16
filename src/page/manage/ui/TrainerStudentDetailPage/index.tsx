@@ -64,7 +64,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                   src={memberInfo.fileUrl}
                   alt='profile'
                   className={cn(
-                    'h-[80px] w-[80px] rounded-full border border-gray-300 object-contain',
+                    'h-[80px] w-[80px] rounded-full border border-gray-300 object-cover',
                     profileBorderStyleMapper(memberInfo.ranking)
                   )}
                 />
