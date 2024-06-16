@@ -10,6 +10,7 @@ const DEFAULT_SIZE = 10;
 interface WorkoutRequest {
   searchValue?: string;
   size?: number;
+  exerciseCategory?: string | null;
 }
 
 interface WorkoutTypeListResponse extends Pageable {
@@ -19,12 +20,22 @@ interface WorkoutTypeListResponse extends Pageable {
 export const useWorkoutTypeListQuery = ({
   searchValue = '',
   size = DEFAULT_SIZE,
+  exerciseCategory,
 }: WorkoutRequest = {}) => {
   return useInfiniteQuery<WorkoutTypeListResponse, BaseError>({
-    queryKey: ['workoutList', { searchValue }],
+    queryKey: ['workoutList', { searchValue, exerciseCategory }],
     queryFn: async ({ pageParam }) => {
+      const queryParams = new URLSearchParams();
+      queryParams.append('page', (pageParam as number).toString());
+      queryParams.append('size', size.toString());
+      if (exerciseCategory) {
+        queryParams.append('exerciseCategory', exerciseCategory.toString());
+      }
+      if (searchValue) {
+        queryParams.append('searchValue', searchValue);
+      }
       const res = await authApi.get<BaseResponse<WorkoutTypeListResponse>>(
-        `/api/exercise/v1?page=${pageParam as number}&size=${size}&searchValue=${searchValue}`
+        `/api/exercise/v1?${queryParams.toString()}`
       );
       return res.data.data;
     },
