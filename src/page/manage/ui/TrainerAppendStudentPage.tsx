@@ -12,7 +12,7 @@ import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import { Typography } from '@/shared/mixin';
 import { Button, Input } from '@/shared/ui';
 import { toast } from '@/shared/ui/toast/use-toast';
-import { cn, twSelector } from '@/shared/utils';
+import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => {
@@ -27,6 +27,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
     register,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm<AppendMemberForm>();
 
   const queryClient = useQueryClient();
@@ -40,7 +41,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
           await queryClient.refetchQueries({ queryKey: ['notRegisteredStudents'] });
 
           toast({
-            className: 'h-[48px]',
+            className: 'h-12',
             description: (
               <div className='flex items-center justify-center'>
                 <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
@@ -56,7 +57,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
           toast({
-            className: 'h-[48px]',
+            className: 'h-12',
             description: (
               <div className='flex items-center justify-center'>
                 <IconError />
@@ -72,7 +73,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
 
   const onInvalidSubmit = () => {
     toast({
-      className: 'h-[48px]',
+      className: 'h-12',
       description: (
         <div className='flex items-center justify-center'>
           <IconError />
@@ -85,8 +86,10 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
     });
   };
 
+  const buttonDisabled = !watch('lessonCnt');
+
   return (
-    <Layout>
+    <Layout className='bg-white'>
       <Layout.Header>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
         <h1 className={cn(Typography.HEADING_4_SEMIBOLD)}>회원 추가</h1>
@@ -99,7 +102,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
           </Link>
         </Button>
       </Layout.Header>
-      <Layout.Contents className='px-[20px] py-[48px]'>
+      <Layout.Contents className='px-7 py-12'>
         <h2
           className={cn(
             Typography.HEADING_3,
@@ -107,53 +110,36 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
           )}>{`${name}님의 수강 정보를\n알려주세요.`}</h2>
         <form
           id='append-member-form'
-          className={cn(Typography.TITLE_3, 'mt-[42px] flex justify-center gap-x-[8px]')}>
-          <div className='flex flex-col gap-y-[8px]'>
+          className={cn(Typography.TITLE_3, 'mt-[42px] flex justify-center gap-x-3')}>
+          <div className='flex flex-col gap-y-3'>
             <p>이름</p>
             <div
               className={cn(
-                'flex rounded-md border border-gray-200 bg-white px-[16px] py-[11.5px] focus-within:border-primary-500',
-                errors.name && 'border-point focus-within:border-point'
+                'flex rounded-md border border-gray-200 bg-white px-6 py-[11.5px]'
               )}>
               <Input
-                placeholder='실명 입력'
-                className={cn(
-                  'w-full',
-                  Typography.TITLE_3,
-                  twSelector('placeholder', Typography.BODY_3)
-                )}
-                {...register('name', {
-                  required: true,
-                })}
+                defaultValue={name}
+                readOnly
+                className={cn(Typography.TITLE_1_SEMIBOLD, 'read-only:text- w-full')}
+                {...register('name')}
               />
             </div>
           </div>
-          <div className='flex flex-col gap-y-[8px]'>
+          <div className='flex flex-col gap-y-3'>
             <p>수업 할 PT 횟수</p>
             <div
               className={cn(
-                'flex gap-x-[10px] rounded-md border border-gray-200 bg-white px-[16px] py-[11.5px] focus-within:border-primary-500',
+                'flex gap-x-[10px] rounded-md border border-gray-200 bg-white px-6 py-[11.5px] focus-within:border-primary-500',
                 errors.lessonCnt && 'border-point focus-within:border-point'
               )}>
               <Input
                 type='number'
-                className={cn(
-                  'no-spin w-full',
-                  Typography.TITLE_3,
-                  twSelector('placeholder', Typography.BODY_3)
-                )}
+                className={cn(Typography.TITLE_1_SEMIBOLD, 'w-full')}
                 {...register('lessonCnt', {
                   required: true,
                 })}
               />
-              <div
-                className={cn(
-                  Typography.BODY_3,
-                  twSelector('placeholder', Typography.BODY_3),
-                  'right-[16px] text-gray-500'
-                )}>
-                회
-              </div>
+              <div className={cn(Typography.BODY_1, 'right-6 text-gray-500')}>회</div>
             </div>
           </div>
         </form>
@@ -163,7 +149,9 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
           formTarget='append-member-form'
           variant='default'
           size='full'
-          onClick={handleSubmit(onValidSubmit, onInvalidSubmit)}>
+          onClick={handleSubmit(onValidSubmit, onInvalidSubmit)}
+          disabled={buttonDisabled}
+          className={cn(Typography.TITLE_1_BOLD)}>
           추가하기
         </Button>
       </Layout.BottomArea>

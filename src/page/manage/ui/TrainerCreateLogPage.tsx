@@ -171,7 +171,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             </AlertDialogDescription>
             <AlertDialogFooter className='mt-8 flex flex-row gap-3'>
               <AlertDialogCancel
-                onClick={() => router.push(`/trainer/manage/${memberId}/log`)}
+                onClick={() => router.back()}
                 className={cn(
                   Typography.TITLE_1_SEMIBOLD,
                   FLEX_CENTER,
