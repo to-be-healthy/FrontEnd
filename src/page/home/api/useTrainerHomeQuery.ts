@@ -24,8 +24,7 @@ interface TrainerHomeInfo {
   todaySchedule: {
     trainerName: string;
     scheduleTotalCount: number;
-    before: TrainerSchedule[];
-    after: TrainerSchedule[];
+    schedule: TrainerSchedule[];
   };
 }
 

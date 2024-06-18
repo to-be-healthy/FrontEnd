@@ -88,10 +88,7 @@ export const TrainerHomePage = () => {
     return closestSchedule;
   };
 
-  const todaySchedule = homeInfo && [
-    ...homeInfo.todaySchedule.before,
-    ...homeInfo.todaySchedule.after,
-  ];
+  const todaySchedule = homeInfo?.todaySchedule.schedule;
 
   const closestSchedule = findClosestSchedule(todaySchedule);
 
@@ -104,11 +101,9 @@ export const TrainerHomePage = () => {
         <p className={cn(Typography.TITLE_2, 'text-white')}>{userInfo?.gym.name}</p>
         <Link href={'/trainer/alarm'} className='relative'>
           <span
-            className={
-              homeAlarmData
-                ? 't-0 absolute -right-[2px] h-1 w-1 rounded-full bg-point'
-                : ''
-            }
+            className={cn(
+              homeAlarmData && 't-0 absolute -right-[2px] h-1 w-1 rounded-full bg-point'
+            )}
           />
           <IconAlarmWhite />
         </Link>
