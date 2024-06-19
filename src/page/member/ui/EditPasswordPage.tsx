@@ -45,7 +45,8 @@ const EditPasswordPage = () => {
       },
       {
         onSuccess: () => {
-          router.replace('/trainer/mypage/info');
+          router.replace('../info');
+          //TODO: SUCCESS TOAST
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
@@ -53,7 +54,6 @@ const EditPasswordPage = () => {
         },
       }
     );
-    router.replace('/trainer/mypage/info');
   };
 
   return (
