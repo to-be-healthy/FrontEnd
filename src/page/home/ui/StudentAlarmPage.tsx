@@ -5,13 +5,14 @@ import 'dayjs/locale/ko';
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { AlarmType, useAlarmQuery } from '@/entity/alarm';
 import { StudentAlarmItem } from '@/feature/alarm';
 import { IconAlarmBig, IconBack } from '@/shared/assets';
-import { Typography } from '@/shared/mixin';
+import { useQueryString } from '@/shared/hooks';
+import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -21,7 +22,8 @@ const NoAlarm = () => {
     <li
       className={cn(
         Typography.TITLE_1_BOLD,
-        'flex flex-col items-center justify-center py-28 text-gray-700'
+        FLEX_CENTER,
+        'flex-col py-28 text-gray-700'
       )}>
       <IconAlarmBig />
       <p className={cn(Typography.HEADING_4_BOLD, 'mt-6 text-gray-400')}>
@@ -35,8 +37,13 @@ const ITEMS_PER_PAGE = 20;
 
 const StudentAlarmPage = () => {
   const router = useRouter();
-  const [tabState, setTabState] = useState<AlarmType>('SCHEDULE');
   const queryClient = useQueryClient();
+  const { getQueryString, setQueryString } = useQueryString();
+
+  const validTabs: AlarmType[] = ['SCHEDULE', 'COMMUNITY'];
+  const tabState: AlarmType = validTabs.includes(getQueryString('tab') as AlarmType)
+    ? (getQueryString('tab') as AlarmType)
+    : 'SCHEDULE';
 
   const { data, hasNextPage, fetchNextPage, isPending } = useAlarmQuery({
     type: tabState,
@@ -48,9 +55,7 @@ const StudentAlarmPage = () => {
   });
 
   const handleValueChange = (value: string) => {
-    if (value === 'SCHEDULE' || value === 'COMMUNITY') {
-      setTabState(value);
-    }
+    setQueryString('tab', value);
   };
 
   useEffect(() => {
@@ -84,11 +89,10 @@ const StudentAlarmPage = () => {
       <Layout.Contents className='bg-white'>
         <Tabs
           value={tabState}
-          defaultValue='SCHEDULE'
           className='flex h-full w-full flex-col'
           onValueChange={(value) => handleValueChange(value)}>
           <TabsList>
-            <TabsTrigger value='SCHEDULE' onClick={() => setTabState('SCHEDULE')}>
+            <TabsTrigger value='SCHEDULE'>
               <p className={cn(Typography.TITLE_1_BOLD, 'relative')}>
                 <span
                   className={
@@ -101,10 +105,7 @@ const StudentAlarmPage = () => {
                 수업
               </p>
             </TabsTrigger>
-            <TabsTrigger
-              value='COMMUNITY'
-              className='relative'
-              onClick={() => setTabState('COMMUNITY')}>
+            <TabsTrigger value='COMMUNITY' className='relative'>
               <p className={cn(Typography.TITLE_1_BOLD, 'relative')}>
                 커뮤니티
                 <span
@@ -121,7 +122,7 @@ const StudentAlarmPage = () => {
           </TabsList>
           <TabsContent value='SCHEDULE' className='mt-0 flex-grow'>
             {isPending && (
-              <div className='flex h-[500px] w-full items-center justify-center'>
+              <div className={cn(FLEX_CENTER, 'h-[500px] w-full')}>
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               </div>
             )}
@@ -151,9 +152,9 @@ const StudentAlarmPage = () => {
               </div>
             )}
           </TabsContent>
-          <TabsContent value='COMMUNITY'>
+          <TabsContent value='COMMUNITY' className='mt-0 flex-grow'>
             {isPending && (
-              <div className='flex h-[500px] w-full items-center justify-center'>
+              <div className={cn(FLEX_CENTER, 'h-[500px] w-full')}>
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               </div>
             )}
@@ -164,7 +165,7 @@ const StudentAlarmPage = () => {
                     return <NoAlarm key={`diet_${index}`} />;
                   }
 
-                  return item?.content?.map((notification) => {
+                  return item.content.map((notification) => {
                     return (
                       <StudentAlarmItem
                         key={notification.notificationId}
