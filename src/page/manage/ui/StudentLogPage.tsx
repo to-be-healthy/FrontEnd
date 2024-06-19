@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 dayjs.locale('ko');
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useStudentLogListQuery } from '@/feature/log';
@@ -14,6 +15,7 @@ import { cn } from '@/shared/utils';
 import { ImageSlide, Layout, MonthPicker } from '@/widget';
 
 const StudentLogPage = () => {
+  const router = useRouter();
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
   const { data } = useStudentLogListQuery({
     searchDate: dayjs(selectedMonth).format('YYYY-MM'),
@@ -24,9 +26,9 @@ const StudentLogPage = () => {
   return (
     <Layout>
       <Layout.Header>
-        <Link href={'/student'}>
+        <button onClick={() => router.back()}>
           <IconBack />
-        </Link>
+        </button>
         <h1
           className={cn(
             Typography.HEADING_4_SEMIBOLD,

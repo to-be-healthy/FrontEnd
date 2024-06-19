@@ -27,7 +27,7 @@ export const Layout = ({ type, className, children, ...props }: LayoutProps) => 
   });
 
   return (
-    <div className={'flex h-screen items-center justify-center bg-[#383838]'}>
+    <div className={'flex h-screen items-center justify-center bg-black'}>
       <div
         className={cn('flex h-full w-[var(--max-width)] flex-col bg-gray-100', className)}
         {...props}>

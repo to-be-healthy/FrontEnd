@@ -1,7 +1,7 @@
 'use client';
 
 import dayjs from 'dayjs';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
 import {
@@ -22,6 +22,7 @@ interface Props {
 }
 
 const StudentLogDetailPage = ({ logId }: Props) => {
+  const router = useRouter();
   const { data } = useLogDetailQuery({ lessonHistoryId: logId });
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -34,9 +35,9 @@ const StudentLogDetailPage = ({ logId }: Props) => {
   return (
     <Layout>
       <Layout.Header>
-        <Link href={'/student/log'}>
+        <button onClick={() => router.back()}>
           <IconBack />
-        </Link>
+        </button>
       </Layout.Header>
       {data && (
         <LogStudentCommentContext.Provider value={value}>
