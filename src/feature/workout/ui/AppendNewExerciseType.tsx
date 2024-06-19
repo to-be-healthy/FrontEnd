@@ -141,31 +141,29 @@ const AppendNewExerciseType = ({
         )}
         {!isPending && (
           <>
-            <div className='w-full overflow-hidden'>
-              <div className='hide-scrollbar overflow-x-auto'>
-                <div className='mt-2 flex w-full flex-nowrap space-x-3'>
-                  {categories.map(({ category, name }) => {
-                    const selected = selectedCategory === category;
-                    return (
-                      <button
-                        key={category}
-                        className={cn(
-                          Typography.TITLE_3,
-                          'whitespace-nowrap rounded-md bg-gray-100 px-8 py-2',
-                          selected && 'bg-primary-500 text-white'
-                        )}
-                        onClick={() => {
-                          if (selected) {
-                            setSelectedCategory(null);
-                          } else {
-                            setSelectedCategory(category);
-                          }
-                        }}>
-                        {name}
-                      </button>
-                    );
-                  })}
-                </div>
+            <div className='hide-scrollbar w-[calc(100vw-40px)] overflow-x-auto'>
+              <div className='mt-2 flex flex-nowrap gap-3'>
+                {categories.map(({ category, name }) => {
+                  const selected = selectedCategory === category;
+                  return (
+                    <button
+                      key={category}
+                      className={cn(
+                        Typography.TITLE_3,
+                        'whitespace-nowrap rounded-md bg-gray-100 px-8 py-2',
+                        selected && 'bg-primary-500 text-white'
+                      )}
+                      onClick={() => {
+                        if (selected) {
+                          setSelectedCategory(null);
+                        } else {
+                          setSelectedCategory(category);
+                        }
+                      }}>
+                      {name}
+                    </button>
+                  );
+                })}
               </div>
             </div>
             <div className='py-9'>
