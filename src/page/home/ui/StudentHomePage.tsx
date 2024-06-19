@@ -183,7 +183,7 @@ export const StudentHomePage = () => {
                       )}
                     />
                   </Link>
-                  {data?.course.remainLessonCnt > 0 ? (
+                  {data?.course.completedLessonCnt !== data.course?.totalLessonCnt ? (
                     <Collapsible className='rounded-bl-lg rounded-br-lg bg-primary-600'>
                       <CollapsibleTrigger
                         className='w-full text-white'
@@ -287,14 +287,21 @@ export const StudentHomePage = () => {
                                     Typography.HEADING_2,
                                     'mb-7 flex items-center text-black'
                                   )}>
-                                  {data?.rank.ranking}
-                                  <span
-                                    className={cn(
-                                      Typography.HEADING_5,
-                                      'ml-[2px] mr-1 text-gray-700'
-                                    )}>
-                                    위
-                                  </span>
+                                  {data?.rank.ranking === 999 ? (
+                                    '-'
+                                  ) : (
+                                    <>
+                                      <span>{data?.rank.ranking}</span>
+                                      <span
+                                        className={cn(
+                                          Typography.HEADING_5,
+                                          'ml-[2px] mr-1 text-gray-700'
+                                        )}>
+                                        위
+                                      </span>
+                                    </>
+                                  )}
+
                                   {data?.rank?.ranking ===
                                   data?.rank?.lastMonthRanking ? (
                                     ''
