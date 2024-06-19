@@ -36,7 +36,8 @@ const useWeeklyTimetable = ({
     if (status === 'COMPLETED' || status === 'SOLD_OUT') {
       const userIndex =
         typeof applicantId === 'number' ? userList.indexOf(applicantId) : null;
-      return SCHEDULE_ACTIVE_COLORS[userIndex ?? 0 % SCHEDULE_ACTIVE_COLORS.length];
+
+      return SCHEDULE_ACTIVE_COLORS[(userIndex ?? 0) % SCHEDULE_ACTIVE_COLORS.length];
     }
 
     if (status === 'AVAILABLE') {
