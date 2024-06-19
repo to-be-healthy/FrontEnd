@@ -151,7 +151,8 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                     completedLessonCnt={memberInfo.course?.completedLessonCnt}
                   />
                 </Link>
-                {memberInfo?.course.remainLessonCnt > 0 ? (
+                {memberInfo?.course.completedLessonCnt !==
+                memberInfo.course?.totalLessonCnt ? (
                   <Collapsible className='rounded-bl-lg rounded-br-lg bg-primary-600'>
                     <CollapsibleTrigger
                       className='w-full text-white'
