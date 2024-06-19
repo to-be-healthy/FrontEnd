@@ -51,7 +51,7 @@ const dayOfWeekMap: Record<DayOfWeek, string> = {
 const classTime = [30, 60, 90, 120];
 const timePeriods = ['오전', '오후'];
 const hours = Array.from({ length: 12 }, (_, i) => String(i + 1));
-const minutes = Array.from({ length: 60 }, (_, i) => (i < 10 ? `0${i}` : String(i)));
+const minutes = ['30', '00'];
 
 export const ClassTimeSettingPage = () => {
   const { data: classTimeData } = useGetTrainerClassTimeSettingQuery();
@@ -356,6 +356,7 @@ export const ClassTimeSettingPage = () => {
                       />
                       <TimeSwiper
                         items={minutes}
+                        loop={false}
                         initialSlide={minutes.indexOf(timeSetting.minutes)}
                         onSlideChange={(e) =>
                           changeSlide('minutes', minutes[e.realIndex], timeSetting.name)
@@ -443,6 +444,7 @@ export const ClassTimeSettingPage = () => {
                       />
                       <TimeSwiper
                         items={minutes}
+                        loop={false}
                         initialSlide={minutes.indexOf(timeSetting.minutes)}
                         onSlideChange={(e) =>
                           changeSlide('minutes', minutes[e.realIndex], timeSetting.name)

@@ -4,6 +4,8 @@ import * as React from 'react';
 
 import { cn } from '@/shared/utils/tw-utils';
 
+import { Typography } from '../mixin';
+
 const buttonVariants = cva(
   'inline-flex items-center justify-center whitespace-nowrap rounded-lg text-sm font-medium transition-colors focus-visible:outline-none disabled:pointer-events-none disabled:bg-gray-300',
   {
@@ -43,7 +45,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const Comp = asChild ? Slot : 'button';
     return (
       <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
+        className={cn(
+          buttonVariants({ variant, size, className }),
+          Typography.TITLE_1_BOLD
+        )}
         ref={ref}
         {...props}
       />

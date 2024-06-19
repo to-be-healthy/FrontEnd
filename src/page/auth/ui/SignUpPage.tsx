@@ -68,9 +68,9 @@ const SignUpPage = () => {
     );
   };
 
-  const handleOnKeyDown = (event: KeyboardEvent<HTMLFormElement>) => {
+  const handlerkeyDown = (event: KeyboardEvent<HTMLFormElement>) => {
     if (event.key === 'Enter') {
-      event.preventDefault();
+      event?.preventDefault();
     }
   };
 
@@ -90,7 +90,7 @@ const SignUpPage = () => {
         <GenericForm
           id='submitSignUp'
           onSubmit={onSubmit}
-          onKeyDown={handleOnKeyDown}
+          onKeyDown={handlerkeyDown}
           formOptions={{ mode: 'onChange' }}>
           <SignUpFunnel
             step={step}

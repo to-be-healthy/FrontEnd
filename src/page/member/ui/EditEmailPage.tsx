@@ -45,7 +45,7 @@ const EditEmailPage = () => {
           await queryClient.refetchQueries({
             queryKey: ['myinfo'],
           });
-          router.replace('/trainer/mypage/info');
+          router.replace('../info');
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';

@@ -1,3 +1,5 @@
+'use client';
+
 import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
@@ -23,7 +25,7 @@ export const SetupName = () => {
 
   const { data } = useInvitationInfoQuery(uuid ?? '');
 
-  const nameValue = watch('name');
+  const nameValue = data ? data.name : watch('name');
 
   useEffect(() => {
     clearErrors('name');

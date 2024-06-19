@@ -1,3 +1,6 @@
+'use client';
+
+import { useSearchParams } from 'next/navigation';
 import {
   Dispatch,
   FormEvent,
@@ -23,6 +26,7 @@ import { Typography } from '@/shared/mixin';
 import { Button, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
+import { useInvitationInfoQuery } from '../../api/useInvitationInfoQuery';
 import { FunnelProps, StepProps } from '../../hooks/useSignUpFunnel';
 import { SetupEmail } from './SetupEmail';
 import { SetupEmailVerificationCode } from './SetupEmailVerificationCode';
@@ -50,6 +54,10 @@ export const SignUpFunnel = ({
   isEmailVerified,
   setIsEmailVerified,
 }: Props) => {
+  const searchParams = useSearchParams();
+  const uuid = searchParams?.get('uuid');
+  const { toast } = useToast();
+
   const [idSuccessMsg, setIdSuccessMsg] = useState('');
 
   const {
@@ -59,7 +67,7 @@ export const SignUpFunnel = ({
     clearErrors,
     formState: { errors },
   } = useFormContext<SignUpFormType>();
-  const { toast } = useToast();
+  const { data } = useInvitationInfoQuery(uuid ?? '');
 
   const { mutate: sendVerificationCodeMutate, isPending: sendVerificationCodePending } =
     useSendVerificationCodeMutation();
@@ -68,18 +76,18 @@ export const SignUpFunnel = ({
   const { mutate: checkAvailableIdMutate, isPending: checkVailableIdPending } =
     useCheckVailableIdMutation();
 
-  const clickNextStep = (e: FormEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    setIdSuccessMsg('');
-    setStep((prev) => prev + 1);
-  };
-
-  const nameValue = watch('name');
+  const nameValue = data ? data.name : watch('name');
   const emailValue = watch('email');
   const verificationCodeValue = watch('emailVerifiedCode');
   const userIdValue = watch('userId');
   const passwordValue = watch('password');
   const passwordConfirmValue = watch('passwordConfirm');
+
+  const clickNextStep = (e: FormEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIdSuccessMsg('');
+    setStep((prev) => prev + 1);
+  };
 
   useEffect(() => {
     clearErrors('userId');
