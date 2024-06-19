@@ -109,7 +109,7 @@ export const TrainerStudentDietListPage = ({ memberId }: Props) => {
   return isPending ? (
     <div>로딩중...</div>
   ) : (
-    <Layout type='trainer'>
+    <Layout>
       <Layout.Header className='justify-start'>
         <button onClick={() => router.back()}>
           <IconArrowLeft stroke='black' />
