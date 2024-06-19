@@ -7,7 +7,9 @@ import { format } from 'date-fns';
 import dayjs from 'dayjs';
 import isBetween from 'dayjs/plugin/isBetween';
 dayjs.extend(isBetween);
+
 import { useQueryClient } from '@tanstack/react-query';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { DateFormatter, DayProps } from 'react-day-picker';
@@ -26,10 +28,16 @@ import {
   useDiet,
   useDietContext,
 } from '@/feature/diet';
-import { IconCheck, IconClose, IconNotification } from '@/shared/assets';
+import {
+  IconArrowLeft,
+  IconArrowRight,
+  IconCheck,
+  IconClose,
+  IconNotification,
+} from '@/shared/assets';
 import DownIcon from '@/shared/assets/images/icon_arrow_bottom.svg';
 import { useShowErrorToast } from '@/shared/hooks';
-import { Typography } from '@/shared/mixin';
+import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { Button, Calendar, Card, CardContent, CardHeader, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -56,20 +64,29 @@ export const StudentDietRegisterPage = () => {
   const [date, setDate] = useState<Date | undefined>();
   const [isArrowToggle, setIsArrowToggle] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(today);
+  const [currentWeek, setCurrentWeek] = useState({
+    start: dayjs(date).startOf('week').toDate(),
+    end: dayjs(date).endOf('week').toDate(),
+  });
 
   const { mutate: noticeMutate } = useDietShowNoticeMutation();
-  const { data: calendarMyDietData, isPending: calendarIsPending } =
-    useStudentCalendarMyDietListQuery({
-      startDate: dayjs(currentMonth)
-        .subtract(1, 'month')
-        .startOf('month')
-        .format('YYYY-MM-DD'),
-      endDate: dayjs(currentMonth).add(1, 'month').endOf('month').format('YYYY-MM-DD'),
-    });
+  const {
+    data: calendarMyDietData,
+    isPending: calendarIsPending,
+    isFetching,
+  } = useStudentCalendarMyDietListQuery({
+    startDate: dayjs(currentMonth)
+      .subtract(1, 'month')
+      .startOf('month')
+      .format('YYYY-MM-DD'),
+    endDate: dayjs(currentMonth).add(1, 'month').endOf('month').format('YYYY-MM-DD'),
+  });
   const { mutate: registerMutate, isPending: isRegisterPending } =
     useRegisterDietMutation();
 
   const month = dayjs(today).format('YYYY-MM');
+  const monthRightButtonDiabled = dayjs(currentMonth).isSame(dayjs(today), 'month');
+  const weekRightButtonDiabled = dayjs(currentWeek.end).isAfter(dayjs(today), 'day');
 
   const dietDates =
     calendarMyDietData?.uploadDays?.map((item) => {
@@ -92,14 +109,11 @@ export const StudentDietRegisterPage = () => {
     );
   };
 
-  // //하단 화살표 클릭시 보여줘야 하는 날짜(일주일)
-  const weekStart = dayjs(date).startOf('week');
-  const weekEnd = dayjs(date).endOf('week');
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const modifiers = {
     hidden: (day: string | number | Date | dayjs.Dayjs | null | undefined) =>
-      isArrowToggle && !dayjs(day).isBetween(weekStart, weekEnd, null, '[]'),
+      isArrowToggle &&
+      !dayjs(day).isBetween(currentWeek.start, currentWeek.end, null, '[]'),
     disabled: (day: Date) => {
       const isAfterToday = day > today;
       const isReservedDate =
@@ -125,14 +139,47 @@ export const StudentDietRegisterPage = () => {
 
   const clickCalendarArrow = () => {
     if (date) {
+      setCurrentWeek({
+        start: dayjs(date).startOf('week').toDate(),
+        end: dayjs(date).endOf('week').toDate(),
+      });
       setHasMounted(true);
       setCurrentMonth(date);
       setIsArrowToggle((prev) => !prev);
     }
   };
 
+  const handleWeekChange = (direction: 'prev' | 'next') => {
+    const newWeekStart =
+      direction === 'prev'
+        ? dayjs(currentWeek.start).subtract(7, 'days').toDate()
+        : dayjs(currentWeek.start).add(7, 'days').toDate();
+
+    const newWeekEnd =
+      direction === 'next'
+        ? dayjs(currentWeek.end).add(7, 'days').toDate()
+        : dayjs(currentWeek.end).subtract(7, 'days').toDate();
+
+    setCurrentWeek({
+      start: newWeekStart,
+      end: newWeekEnd,
+    });
+
+    if (direction === 'prev') {
+      dayjs(newWeekStart).month() !== dayjs(currentWeek.start).month()
+        ? setCurrentMonth(newWeekStart)
+        : setCurrentMonth(currentWeek.start);
+    } else {
+      setCurrentMonth(currentWeek.end);
+    }
+  };
+
   const handleMonthChange = (month: Date) => {
     setCurrentMonth(month);
+    setCurrentWeek({
+      start: dayjs(month).startOf('week').toDate(),
+      end: dayjs(month).endOf('week').toDate(),
+    });
   };
 
   const updateRequestData = (
@@ -215,6 +262,12 @@ export const StudentDietRegisterPage = () => {
     initialImages();
   }, [calendarMyDietData]);
 
+  useEffect(() => {
+    if (calendarMyDietData && !isFetching) {
+      setHasMounted(false);
+    }
+  }, [calendarMyDietData, isFetching]);
+
   return (
     <Layout>
       <Layout.Header className='bg-white'>
@@ -250,17 +303,62 @@ export const StudentDietRegisterPage = () => {
           )}
 
           {calendarIsPending ? (
-            <div className='h-[364px] w-full px-7 pb-6 pt-8'>로딩중...</div>
+            <div
+              className={cn(
+                isArrowToggle ? 'h-[150px]' : 'h-[364px]',
+                'flex w-full items-center justify-center'
+              )}>
+              <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
+            </div>
           ) : (
             <div
               className={cn(
+                'relative',
                 hasMounted
                   ? isArrowToggle
                     ? 'animate-calendar-accordion-up fill-mode-forwards'
                     : 'animate-calendar-accordion-down fill-mode-forwards'
-                  : '',
+                  : isArrowToggle
+                    ? 'h-[150px]'
+                    : '',
                 'overflow-hidden px-7 pb-6 pt-8'
               )}>
+              <div className='absolute right-7 top-8 z-10 flex items-center gap-8 py-2'>
+                <button
+                  onClick={
+                    !isArrowToggle
+                      ? () =>
+                          handleMonthChange(
+                            dayjs(currentMonth).subtract(1, 'month').toDate()
+                          )
+                      : () => handleWeekChange('prev')
+                  }
+                  className={cn(FLEX_CENTER, 'h-6 w-6')}>
+                  <IconArrowLeft stroke={'#000'} />
+                </button>
+                <button
+                  onClick={
+                    !isArrowToggle
+                      ? () =>
+                          handleMonthChange(dayjs(currentMonth).add(1, 'month').toDate())
+                      : () => handleWeekChange('next')
+                  }
+                  disabled={
+                    !isArrowToggle ? monthRightButtonDiabled : weekRightButtonDiabled
+                  }
+                  className={cn(FLEX_CENTER, 'h-6 w-6')}>
+                  {!isArrowToggle ? (
+                    <IconArrowRight
+                      stroke={monthRightButtonDiabled ? 'var(--gray-400)' : '#000'}
+                    />
+                  ) : (
+                    <IconArrowRight
+                      stroke={weekRightButtonDiabled ? 'var(--gray-400)' : '#000'}
+                    />
+                  )}
+                </button>
+              </div>
+
               <Calendar
                 mode='single'
                 required
@@ -282,6 +380,7 @@ export const StudentDietRegisterPage = () => {
                 components={{
                   DayContent: dietDay, //예약한 날 표시(블루닷)
                 }}
+                classNames={{ nav: 'hidden', nav_button: 'hidden' }}
                 isToggle={isArrowToggle}
               />
             </div>
@@ -318,7 +417,11 @@ export const StudentDietRegisterPage = () => {
           onClick={onClickRegisterDiet}
           disabled={isRegisterPending}
           className={cn(Typography.TITLE_1_BOLD, 'text-white')}>
-          {isRegisterPending ? '로딩중...' : '등록 완료'}
+          {isRegisterPending ? (
+            <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
+          ) : (
+            '등록 완료'
+          )}
         </Button>
       </Layout.BottomArea>
     </Layout>
