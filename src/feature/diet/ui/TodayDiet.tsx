@@ -1,6 +1,9 @@
+'use client';
+
 /* eslint-disable @next/next/no-img-element */
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 
 import {
@@ -10,7 +13,6 @@ import {
   useRegisterHomeDietMutation,
 } from '@/entity/diet';
 import {
-  IconAlbum,
   IconCameraUpload,
   IconCheck,
   IconDelete,
@@ -34,38 +36,18 @@ interface SelectImageProps {
   uploadFiles: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const TakePhoto = ({ type, uploadFiles }: SelectImageProps) => {
-  return (
-    <label htmlFor={`today-${type}-camera-input`} className='cursor-pointer'>
-      <Input
-        id={`today-${type}-camera-input`}
-        type='file'
-        className='hidden'
-        accept='image/*'
-        capture='environment'
-        onChange={uploadFiles}
-      />
-      <p className='flex items-center justify-start px-7 py-6'>
-        <IconCameraUpload width={24} height={24} />
-        <span className={cn(Typography.BODY_1, 'ml-4')}>사진 찍기</span>
-      </p>
-    </label>
-  );
-};
-
-const SelectAlbum = ({ type, uploadFiles }: SelectImageProps) => {
+const ImageUpload = ({ type, uploadFiles }: SelectImageProps) => {
   return (
     <label htmlFor={`today-${type}-album-input`} className='cursor-pointer'>
       <Input
         id={`today-${type}-album-input`}
         type='file'
         className='hidden'
-        accept='image/*'
         onChange={uploadFiles}
       />
       <p className='flex items-center justify-start px-7 py-6'>
-        <IconAlbum width={23} height={23} />
-        <span className={cn(Typography.BODY_1, 'ml-4')}>앨범에서 선택</span>
+        <IconCameraUpload width={24} height={24} />
+        <span className={cn(Typography.BODY_1, 'ml-4')}>사진 업로드</span>
       </p>
     </label>
   );
@@ -192,7 +174,7 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
           <SheetTrigger className='flex h-[88px] w-full items-center justify-center rounded-md bg-gray-100 p-0'>
             {isAnyLoading ? (
               <div className='flex h-[88px] w-full items-center justify-center'>
-                로딩중...
+                <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               </div>
             ) : (
               <p
@@ -208,14 +190,17 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
             )}
           </SheetTrigger>
           <SheetContent headerType='thumb' className='p-0 pb-9 pt-4'>
-            <SheetHeader className='py-5'>{type && dietText[type]}</SheetHeader>
+            <SheetHeader
+              className={cn(
+                Typography.TITLE_1_SEMIBOLD,
+                'py-5 text-black sm:text-center'
+              )}>
+              {diet.type && dietText[diet.type]}
+            </SheetHeader>
 
             <ul>
               <li className='h-[56px] border-t border-gray-100'>
-                <TakePhoto type={type} uploadFiles={uploadFiles} />
-              </li>
-              <li className='h-[56px] border-t border-gray-100'>
-                <SelectAlbum type={type} uploadFiles={uploadFiles} />
+                <ImageUpload type={type} uploadFiles={uploadFiles} />
               </li>
               <li className='h-[56px] border-t border-gray-100'>
                 <CancelFasting registerDiet={registerDiet} />
@@ -231,7 +216,7 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
           <SheetTrigger className='flex h-[88px] w-full cursor-pointer items-center justify-center rounded-md bg-gray-100 p-0'>
             {isAnyLoading ? (
               <div className='flex h-[88px] w-full items-center justify-center'>
-                로딩중...
+                <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               </div>
             ) : diet?.dietFile?.fileUrl ? (
               <img
@@ -256,10 +241,7 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
 
             <ul>
               <li className='h-[56px] border-t border-gray-100'>
-                <TakePhoto type={type} uploadFiles={uploadFiles} />
-              </li>
-              <li className='h-[56px] border-t border-gray-100'>
-                <SelectAlbum type={diet.type} uploadFiles={uploadFiles} />
+                <ImageUpload type={diet.type} uploadFiles={uploadFiles} />
               </li>
               {diet?.dietFile?.fileUrl ? (
                 <>

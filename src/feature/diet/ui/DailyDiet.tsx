@@ -1,9 +1,11 @@
+'use client';
+
 /* eslint-disable @next/next/no-img-element */
+import Image from 'next/image';
 import { useState } from 'react';
 
 import { MealType } from '@/entity/diet';
 import {
-  IconAlbum,
   IconCameraUpload,
   IconCheck,
   IconDelete,
@@ -29,30 +31,7 @@ interface SelectImageProps {
   setIsSheetOpen: (value: boolean) => void;
 }
 
-const TakePhoto = ({ type, setIsSheetOpen }: SelectImageProps) => {
-  const { uploadFiles } = useDietContext();
-  return (
-    <label htmlFor={`new-${type}-camera-input`} className='cursor-pointer'>
-      <Input
-        id={`new-${type}-camera-input`}
-        type='file'
-        className='hidden'
-        accept='image/*'
-        capture='environment'
-        onChange={(e) => {
-          uploadFiles(e, type);
-          setIsSheetOpen(false);
-        }}
-      />
-      <p className='flex items-center justify-start px-7 py-6'>
-        <IconCameraUpload width={24} height={24} />
-        <span className={cn(Typography.BODY_1, 'ml-4')}>사진 찍기</span>
-      </p>
-    </label>
-  );
-};
-
-const SelectAlbum = ({ type, setIsSheetOpen }: SelectImageProps) => {
+const ImageUpload = ({ type, setIsSheetOpen }: SelectImageProps) => {
   const { uploadFiles } = useDietContext();
   return (
     <label htmlFor={`new-${type}-album-input`} className='cursor-pointer'>
@@ -60,15 +39,14 @@ const SelectAlbum = ({ type, setIsSheetOpen }: SelectImageProps) => {
         id={`new-${type}-album-input`}
         type='file'
         className='hidden'
-        accept='image/*'
         onChange={(e) => {
           uploadFiles(e, type);
           setIsSheetOpen(false);
         }}
       />
       <p className='flex items-center justify-start px-7 py-6'>
-        <IconAlbum width={23} height={23} />
-        <span className={cn(Typography.BODY_1, 'ml-4')}>앨범에서 선택</span>
+        <IconCameraUpload width={24} height={24} />
+        <span className={cn(Typography.BODY_1, 'ml-4')}>사진 업로드</span>
       </p>
     </label>
   );
@@ -165,16 +143,17 @@ export const DailyDiet = ({ diet }: DailyDietProps) => {
               단식
             </SheetTrigger>
             <SheetContent headerType='thumb' className='p-0 pb-9 pt-4'>
-              <SheetHeader className='py-5'>
+              <SheetHeader
+                className={cn(
+                  Typography.TITLE_1_SEMIBOLD,
+                  'py-5 text-black sm:text-center'
+                )}>
                 {diet.type && dietText[diet.type]}
               </SheetHeader>
 
               <ul>
                 <li className='h-[56px] border-t border-gray-100'>
-                  <TakePhoto type={diet.type} setIsSheetOpen={setIsSheetOpen} />
-                </li>
-                <li className='h-[56px] border-t border-gray-100'>
-                  <SelectAlbum type={diet.type} setIsSheetOpen={setIsSheetOpen} />
+                  <ImageUpload type={diet.type} setIsSheetOpen={setIsSheetOpen} />
                 </li>
                 <li className='h-[56px] border-t border-gray-100'>
                   <CancelFasting type={diet.type} setIsSheetOpen={setIsSheetOpen} />
@@ -190,7 +169,7 @@ export const DailyDiet = ({ diet }: DailyDietProps) => {
             <SheetTrigger className='flex h-[88px] w-full cursor-pointer items-center justify-center rounded-md bg-gray-100'>
               {uploadStates[diet.type] && (
                 <div className='flex h-[88px] w-full items-center justify-center'>
-                  로딩중...
+                  <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
                 </div>
               )}
               {diet?.fileUrl && !uploadStates[diet.type] && (
@@ -215,10 +194,7 @@ export const DailyDiet = ({ diet }: DailyDietProps) => {
 
               <ul>
                 <li className='h-[56px] border-t border-gray-100'>
-                  <TakePhoto type={diet.type} setIsSheetOpen={setIsSheetOpen} />
-                </li>
-                <li className='h-[56px] border-t border-gray-100'>
-                  <SelectAlbum type={diet.type} setIsSheetOpen={setIsSheetOpen} />
+                  <ImageUpload type={diet.type} setIsSheetOpen={setIsSheetOpen} />
                 </li>
                 {diet.fileUrl ? (
                   <>
