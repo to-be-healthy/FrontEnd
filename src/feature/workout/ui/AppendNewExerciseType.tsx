@@ -54,7 +54,6 @@ const AppendNewExerciseType = ({
     data: pagedTypes,
     refetch,
     hasNextPage,
-    isFetchingNextPage,
     fetchNextPage,
   } = useWorkoutTypeListQuery({
     searchValue: debouncedSearch,
@@ -121,8 +120,8 @@ const AppendNewExerciseType = ({
           운동 추가하기
         </h1>
       </Layout.Header>
-      <Layout.Contents className='hide-scrollbar'>
-        <div className='flex h-fit w-full px-7 py-6'>
+      <Layout.Contents className='hide-scrollbar px-7'>
+        <div className='flex h-fit w-full py-6'>
           <div className='flex h-fit w-full justify-between rounded-md bg-gray-200 px-6 py-4'>
             <Button variant='ghost' size='icon' className='h-7 w-7'>
               <IconSearch />
@@ -142,32 +141,34 @@ const AppendNewExerciseType = ({
         )}
         {!isPending && (
           <>
-            <div className='hide-scrollbar overflow-x-auto'>
-              <div className='mt-2 flex w-full flex-nowrap space-x-3 px-7'>
-                {categories.map(({ category, name }) => {
-                  const selected = selectedCategory === category;
-                  return (
-                    <button
-                      key={category}
-                      className={cn(
-                        Typography.TITLE_3,
-                        'whitespace-nowrap rounded-md bg-gray-100 px-8 py-2',
-                        selected && 'bg-primary-500 text-white'
-                      )}
-                      onClick={() => {
-                        if (selected) {
-                          setSelectedCategory(null);
-                        } else {
-                          setSelectedCategory(category);
-                        }
-                      }}>
-                      {name}
-                    </button>
-                  );
-                })}
+            <div className='w-full overflow-hidden'>
+              <div className='hide-scrollbar overflow-x-auto'>
+                <div className='mt-2 flex w-full flex-nowrap space-x-3'>
+                  {categories.map(({ category, name }) => {
+                    const selected = selectedCategory === category;
+                    return (
+                      <button
+                        key={category}
+                        className={cn(
+                          Typography.TITLE_3,
+                          'whitespace-nowrap rounded-md bg-gray-100 px-8 py-2',
+                          selected && 'bg-primary-500 text-white'
+                        )}
+                        onClick={() => {
+                          if (selected) {
+                            setSelectedCategory(null);
+                          } else {
+                            setSelectedCategory(category);
+                          }
+                        }}>
+                        {name}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
             </div>
-            <div className='px-7 py-9'>
+            <div className='py-9'>
               <CreateNewExerciseBottomSheet categories={categories} />
             </div>
             {filteredTypes.length === 0 && (
@@ -190,7 +191,7 @@ const AppendNewExerciseType = ({
                       <label
                         htmlFor={type.names}
                         className={cn(
-                          'flex w-full items-center justify-between px-7 py-6',
+                          'flex w-full items-center justify-between py-6',
                           selected && 'bg-blue-10'
                         )}>
                         <div className='flex items-center gap-6'>
@@ -255,20 +256,11 @@ const AppendNewExerciseType = ({
                 })}
               </ul>
             )}
-            <div ref={ref}>
-              {isFetchingNextPage && (
-                <div className={cn(FLEX_CENTER, 'w-full')}>
-                  <div className={cn(FLEX_CENTER, 'mt-4 w-full')}>
-                    <Image
-                      src='/images/loading.gif'
-                      alt='loading'
-                      width={20}
-                      height={20}
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
+            {hasNextPage && (
+              <div ref={ref} className={cn(FLEX_CENTER, 'h-7 w-full p-3')}>
+                <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
+              </div>
+            )}
           </>
         )}
       </Layout.Contents>
