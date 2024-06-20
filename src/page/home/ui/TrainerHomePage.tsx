@@ -52,7 +52,7 @@ export const TrainerHomePage = () => {
         courseId,
         memberId,
         calculation: 'PLUS',
-        type: 'PLUS_CNT',
+        type: 'ONE_LESSON',
         updateCnt: '1',
       },
       {
@@ -325,18 +325,20 @@ export const TrainerHomePage = () => {
                               아니요
                             </Button>
                           </DialogClose>
-                          <Button
-                            variant='default'
-                            size='full'
-                            className={cn(Typography.TITLE_1_SEMIBOLD, 'py-4')}
-                            onClick={() =>
-                              addCourse({
-                                courseId: item.courseId,
-                                memberId: item.memberId,
-                              })
-                            }>
-                            예
-                          </Button>
+                          <DialogClose asChild>
+                            <Button
+                              variant='default'
+                              size='full'
+                              className={cn(Typography.TITLE_1_SEMIBOLD, 'py-4')}
+                              onClick={() =>
+                                addCourse({
+                                  courseId: item.courseId,
+                                  memberId: item.memberId,
+                                })
+                              }>
+                              예
+                            </Button>
+                          </DialogClose>
                         </div>
                       </DialogContent>
                     </Dialog>
