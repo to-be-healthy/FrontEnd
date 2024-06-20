@@ -103,7 +103,6 @@ const AppendNewExerciseType = ({
     }
   }, [fetchNextPage, hasNextPage, inView]);
 
-  const isPending = !categories || !filteredTypes;
   const buttonDisabled = selectedTypes.length === 0;
 
   return (
@@ -134,132 +133,135 @@ const AppendNewExerciseType = ({
             />
           </div>
         </div>
-        {isPending && (
+
+        {categories && (
+          <div className='hide-scrollbar overflow-x-auto'>
+            <div className='mt-2 flex w-[calc(100vw-40px)] flex-nowrap gap-3'>
+              {categories.map(({ category, name }) => {
+                const selected = selectedCategory === category;
+                return (
+                  <button
+                    key={category}
+                    className={cn(
+                      Typography.TITLE_3,
+                      'whitespace-nowrap rounded-md bg-gray-100 px-8 py-2',
+                      selected && 'bg-primary-500 text-white'
+                    )}
+                    onClick={() => {
+                      if (selected) {
+                        setSelectedCategory(null);
+                      } else {
+                        setSelectedCategory(category);
+                      }
+                    }}>
+                    {name}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
+        {categories && (
+          <div className='py-9'>
+            <CreateNewExerciseBottomSheet categories={categories} />
+          </div>
+        )}
+        {!filteredTypes && (
           <div className={cn(FLEX_CENTER, 'mt-10 w-full')}>
             <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
           </div>
         )}
-        {!isPending && (
-          <>
-            <div className='hide-scrollbar w-[calc(100vw-40px)] overflow-x-auto'>
-              <div className='mt-2 flex flex-nowrap gap-3'>
-                {categories.map(({ category, name }) => {
-                  const selected = selectedCategory === category;
-                  return (
-                    <button
-                      key={category}
+        {filteredTypes && filteredTypes.length === 0 && (
+          <div
+            className={cn(
+              Typography.HEADING_4_SEMIBOLD,
+              FLEX_CENTER,
+              'mt-10 flex w-full flex-col gap-5 text-gray-400'
+            )}>
+            <IconNotification width={33} height={33} stroke='var(--gray-300)' />
+            추가 가능한 운동이 없습니다.
+          </div>
+        )}
+        {filteredTypes && filteredTypes.length > 0 && (
+          <div>
+            <ul className='flex h-fit w-full flex-col'>
+              {filteredTypes.map((type) => {
+                const selected = selectedTypes.includes(type.exerciseId);
+                return (
+                  <li key={type.exerciseId}>
+                    <label
+                      htmlFor={type.names}
                       className={cn(
-                        Typography.TITLE_3,
-                        'whitespace-nowrap rounded-md bg-gray-100 px-8 py-2',
-                        selected && 'bg-primary-500 text-white'
-                      )}
-                      onClick={() => {
-                        if (selected) {
-                          setSelectedCategory(null);
-                        } else {
-                          setSelectedCategory(category);
-                        }
-                      }}>
-                      {name}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-            <div className='py-9'>
-              <CreateNewExerciseBottomSheet categories={categories} />
-            </div>
-            {filteredTypes.length === 0 && (
-              <div
-                className={cn(
-                  Typography.HEADING_4_SEMIBOLD,
-                  FLEX_CENTER,
-                  'mt-10 flex w-full flex-col gap-5 text-gray-400'
-                )}>
-                <IconNotification width={33} height={33} stroke='var(--gray-300)' />
-                추가 가능한 운동이 없습니다.
-              </div>
-            )}
-            {filteredTypes.length > 0 && (
-              <ul className='flex w-full flex-col'>
-                {filteredTypes.map((type) => {
-                  const selected = selectedTypes.includes(type.exerciseId);
-                  return (
-                    <li key={type.exerciseId}>
-                      <label
-                        htmlFor={type.names}
-                        className={cn(
-                          'flex w-full items-center justify-between py-6',
-                          selected && 'bg-blue-10'
-                        )}>
-                        <div className='flex items-center gap-6'>
-                          <input
-                            id={type.names}
-                            type='checkbox'
-                            className='peer hidden'
-                            checked={selected}
-                            onChange={() => {
-                              if (!selected) {
-                                setSelectedTypes((prev) => [...prev, type.exerciseId]);
-                              }
-                              if (selected) {
-                                setSelectedTypes((prev) =>
-                                  prev.filter((id) => id !== type.exerciseId)
-                                );
-                              }
-                            }}
-                          />
-                          <span className='flex h-[20px] w-[20px] items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
-                            <IconNoCircleCheck width={15} height={12} fill='white' />
+                        'flex w-full items-center justify-between py-6',
+                        selected && 'bg-blue-10'
+                      )}>
+                      <div className='flex items-center gap-6'>
+                        <input
+                          id={type.names}
+                          type='checkbox'
+                          className='peer hidden'
+                          checked={selected}
+                          onChange={() => {
+                            if (!selected) {
+                              setSelectedTypes((prev) => [...prev, type.exerciseId]);
+                            }
+                            if (selected) {
+                              setSelectedTypes((prev) =>
+                                prev.filter((id) => id !== type.exerciseId)
+                              );
+                            }
+                          }}
+                        />
+                        <span className='flex h-[20px] w-[20px] items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
+                          <IconNoCircleCheck width={15} height={12} fill='white' />
+                        </span>
+                        <div className='flex flex-col'>
+                          <p className={cn(Typography.TITLE_2)}>{type.names}</p>
+                          <span
+                            className={cn(Typography.BODY_4_REGULAR, 'text-gray-600')}>
+                            {type.muscles}
                           </span>
-                          <div className='flex flex-col'>
-                            <p className={cn(Typography.TITLE_2)}>{type.names}</p>
-                            <span
-                              className={cn(Typography.BODY_4_REGULAR, 'text-gray-600')}>
-                              {type.muscles}
-                            </span>
-                          </div>
                         </div>
-                        {type.custom && (
-                          <Sheet>
-                            <SheetTrigger className={cn(FLEX_CENTER, 'h-6 w-6')}>
-                              <IconDotsVertical />
-                            </SheetTrigger>
-                            <SheetContent
-                              headerType='thumb'
-                              className='flex flex-col px-0 pt-8'>
-                              <SheetHeader>
-                                <h3
-                                  className={cn(
-                                    Typography.TITLE_1_SEMIBOLD,
-                                    'text-center'
-                                  )}>
-                                  {type.names}
-                                </h3>
-                              </SheetHeader>
-                              <SheetClose
+                      </div>
+                      {type.custom && (
+                        <Sheet>
+                          <SheetTrigger className={cn(FLEX_CENTER, 'h-6 w-6')}>
+                            <IconDotsVertical />
+                          </SheetTrigger>
+                          <SheetContent
+                            headerType='thumb'
+                            className='flex flex-col px-0 pt-8'>
+                            <SheetHeader>
+                              <h3
                                 className={cn(
-                                  Typography.BODY_1,
-                                  'w-full border-t px-7 py-6 text-left'
-                                )}
-                                onClick={() => deleteCustomExercise(type.exerciseId)}>
-                                목록에서 제거
-                              </SheetClose>
-                            </SheetContent>
-                          </Sheet>
-                        )}
-                      </label>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-            {hasNextPage && (
+                                  Typography.TITLE_1_SEMIBOLD,
+                                  'text-center'
+                                )}>
+                                {type.names}
+                              </h3>
+                            </SheetHeader>
+                            <SheetClose
+                              className={cn(
+                                Typography.BODY_1,
+                                'w-full border-t px-7 py-6 text-left'
+                              )}
+                              onClick={() => deleteCustomExercise(type.exerciseId)}>
+                              목록에서 제거
+                            </SheetClose>
+                          </SheetContent>
+                        </Sheet>
+                      )}
+                    </label>
+                  </li>
+                );
+              })}
+            </ul>
+            {filteredTypes && hasNextPage && (
               <div ref={ref} className={cn(FLEX_CENTER, 'h-7 w-full p-3')}>
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               </div>
             )}
-          </>
+          </div>
         )}
       </Layout.Contents>
       <Layout.BottomArea>
