@@ -190,7 +190,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-        <p className='typography-heading-4 flex h-full items-center'>
+        <p className={cn(Typography.HEADING_4, 'flex h-full items-center')}>
           {`${name ? `${name}님 ` : ''}`}수업일지 작성
         </p>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>

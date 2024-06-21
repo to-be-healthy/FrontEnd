@@ -39,7 +39,7 @@ const StudentEditMemo = ({ memberId }: Props) => {
             description: (
               <div className='flex items-center justify-center'>
                 <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className='typography-heading-5 ml-6 text-white'>
+                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
                   메모를 저장했습니다.
                 </p>
               </div>
@@ -54,7 +54,7 @@ const StudentEditMemo = ({ memberId }: Props) => {
             description: (
               <div className='flex items-center justify-center'>
                 <IconError />
-                <p className='typography-heading-5 ml-6 text-white'>
+                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
                   {error.response?.data.message}
                 </p>
               </div>

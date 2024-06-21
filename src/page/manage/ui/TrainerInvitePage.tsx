@@ -125,11 +125,11 @@ export const TrainerInvitePage = () => {
             <CloseIcon width={20} height={20} />
           </Link>
         </Button>
-        <h1 className='typography-heading-4 font-semibold'>회원추가</h1>
+        <h1 className={cn(Typography.HEADING_4)}>회원추가</h1>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
       </Layout.Header>
       <Layout.Contents className='px-7'>
-        <h2 className='typography-heading-3 py-11'>회원님의 정보를 알려주세요.</h2>
+        <h2 className={cn(Typography.HEADING_3, 'py-11')}>회원님의 정보를 알려주세요.</h2>
         <div className='flex w-full items-center justify-center py-11'>
           <Image
             src='/images/letter_blue-heart.png'

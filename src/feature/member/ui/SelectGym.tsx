@@ -7,6 +7,7 @@ import { useAuthAction, useAuthSelector } from '@/entity/auth';
 import { Gym, useGymListQuery, useRegisterGymMutation } from '@/entity/gym';
 import { IconError } from '@/shared/assets';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
+import { Typography } from '@/shared/mixin';
 import { Button, InputOTP, InputOTPGroup, InputOTPSlot, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -51,7 +52,7 @@ export const SelectGym = () => {
               description: (
                 <div className='flex items-center justify-center'>
                   <IconError />
-                  <p className='typography-heading-5 ml-6 text-white'>
+                  <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
                     {error.response?.data.message}
                   </p>
                 </div>
@@ -75,7 +76,7 @@ export const SelectGym = () => {
               description: (
                 <div className='flex items-center justify-center'>
                   <IconError />
-                  <p className='typography-heading-5 ml-6 text-white'>
+                  <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
                     {error.response?.data.message}
                   </p>
                 </div>

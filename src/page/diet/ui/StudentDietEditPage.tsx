@@ -106,7 +106,7 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
             description: (
               <div className='flex items-center justify-center'>
                 <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className='typography-heading-5 ml-6 text-white'>{message}</p>
+                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
               </div>
             ),
             duration: 2000,
