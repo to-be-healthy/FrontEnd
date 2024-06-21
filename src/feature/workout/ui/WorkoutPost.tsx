@@ -3,7 +3,7 @@
 import dayjs from 'dayjs';
 
 import { type Workout } from '@/feature/workout';
-import { IconChat, IconLike } from '@/shared/assets';
+import { IconChat, IconGroup, IconLike, IconLock } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -12,13 +12,24 @@ import { ImageSlide } from '@/widget';
 import { ExercisePreview } from './ExerciseInfo';
 
 const WorkoutPost = ({ workout }: { workout: Workout }) => {
-  const { createdAt, files, content, completedExercises, liked, likeCnt, commentCnt } =
-    workout;
+  const {
+    createdAt,
+    files,
+    content,
+    completedExercises,
+    liked,
+    likeCnt,
+    commentCnt,
+    viewMySelf,
+  } = workout;
   const formattedDate = dayjs(createdAt).format('M월 D일 (ddd)');
 
   return (
     <Card className={cn(Typography.TITLE_3, 'w-full gap-0')}>
-      <CardHeader className={cn(Typography.TITLE_3, 'mb-4')}>{formattedDate}</CardHeader>
+      <CardHeader className='flex w-full items-center justify-between'>
+        <p className={cn(Typography.TITLE_3, 'mb-4')}>{formattedDate}</p>
+        {viewMySelf ? <IconLock /> : <IconGroup />}
+      </CardHeader>
       <CardContent>
         <p
           className={cn(
