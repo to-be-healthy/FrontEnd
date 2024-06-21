@@ -3,7 +3,8 @@
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Image from 'next/image';
-import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -25,7 +26,10 @@ import {
   useRegisterStudentCourseMutation,
   useStudentCourseDetailQuery,
 } from '@/feature/member';
-import { IconArrowLeft, IconCheck, IconNotification, IconPlus } from '@/shared/assets';
+import { IconPlus } from '@/shared/assets';
+import { IconCheck } from '@/shared/assets';
+import { IconNotification } from '@/shared/assets';
+import BackIcon from '@/shared/assets/images/icon_back.svg';
 import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
@@ -42,7 +46,6 @@ import {
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
-
 interface Props {
   memberId: number;
 }
@@ -51,7 +54,6 @@ const ITEMS_PER_PAGE = 20;
 
 export const StudentCourseDetailPage = ({ memberId }: Props) => {
   const { toast } = useToast();
-  const router = useRouter();
   const params = useSearchParams();
   const name = params.get('name');
   const date = new Date();
@@ -95,7 +97,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
         onSuccess: (reslut) => {
           setIsRegisterSheetOpen(false);
           void queryClient.invalidateQueries({
-            queryKey: ['studentCourseHistory'],
+            queryKey: ['studentCourseDetail'],
           });
           return toast({
             className: 'h-12',
@@ -154,7 +156,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
     deleteMutation(studentCourseId, {
       onSuccess: (result) => {
         void queryClient.invalidateQueries({
-          queryKey: ['studentCourseHistory'],
+          queryKey: ['studentCourseDetail'],
         });
         return toast({
           className: 'h-12',
@@ -183,16 +185,16 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
 
   useEffect(() => {
     return () => {
-      queryClient.removeQueries({ queryKey: ['studentCourseHistory'] });
+      queryClient.removeQueries({ queryKey: ['studentCourseDetail'] });
     };
   }, [queryClient]);
 
   return (
     <Layout type='trainer'>
       <Layout.Header className='justify-start bg-[#fff]'>
-        <button onClick={() => router.back()}>
-          <IconArrowLeft stroke='black' />
-        </button>
+        <Link href='./'>
+          <BackIcon />
+        </Link>
         <h2
           className={cn(
             Typography.HEADING_4_SEMIBOLD,
