@@ -62,7 +62,7 @@ const EditPasswordPage = () => {
         <button onClick={() => router.back()}>
           <IconBack />
         </button>
-        <h1 className={cn(Typography.HEADING_4_SEMIBOLD)}>이메일 변경</h1>
+        <h1 className={cn(Typography.HEADING_4_SEMIBOLD)}>비밀번호 변경</h1>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
       </Layout.Header>
       <Layout.Contents>

@@ -118,7 +118,7 @@ export const TrainerStudentDietDetailPage = ({ memberId, dietId }: Props) => {
                   ? `${name}님 식단`
                   : dietDate === todayValue
                     ? '오늘 식단'
-                    : `${dietDate.split(' ')[0]} ${dietDate.split(' ')[1]} 식단`}
+                    : `${dayjs(dietData?.eatDate).format('MM월 DD일 ')} 식단`}
               </h2>
             </Layout.Header>
             <Layout.Contents>
