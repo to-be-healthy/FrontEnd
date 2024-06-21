@@ -152,9 +152,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                   Typography.HEADING_4_SEMIBOLD,
                   'absolute left-1/2 translate-x-[-50%] text-black'
                 )}>
-                {dietValue === todayValue
-                  ? '오늘 '
-                  : dayjs(dietData?.eatDate).format('MM월 DD일 ')}
+                {dietValue === todayValue ? '오늘 ' : dayjs(dietValue).format('YYYY-MM')}
                 식단
               </h2>
               <DropdownMenu>
