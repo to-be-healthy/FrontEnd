@@ -17,7 +17,7 @@ import {
   WorkoutCommentInput,
   WorkoutCommentsWrapper,
 } from '@/feature/workout';
-import { IconBack } from '@/shared/assets';
+import { IconBack, IconGroup, IconLock } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Card, CardContent, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -47,8 +47,9 @@ const TrainerWorkoutDetailPage = ({ workoutHistoryId, memberId }: Props) => {
         <Layout.Contents className='hide-scrollbar px-7 py-6'>
           {data && (
             <Card className='w-full gap-0 px-0 pb-0 pt-7'>
-              <CardHeader className={cn(Typography.TITLE_3, 'px-6')}>
-                {formattedDate}
+              <CardHeader className='flex w-full items-center justify-between px-6'>
+                <p className={cn(Typography.TITLE_3, 'mb-4')}>{formattedDate}</p>
+                {data.viewMySelf ? <IconLock /> : <IconGroup />}
               </CardHeader>
               <CardContent className='mt-4 px-6 pb-7'>
                 <p className={cn(Typography.BODY_3, 'mb-5 mt-4')}>{data.content}</p>

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { ChangeEvent, useState } from 'react';
 
-import { Member, useNotRegisteredStudentsQuery } from '@/feature/member';
+import { Member, useMyInfoQuery, useNotRegisteredStudentsQuery } from '@/feature/member';
 import { IconAlertCircle, IconSearch } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import { Typography } from '@/shared/mixin';
@@ -22,6 +22,7 @@ const MemberListController = (students: Member[]) => ({
 });
 
 export const NotRegisteredStudentListPage = () => {
+  const { data: myInfo } = useMyInfoQuery();
   const [searchQuery, setSearchQuery] = useState('');
 
   const { data, isPending } = useNotRegisteredStudentsQuery();
@@ -38,7 +39,7 @@ export const NotRegisteredStudentListPage = () => {
     <Layout>
       <Layout.Header>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
-        <h1 className={cn(Typography.HEADING_4_SEMIBOLD)}>건강하짐 홍대점</h1>
+        <h1 className={cn(Typography.HEADING_4_SEMIBOLD)}>{myInfo?.gym.name}</h1>
         <Button
           variant='outline'
           className='border-none bg-transparent p-0 hover:bg-transparent'

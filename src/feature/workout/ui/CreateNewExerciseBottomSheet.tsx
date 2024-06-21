@@ -1,7 +1,7 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { IconPlus } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
@@ -11,7 +11,6 @@ import {
   Input,
   Sheet,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTrigger,
@@ -23,8 +22,10 @@ import { WorkoutCategory } from '../model/types';
 
 const CreateNewExerciseBottomSheet = ({
   categories,
+  defaultSearch,
 }: {
   categories: WorkoutCategory[];
+  defaultSearch: string;
 }) => {
   const queryClient = useQueryClient();
   const { showErrorToast } = useShowErrorToast();
@@ -69,6 +70,12 @@ const CreateNewExerciseBottomSheet = ({
 
   const buttonDisabled = !name || !selectedCategory;
 
+  useEffect(() => {
+    if (open && defaultSearch) {
+      setName(defaultSearch);
+    }
+  }, [defaultSearch, open]);
+
   return (
     <Sheet
       open={open}
@@ -91,7 +98,7 @@ const CreateNewExerciseBottomSheet = ({
             신규 운동 추가
           </h3>
         </SheetHeader>
-        <SheetDescription className='flex flex-col gap-7 px-7 text-black'>
+        <div className='flex flex-col gap-7 px-7 text-black'>
           <div className='flex flex-col gap-3'>
             <p className={cn(Typography.TITLE_3)}>
               운동 이름 <span className='text-point'>*</span>
@@ -100,6 +107,7 @@ const CreateNewExerciseBottomSheet = ({
               <Input
                 type='text'
                 placeholder='추가할 운동 이름을 입력해주세요.'
+                value={name}
                 className={cn(
                   'w-full',
                   twSelector('placeholder', cn(Typography.BODY_1, 'text-gray-500'))
@@ -144,6 +152,7 @@ const CreateNewExerciseBottomSheet = ({
               <Input
                 type='text'
                 placeholder='사용 근육을 입력해주세요.'
+                value={muscles}
                 className={cn(
                   'w-full',
                   twSelector('placeholder', cn(Typography.BODY_1, 'text-gray-500'))
@@ -152,7 +161,7 @@ const CreateNewExerciseBottomSheet = ({
               />
             </div>
           </div>
-        </SheetDescription>
+        </div>
         <SheetFooter className='px-7'>
           <Button
             variant='default'

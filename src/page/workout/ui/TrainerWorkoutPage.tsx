@@ -3,6 +3,7 @@
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -13,6 +14,7 @@ import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
 const TrainerWorkoutPage = ({ memberId }: { memberId: number }) => {
+  const router = useRouter();
   const [selectedMonth, setSelectedMonth] = useState<Date>(new Date());
   const searchDate = dayjs(selectedMonth).format('YYYY-MM');
 
@@ -39,9 +41,9 @@ const TrainerWorkoutPage = ({ memberId }: { memberId: number }) => {
   return (
     <Layout>
       <Layout.Header>
-        <Link href={`/trainer/manage/${memberId}`}>
+        <button onClick={() => router.back()}>
           <IconBack />
-        </Link>
+        </button>
         <h1
           className={cn(
             Typography.HEADING_4_SEMIBOLD,

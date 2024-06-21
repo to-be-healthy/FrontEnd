@@ -298,7 +298,11 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
         </div>
       </Layout.Contents>
       <Layout.BottomArea>
-        <Button size='full' onClick={submit} disabled={submitButtonDisabled}>
+        <Button
+          size='full'
+          onClick={submit}
+          disabled={submitButtonDisabled}
+          className={cn(Typography.TITLE_1_BOLD)}>
           작성 완료
         </Button>
       </Layout.BottomArea>

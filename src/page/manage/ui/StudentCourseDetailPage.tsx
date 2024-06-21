@@ -3,8 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Image from 'next/image';
-import Link from 'next/link';
-import { useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -53,6 +52,7 @@ interface Props {
 const ITEMS_PER_PAGE = 20;
 
 export const StudentCourseDetailPage = ({ memberId }: Props) => {
+  const router = useRouter();
   const { toast } = useToast();
   const params = useSearchParams();
   const name = params.get('name');
@@ -192,9 +192,9 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
   return (
     <Layout type='trainer'>
       <Layout.Header className='justify-start bg-[#fff]'>
-        <Link href='./'>
+        <button onClick={() => router.back()}>
           <BackIcon />
-        </Link>
+        </button>
         <h2
           className={cn(
             Typography.HEADING_4_SEMIBOLD,
