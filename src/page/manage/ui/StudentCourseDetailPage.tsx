@@ -25,10 +25,7 @@ import {
   useRegisterStudentCourseMutation,
   useStudentCourseDetailQuery,
 } from '@/feature/member';
-import { IconPlus } from '@/shared/assets';
-import { IconCheck } from '@/shared/assets';
-import { IconNotification } from '@/shared/assets';
-import BackIcon from '@/shared/assets/images/icon_back.svg';
+import { IconArrowLeft, IconCheck, IconNotification, IconPlus } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
@@ -45,6 +42,7 @@ import {
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
+
 interface Props {
   memberId: number;
 }
@@ -52,8 +50,8 @@ interface Props {
 const ITEMS_PER_PAGE = 20;
 
 export const StudentCourseDetailPage = ({ memberId }: Props) => {
-  const router = useRouter();
   const { toast } = useToast();
+  const router = useRouter();
   const params = useSearchParams();
   const name = params.get('name');
   const date = new Date();
@@ -97,7 +95,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
         onSuccess: (reslut) => {
           setIsRegisterSheetOpen(false);
           void queryClient.invalidateQueries({
-            queryKey: ['studentCourseDetail'],
+            queryKey: ['studentCourseHistory'],
           });
           return toast({
             className: 'h-12',
@@ -156,7 +154,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
     deleteMutation(studentCourseId, {
       onSuccess: (result) => {
         void queryClient.invalidateQueries({
-          queryKey: ['studentCourseDetail'],
+          queryKey: ['studentCourseHistory'],
         });
         return toast({
           className: 'h-12',
@@ -185,7 +183,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
 
   useEffect(() => {
     return () => {
-      queryClient.removeQueries({ queryKey: ['studentCourseDetail'] });
+      queryClient.removeQueries({ queryKey: ['studentCourseHistory'] });
     };
   }, [queryClient]);
 
@@ -193,7 +191,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
     <Layout type='trainer'>
       <Layout.Header className='justify-start bg-[#fff]'>
         <button onClick={() => router.back()}>
-          <BackIcon />
+          <IconArrowLeft stroke='black' />
         </button>
         <h2
           className={cn(
