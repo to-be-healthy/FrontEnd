@@ -19,8 +19,8 @@ const ExercisePreview = ({ exercises }: { exercises: Exercise[] }) => {
       <div className='mt-5 flex w-full justify-between rounded-md bg-gray-100 px-6 py-5'>
         <p className={cn(Typography.TITLE_3, 'text-black')}>{firstExercise.name}</p>
         <p className={cn(Typography.BODY_2, 'text-black')}>
-          {`${firstExercise.weight}kg × ${firstExercise.setNum}회`}
-          <span className='ml-2 text-primary-500'>{`${firstExercise.numberOfCycles}세트`}</span>
+          {`${firstExercise.weight}kg × ${firstExercise.numberOfCycles}회`}
+          <span className='ml-2 text-primary-500'>{`${firstExercise.setNum}세트`}</span>
         </p>
       </div>
     );
@@ -53,8 +53,8 @@ const ExerciseDetail = ({ exercises }: { exercises: Exercise[] }) => {
             <div key={item.exerciseId} className='flex items-center justify-between'>
               <p className={cn(Typography.TITLE_3, 'text-black')}>{name}</p>
               <p className={cn(Typography.BODY_2, 'text-black')}>
-                {`${weight}kg × ${setNum}회`}
-                <span className='ml-2 text-primary-500'>{`${numberOfCycles}세트`}</span>
+                {`${weight}kg × ${numberOfCycles}회`}
+                <span className='ml-2 text-primary-500'>{`${setNum}세트`}</span>
               </p>
             </div>
           );
