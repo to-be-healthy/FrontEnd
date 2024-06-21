@@ -51,7 +51,7 @@ const dayOfWeekMap: Record<DayOfWeek, string> = {
 const classTime = [30, 60, 90, 120];
 const timePeriods = ['오전', '오후'];
 const hours = Array.from({ length: 12 }, (_, i) => String(i + 1));
-const minutes = ['30', '00'];
+const minutes = ['00', '30'];
 
 export const ClassTimeSettingPage = () => {
   const { data: classTimeData } = useGetTrainerClassTimeSettingQuery();

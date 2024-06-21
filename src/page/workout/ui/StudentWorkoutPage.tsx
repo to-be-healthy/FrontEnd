@@ -3,17 +3,19 @@
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { useAuthSelector } from '@/entity/auth';
 import { NoWorkout, useWorkoutQuery, WorkoutPost } from '@/feature/workout';
-import { IconBack, IconPlus } from '@/shared/assets';
+import { IconArrowLeft, IconPlus } from '@/shared/assets';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
 const StudentWorkoutPage = () => {
+  const router = useRouter();
   const { name, memberId } = useAuthSelector(['name', 'memberId']);
 
   if (!name || !memberId) {
@@ -43,9 +45,9 @@ const StudentWorkoutPage = () => {
   return (
     <Layout>
       <Layout.Header>
-        <Link href={'/student'}>
-          <IconBack />
-        </Link>
+        <button onClick={() => router.back()}>
+          <IconArrowLeft stroke='black' />
+        </button>
         <h1
           className={cn(
             Typography.HEADING_4_SEMIBOLD,
