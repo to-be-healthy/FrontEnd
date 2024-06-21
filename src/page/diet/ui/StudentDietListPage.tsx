@@ -94,154 +94,144 @@ export const StudentDietListPage = () => {
     };
   }, [queryClient]);
 
-  return (
+  return isPending ? (
+    <div>로딩중...</div>
+  ) : (
     <Layout type='student'>
-      {isPending && (
-        <div className='flex h-full w-full items-center justify-center'>
-          <div ref={ref} className='flex w-full justify-center p-3'>
-            <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
-          </div>
-        </div>
-      )}
-      {!isPending && (
-        <>
-          <Layout.Header className='bg-gray-100'>
-            <button onClick={() => router.back()}>
-              <IconArrowLeft stroke='black' />
-            </button>
-            <h2
-              className={cn(
-                Typography.HEADING_4_SEMIBOLD,
-                'absolute left-1/2 translate-x-[-50%] text-black'
-              )}>
-              {name}님 식단
-            </h2>
-            <Link href='/student/diet/register'>
-              <IconPlus width={20} height={20} />
-            </Link>
-          </Layout.Header>
-          <Layout.Contents className='bg-gray-100'>
-            <article className='bg-gray-100 px-7 pb-[52px] pt-7'>
-              {selectedMonth && (
-                <div className='flex justify-start'>
-                  <MonthPicker
-                    date={selectedMonth}
-                    onChangeDate={(newDate) => onChangeMonth(newDate)}
-                  />
-                </div>
-              )}
+      <Layout.Header className='bg-gray-100'>
+        <Link href='/student'>
+          <IconArrowLeft stroke='black' />
+        </Link>
+        <h2
+          className={cn(
+            Typography.HEADING_4_SEMIBOLD,
+            'absolute left-1/2 translate-x-[-50%] text-black'
+          )}>
+          {name}님 식단
+        </h2>
+        <Link href='/student/diet/register'>
+          <IconPlus width={20} height={20} />
+        </Link>
+      </Layout.Header>
+      <Layout.Contents className='bg-gray-100'>
+        <article className='bg-gray-100 px-7 pb-[52px] pt-7'>
+          {selectedMonth && (
+            <div className='flex justify-start'>
+              <MonthPicker
+                date={selectedMonth}
+                onChangeDate={(newDate) => onChangeMonth(newDate)}
+              />
+            </div>
+          )}
 
-              <ul>
-                {data?.pages.map((item, index) => {
-                  if (item.content === null || item.content.length === 0) {
-                    return <NoDiet key={`diet_${index}`} />;
-                  }
+          <ul>
+            {data?.pages.map((item, index) => {
+              if (item.content === null || item.content.length === 0) {
+                return <NoDiet key={`diet_${index}`} />;
+              }
 
-                  return item.content.map((diet) => {
-                    const date = dayjs(diet?.eatDate).format('MM월 DD일 (dd)');
-                    const todayValue = dayjs(today).format('MM월 DD일 (dd)');
-                    return (
-                      <li key={diet.dietId}>
-                        <Button
-                          variant='ghost'
-                          size='full'
-                          className='p-0'
-                          onClick={() => onClickDiet(diet.dietId)}>
-                          <Card className='mb-5 w-full px-6 py-7'>
-                            <CardHeader
-                              className={
-                                (Typography.TITLE_3, 'mb-4 text-left text-gray-600')
-                              }>
-                              {date === todayValue ? '오늘' : date}
-                            </CardHeader>
-                            <CardContent>
-                              <article className='mb-6 flex justify-between gap-2'>
-                                {dietDay.map((mealType: MealType) => {
-                                  const meal = diet[mealType];
-
-                                  return (
+              return item.content.map((diet) => {
+                const date = dayjs(diet?.eatDate).format('MM월 DD일 (dd)');
+                const todayValue = dayjs(today).format('MM월 DD일 (dd)');
+                return (
+                  <li key={diet.dietId}>
+                    <Button
+                      variant='ghost'
+                      size='full'
+                      className='p-0'
+                      onClick={() => onClickDiet(diet.dietId)}>
+                      <Card className='mb-5 w-full px-6 py-7'>
+                        <CardHeader
+                          className={
+                            (Typography.TITLE_3, 'mb-4 text-left text-gray-600')
+                          }>
+                          {date === todayValue ? '오늘' : date}
+                        </CardHeader>
+                        <CardContent>
+                          <article className='mb-6 flex justify-between gap-2'>
+                            {dietDay.map((mealType: MealType) => {
+                              const meal = diet[mealType];
+                              return (
+                                <div
+                                  key={mealType}
+                                  className='flex flex-1 items-center justify-center'>
+                                  {meal.fast && (
                                     <div
-                                      key={mealType}
-                                      className='flex flex-1 items-center justify-center'>
-                                      {meal.fast && (
-                                        <div
-                                          className={cn(
-                                            Typography.TITLE_2,
-                                            'flex h-[88px] w-full flex-col items-center justify-center rounded-md bg-gray-100 p-0 text-center text-gray-400'
-                                          )}>
-                                          <span className='mb-1'>
-                                            <IconCheck
-                                              fill={'var(--primary-500)'}
-                                              width={17}
-                                              height={17}
-                                            />
-                                          </span>
-                                          단식
-                                        </div>
-                                      )}
-                                      {!meal.fast && meal.dietFile?.fileUrl && (
-                                        <div className='h-[88px] w-full'>
-                                          <img
-                                            src={meal.dietFile?.fileUrl}
-                                            alt={`${meal.type} image`}
-                                            className='custom-image rounded-md'
-                                          />
-                                        </div>
-                                      )}
-                                      {!meal.fast && !meal.dietFile && (
-                                        <div className='h-[88px] w-full rounded-md bg-gray-100 p-0' />
-                                      )}
+                                      className={cn(
+                                        Typography.TITLE_2,
+                                        'flex h-[88px] w-full flex-col items-center justify-center rounded-md bg-gray-100 p-0 text-center text-gray-400'
+                                      )}>
+                                      <span className='mb-1'>
+                                        <IconCheck
+                                          fill={'var(--primary-500)'}
+                                          width={17}
+                                          height={17}
+                                        />
+                                      </span>
+                                      단식
                                     </div>
-                                  );
-                                })}
-                              </article>
-
-                              <CardFooter className='flex items-center justify-start'>
-                                <div className='flex items-center'>
-                                  {diet.liked ? (
-                                    <IconLike
-                                      stroke='var(--point-color)'
-                                      fill='var(--point-color)'
-                                    />
-                                  ) : (
-                                    <IconLike stroke='var(--gray-500)' />
                                   )}
-                                  <span className='ml-1'>
-                                    {diet.likeCnt ? diet.likeCnt : 0}
-                                  </span>
+                                  {!meal.fast && meal.dietFile?.fileUrl && (
+                                    <div className='h-[88px] w-full'>
+                                      <img
+                                        src={meal.dietFile.fileUrl}
+                                        alt={`${meal.type} image`}
+                                        className='custom-image rounded-md'
+                                      />
+                                    </div>
+                                  )}
+                                  {!meal.fast && !meal.dietFile && (
+                                    <div className='h-[88px] w-full rounded-md bg-gray-100 p-0' />
+                                  )}
                                 </div>
-                                <div className='ml-4 flex items-center'>
-                                  <IconChat />
-                                  <p
-                                    className={cn(
-                                      Typography.BODY_4_MEDIUM,
-                                      'ml-1 text-gray-500'
-                                    )}>
-                                    댓글
-                                    <span className='ml-[2px]'>
-                                      {diet.commentCnt ? diet.commentCnt : 0}
-                                    </span>
-                                  </p>
-                                </div>
-                              </CardFooter>
-                            </CardContent>
-                          </Card>
-                        </Button>
-                      </li>
-                    );
-                  });
-                })}
-              </ul>
+                              );
+                            })}
+                          </article>
 
-              {!data?.pages[data?.pages.length - 1].isLast && hasNextPage && (
-                <div ref={ref} className='h-[20px] p-3 text-center'>
-                  <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
-                </div>
-              )}
-            </article>
-          </Layout.Contents>
-        </>
-      )}
+                          <CardFooter className='flex items-center justify-start'>
+                            <div className='flex items-center'>
+                              {diet.liked ? (
+                                <IconLike
+                                  stroke='var(--point-color)'
+                                  fill='var(--point-color)'
+                                />
+                              ) : (
+                                <IconLike stroke='var(--gray-500)' />
+                              )}
+                              <span className='ml-1'>
+                                {diet.likeCnt ? diet.likeCnt : 0}
+                              </span>
+                            </div>
+                            <div className='ml-4 flex items-center'>
+                              <IconChat />
+                              <p
+                                className={cn(
+                                  Typography.BODY_4_MEDIUM,
+                                  'ml-1 text-gray-500'
+                                )}>
+                                댓글
+                                <span className='ml-[2px]'>
+                                  {diet.commentCnt ? diet.commentCnt : 0}
+                                </span>
+                              </p>
+                            </div>
+                          </CardFooter>
+                        </CardContent>
+                      </Card>
+                    </Button>
+                  </li>
+                );
+              });
+            })}
+          </ul>
+
+          {!data?.pages[data?.pages.length - 1].isLast && hasNextPage && (
+            <div ref={ref} className='h-[20px] p-3 text-center'>
+              <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
+            </div>
+          )}
+        </article>
+      </Layout.Contents>
     </Layout>
   );
 };
