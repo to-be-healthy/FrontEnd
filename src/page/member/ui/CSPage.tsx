@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation';
 
-import { IconBack } from '@/shared/assets';
+import { IconBack, IconCheck } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Button } from '@/shared/ui';
+import { Button, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
@@ -12,9 +12,20 @@ const CSPage = () => {
   const CS_EMAIL = 'tobehealthy0127@gmail.com';
 
   const router = useRouter();
+  const { toast } = useToast();
 
   const copyEmail = async () => {
     await navigator.clipboard.writeText(CS_EMAIL);
+    toast({
+      className: 'py-5 px-6',
+      description: (
+        <div className={cn('flex w-[320px] items-center gap-6')}>
+          <IconCheck fill={'var(--primary-500)'} width={24} height={24} />
+          <p className={cn(Typography.HEADING_5, 'text-white')}>이메일을 복사했어요.</p>
+        </div>
+      ),
+      duration: 2000,
+    });
   };
 
   return (
