@@ -57,21 +57,27 @@ export const StudentMyPage = () => {
         )}
 
         <div className='bg-white py-6 pb-9'>
-          <article className='mypage-box-shadow m-auto flex w-[320px] items-center justify-between rounded-lg bg-white px-8 py-5'>
-            <div className='flex flex-col items-center justify-center gap-y-5'>
-              <IconClassLog />
-              <Link href='/student/log'>수업일지</Link>
-            </div>
-            <span className='mx-9 h-11 w-[1px] border border-gray-200' />
-            <div className='flex flex-col items-center justify-center gap-y-5'>
-              <IconDiet />
-              <Link href={`/student/diet?month=${month}`}>식단</Link>
-            </div>
-            <span className='mx-9 h-11 w-[1px] border border-gray-200' />
-            <div className='flex flex-col items-center justify-center gap-y-5'>
-              <IconExerciseLog />
-              <Link href='/student/workout'>운동기록</Link>
-            </div>
+          <article className='mypage-box-shadow m-auto flex w-[320px] items-center rounded-lg bg-white'>
+            <Link href='/student/log' className='py-5 pl-8 pr-9'>
+              <div className='flex flex-col items-center justify-center gap-y-5'>
+                <IconClassLog />
+                수업일지
+              </div>
+            </Link>
+            <span className='h-11 w-[1px] border border-gray-200' />
+            <Link href={`/student/diet?month=${month}`} className='px-11 py-5'>
+              <div className='flex flex-col items-center justify-center gap-y-5'>
+                <IconDiet />
+                식단
+              </div>
+            </Link>
+            <span className='h-11 w-[1px] border border-gray-200' />
+            <Link href='/student/workout' className='py-5 pl-9 pr-8'>
+              <div className='flex flex-col items-center justify-center gap-y-5'>
+                <IconExerciseLog />
+                운동기록
+              </div>
+            </Link>
           </article>
         </div>
 
