@@ -3,7 +3,6 @@
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
@@ -27,9 +26,7 @@ import {
   useStudentCourseDetailQuery,
 } from '@/feature/member';
 import { IconArrowLeft, IconPlus } from '@/shared/assets';
-import { IconCheck } from '@/shared/assets';
-import { IconNotification } from '@/shared/assets';
-import BackIcon from '@/shared/assets/images/icon_back.svg';
+import { IconCheck, IconNotification } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
@@ -105,7 +102,9 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             description: (
               <div className='flex items-center justify-center'>
                 <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className='typography-heading-5 ml-6 text-[#fff]'>{reslut.message}</p>
+                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
+                  {reslut.message}
+                </p>
               </div>
             ),
             duration: 2000,
@@ -138,7 +137,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
             description: (
               <div className='flex items-center justify-center'>
                 <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className='typography-heading-5 ml-6 text-[#fff]'>
+                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
                   {addInput}회가 연장되었습니다.
                 </p>
               </div>
@@ -164,7 +163,9 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           description: (
             <div className='flex items-center justify-center'>
               <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-              <p className='typography-heading-5 ml-6 text-[#fff]'>{result.message}</p>
+              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
+                {result.message}
+              </p>
             </div>
           ),
           duration: 2000,
@@ -192,7 +193,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
 
   return (
     <Layout type='trainer'>
-      <Layout.Header className='justify-start bg-[#fff]'>
+      <Layout.Header className='justify-start bg-white'>
         <button onClick={() => router.back()}>
           <IconArrowLeft stroke='black' />
         </button>
@@ -235,7 +236,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           <>
             {/* 수강권 있을때 */}
             {historyData?.pages[0]?.mainData.course && (
-              <div className='bg-[#fff] p-7 pb-0'>
+              <div className='bg-white p-7 pb-0'>
                 <CourseCard
                   className='mb-6'
                   expiration={
@@ -315,7 +316,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                         </AlertDialogCancel>
                         <AlertDialogAction
                           asChild
-                          className='mt-0 h-[48px] rounded-md bg-point text-base font-normal text-[#fff]'>
+                          className='mt-0 h-[48px] rounded-md bg-point text-base font-normal text-white'>
                           <Button variant='ghost' onClick={deleteStudentCourse}>
                             예
                           </Button>
@@ -336,7 +337,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
 
             {/* 수강권 없을때 */}
             {!historyData?.pages[0]?.mainData.course && (
-              <div className='flex flex-col items-center justify-center bg-[#fff] py-[88px]'>
+              <div className='flex flex-col items-center justify-center bg-white py-[88px]'>
                 <p className={cn('mb-3 text-gray-500', Typography.TITLE_3)}>
                   등록된 수강권이 없습니다.
                 </p>

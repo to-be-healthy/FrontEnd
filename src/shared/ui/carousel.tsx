@@ -222,7 +222,7 @@ const CarouselNav = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) =>
     <div
       className='absolute bottom-4 left-1/2 flex translate-x-[-50%] justify-center'
       {...props}>
-      <div className={cn('mt-[10px] flex space-x-[6px]', className)}>
+      <div className={cn('mt-4 flex space-x-2', className)}>
         {total > 0 &&
           Array.from({ length: Math.min(total, MAX_CAROUSEL_SIZE) }).map((_, index) => {
             return (
@@ -249,7 +249,7 @@ const DotButton = ({ selected, ...props }: DotButton) => {
       type='button'
       {...props}
       className={cn(
-        'h-[6px] w-[6px] rounded-full bg-white opacity-50',
+        'h-2 w-2 rounded-full bg-white opacity-50',
         selected && 'opacity-100'
       )}
     />

@@ -45,7 +45,9 @@ const StudentEditNickname = ({ memberId }: Props) => {
         description: (
           <div className='flex items-center justify-center'>
             <IconError />
-            <p className='typography-heading-5 ml-6 text-white'>별칭을 입력해주세요.</p>
+            <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
+              별칭을 입력해주세요.
+            </p>
           </div>
         ),
         duration: 2000,
@@ -58,7 +60,9 @@ const StudentEditNickname = ({ memberId }: Props) => {
         description: (
           <div className='flex items-center justify-center'>
             <IconError />
-            <p className='typography-heading-5 ml-6 text-white'>기존 별칭과 같습니다.</p>
+            <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
+              기존 별칭과 같습니다.
+            </p>
           </div>
         ),
         duration: 2000,
@@ -79,7 +83,9 @@ const StudentEditNickname = ({ memberId }: Props) => {
             description: (
               <div className='flex items-center justify-center'>
                 <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className='typography-heading-5 ml-6 text-white'>{data.message}</p>
+                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
+                  {data.message}
+                </p>
               </div>
             ),
             duration: 2000,
@@ -92,7 +98,7 @@ const StudentEditNickname = ({ memberId }: Props) => {
             description: (
               <div className='flex items-center justify-center'>
                 <IconError />
-                <p className='typography-heading-5 ml-6 text-white'>
+                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
                   {error.response?.data.message}
                 </p>
               </div>

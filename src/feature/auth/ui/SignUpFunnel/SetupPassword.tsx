@@ -26,7 +26,7 @@ export const SetupPassword = () => {
 
   return (
     <div>
-      <div className='mb-[16px] flex flex-col'>
+      <div className='mb-6 flex flex-col'>
         <label
           htmlFor='password'
           className={cn(Typography.TITLE_3, 'mb-3 text-gray-800')}>
@@ -50,13 +50,13 @@ export const SetupPassword = () => {
           })}
         />
         {errors.password && (
-          <p className={cn(Typography.BODY_4, 'mt-[8px] text-point')}>
+          <p className={cn(Typography.BODY_4, 'mt-3 text-point')}>
             {errors.password.message}
           </p>
         )}
       </div>
 
-      <div className='mb-[16px] flex flex-col'>
+      <div className='mb-6 flex flex-col'>
         <label
           htmlFor='passwordConfirm'
           className={cn(Typography.TITLE_3, 'mb-3 text-gray-800')}>
@@ -74,7 +74,7 @@ export const SetupPassword = () => {
           })}
         />
         {errors.passwordConfirm && (
-          <p className={cn(Typography.BODY_4, 'mt-[8px] text-point')}>
+          <p className={cn(Typography.BODY_4, 'mt-3 text-point')}>
             {errors.passwordConfirm.message}
           </p>
         )}

@@ -56,7 +56,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
         <>
           <Header name={memberInfo.name} memberId={memberId} />
           <Layout.Contents className='hide-scrollbar p-7 pt-8'>
-            <div className='mb-6 flex w-full items-center gap-x-[24px]'>
+            <div className='mb-6 flex w-full items-center gap-x-8'>
               {memberInfo.fileUrl ? (
                 <Image
                   width={80}
@@ -72,13 +72,13 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                 <IconDefaultProfile />
               )}
               <div className='flex flex-col'>
-                <h2 className={cn('flex gap-x-[8px]', Typography.HEADING_2)}>
+                <h2 className={cn('flex gap-x-3', Typography.HEADING_2)}>
                   {memberInfo.name}
                 </h2>
                 <div
                   className={cn(
                     Typography.BODY_3,
-                    'flex items-center gap-x-[6px] text-gray-500'
+                    'flex items-center gap-x-2 text-gray-500'
                   )}>
                   {memberInfo.nickName && <p>{memberInfo.nickName}</p>}
                   {memberInfo.ranking !== 999 && memberInfo.nickName && (
@@ -92,30 +92,30 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                 </div>
               </div>
             </div>
-            <div className='flex items-center justify-center gap-x-[8px]'>
-              <Card className='mb-[16px] flex w-full flex-row items-center justify-between gap-y-[28px] px-[24px] py-[12px] shadow-sm'>
+            <div className='flex items-center justify-center gap-x-3'>
+              <Card className='mb-6 flex w-full flex-row items-center justify-between gap-y-9 px-8 py-5 shadow-sm'>
                 <Link
                   href={`/trainer/manage/${memberId}/reservation?name=${memberInfo?.name}`}
-                  className='flex flex-col items-center justify-between gap-y-[8px]'>
-                  <div className='flex h-[20px] items-center justify-center'>
+                  className='flex flex-col items-center justify-between gap-y-3'>
+                  <div className='flex h-7 items-center justify-center'>
                     <IconCalendar />
                   </div>
                   <p className={Typography.HEADING_5}>예약 내역</p>
                 </Link>
-                <div className='h-[36px] w-[1px] bg-gray-100' />
+                <div className='h-11 w-[1px] bg-gray-100' />
                 <Link
                   href={`/trainer/manage/${memberId}/edit/memo`}
-                  className='flex flex-col items-center justify-between gap-y-[8px]'>
-                  <div className='flex h-[20px] items-center justify-center'>
+                  className='flex flex-col items-center justify-between gap-y-3'>
+                  <div className='flex h-7 items-center justify-center'>
                     <IconEdit />
                   </div>
                   <p className={Typography.HEADING_5}>회원 메모</p>
                 </Link>
-                <div className='h-[36px] w-[1px] bg-gray-100' />
+                <div className='h-11 w-[1px] bg-gray-100' />
                 <Link
                   href={`/trainer/manage/${memberId}/log`}
-                  className='flex flex-col items-center justify-between gap-y-[8px]'>
-                  <div className='flex h-[20px] items-center justify-center'>
+                  className='flex flex-col items-center justify-between gap-y-3'>
+                  <div className='flex h-7 items-center justify-center'>
                     <IconDumbel />
                   </div>
                   <p className={Typography.HEADING_5}>수업 일지</p>
@@ -331,14 +331,14 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
             )}
 
             {memberInfo.diet.dietId && (
-              <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
+              <Card className='mb-6 w-full gap-y-5 px-6 py-7 shadow-sm'>
                 <CardHeader className='mb-7 flex items-center justify-between text-gray-800'>
                   <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>오늘 식단</h4>
                   <Link href={`/trainer/manage/${memberId}/diet?month=${month}`}>
                     <p className={cn(Typography.BODY_3, 'text-gray-500')}>식단전체</p>
                   </Link>
                 </CardHeader>
-                <CardContent className='flex justify-center gap-x-[6px]'>
+                <CardContent className='flex justify-center gap-x-2'>
                   <article className='mb-6 flex w-full justify-between gap-2'>
                     {dietDay.map((mealType: MealType) => {
                       const meal = memberInfo.diet[mealType];
@@ -384,7 +384,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
 
             {memberInfo.diet.dietId === null && (
               <Link href={`/trainer/manage/${memberId}/diet?month=${month}`}>
-                <Card className='mb-[16px] w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
+                <Card className='mb-6 w-full gap-y-5 px-6 py-7 shadow-sm'>
                   <CardHeader className='flex items-center justify-between text-gray-800'>
                     <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>등록 식단</h4>
                     <IconArrowRight />
@@ -393,7 +393,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
               </Link>
             )}
             <Link href={`/trainer/manage/${memberId}/workout`}>
-              <Card className='w-full gap-y-[12px] px-[16px] py-[20px] shadow-sm'>
+              <Card className='w-full gap-y-5 px-6 py-7 shadow-sm'>
                 <CardHeader className='flex items-center justify-between'>
                   <h4 className={cn(Typography.TITLE_2, 'text-gray-800')}>
                     개인 운동 기록

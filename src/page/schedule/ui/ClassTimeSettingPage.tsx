@@ -118,7 +118,7 @@ export const ClassTimeSettingPage = () => {
             description: (
               <div className='flex items-center justify-center'>
                 <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
+                <p className='typography-heading-5 ml-6 text-white'>{message}</p>
               </div>
             ),
             duration: 2000,
@@ -278,7 +278,7 @@ export const ClassTimeSettingPage = () => {
 
   return (
     <Layout>
-      <Layout.Header className='flex justify-end bg-[#fff]'>
+      <Layout.Header className='flex justify-end bg-white'>
         <Button
           variant='ghost'
           className={cn(Typography.BODY_1, 'p-0 text-gray-500')}
@@ -286,10 +286,10 @@ export const ClassTimeSettingPage = () => {
           건너뛰기
         </Button>
       </Layout.Header>
-      <Layout.Contents className='flex flex-col justify-between bg-[#fff] px-7 pb-[30px] pt-[12px]'>
+      <Layout.Contents className='flex flex-col justify-between bg-white px-7 pb-[30px] pt-5'>
         <div>
           <article className='mb-[56px]'>
-            <h2 className={cn(Typography.HEADING_1, 'mb-[12px] text-black')}>
+            <h2 className={cn(Typography.HEADING_1, 'mb-5 text-black')}>
               기본 수업 시간을
               <br />
               설정해주세요.
@@ -303,7 +303,7 @@ export const ClassTimeSettingPage = () => {
 
           {timeList.length > 0 && (
             <>
-              <article className='border-b border-solid border-gray-100 pb-[28px]'>
+              <article className='border-b border-solid border-gray-100 pb-9'>
                 <dl className='flex items-center justify-between'>
                   <dt className={cn(Typography.TITLE_1_BOLD, 'text-black')}>근무 시간</dt>
                   <dd>
@@ -331,7 +331,7 @@ export const ClassTimeSettingPage = () => {
                   (timeSetting.name === 'lessonStartTime' && timeSetting.state) ||
                   (timeSetting.name === 'lessonEndTime' && timeSetting.state) ? (
                     <div
-                      className='relative mt-[28px] flex items-center justify-center'
+                      className='relative mt-9 flex items-center justify-center'
                       key={`${timeSetting.name}_${idx}`}>
                       <TimeSwiper
                         items={timePeriods}
@@ -369,7 +369,7 @@ export const ClassTimeSettingPage = () => {
                 )}
               </article>
 
-              <article className='border-b border-solid border-gray-100 py-[28px]'>
+              <article className='border-b border-solid border-gray-100 py-9'>
                 <dl className='flex items-center justify-between'>
                   <dt className={cn(Typography.TITLE_1_BOLD, 'text-black')}>점심 시간</dt>
                   <dd className='flex flex-col items-end justify-end'>
@@ -405,7 +405,7 @@ export const ClassTimeSettingPage = () => {
                           checked={isLunchTimeUnset}
                           onChange={resetSettingsOnDisable}
                         />
-                        <span className='flex h-[20px] w-[20px] items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
+                        <span className='flex h-7 w-7 items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
                           {isLunchTimeUnset && (
                             <IconNoCircleCheck width={15} height={12} fill='white' />
                           )}
@@ -419,7 +419,7 @@ export const ClassTimeSettingPage = () => {
                   (timeSetting.name === 'lunchStartTime' && timeSetting.state) ||
                   (timeSetting.name === 'lunchEndTime' && timeSetting.state) ? (
                     <div
-                      className='relative mt-[28px] flex items-center justify-center'
+                      className='relative mt-9 flex items-center justify-center'
                       key={`${timeSetting.name}_${idx}`}>
                       <TimeSwiper
                         items={timePeriods}
@@ -458,7 +458,7 @@ export const ClassTimeSettingPage = () => {
               </article>
 
               <article className='border-b border-solid border-gray-100'>
-                <dl className='flex items-center justify-between py-[28px]'>
+                <dl className='flex items-center justify-between py-9'>
                   <dt className={cn(Typography.TITLE_1_BOLD, 'text-black')}>수업 시간</dt>
                   <dd>
                     <Sheet
@@ -505,7 +505,7 @@ export const ClassTimeSettingPage = () => {
               </article>
 
               <article>
-                <dl className='py-[28px]'>
+                <dl className='py-9'>
                   <dt className={cn(Typography.TITLE_1_BOLD, 'mb-6 text-black')}>
                     휴무일
                   </dt>

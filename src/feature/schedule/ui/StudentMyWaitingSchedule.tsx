@@ -146,7 +146,7 @@ export const StudentMyWaitingSchedule = ({ data }: Props) => {
                     <span
                       className={cn(
                         Typography.BODY_3,
-                        'absolute right-6 top-[50%] h-[36px] w-[82px] -translate-y-1/2 transform rounded-md bg-gray-100 text-center text-gray-700'
+                        'absolute right-6 top-[50%] h-11 w-[82px] -translate-y-1/2 transform rounded-md bg-gray-100 text-center text-gray-700'
                       )}>
                       대기취소
                     </span>

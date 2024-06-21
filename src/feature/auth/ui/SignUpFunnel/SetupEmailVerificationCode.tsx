@@ -35,7 +35,7 @@ export const SetupEmailVerificationCode = ({
   }, [verificationCodeValue]);
 
   return (
-    <div className='mb-[16px] flex flex-col'>
+    <div className='mb-6 flex flex-col'>
       <label
         htmlFor='emailVerifiedCode'
         className={cn(Typography.TITLE_3, 'mb-3 text-gray-800')}>
@@ -74,7 +74,7 @@ export const SetupEmailVerificationCode = ({
       </div>
 
       {errors.emailVerifiedCode && (
-        <p className={cn(Typography.BODY_4, 'mt-[8px] text-point')}>
+        <p className={cn(Typography.BODY_4, 'mt-3 text-point')}>
           {errors.emailVerifiedCode.message}
         </p>
       )}

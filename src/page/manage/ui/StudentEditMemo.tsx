@@ -91,7 +91,7 @@ const StudentEditMemo = ({ memberId }: Props) => {
               ref={memoTextareaRef}
               placeholder='메모를 입력해주세요.'
               defaultValue={memberInfo.memo ?? ''}
-              className={cn(Typography.BODY_2, 'h-full resize-none px-[20px] py-[24px]')}
+              className={cn(Typography.BODY_2, 'h-full resize-none px-7 py-8')}
             />
           </Layout.Contents>
         </>

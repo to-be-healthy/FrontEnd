@@ -66,7 +66,7 @@ export const StudentPointDetailPage = ({ memberId }: Props) => {
 
   return (
     <Layout type='student'>
-      <Layout.Header className='justify-start bg-[#fff]'>
+      <Layout.Header className='justify-start bg-white'>
         <Link href='./' className='h-full w-full'>
           <IconClose width={14} height={14} />
         </Link>
@@ -83,7 +83,7 @@ export const StudentPointDetailPage = ({ memberId }: Props) => {
           <div className='loading'>Loading..</div>
         ) : (
           <>
-            <div className='bg-[#fff] p-7 pb-[36px] pt-6'>
+            <div className='bg-white p-7 pb-11 pt-6'>
               <MonthPicker
                 date={selectedMonth}
                 onChangeDate={(newDate) => setSelectedMonth(newDate)}

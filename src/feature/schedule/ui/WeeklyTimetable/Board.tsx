@@ -29,14 +29,12 @@ const Board = ({
   return (
     <div className='relative h-full w-full'>
       <div
-        className={cn(
-          `absolute left-[20px] top-0 z-50 h-[48px] w-[21px] border bg-white`
-        )}
+        className={cn(`absolute left-7 top-0 z-50 h-[48px] w-[21px] border bg-white`)}
       />
-      <div className='hide-scrollbar relative ml-[20px] mt-[20px] flex h-full overflow-auto rounded-sm'>
+      <div className='hide-scrollbar relative ml-7 mt-7 flex h-full overflow-auto rounded-sm'>
         <div className='relative mr-[21px] flex h-full w-fit flex-col'>
           {/* Day of Week Axis */}
-          <div className='sticky top-0 z-10 ml-[20px] flex border-l'>
+          <div className='sticky top-0 z-10 ml-7 flex border-l'>
             {dayOfWeekAxis.map((day) => {
               const dayOfWeek = dayjs(day).format('ddd');
               const isToday = today.toDateString() === day.toDateString();

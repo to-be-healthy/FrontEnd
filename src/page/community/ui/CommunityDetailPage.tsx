@@ -52,7 +52,7 @@ const CommunityDetailPage = ({ workoutHistoryId }: { workoutHistoryId: number })
                       alt='profile'
                       width={32}
                       height={32}
-                      className='h-[32px] w-[32px] rounded-full border border-gray-300 object-cover'
+                      className='h-10 w-10 rounded-full border border-gray-300 object-cover'
                       priority
                     />
                   ) : (

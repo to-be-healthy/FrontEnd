@@ -48,14 +48,14 @@ function Calendar({
           'w-[40px] h-[40px] flex justify-center items-center text-muted-foreground rounded-md font-normal'
         ),
         row: 'flex w-full justify-between items-center',
-        cell: 'text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-primary-500 [&:has([aria-selected])]:text-[#fff] [&:has([aria-selected])]:rounded-[50%] focus-within:relative focus-within:z-20',
+        cell: 'text-center text-sm p-0 relative [&:has([aria-selected].day-range-end)]:rounded-r-md [&:has([aria-selected].day-outside)]:bg-accent/50 [&:has([aria-selected])]:bg-primary-500 [&:has([aria-selected])]:text-white [&:has([aria-selected])]:rounded-[50%] focus-within:relative focus-within:z-20',
         day: cn(
           buttonVariants({ variant: 'ghost' }),
           Typography.TITLE_1_SEMIBOLD,
           'w-[40px] h-[40px] p-0 aria-selected:opacity-100 rounded-full'
         ),
         day_range_end: 'day-range-end',
-        day_selected: 'bg-primary text-[#fff]',
+        day_selected: 'bg-primary text-white',
         day_today: 'bg-primary text-accent-foreground',
         day_outside:
           'day-outside text-muted-foreground opacity-50 aria-selected:text-muted-foreground aria-selected:opacity-30',

@@ -226,7 +226,7 @@ export const StudentDietRegisterPage = () => {
               description: (
                 <div className='flex items-center justify-center'>
                   <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                  <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
+                  <p className='typography-heading-5 ml-6 text-white'>{message}</p>
                 </div>
               ),
               duration: 2000,
@@ -283,7 +283,7 @@ export const StudentDietRegisterPage = () => {
         </h2>
       </Layout.Header>
       <Layout.Contents>
-        <article className='calendar-shadow rounded-bl-lg rounded-br-lg bg-[#fff]'>
+        <article className='calendar-shadow rounded-bl-lg rounded-br-lg bg-white'>
           {calendarMyDietData?.dietNoticeStatus === 'ENABLED' && (
             <div className='flex items-center justify-between bg-blue-50 px-7 py-5'>
               <div className='flex items-center justify-center'>

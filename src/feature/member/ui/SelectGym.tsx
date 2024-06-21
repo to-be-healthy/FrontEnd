@@ -51,7 +51,7 @@ export const SelectGym = () => {
               description: (
                 <div className='flex items-center justify-center'>
                   <IconError />
-                  <p className='typography-heading-5 ml-6 text-[#fff]'>
+                  <p className='typography-heading-5 ml-6 text-white'>
                     {error.response?.data.message}
                   </p>
                 </div>
@@ -75,7 +75,7 @@ export const SelectGym = () => {
               description: (
                 <div className='flex items-center justify-center'>
                   <IconError />
-                  <p className='typography-heading-5 ml-6 text-[#fff]'>
+                  <p className='typography-heading-5 ml-6 text-white'>
                     {error.response?.data.message}
                   </p>
                 </div>
@@ -101,7 +101,7 @@ export const SelectGym = () => {
           {step === 1 && (
             <Layout.Contents>
               <div className='flex h-full w-full flex-col items-center justify-between'>
-                <div className='flex w-full flex-col items-center justify-start overflow-y-auto p-[20px] pt-[100px]'>
+                <div className='flex w-full flex-col items-center justify-start overflow-y-auto p-7 pt-[100px]'>
                   <p className='typography-heading-1 mb-[80px] text-center'>
                     {auth.memberType === 'TRAINER' ? '수업하시는' : '다니시는'} 헬스장을
                     <br />
@@ -115,7 +115,7 @@ export const SelectGym = () => {
                             className={cn(
                               'typography-heading-4 h-full text-black',
                               selectGymId === item.gymId
-                                ? 'border-2 border-solid border-primary-500 bg-[#fff]'
+                                ? 'border-2 border-solid border-primary-500 bg-white'
                                 : 'bg-gray-100'
                             )}
                             size='full'
@@ -129,7 +129,7 @@ export const SelectGym = () => {
                   </ul>
                 </div>
 
-                <div className='w-full p-[20px]'>
+                <div className='w-full p-7'>
                   {auth.memberType === 'TRAINER' ? (
                     <Button
                       className='h-[57px] w-full rounded-lg bg-primary-500 text-white'
@@ -159,7 +159,7 @@ export const SelectGym = () => {
               </Layout.Header>
 
               <Layout.Contents>
-                <div className='flex h-full w-full flex-col items-center justify-between p-[20px] pt-[60px]'>
+                <div className='flex h-full w-full flex-col items-center justify-between p-7 pt-[60px]'>
                   <div className='flex w-full flex-col items-center justify-start'>
                     <p className='typography-heading-1 mb-[30px] text-center'>
                       인증 코드를 입력해 주세요.

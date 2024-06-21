@@ -105,7 +105,7 @@ const WeekPicker = ({ startDate, onWeekChange }: WeekPickerProps) => {
   };
 
   return (
-    <div className='mx-[20px] flex items-center justify-between rounded-md border border-gray-300 px-[16px] py-[10px]'>
+    <div className='mx-7 flex items-center justify-between rounded-md border border-gray-300 px-6 py-4'>
       <Button variant='ghost' size='auto' onClick={movePrevWeek}>
         <IconArrowLeft stroke={'var(--gray-600)'} />
       </Button>
@@ -117,7 +117,7 @@ const WeekPicker = ({ startDate, onWeekChange }: WeekPickerProps) => {
         </DialogTrigger>
         <DialogContent
           className={cn(
-            'bottom-0 top-auto flex max-w-[var(--max-width)] translate-y-0 flex-col justify-center space-y-[24px] rounded-t-[12px] px-[20px] py-[32px]',
+            'rounded-t-5 bottom-0 top-auto flex max-w-[var(--max-width)] translate-y-0 flex-col justify-center space-y-8 px-7 py-10',
             'data-[state=closed]:slide-out-to-bottom-[200%] data-[state=open]:slide-in-from-bottom-[200%]'
           )}>
           <DailyCalendar defaultStartDate={startDate} changeWeek={changeWeek} />

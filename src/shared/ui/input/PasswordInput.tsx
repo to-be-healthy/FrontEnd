@@ -50,7 +50,7 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
           type='button'
           onClick={handlePasswordIconClick}
           variant='ghost'
-          className='absolute right-[20px] p-0'>
+          className='absolute right-7 p-0'>
           {isShowPassword ? <HidePasswordIcon /> : <ShowPasswordIcon />}
         </Button>
       </div>

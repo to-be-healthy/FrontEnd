@@ -7,6 +7,7 @@ import { useAuthSelector } from '@/entity/auth';
 import { useDeleteDietCommentMutation } from '@/entity/diet';
 import { IconProfileDefault } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
+import { TITLE_3 } from '@/shared/mixin/typography';
 import { Button } from '@/shared/ui';
 import {
   DropdownMenu,
@@ -145,7 +146,7 @@ const CommentItem = ({
       <DropdownMenuContent className='absolute -top-11 right-4 flex w-[120px] flex-col bg-white'>
         <DropdownMenuGroup className='flex flex-col'>
           <DropdownMenuItem
-            className='typography-title-3 px-6 py-5'
+            className={cn(Typography.TITLE_3, 'px-6 py-5')}
             onClick={() => {
               changeTarget({
                 comment: commentItem,
@@ -157,7 +158,7 @@ const CommentItem = ({
             댓글 수정
           </DropdownMenuItem>
           <DropdownMenuItem
-            className='typography-title-3 px-6 py-5'
+            className={cn(Typography.TITLE_3, 'px-6 py-5')}
             onClick={() => {
               deleteComment(commentItem.id);
               setOpend(false);

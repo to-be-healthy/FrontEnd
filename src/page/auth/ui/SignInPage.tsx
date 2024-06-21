@@ -36,7 +36,7 @@ export const SignInPage = () => {
         </Button>
       </Layout.Header>
       <Layout.Contents>
-        <div className='flex flex-col items-center px-[20px]'>
+        <div className='flex flex-col items-center px-7'>
           <div className='mb-[55px] mt-[40px]'>
             <IconLogo width={64} height={64} />
           </div>
@@ -48,7 +48,7 @@ export const SignInPage = () => {
               비밀번호 찾기
             </li>
             <li>
-              <Separator className='h-[12px]' orientation='vertical' />
+              <Separator className='h-5' orientation='vertical' />
             </li>
             <li
               className={cn(Typography.BODY_3, 'cursor-pointer text-gray-500')}

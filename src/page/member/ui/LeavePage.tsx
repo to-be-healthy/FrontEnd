@@ -71,7 +71,7 @@ const LeavePage = () => {
               checked={agreement}
               onChange={changeAgreement}
             />
-            <span className='flex h-[20px] w-[20px] items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
+            <span className='flex h-7 w-7 items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
               <NoCircleCheckIcon width={15} height={12} fill='white' />
             </span>
             <p className={cn(Typography.BODY_2)}>

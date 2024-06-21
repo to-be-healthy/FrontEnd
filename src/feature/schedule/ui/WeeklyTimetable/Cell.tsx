@@ -31,7 +31,7 @@ const Cell = ({ schedule }: { schedule: FlatSchedule }) => {
       {reservationStatus === 'NO_SHOW' && (
         <>
           <p className={cn(Typography.HEADING_5)}>{applicantName}</p>
-          <span className='text-[10px] text-gray-400'>미출석</span>
+          <span className='text-4 text-gray-400'>미출석</span>
         </>
       )}
     </div>

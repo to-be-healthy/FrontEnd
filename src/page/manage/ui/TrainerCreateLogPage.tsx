@@ -195,8 +195,8 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
         </p>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
       </Layout.Header>
-      <Layout.Contents className='p-[20px]'>
-        <div className='flex-col space-y-[8px]'>
+      <Layout.Contents className='p-7'>
+        <div className='flex-col space-y-3'>
           <div className='flex items-center justify-between'>
             <h3 className={cn(Typography.TITLE_3)}>작성할 수업</h3>
             <Button
@@ -207,7 +207,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
               변경하기
             </Button>
           </div>
-          <div className='h-[85px] flex-col space-y-[10px] rounded-lg border border-gray-200 p-[16px]'>
+          <div className='h-[85px] flex-col space-y-4 rounded-lg border border-gray-200 p-6'>
             {selectedLesson === null && (
               <div
                 className={cn(Typography.HEADING_5, FLEX_CENTER, 'h-full text-gray-500')}>
@@ -219,7 +219,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
                 <p className={cn(Typography.TITLE_3, 'text-gray-600')}>
                   {selectedLesson.lessonDt}
                 </p>
-                <div className='space-x-[6px]'>
+                <div className='space-x-2'>
                   <span className={cn(Typography.TITLE_1_BOLD)}>
                     {selectedLesson.lessonTime}
                   </span>
@@ -284,7 +284,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             </div>
           ))}
         </div>
-        <div className='mt-[24px] space-y-[8px]'>
+        <div className='mt-8 space-y-3'>
           <h3 className={cn(Typography.TITLE_3)}>내용</h3>
           <Textarea
             placeholder='수업 일지 내용을 작성해 주세요.'

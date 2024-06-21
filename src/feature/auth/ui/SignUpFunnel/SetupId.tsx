@@ -22,7 +22,7 @@ export const SetupId = ({ idSuccessMsg, isPending, handleIsIdAvailable }: Props)
   const userIdValue = watch('userId');
 
   return (
-    <div className='mb-[16px] flex flex-col'>
+    <div className='mb-6 flex flex-col'>
       <label htmlFor='id' className={cn(Typography.TITLE_3, 'mb-3 text-gray-800')}>
         아이디
       </label>
@@ -54,14 +54,12 @@ export const SetupId = ({ idSuccessMsg, isPending, handleIsIdAvailable }: Props)
       </div>
 
       {errors.userId && (
-        <p className={cn(Typography.BODY_4, 'mt-[8px] text-point')}>
+        <p className={cn(Typography.BODY_4, 'mt-3 text-point')}>
           {errors.userId.message}
         </p>
       )}
       {idSuccessMsg && (
-        <p className={cn(Typography.BODY_4, 'mt-[8px] text-primary-500')}>
-          {idSuccessMsg}
-        </p>
+        <p className={cn(Typography.BODY_4, 'mt-3 text-primary-500')}>{idSuccessMsg}</p>
       )}
     </div>
   );

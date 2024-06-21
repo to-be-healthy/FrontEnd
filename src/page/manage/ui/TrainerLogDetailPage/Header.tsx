@@ -51,7 +51,7 @@ const Header = () => {
             description: (
               <div className='flex items-center justify-center'>
                 <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className='typography-heading-5 ml-6 text-white'>
+                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
                   수업 일지가 삭제되었습니다.
                 </p>
               </div>
@@ -81,7 +81,7 @@ const Header = () => {
         <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
           <DropdownMenuGroup className='flex flex-col'>
             <DropdownMenuItem
-              className='typography-title-3 flex items-center gap-[8px] px-[16px] py-[12px]'
+              className='typography-title-3 flex items-center gap-3 px-6 py-5'
               onClick={() =>
                 router.replace(`/trainer/manage/${memberId}/log/${logId}/edit`)
               }>
@@ -89,7 +89,7 @@ const Header = () => {
               수정
             </DropdownMenuItem>
             <DropdownMenuItem
-              className='typography-title-3 flex items-center gap-[8px] px-[16px] py-[12px] text-point'
+              className='typography-title-3 flex items-center gap-3 px-6 py-5 text-point'
               onClick={() => setOpen(true)}>
               <IconTrash />
               삭제
@@ -98,7 +98,7 @@ const Header = () => {
         </DropdownMenuContent>
       </DropdownMenu>
       <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogContent className='space-y-[24px] px-7 py-11'>
+        <AlertDialogContent className='space-y-8 px-7 py-11'>
           <AlertDialogHeader
             className={cn(Typography.TITLE_1_SEMIBOLD, 'mx-auto text-center')}>
             게시글을 삭제하시겠습니까?
@@ -109,7 +109,7 @@ const Header = () => {
             </AlertDialogCancel>
             <AlertDialogAction
               asChild
-              className='mt-0 h-[48px] rounded-md bg-point text-base font-normal text-[#fff]'>
+              className='mt-0 h-[48px] rounded-md bg-point text-base font-normal text-white'>
               <Button variant='ghost' onClick={deleteLog}>
                 삭제
               </Button>

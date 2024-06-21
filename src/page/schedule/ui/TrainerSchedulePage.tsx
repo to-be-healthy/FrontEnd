@@ -43,13 +43,13 @@ export const TrainerSchedulePage = () => {
 
   return (
     <Layout type='trainer' className='bg-white'>
-      <Layout.Header className='py-[16px]'>
+      <Layout.Header className='py-6'>
         <h1 className={cn(Typography.HEADING_4_SEMIBOLD)}>내 스케줄</h1>
         <Link href='/trainer/schedule/setting'>
           <IconGear />
         </Link>
       </Layout.Header>
-      <Layout.Contents className='mt-[16px] overflow-hidden'>
+      <Layout.Contents className='mt-6 overflow-hidden'>
         <WeekPicker startDate={startDate} onWeekChange={changeWeek} />
         {isPending && (
           <div className={cn(FLEX_CENTER, 'h-full w-full')}>
@@ -60,7 +60,7 @@ export const TrainerSchedulePage = () => {
           <WeeklyTimetable startDate={startDate} schedules={weeklySchedules} />
         )}
         {!isPending && weeklySchedules === null && (
-          <div className={cn(FLEX_CENTER, 'h-full w-full flex-col space-y-[16px]')}>
+          <div className={cn(FLEX_CENTER, 'h-full w-full flex-col space-y-6')}>
             <Button size='lg' onClick={createWeeklySchedules}>
               일정 등록
             </Button>

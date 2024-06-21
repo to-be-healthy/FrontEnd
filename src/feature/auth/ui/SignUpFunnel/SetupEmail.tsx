@@ -28,7 +28,7 @@ export const SetupEmail = ({ isEmailVerified }: SetupEmailProps) => {
   }, [emailValue]);
 
   return (
-    <div className='mb-[16px] flex flex-col'>
+    <div className='mb-6 flex flex-col'>
       <label htmlFor='email' className={cn(Typography.TITLE_3, 'mb-3 text-gray-800')}>
         이메일
       </label>
@@ -49,7 +49,7 @@ export const SetupEmail = ({ isEmailVerified }: SetupEmailProps) => {
       />
 
       {errors.email && (
-        <p className={cn(Typography.BODY_4, '4 mt-[8px] text-point')}>
+        <p className={cn(Typography.BODY_4, '4 mt-3 text-point')}>
           {errors.email.message}
         </p>
       )}

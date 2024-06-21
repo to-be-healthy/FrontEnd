@@ -20,10 +20,10 @@ export const SignUpCompletePage = () => {
   return (
     <Layout className='bg-white'>
       <Layout.Contents>
-        <div className='flex h-full w-full flex-col items-center justify-between p-[20px]'>
+        <div className='flex h-full w-full flex-col items-center justify-between p-7'>
           <div className='flex h-full w-full flex-col items-center justify-center'>
             <Image
-              className='mb-[20px]'
+              className='mb-7'
               src='/images/signUpComplete.png'
               width={100}
               height={100}

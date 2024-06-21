@@ -383,7 +383,7 @@ export const StudentHomePage = () => {
                         <span
                           className={cn(
                             Typography.HEADING_5,
-                            'ml-1 inline-block h-7 w-7 rounded-[50%] bg-primary-500 text-center text-[#fff]'
+                            'ml-1 inline-block h-7 w-7 rounded-[50%] bg-primary-500 text-center text-white'
                           )}>
                           1
                         </span>
@@ -398,7 +398,7 @@ export const StudentHomePage = () => {
                   <Link href={`/student/log/${data?.lessonHistory.id}`}>
                     <CardContent className='flex items-start justify-start'>
                       {data.lessonHistory.trainerProfile ? (
-                        <div className='h-[28px] w-[28px] overflow-hidden rounded-full border border-gray-100'>
+                        <div className='h-9 w-9 overflow-hidden rounded-full border border-gray-100'>
                           <Image
                             src={data.lessonHistory.trainerProfile}
                             width={28}

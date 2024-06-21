@@ -123,7 +123,7 @@ const TrainerScheduleSettingPage = () => {
           description: (
             <div className='flex items-center justify-center'>
               <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-              <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
+              <p className='typography-heading-5 ml-6 text-white'>{message}</p>
             </div>
           ),
           duration: 2000,
@@ -339,7 +339,7 @@ const TrainerScheduleSettingPage = () => {
                   (timeSetting.name === 'lessonStartTime' && timeSetting.state) ||
                   (timeSetting.name === 'lessonEndTime' && timeSetting.state) ? (
                     <div
-                      className='relative mt-[28px] flex items-center justify-center'
+                      className='relative mt-9 flex items-center justify-center'
                       key={`${timeSetting.name}_${idx}`}>
                       <TimeSwiper
                         items={timePeriods}
@@ -413,7 +413,7 @@ const TrainerScheduleSettingPage = () => {
                           checked={isLunchTimeUnset}
                           onChange={resetSettingsOnDisable}
                         />
-                        <span className='flex h-[20px] w-[20px] items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
+                        <span className='flex h-7 w-7 items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
                           {isLunchTimeUnset && (
                             <IconNoCircleCheck width={15} height={12} fill='white' />
                           )}
@@ -427,7 +427,7 @@ const TrainerScheduleSettingPage = () => {
                   (timeSetting.name === 'lunchStartTime' && timeSetting.state) ||
                   (timeSetting.name === 'lunchEndTime' && timeSetting.state) ? (
                     <div
-                      className='relative mt-[28px] flex items-center justify-center'
+                      className='relative mt-9 flex items-center justify-center'
                       key={`${timeSetting.name}_${idx}`}>
                       <TimeSwiper
                         items={timePeriods}
@@ -466,7 +466,7 @@ const TrainerScheduleSettingPage = () => {
               </article>
 
               <article className='border-b border-solid border-gray-100'>
-                <dl className='flex items-center justify-between py-[28px]'>
+                <dl className='flex items-center justify-between py-9'>
                   <dt className={cn(Typography.TITLE_1_BOLD, 'text-black')}>수업 시간</dt>
                   <dd>
                     <Sheet
@@ -513,7 +513,7 @@ const TrainerScheduleSettingPage = () => {
               </article>
 
               <article>
-                <dl className='py-[28px]'>
+                <dl className='py-9'>
                   <dt className={cn(Typography.TITLE_1_BOLD, 'mb-6 text-black')}>
                     휴무일
                   </dt>
