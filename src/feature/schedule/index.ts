@@ -22,6 +22,7 @@ export type {
   MyReservationResponse,
   MyWaitingResponse,
   ScheduleData,
+  TodaySchedule,
   TrainerSchedule,
 } from './model/type';
 export { ReservationBottomSheet } from './ui/ReservationBottomSheet';

@@ -38,12 +38,12 @@ const messaging = firebase.messaging();
 // });
 
 messaging.onBackgroundMessage((payload) => {
-  console.log('payload', payload);
+  // TODO:console.log('payload', payload);
   //알림 커스텀하면 기본알림, 커스텀알림 두번 울림(payload.data로 변경 완료)
   const notificationTitle = payload.data.title;
   const notificationOptions = {
     body: payload.data.body,
-    icon: '/images/icon_pay.png',
+    icon: '/images/logo.png',
   };
 
   self.registration.showNotification(notificationTitle, notificationOptions);
@@ -51,7 +51,7 @@ messaging.onBackgroundMessage((payload) => {
 
 self.addEventListener('notificationclick', function (event) {
   //알림 클릭시 어느페이지로 이동할건지
-  console.log('notification click');
+  // TODO:console.log(event);
   const url = '/student';
   event.notification.close();
   event.waitUntil(clients.openWindow(url));

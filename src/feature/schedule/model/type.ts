@@ -92,6 +92,12 @@ interface FlatSchedule extends TrainerSchedule {
   color: ScheduleColor | null;
 }
 
+interface TodaySchedule {
+  trainerName: string;
+  scheduleTotalCount: number;
+  schedule: TrainerSchedule[];
+}
+
 export type {
   AllScheduleData,
   ClassTimeSettingData,
@@ -104,6 +110,7 @@ export type {
   ScheduleColor,
   ScheduleData,
   ScheduleOffset,
+  TodaySchedule,
   TrainerSchedule,
   TrainerWeeklySchedule,
 };

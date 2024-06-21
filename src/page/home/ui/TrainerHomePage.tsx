@@ -2,10 +2,14 @@
 
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
+import { getMessaging, getToken } from 'firebase/messaging';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect } from 'react';
 
+import { firebaseApp } from '@/app/_providers/Firebase';
 import { useHomeAlarmQuery } from '@/entity/alarm';
+import { useRegisterTokenMutation } from '@/feature/alarm';
 import {
   AddStudentDialog,
   useAddStudentCourseMutation,
@@ -30,17 +34,20 @@ import { Layout } from '@/widget';
 
 import { useTrainerHomeQuery } from '../api/useTrainerHomeQuery';
 
+const MAX_RETRY_ATTEMPTS = 3;
+
 export const TrainerHomePage = () => {
   const queryClient = useQueryClient();
   const { showErrorToast } = useShowErrorToast();
-  const { mutate } = useAddStudentCourseMutation();
+  const { mutate: addStudentCourseMutate } = useAddStudentCourseMutation();
+  const { mutate: tokenMutate } = useRegisterTokenMutation();
 
   const { data: userInfo } = useMyInfoQuery();
   const { data: homeInfo } = useTrainerHomeQuery();
   const { data: homeAlarmData } = useHomeAlarmQuery();
 
   const addCourse = ({ courseId, memberId }: { courseId: number; memberId: number }) => {
-    mutate(
+    addStudentCourseMutate(
       {
         courseId,
         memberId,
@@ -88,11 +95,72 @@ export const TrainerHomePage = () => {
     return closestSchedule;
   };
 
-  const todaySchedule = homeInfo?.todaySchedule.schedule;
+  const todaySchedule: TrainerSchedule[] | undefined = homeInfo?.todaySchedule.schedule;
 
   const closestSchedule = findClosestSchedule(todaySchedule);
 
   const hasTodaySchedule = Array.isArray(todaySchedule) && todaySchedule.length > 0;
+
+  const messaging = getMessaging(firebaseApp);
+
+  const attemptToGetToken = async (
+    registration: ServiceWorkerRegistration,
+    attempt = 1
+  ) => {
+    try {
+      const currentToken = await getToken(messaging, {
+        vapidKey: process.env.VAPIDKEY,
+        serviceWorkerRegistration: registration,
+      });
+      if (currentToken) {
+        tokenMutate(currentToken, {
+          onSuccess: () => {
+            localStorage.setItem('serviceWorkerRegistration', currentToken);
+          },
+          onError: (error) => {
+            throw new Error(error?.response?.data.message ?? 'Mutation error occurred.');
+          },
+        });
+      }
+    } catch (error) {
+      if (attempt < MAX_RETRY_ATTEMPTS) {
+        await attemptToGetToken(registration, attempt + 1);
+      } else {
+        showErrorToast(`Failed to get token after ${MAX_RETRY_ATTEMPTS} attempts`);
+      }
+    }
+  };
+
+  const onMessageFCM = async () => {
+    //서비스워커의 토큰은 한번 등록하면 안바뀜
+    const registration = await navigator.serviceWorker.register(
+      '/firebase-messaging-sw.js'
+    );
+    if (!('serviceWorker' in navigator) && !('Notification' in window)) {
+      return;
+    }
+
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      alert('알림을 허용해 주세요.');
+      return;
+    }
+
+    if (!localStorage.getItem('serviceWorkerRegistration')) {
+      if (registration) {
+        try {
+          await attemptToGetToken(registration);
+        } catch (e) {
+          await attemptToGetToken(registration);
+        }
+      }
+    }
+  };
+
+  useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    onMessageFCM();
+  }, []);
 
   return (
     <Layout type='trainer' className='relative'>

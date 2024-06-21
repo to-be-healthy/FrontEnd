@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-floating-promises */
 'use client';
 
 import 'dayjs/locale/ko';
@@ -14,6 +13,7 @@ import { useEffect } from 'react';
 
 import { firebaseApp } from '@/app/_providers/Firebase';
 import { useHomeAlarmQuery } from '@/entity/alarm';
+import { useRegisterTokenMutation } from '@/feature/alarm';
 import { TodayDiet } from '@/feature/diet';
 import {
   CourseCard,
@@ -21,7 +21,6 @@ import {
   CourseCardHeader,
   useStudentHomeDataQuery,
 } from '@/feature/member';
-import { useFcmTokenMutation } from '@/feature/member';
 import {
   IconAlarm,
   IconArrowDown,
@@ -35,7 +34,6 @@ import {
 import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
-  Button,
   Card,
   CardContent,
   CardHeader,
@@ -46,15 +44,16 @@ import {
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
+const MAX_RETRY_ATTEMPTS = 3;
+
 export const StudentHomePage = () => {
   const { showErrorToast } = useShowErrorToast();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [token, setToken] = useState('');
 
   const { data, isPending } = useStudentHomeDataQuery();
   const { data: homeAlarmData } = useHomeAlarmQuery();
-  const { mutate } = useFcmTokenMutation();
+  const { mutate } = useRegisterTokenMutation();
 
   const month = dayjs(new Date()).format('YYYY-MM');
   const nextScheduledDay = data?.myReservation
@@ -70,13 +69,15 @@ export const StudentHomePage = () => {
 
   const messaging = getMessaging(firebaseApp);
 
-  const attemptToGetToken = async (registration: ServiceWorkerRegistration) => {
+  const attemptToGetToken = async (
+    registration: ServiceWorkerRegistration,
+    attempt = 1
+  ) => {
     try {
       const currentToken = await getToken(messaging, {
         vapidKey: process.env.VAPIDKEY,
         serviceWorkerRegistration: registration,
       });
-      setToken(currentToken);
       if (currentToken) {
         mutate(currentToken, {
           onSuccess: () => {
@@ -86,13 +87,13 @@ export const StudentHomePage = () => {
             throw new Error(error?.response?.data.message ?? 'Mutation error occurred.');
           },
         });
-      } else {
-        showErrorToast(
-          'No Instance ID token available. Request permission to generate one.'
-        );
       }
     } catch (error) {
-      showErrorToast(`Failed to get token:`);
+      if (attempt < MAX_RETRY_ATTEMPTS) {
+        await attemptToGetToken(registration, attempt + 1);
+      } else {
+        showErrorToast(`Failed to get token after ${MAX_RETRY_ATTEMPTS} attempts`);
+      }
     }
   };
 
@@ -125,17 +126,7 @@ export const StudentHomePage = () => {
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     onMessageFCM();
-
-    const data = localStorage.getItem('serviceWorkerRegistration');
-    if (data) {
-      setToken(data);
-    }
   }, []);
-
-  const copyFCMToken = async () => {
-    if (window === undefined) return;
-    await navigator.clipboard.writeText(token);
-  };
 
   return (
     <Layout type='student'>
@@ -157,9 +148,6 @@ export const StudentHomePage = () => {
           </div>
         ) : (
           <>
-            <Button variant='secondary' className='my-3' onClick={copyFCMToken}>
-              FCM 토큰 복사하기
-            </Button>
             <article className='mb-7'>
               {/* 수강권 있을때 */}
               {data?.course && (
