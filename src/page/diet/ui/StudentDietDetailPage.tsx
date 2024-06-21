@@ -165,7 +165,10 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                 <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
                   <DropdownMenuGroup className='flex flex-col'>
                     <DropdownMenuItem
-                      className='typography-title-3 flex items-center gap-3 px-6 py-5'
+                      className={cn(
+                        Typography.TITLE_3,
+                        'flex items-center gap-3 px-6 py-5'
+                      )}
                       asChild>
                       <Link href={`/student/diet/${dietId}/edit?month=${month}`}>
                         <IconEdit />
@@ -173,7 +176,10 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      className='typography-title-3 flex items-center gap-3 px-6 py-5 text-point'
+                      className={cn(
+                        Typography.TITLE_3,
+                        'flex items-center gap-3 px-6 py-5 text-point'
+                      )}
                       onClick={() => setOpen(true)}>
                       <IconTrash />
                       삭제

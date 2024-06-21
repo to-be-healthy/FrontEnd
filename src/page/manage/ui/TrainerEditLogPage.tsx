@@ -119,7 +119,9 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-        <p className='typography-heading-4 flex h-full items-center'>수업 일지 작성</p>
+        <p className={cn(Typography.HEADING_4, 'flex h-full items-center')}>
+          수업 일지 작성
+        </p>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
       </Layout.Header>
       <Layout.Contents className='p-7'>

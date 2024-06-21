@@ -103,7 +103,7 @@ export const SelectGym = () => {
             <Layout.Contents>
               <div className='flex h-full w-full flex-col items-center justify-between'>
                 <div className='flex w-full flex-col items-center justify-start overflow-y-auto p-7 pt-[100px]'>
-                  <p className='typography-heading-1 mb-[80px] text-center'>
+                  <p className={cn(Typography.HEADING_1, 'mb-[80px] text-center')}>
                     {auth.memberType === 'TRAINER' ? '수업하시는' : '다니시는'} 헬스장을
                     <br />
                     선택해주세요.
@@ -114,7 +114,8 @@ export const SelectGym = () => {
                         <li key={item.gymId} className='mb-3 h-[80px] w-full'>
                           <Button
                             className={cn(
-                              'typography-heading-4 h-full text-black',
+                              Typography.HEADING_4,
+                              'h-full text-black',
                               selectGymId === item.gymId
                                 ? 'border-2 border-solid border-primary-500 bg-white'
                                 : 'bg-gray-100'
@@ -162,7 +163,7 @@ export const SelectGym = () => {
               <Layout.Contents>
                 <div className='flex h-full w-full flex-col items-center justify-between p-7 pt-[60px]'>
                   <div className='flex w-full flex-col items-center justify-start'>
-                    <p className='typography-heading-1 mb-[30px] text-center'>
+                    <p className={cn(Typography.HEADING_1, 'mb-[30px] text-center')}>
                       인증 코드를 입력해 주세요.
                     </p>
                     <InputOTP
@@ -176,7 +177,7 @@ export const SelectGym = () => {
                             <InputOTPSlot
                               key={index}
                               index={index}
-                              className='typography-heading-1 bg-gray-100'
+                              className={cn(Typography.HEADING_1, 'bg-gray-100')}
                             />
                           );
                         })}
@@ -186,7 +187,7 @@ export const SelectGym = () => {
 
                   <div className='w-full'>
                     <Button
-                      className='typography-title-1 h-[57px] w-full rounded-lg'
+                      className={cn(Typography.TITLE_1, 'h-[57px] w-full rounded-lg')}
                       disabled={authValue.length < 6}
                       onClick={handleRegisterGym}>
                       완료

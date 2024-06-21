@@ -540,7 +540,7 @@ export const ClassTimeSettingPage = () => {
       <Layout.BottomArea className='bg-white'>
         <Button
           size='full'
-          className='typography-title-1 h-[57px] rounded-lg'
+          className={cn(Typography.TITLE_1, 'h-[57px] rounded-lg')}
           onClick={(e) => handleSetClassTime(e)}>
           수업 시간 설정
         </Button>
