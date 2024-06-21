@@ -8,6 +8,8 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react';
 import IconTriangleDown from '@/shared/assets/images/icon_triangle_down.svg';
 import { cn } from '@/shared/utils/tw-utils';
 
+import { Typography } from '../mixin';
+
 const SelectRoot = SelectPrimitive.Root;
 
 const SelectGroup = SelectPrimitive.Group;
@@ -22,7 +24,7 @@ const SelectTrigger = forwardRef<
     ref={ref}
     className={cn(
       'flex h-10 w-full items-center justify-between rounded-md bg-background px-3 py-2 text-sm placeholder:text-black focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1',
-      'typography-title-2',
+      Typography.TITLE_2,
       className
     )}
     {...props}>

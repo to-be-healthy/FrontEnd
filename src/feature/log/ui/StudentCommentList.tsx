@@ -83,7 +83,7 @@ const CommentItem = ({
       modal={false}>
       <DropdownMenuTrigger asChild>
         <li className={cn(active && 'bg-blue-10', className)} {...props}>
-          <div className={cn('flex space-x-[6px] px-6 py-4', depth !== 0 && 'ml-[47px]')}>
+          <div className={cn('flex space-x-2 px-6 py-4', depth !== 0 && 'ml-[47px]')}>
             {comment.member.fileUrl ? (
               <Image
                 src={comment.member.fileUrl}
@@ -103,7 +103,7 @@ const CommentItem = ({
                   {comment.content}
                 </p>
                 {!comment.delYn && comment.files.length > 0 && (
-                  <div className='mt-[6px]'>
+                  <div className='mt-2'>
                     {comment.files.map((file, index) => (
                       <div key={index} className='overflow-hidden'>
                         <Image
@@ -145,7 +145,7 @@ const CommentItem = ({
       <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
         <DropdownMenuGroup className='flex flex-col'>
           <DropdownMenuItem
-            className='typography-title-3 px-[16px] py-[12px]'
+            className={cn(Typography.TITLE_3, 'px-6 py-5')}
             onClick={() => {
               changeTarget({
                 comment,
@@ -157,7 +157,7 @@ const CommentItem = ({
             댓글 수정
           </DropdownMenuItem>
           <DropdownMenuItem
-            className='typography-title-3 px-[16px] py-[12px]'
+            className={cn(Typography.TITLE_3, 'px-6 py-5')}
             onClick={() => {
               deleteComment(comment.id);
               setOpend(false);

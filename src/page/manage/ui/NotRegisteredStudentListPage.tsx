@@ -49,10 +49,10 @@ export const NotRegisteredStudentListPage = () => {
           </Link>
         </Button>
       </Layout.Header>
-      <Layout.Contents className='flex h-full flex-col px-[20px] pb-[16px]'>
-        <div className='flex h-fit w-full py-[16px]'>
-          <div className='flex h-fit w-full justify-between rounded-md bg-gray-200 px-[16px] py-[10px]'>
-            <Button variant='ghost' size='icon' className='h-[20px] w-[20px]'>
+      <Layout.Contents className='flex h-full flex-col px-7 pb-6'>
+        <div className='flex h-fit w-full py-6'>
+          <div className='flex h-fit w-full justify-between rounded-md bg-gray-200 px-6 py-4'>
+            <Button variant='ghost' size='icon' className='h-7 w-7'>
               <IconSearch />
             </Button>
             {/* 공통 인풋 적용 예정 */}
@@ -67,10 +67,10 @@ export const NotRegisteredStudentListPage = () => {
         {!isPending && processedMemberList.length === 0 && (
           <div className='flex h-full flex-col items-center justify-center'>
             <div className='mb-[30%] flex h-full flex-col items-center justify-center'>
-              <div className='flex flex-col items-center gap-y-[36px]'>
-                <div className='flex flex-col items-center gap-y-[12px]'>
+              <div className='flex flex-col items-center gap-y-11'>
+                <div className='flex flex-col items-center gap-y-5'>
                   <IconAlertCircle />
-                  <p className='text-[16px]/[130%] font-bold text-gray-500'>
+                  <p className='text-6/[130%] font-bold text-gray-500'>
                     {data === null ? '등록된 회원이 없습니다.' : '검색 결과가 없습니다.'}
                   </p>
                 </div>
@@ -83,14 +83,14 @@ export const NotRegisteredStudentListPage = () => {
           processedMemberList.map(({ name, id, email }) => (
             <Card
               key={id}
-              className='my-[4px] flex w-full flex-row items-center justify-between px-[16px] py-[20px]'>
+              className='my-[4px] flex w-full flex-row items-center justify-between px-6 py-7'>
               <div className='flex flex-col gap-y-[4px]'>
                 <p className={Typography.TITLE_1_BOLD}>{name}</p>
                 <span className={cn(Typography.BODY_4_REGULAR, 'text-gray-400')}>
                   {email}
                 </span>
               </div>
-              <Button variant='secondary' className='px-[36px] py-[6px]' asChild>
+              <Button variant='secondary' className='px-11 py-2' asChild>
                 <Link
                   href={{
                     pathname: `/trainer/manage/append/${id}`,

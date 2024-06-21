@@ -134,7 +134,7 @@ export const SignUpFunnel = ({
           description: (
             <div className='flex items-center justify-center'>
               <IconSendEmail />
-              <p className={cn(Typography.HEADING_5, 'ml-6 text-[#fff]')}>{message}</p>
+              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
             </div>
           ),
           duration: 2000,
@@ -243,7 +243,7 @@ export const SignUpFunnel = ({
         </div>
       </div>
 
-      <div className='w-full p-[20px]'>
+      <div className='w-full p-7'>
         {step < 5 ? (
           step === 2 ? (
             <Button

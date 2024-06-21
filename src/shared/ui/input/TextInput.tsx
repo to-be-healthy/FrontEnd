@@ -45,7 +45,7 @@ export const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
           <Button
             type='button'
             className={cn(
-              'absolute right-[16px] top-[50%] hidden h-auto w-auto translate-y-[-50%] bg-transparent p-0',
+              'absolute right-6 top-[50%] hidden h-auto w-auto translate-y-[-50%] bg-transparent p-0',
               {
                 block: value !== '' && value !== undefined,
               }

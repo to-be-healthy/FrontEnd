@@ -215,7 +215,7 @@ const AppendNewExerciseType = ({
                             }
                           }}
                         />
-                        <span className='flex h-[20px] w-[20px] items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
+                        <span className='flex h-7 w-7 items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
                           <IconNoCircleCheck width={15} height={12} fill='white' />
                         </span>
                         <div className='flex flex-col'>

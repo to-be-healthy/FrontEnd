@@ -42,7 +42,7 @@ export const TrainerInvitePage = () => {
           description: (
             <div className='flex items-center justify-center'>
               <IconError />
-              <p className='typography-heading-5 ml-6 text-white'>{message}</p>
+              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
             </div>
           ),
           duration: 2000,
@@ -57,7 +57,7 @@ export const TrainerInvitePage = () => {
       description: (
         <div className='flex items-center justify-center'>
           <IconError />
-          <p className='typography-heading-5 ml-6 text-white'>
+          <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
             입력이 필요한 항목이 있습니다.
           </p>
         </div>
@@ -79,7 +79,9 @@ export const TrainerInvitePage = () => {
       description: (
         <div className='flex items-center justify-center'>
           <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-          <p className='typography-heading-5 ml-6 text-white'>초대 링크를 복사했어요.</p>
+          <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
+            초대 링크를 복사했어요.
+          </p>
         </div>
       ),
       duration: 2000,
@@ -123,12 +125,12 @@ export const TrainerInvitePage = () => {
             <CloseIcon width={20} height={20} />
           </Link>
         </Button>
-        <h1 className='typography-heading-4 font-semibold'>회원추가</h1>
+        <h1 className={cn(Typography.HEADING_4)}>회원추가</h1>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
       </Layout.Header>
-      <Layout.Contents className='px-[20px]'>
-        <h2 className='typography-heading-3 py-[36px]'>회원님의 정보를 알려주세요.</h2>
-        <div className='flex w-full items-center justify-center py-[36px]'>
+      <Layout.Contents className='px-7'>
+        <h2 className={cn(Typography.HEADING_3, 'py-11')}>회원님의 정보를 알려주세요.</h2>
+        <div className='flex w-full items-center justify-center py-11'>
           <Image
             src='/images/letter_blue-heart.png'
             width={110}
@@ -139,12 +141,12 @@ export const TrainerInvitePage = () => {
         </div>
         <form
           id='invite-form'
-          className={cn('flex justify-center gap-x-[8px]', Typography.TITLE_3)}>
-          <div className='flex flex-col gap-y-[8px]'>
+          className={cn('flex justify-center gap-x-3', Typography.TITLE_3)}>
+          <div className='flex flex-col gap-y-3'>
             <p>이름</p>
             <div
               className={cn(
-                'flex rounded-md border border-gray-200 bg-white px-[16px] py-[11.5px] focus-within:border-primary-500',
+                'flex rounded-md border border-gray-200 bg-white px-6 py-[11.5px] focus-within:border-primary-500',
                 errors.name && 'border-point focus-within:border-point'
               )}>
               <Input
@@ -160,11 +162,11 @@ export const TrainerInvitePage = () => {
               />
             </div>
           </div>
-          <div className='flex flex-col gap-y-[8px]'>
+          <div className='flex flex-col gap-y-3'>
             <p>수업 할 PT 횟수</p>
             <div
               className={cn(
-                'flex gap-x-[10px] rounded-md border border-gray-200 bg-white px-[16px] py-[11.5px] focus-within:border-primary-500',
+                'flex gap-x-4 rounded-md border border-gray-200 bg-white px-6 py-[11.5px] focus-within:border-primary-500',
                 errors.lessonCnt && 'border-point focus-within:border-point'
               )}>
               <Input
@@ -182,7 +184,7 @@ export const TrainerInvitePage = () => {
                 className={cn(
                   Typography.BODY_3,
                   twSelector('placeholder', Typography.BODY_3),
-                  'right-[16px] text-gray-500'
+                  'right-6 text-gray-500'
                 )}>
                 회
               </div>
@@ -200,14 +202,14 @@ export const TrainerInvitePage = () => {
         </Button>
       </Layout.BottomArea>
       <Dialog open={dialogOpen}>
-        <DialogContent className='bottom-0 top-auto flex max-w-[var(--max-width)] translate-y-0 flex-col items-center justify-center rounded-t-[12px] px-[20px] py-[32px]'>
+        <DialogContent className='rounded-t-5 bottom-0 top-auto flex max-w-[var(--max-width)] translate-y-0 flex-col items-center justify-center px-7 py-10'>
           <h4 className={Typography.HEADING_4_BOLD}>회원님을 초대해주세요.</h4>
           <p
             className={cn(
               Typography.BODY_1,
               'whitespace-pre-wrap break-keep text-center text-gray-600'
             )}>{`초대 링크로 가입하면 입력하신 정보로\n바로 가입할 수 있습니다.`}</p>
-          <div className='flex w-full gap-x-[8px]'>
+          <div className='flex w-full gap-x-3'>
             <Button
               size='full'
               variant='secondary'

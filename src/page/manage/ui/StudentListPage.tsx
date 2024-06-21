@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { StudentList } from '@/feature/manage';
 import { AddStudentDialog } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
+import { Typography } from '@/shared/mixin';
+import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const StudentListPage = () => {
@@ -14,7 +16,7 @@ const StudentListPage = () => {
         <Link href={'/trainer'}>
           <IconBack />
         </Link>
-        <h2 className='typography-heading-4 font-semibold'>나의 회원</h2>
+        <h2 className={cn(Typography.HEADING_4)}>나의 회원</h2>
         <AddStudentDialog />
       </Layout.Header>
       <Layout.Contents className='overflow-y-hidden'>

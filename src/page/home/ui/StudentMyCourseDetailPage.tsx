@@ -50,7 +50,7 @@ export const StudentMyCourseDetailPage = () => {
 
   return (
     <Layout type='student'>
-      <Layout.Header className='justify-start bg-[#fff]'>
+      <Layout.Header className='justify-start bg-white'>
         <Link href='./'>
           <IconClose width={14} height={14} />
         </Link>
@@ -69,7 +69,7 @@ export const StudentMyCourseDetailPage = () => {
           </div>
         ) : (
           <>
-            <div className='bg-[#fff] p-7 pb-0 pt-6'>
+            <div className='bg-white p-7 pb-0 pt-6'>
               {historyData?.pages[0]?.mainData.course && (
                 <CourseCard
                   expiration={

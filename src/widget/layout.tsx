@@ -36,7 +36,6 @@ export const Layout = ({ type, className, children, ...props }: LayoutProps) => 
         {type === 'trainer' && <TrainerNavigation />}
         {type === 'student' && <StudentNavigation />}
         {type === undefined && footer}
-        <Toaster />
       </div>
     </div>
   );
@@ -59,6 +58,7 @@ const Contents = ({ children, className, ...props }: HTMLAttributes<HTMLDivEleme
     className={cn('h-full w-full flex-1 flex-shrink-0 overflow-y-auto', className)}
     {...props}>
     {children}
+    <Toaster />
   </main>
 );
 Contents.displayName = 'Contents';

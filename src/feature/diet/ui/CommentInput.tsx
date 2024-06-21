@@ -51,15 +51,15 @@ const CommentInput = () => {
   return (
     <div
       className={cn(
-        'border-t border-gray-200 bg-white px-[16px] pb-[16px]',
-        target === null && 'pt-[16px]'
+        'border-t border-gray-200 bg-white px-6 pb-6',
+        target === null && 'pt-6'
       )}>
       {/* Input 상단 상태바 - 신규 답글 남기기 */}
       {target !== null && target.mode === 'create' && target.isReply && (
         <div
           className={cn(
             Typography.BODY_4_REGULAR,
-            'flex items-center justify-center gap-[6px] py-[10px]'
+            'flex items-center justify-center gap-2 py-4'
           )}>
           {target.comment.member.name}님에게 답글 남기는 중
           <span className='h-[2px] w-[2px] rounded-full bg-gray-500' />
@@ -77,7 +77,7 @@ const CommentInput = () => {
         <div
           className={cn(
             Typography.BODY_4_REGULAR,
-            'flex items-center justify-center gap-[6px] py-[10px]'
+            'flex items-center justify-center gap-2 py-4'
           )}>
           댓글 수정 중
           <span className='h-[2px] w-[2px] rounded-full bg-gray-500' />
@@ -91,8 +91,8 @@ const CommentInput = () => {
         </div>
       )}
 
-      <div className={cn('flex items-center justify-between space-x-[10px]')}>
-        <div className='flex-1 rounded-md border px-[16px] py-[13px] focus-within:border-primary-500'>
+      <div className={cn('flex items-center justify-between space-x-4')}>
+        <div className='flex-1 rounded-md border px-6 py-[13px] focus-within:border-primary-500'>
           <Input
             ref={ref}
             placeholder='댓글을 입력하세요.'

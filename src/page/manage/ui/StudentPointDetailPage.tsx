@@ -66,7 +66,7 @@ export const StudentPointDetailPage = ({ memberId }: Props) => {
 
   return (
     <Layout type='student'>
-      <Layout.Header className='justify-start bg-[#fff]'>
+      <Layout.Header className='justify-start bg-white'>
         <Link href='./' className='h-full w-full'>
           <IconClose width={14} height={14} />
         </Link>
@@ -83,7 +83,7 @@ export const StudentPointDetailPage = ({ memberId }: Props) => {
           <div className='loading'>Loading..</div>
         ) : (
           <>
-            <div className='bg-[#fff] p-7 pb-[36px] pt-6'>
+            <div className='bg-white p-7 pb-11 pt-6'>
               <MonthPicker
                 date={selectedMonth}
                 onChangeDate={(newDate) => setSelectedMonth(newDate)}
@@ -152,12 +152,14 @@ export const StudentPointDetailPage = ({ memberId }: Props) => {
 
                     return (
                       <li className='px-7 py-8' key={item.pointId}>
-                        <p className='typography-body-4 text-gray-500'>{formattedDate}</p>
+                        <p className={cn(Typography.BODY_4, 'text-gray-500')}>
+                          {formattedDate}
+                        </p>
                         <dl className='flex items-center justify-between'>
-                          <dt className='typography-title-3 text-gray-700'>
+                          <dt className={cn(Typography.TITLE_3, 'text-gray-700')}>
                             {pointHistoryTypes[item.type]}
                           </dt>
-                          <dd className='typography-title-3 text-black'>
+                          <dd className={cn(Typography.TITLE_3, 'text-black')}>
                             {item.calculation === 'PLUS' ? '+' : '-'}
                             {item.point}
                           </dd>

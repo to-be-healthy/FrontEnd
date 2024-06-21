@@ -4,8 +4,10 @@ import { IconPlus } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import IconMail from '@/shared/assets/images/icon_mail.svg';
 import IconPeopleAdd from '@/shared/assets/images/icon_people_add.svg';
+import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/shared/ui/dialog';
+import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 export const AddStudentDialog = ({ children }: { children?: React.ReactNode }) => {
@@ -13,7 +15,7 @@ export const AddStudentDialog = ({ children }: { children?: React.ReactNode }) =
     <Dialog>
       <DialogTrigger asChild>
         {children ?? (
-          <Button variant='ghost' className='h-[20px] w-[20px]' size='icon'>
+          <Button variant='ghost' className='h-7 w-7' size='icon'>
             <IconPlus fill='black' width={17} height={16} />
           </Button>
         )}
@@ -27,21 +29,21 @@ export const AddStudentDialog = ({ children }: { children?: React.ReactNode }) =
               <CloseIcon width={20} height={20} />
             </Button>
           </DialogClose>
-          <h1 className='typography-heading-4 font-semibold'>회원추가</h1>
+          <h1 className={cn(Typography.HEADING_4)}>회원추가</h1>
           <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
         </Layout.Header>
-        <Layout.Contents className='flex flex-row items-center justify-evenly py-[16px]'>
+        <Layout.Contents className='flex flex-row items-center justify-evenly py-6'>
           <Link
             href={'/trainer/manage/invite'}
-            className='flex flex-col items-center justify-center gap-y-[6px]'>
+            className='flex flex-col items-center justify-center gap-y-2'>
             <IconMail />
-            <p className='typography-heading-5'>회원 초대하기</p>
+            <p className={cn(Typography.HEADING_5)}>회원 초대하기</p>
           </Link>
           <Link
             href={'/trainer/manage/append'}
-            className='flex flex-col items-center justify-center gap-y-[6px]'>
+            className='flex flex-col items-center justify-center gap-y-2'>
             <IconPeopleAdd />
-            <p className='typography-heading-5'>가입된 회원 추가</p>
+            <p className={cn(Typography.HEADING_5)}>가입된 회원 추가</p>
           </Link>
         </Layout.Contents>
       </DialogContent>

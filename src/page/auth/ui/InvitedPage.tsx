@@ -27,7 +27,7 @@ const InvitedPage = () => {
     !isPending &&
     data && (
       <Layout>
-        <Layout.Contents className='flex flex-col items-center px-[20px]'>
+        <Layout.Contents className='flex flex-col items-center px-7'>
           <h1
             className={cn(
               Typography.HEADING_2,
@@ -35,7 +35,7 @@ const InvitedPage = () => {
             )}>
             {`${data.trainer.name} 트레이너가\n${data.name}님을 초대했습니다!`}
           </h1>
-          <div className='flex w-full items-center justify-center py-[36px]'>
+          <div className='flex w-full items-center justify-center py-11'>
             <Image
               src='/images/letter_blue-heart.png'
               width={150}
@@ -48,14 +48,14 @@ const InvitedPage = () => {
           <Button
             className={cn(
               Typography.TITLE_3,
-              'h-fit bg-transparent p-0 pt-[20px] text-gray-500'
+              'h-fit bg-transparent p-0 pt-7 text-gray-500'
             )}
             onClick={() => {
               router.push(`/sign-up?type=student&uuid=${uuid}`);
             }}>
             일반 계정 회원가입
           </Button>
-          <p className='w-2/3 break-keep pt-[32px] text-center text-[11px] text-gray-400'>
+          <p className='w-2/3 break-keep pt-10 text-center text-[11px] text-gray-400'>
             로그인 시{' '}
             <Link href='#' className='underline'>
               개인정보 처리방침

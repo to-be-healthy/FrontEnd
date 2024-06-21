@@ -99,7 +99,7 @@ export const StudentMyReservationSchedule = ({ data }: Props) => {
           description: (
             <div className='flex items-center justify-center'>
               <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-              <p className='typography-heading-5 ml-6 text-white'>{message}</p>
+              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
             </div>
           ),
           duration: 2000,
@@ -152,7 +152,7 @@ export const StudentMyReservationSchedule = ({ data }: Props) => {
                     <span
                       className={cn(
                         Typography.BODY_3,
-                        'absolute right-6 top-[50%] h-[36px] w-[82px] -translate-y-1/2 transform rounded-md bg-gray-100 text-center text-gray-700'
+                        'absolute right-6 top-[50%] h-11 w-[82px] -translate-y-1/2 transform rounded-md bg-gray-100 text-center text-gray-700'
                       )}>
                       예약취소
                     </span>

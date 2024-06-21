@@ -126,7 +126,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
           description: (
             <div className='flex items-center justify-center'>
               <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-              <p className='typography-heading-5 ml-6 text-[#fff]'>{message}</p>
+              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
             </div>
           ),
           duration: 2000,
@@ -152,7 +152,9 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                   Typography.HEADING_4_SEMIBOLD,
                   'absolute left-1/2 translate-x-[-50%] text-black'
                 )}>
-                {dietValue === todayValue ? '오늘 ' : dayjs(dietValue).format('YYYY-MM')}
+                {dietValue === todayValue
+                  ? '오늘 '
+                  : dayjs(dietData?.eatDate).format('MM월 DD일 ')}
                 식단
               </h2>
               <DropdownMenu>
@@ -163,7 +165,10 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                 <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
                   <DropdownMenuGroup className='flex flex-col'>
                     <DropdownMenuItem
-                      className='typography-title-3 flex items-center gap-[8px] px-[16px] py-[12px]'
+                      className={cn(
+                        Typography.TITLE_3,
+                        'flex items-center gap-3 px-6 py-5'
+                      )}
                       asChild>
                       <Link href={`/student/diet/${dietId}/edit?month=${month}`}>
                         <IconEdit />
@@ -171,7 +176,10 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuItem
-                      className='typography-title-3 flex items-center gap-[8px] px-[16px] py-[12px] text-point'
+                      className={cn(
+                        Typography.TITLE_3,
+                        'flex items-center gap-3 px-6 py-5 text-point'
+                      )}
                       onClick={() => setOpen(true)}>
                       <IconTrash />
                       삭제
@@ -180,7 +188,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                 </DropdownMenuContent>
               </DropdownMenu>
               <AlertDialog open={open} onOpenChange={setOpen}>
-                <AlertDialogContent className='space-y-[24px] px-7 py-11'>
+                <AlertDialogContent className='space-y-8 px-7 py-11'>
                   <AlertDialogHeader
                     className={cn(Typography.TITLE_1_SEMIBOLD, 'mx-auto text-center')}>
                     식단을 삭제하시겠습니까?
@@ -191,7 +199,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                     </AlertDialogCancel>
                     <AlertDialogAction
                       asChild
-                      className='mt-0 h-[48px] rounded-md bg-point text-base font-normal text-[#fff]'>
+                      className='mt-0 h-[48px] rounded-md bg-point text-base font-normal text-white'>
                       <Button variant='ghost' onClick={() => deleteDiet(dietId)}>
                         삭제
                       </Button>

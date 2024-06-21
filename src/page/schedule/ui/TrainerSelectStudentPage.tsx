@@ -9,6 +9,8 @@ import { AddStudentDialog } from '@/feature/member';
 import { useAddScheduleMutation } from '@/feature/schedule';
 import { IconBack } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
+import { Typography } from '@/shared/mixin';
+import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const TrainerSelectStudentPage = ({ scheduleId }: { scheduleId: number }) => {
@@ -42,7 +44,7 @@ const TrainerSelectStudentPage = ({ scheduleId }: { scheduleId: number }) => {
         <Link href={'/trainer/schedule'}>
           <IconBack />
         </Link>
-        <h2 className='typography-heading-4 font-semibold'>수업할 회원 선택</h2>
+        <h2 className={cn(Typography.HEADING_4)}>수업할 회원 선택</h2>
         <AddStudentDialog />
       </Layout.Header>
       <Layout.Contents>

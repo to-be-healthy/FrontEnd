@@ -27,11 +27,11 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
         <li>
           <Link
             href='/trainer'
-            className='flex flex-col items-center justify-between gap-y-[6px]'>
+            className='flex flex-col items-center justify-between gap-y-2'>
             {pathname === '/trainer' ? <IconHomeFilled /> : <IconHomeOutlined />}
             <span
               className={cn(
-                'text-[10px] font-semibold',
+                'text-4 font-semibold',
                 pathname === '/trainer' ? 'text-black' : 'text-gray-700'
               )}>
               홈
@@ -41,7 +41,7 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
         <li>
           <Link
             href='/trainer/schedule'
-            className='flex flex-col items-center justify-between gap-y-[6px]'>
+            className='flex flex-col items-center justify-between gap-y-2'>
             {pathname === '/trainer/schedule' ? (
               <IconCalendarFilled />
             ) : (
@@ -49,7 +49,7 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             )}
             <span
               className={cn(
-                'text-[10px] font-semibold',
+                'text-4 font-semibold',
                 pathname === '/trainer/schedule' ? 'text-black' : 'text-gray-700'
               )}>
               스케줄
@@ -59,7 +59,7 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
         <li>
           <Link
             href='/trainer/community'
-            className='flex flex-col items-center justify-between gap-y-[6px]'>
+            className='flex flex-col items-center justify-between gap-y-2'>
             {pathname === '/trainer/community' ? (
               <IconCommunityFilled />
             ) : (
@@ -67,7 +67,7 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             )}
             <span
               className={cn(
-                'text-[10px] font-semibold',
+                'text-4 font-semibold',
                 pathname === '/trainer/community' ? 'text-black' : 'text-gray-700'
               )}>
               커뮤니티
@@ -77,7 +77,7 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
         <li>
           <Link
             href='/trainer/mypage'
-            className='flex flex-col items-center justify-between gap-y-[6px]'>
+            className='flex flex-col items-center justify-between gap-y-2'>
             {pathname === '/trainer/mypage' ? (
               <IconProfileFilled />
             ) : (
@@ -85,7 +85,7 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             )}
             <span
               className={cn(
-                'text-[10px] font-semibold',
+                'text-4 font-semibold',
                 pathname === '/trainer/mypage' ? 'text-black' : 'text-gray-700'
               )}>
               마이
@@ -123,11 +123,11 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
         <li>
           <Link
             href='/student'
-            className='flex flex-col items-center justify-between gap-y-[6px]'>
+            className='flex flex-col items-center justify-between gap-y-2'>
             {pathname === '/student' ? <IconHomeFilled /> : <IconHomeOutlined />}
             <span
               className={cn(
-                'text-[10px] font-semibold',
+                'text-4 font-semibold',
                 pathname === '/student' ? 'text-black' : 'text-gray-700'
               )}>
               홈
@@ -139,7 +139,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             variant='ghost'
             size='auto'
             onClick={clickCheckMappedTrainer}
-            className='flex flex-col items-center justify-between gap-y-[6px] p-0 leading-[15px]'>
+            className='flex flex-col items-center justify-between gap-y-2 p-0 leading-[15px]'>
             {pathname === '/student/schedule' ? (
               <IconCalendarFilled />
             ) : (
@@ -147,7 +147,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             )}
             <span
               className={cn(
-                'text-[10px] font-semibold',
+                'text-4 font-semibold',
                 pathname === '/student/schedule' ? 'text-black' : 'text-gray-700'
               )}>
               수업예약
@@ -157,7 +157,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
         <li>
           <Link
             href='/student/community'
-            className='flex flex-col items-center justify-between gap-y-[6px]'>
+            className='flex flex-col items-center justify-between gap-y-2'>
             {pathname === '/student/community' ? (
               <IconCommunityFilled />
             ) : (
@@ -165,7 +165,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             )}
             <span
               className={cn(
-                'text-[10px] font-semibold',
+                'text-4 font-semibold',
                 pathname === '/student/community' ? 'text-black' : 'text-gray-700'
               )}>
               커뮤니티
@@ -175,7 +175,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
         <li>
           <Link
             href='/student/mypage'
-            className='flex flex-col items-center justify-between gap-y-[6px]'>
+            className='flex flex-col items-center justify-between gap-y-2'>
             {pathname === '/student/mypage' ? (
               <IconProfileFilled />
             ) : (
@@ -183,7 +183,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             )}
             <span
               className={cn(
-                'text-[10px] font-semibold',
+                'text-4 font-semibold',
                 pathname === '/student/mypage' ? 'text-black' : 'text-gray-700'
               )}>
               마이

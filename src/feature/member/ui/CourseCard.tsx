@@ -19,7 +19,7 @@ export const CourseCard = ({ className, children, expiration }: CourseCardProps)
     <Card
       className={cn(
         expiration ? 'bg-gray-500' : 'bg-primary-500',
-        'w-full gap-y-0 p-0 text-[#fff]',
+        'w-full gap-y-0 p-0 text-white',
         className
       )}>
       {children}
@@ -46,7 +46,11 @@ export const CourseCardHeader = ({
       : `${remainLessonCnt}회 예약할 수 있어요!`;
   return (
     <CardHeader className='px-6 pb-8 pt-7'>
-      <div className='typography-body-3 mb-1 flex items-center justify-between text-white'>
+      <div
+        className={cn(
+          Typography.BODY_3,
+          'mb-1 flex items-center justify-between text-white'
+        )}>
         <p className={cn(Typography.BODY_3, 'text-gray-100')}>{gymName}</p>
         <span className={cn(Typography.BODY_3, 'text-gray-100')}>
           {`PT ${totalLessonCnt}회 수강권`}
@@ -76,9 +80,9 @@ export const CourseCardContent = ({
   return (
     <CardContent>
       <div className='px-6 pb-7'>
-        <p className='typography-heading-5 mb-[6px] text-[#fff]'>
+        <p className={cn(Typography.HEADING_5, 'mb-2 text-white')}>
           PT 진행 횟수 {completedLessonCnt}
-          <span className={cn(expirationTextColor, 'typography-body-3', className)}>
+          <span className={cn(expirationTextColor, Typography.BODY_3, className)}>
             /{totalLessonCnt}
           </span>
         </p>

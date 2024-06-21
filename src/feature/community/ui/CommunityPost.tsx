@@ -33,7 +33,7 @@ const CommunityPost = ({ workout }: { workout: Workout }) => {
             alt='profile'
             width={32}
             height={32}
-            className='h-[32px] w-[32px] rounded-full border border-gray-300 object-cover'
+            className='w-h-10 h-10 rounded-full border border-gray-300 object-cover'
             priority
           />
         ) : (

@@ -103,8 +103,8 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
         </div>
       </div>
       {!isLoading && (
-        <div className='hide-scrollbar mt-1 flex h-full flex-1 flex-grow flex-col overflow-y-auto px-[20px]'>
-          <div className='mb-[10px] flex items-center justify-between'>
+        <div className='hide-scrollbar mt-1 flex h-full flex-1 flex-grow flex-col overflow-y-auto px-7'>
+          <div className='mb-4 flex items-center justify-between'>
             <p className={Typography.BODY_2}>
               총{' '}
               <span className={cn(Typography.TITLE_3, 'text-primary-500')}>
@@ -139,7 +139,7 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
           </div>
           {studentList === null && (
             <div className='mb-[30%] flex h-full flex-col items-center justify-center gap-y-11'>
-              <div className='flex flex-col items-center gap-y-[12px]'>
+              <div className='flex flex-col items-center gap-y-5'>
                 <IconAlertCircle />
                 <p className={cn(Typography.TITLE_1_BOLD, 'text-gray-700')}>
                   등록된 회원이 없습니다.
@@ -160,8 +160,8 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
           )}
           {studentList !== null && processedStudentList.length === 0 && (
             <div className='mb-[30%] flex h-full flex-col items-center justify-center'>
-              <div className='flex flex-col items-center gap-y-[36px]'>
-                <div className='flex flex-col items-center gap-y-[12px]'>
+              <div className='flex flex-col items-center gap-y-11'>
+                <div className='flex flex-col items-center gap-y-5'>
                   <IconAlertCircle />
                   <p className={cn(Typography.TITLE_1_BOLD, 'text-gray-500')}>
                     검색 결과가 없습니다.
@@ -178,7 +178,7 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
                     key={item.memberId}
                     onClick={() => onClickStudent(item.memberId)}>
                     <div className='flex h-[72px] justify-between rounded-lg bg-white px-6 py-7'>
-                      <div className='flex items-center gap-x-[16px]'>
+                      <div className='flex items-center gap-x-6'>
                         <div className='relative'>
                           {item.fileUrl ? (
                             <Image
@@ -187,7 +187,7 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
                               src={item.fileUrl}
                               alt='profile'
                               className={cn(
-                                'h-[32px] w-[32px] rounded-full border border-gray-300 object-contain',
+                                'h-10 w-10 rounded-full border border-gray-300 object-contain',
                                 profileBorderStyleMapper(item.ranking)
                               )}
                             />

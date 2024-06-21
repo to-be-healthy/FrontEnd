@@ -45,7 +45,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
             description: (
               <div className='flex items-center justify-center'>
                 <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className='typography-heading-5 ml-6 text-white'>
+                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
                   회원이 추가되었습니다.
                 </p>
               </div>
@@ -61,7 +61,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
             description: (
               <div className='flex items-center justify-center'>
                 <IconError />
-                <p className='typography-heading-5 ml-6 text-white'>{message}</p>
+                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
               </div>
             ),
             duration: 2000,
@@ -77,7 +77,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
       description: (
         <div className='flex items-center justify-center'>
           <IconError />
-          <p className='typography-heading-5 ml-6 text-white'>
+          <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
             입력이 필요한 항목이 있습니다.
           </p>
         </div>
@@ -129,7 +129,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
             <p>수업 할 PT 횟수</p>
             <div
               className={cn(
-                'flex gap-x-[10px] rounded-md border border-gray-200 bg-white px-6 py-[11.5px] focus-within:border-primary-500',
+                'flex gap-x-4 rounded-md border border-gray-200 bg-white px-6 py-[11.5px] focus-within:border-primary-500',
                 errors.lessonCnt && 'border-point focus-within:border-point'
               )}>
               <Input

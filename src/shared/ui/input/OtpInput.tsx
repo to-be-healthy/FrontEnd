@@ -48,7 +48,7 @@ const InputOTPSlot = forwardRef<
     <div
       ref={ref}
       className={cn(
-        'relative flex h-10 w-10 items-center justify-center rounded-[6px] border-input text-sm transition-all',
+        'rounded-2 relative flex h-10 w-10 items-center justify-center border-input text-sm transition-all',
         isActive && 'z-10 ring-2 ring-primary-500 ring-offset-primary-500',
         className
       )}
@@ -56,7 +56,7 @@ const InputOTPSlot = forwardRef<
       {char}
       {hasFakeCaret && (
         <div className='pointer-events-none absolute inset-0 flex items-center justify-center'>
-          <div className='animate-caret-blink h-[24px] w-px bg-foreground duration-1000' />
+          <div className='animate-caret-blink h-8 w-px bg-foreground duration-1000' />
         </div>
       )}
     </div>

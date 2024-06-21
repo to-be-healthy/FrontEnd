@@ -3,6 +3,7 @@
 import Link from 'next/link';
 
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
+import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -15,6 +16,7 @@ import {
   AlertDialogTrigger,
   Button,
 } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 export const SignUpCancelDialog = ({ type }: { type: string | null | undefined }) => {
   const validType = type ?? '';
@@ -29,8 +31,8 @@ export const SignUpCancelDialog = ({ type }: { type: string | null | undefined }
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent>
-        <AlertDialogHeader className='mb-[24px] text-left'>
-          <AlertDialogTitle className='typography-heading-4 mb-3'>
+        <AlertDialogHeader className='mb-8 text-left'>
+          <AlertDialogTitle className={cn(Typography.HEADING_4, 'mb-3')}>
             회원가입을 그만둘까요?
           </AlertDialogTitle>
           <AlertDialogDescription>
@@ -43,7 +45,7 @@ export const SignUpCancelDialog = ({ type }: { type: string | null | undefined }
             className='mt-0 h-[48px] rounded-md bg-[#E2F1FF] text-primary-500'>
             <Link href={`/sign-in?type=${validType}`}>확인</Link>
           </AlertDialogAction>
-          <AlertDialogCancel className='mt-0 h-[48px] rounded-md bg-primary-500 text-[#fff]'>
+          <AlertDialogCancel className='mt-0 h-[48px] rounded-md bg-primary-500 text-white'>
             취소
           </AlertDialogCancel>
         </AlertDialogFooter>
