@@ -163,7 +163,10 @@ const AppendNewExerciseType = ({
         )}
         {categories && (
           <div className='py-9'>
-            <CreateNewExerciseBottomSheet categories={categories} />
+            <CreateNewExerciseBottomSheet
+              categories={categories}
+              defaultSearch={search}
+            />
           </div>
         )}
         {!filteredTypes && (
