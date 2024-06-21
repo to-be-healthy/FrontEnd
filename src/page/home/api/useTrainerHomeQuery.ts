@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { authApi } from '@/entity/auth';
 import { ImageFile } from '@/feature/log';
-import { TrainerSchedule } from '@/feature/schedule';
+import { TodaySchedule } from '@/feature/schedule';
 import { BaseError, BaseResponse } from '@/shared/api';
 
 interface BestStudent {
@@ -21,11 +21,7 @@ interface BestStudent {
 interface TrainerHomeInfo {
   studentCount: number;
   bestStudents: BestStudent[] | null;
-  todaySchedule: {
-    trainerName: string;
-    scheduleTotalCount: number;
-    schedule: TrainerSchedule[];
-  };
+  todaySchedule: TodaySchedule;
 }
 
 const useTrainerHomeQuery = () => {
