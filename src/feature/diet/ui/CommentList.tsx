@@ -7,7 +7,6 @@ import { useAuthSelector } from '@/entity/auth';
 import { useDeleteDietCommentMutation } from '@/entity/diet';
 import { IconProfileDefault } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { TITLE_3 } from '@/shared/mixin/typography';
 import { Button } from '@/shared/ui';
 import {
   DropdownMenu,
