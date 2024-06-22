@@ -16,6 +16,7 @@ import {
   IconProfileOutlined,
 } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
+import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
@@ -31,7 +32,7 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             {pathname === '/trainer' ? <IconHomeFilled /> : <IconHomeOutlined />}
             <span
               className={cn(
-                'text-4 font-semibold',
+                Typography.NAV_TEXT,
                 pathname === '/trainer' ? 'text-black' : 'text-gray-700'
               )}>
               홈
@@ -49,7 +50,7 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             )}
             <span
               className={cn(
-                'text-4 font-semibold',
+                Typography.NAV_TEXT,
                 pathname === '/trainer/schedule' ? 'text-black' : 'text-gray-700'
               )}>
               스케줄
@@ -67,7 +68,7 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             )}
             <span
               className={cn(
-                'text-4 font-semibold',
+                Typography.NAV_TEXT,
                 pathname === '/trainer/community' ? 'text-black' : 'text-gray-700'
               )}>
               커뮤니티
@@ -85,7 +86,7 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             )}
             <span
               className={cn(
-                'text-4 font-semibold',
+                Typography.NAV_TEXT,
                 pathname === '/trainer/mypage' ? 'text-black' : 'text-gray-700'
               )}>
               마이
@@ -127,7 +128,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             {pathname === '/student' ? <IconHomeFilled /> : <IconHomeOutlined />}
             <span
               className={cn(
-                'text-4 font-semibold',
+                Typography.NAV_TEXT,
                 pathname === '/student' ? 'text-black' : 'text-gray-700'
               )}>
               홈
@@ -147,7 +148,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             )}
             <span
               className={cn(
-                'text-4 font-semibold',
+                Typography.NAV_TEXT,
                 pathname === '/student/schedule' ? 'text-black' : 'text-gray-700'
               )}>
               수업예약
@@ -165,7 +166,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             )}
             <span
               className={cn(
-                'text-4 font-semibold',
+                Typography.NAV_TEXT,
                 pathname === '/student/community' ? 'text-black' : 'text-gray-700'
               )}>
               커뮤니티
@@ -183,7 +184,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
             )}
             <span
               className={cn(
-                'text-4 font-semibold',
+                Typography.NAV_TEXT,
                 pathname === '/student/mypage' ? 'text-black' : 'text-gray-700'
               )}>
               마이

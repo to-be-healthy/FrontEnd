@@ -16,3 +16,4 @@ export const BODY_3 = 'text-[13px]/[150%] font-normal' as string;
 export const BODY_4 = 'text-[12px]/[150%] font-normal' as string;
 export const BODY_4_REGULAR = 'text-[12px]/[150%] font-normal' as string;
 export const BODY_4_MEDIUM = 'text-[12px]/[150%] font-medium' as string;
+export const NAV_TEXT = 'text-gray-700 text-center text-[10px] font-medium';
