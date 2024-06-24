@@ -400,7 +400,7 @@ export const StudentHomePage = () => {
                       {data.lessonHistory.trainerProfile ? (
                         <div className='h-9 w-9 overflow-hidden rounded-full border border-gray-100'>
                           <Image
-                            src={data.lessonHistory.trainerProfile}
+                            src={`${data.lessonHistory.trainerProfile}?w=100&h=100&q=90`}
                             width={28}
                             height={28}
                             alt='trainer profile'

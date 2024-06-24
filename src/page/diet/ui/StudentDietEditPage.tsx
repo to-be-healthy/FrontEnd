@@ -152,7 +152,7 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
                   Typography.TITLE_1_SEMIBOLD,
                   'mt-0 h-[48px] rounded-md bg-primary-50  text-primary-500'
                 )}>
-                <Link href={`/student/diet?month=${month}`}>확인</Link>
+                <Link href={`/student/diet/${dietId}?month=${month}`}>확인</Link>
               </AlertDialogAction>
               <AlertDialogCancel
                 className={cn(

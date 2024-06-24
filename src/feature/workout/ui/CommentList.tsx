@@ -85,7 +85,7 @@ const CommentLi = ({ comment, depth, className, ...props }: CommentLiProps) => {
           <div className={cn('flex space-x-2 px-6 py-4', depth !== 0 && 'ml-[47px]')}>
             {comment.member.fileUrl ? (
               <Image
-                src={comment.member.fileUrl}
+                src={`${comment.member.fileUrl}?w=300&q=90`}
                 width={80}
                 height={80}
                 alt='staged image'

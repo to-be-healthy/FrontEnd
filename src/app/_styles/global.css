@@ -87,18 +87,12 @@
     @apply border-border;
   }
 
-  html {
-    position: fixed;
-    top: 0;
-  }
-
   body {
     @apply bg-background text-foreground;
 
     position: fixed;
     top: 0;
     width: 100%;
-    height: 100dvh;
   }
 }
 

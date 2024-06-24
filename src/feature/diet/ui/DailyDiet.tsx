@@ -32,7 +32,7 @@ interface SelectImageProps {
 }
 
 const ImageUpload = ({ type, setIsSheetOpen }: SelectImageProps) => {
-  const { uploadFiles } = useDietContext();
+  const { uploadImageDiet } = useDietContext();
   return (
     <label htmlFor={`new-${type}-album-input`} className='cursor-pointer'>
       <Input
@@ -40,7 +40,7 @@ const ImageUpload = ({ type, setIsSheetOpen }: SelectImageProps) => {
         type='file'
         className='hidden'
         onChange={(e) => {
-          uploadFiles(e, type);
+          uploadImageDiet(e, type);
           setIsSheetOpen(false);
         }}
       />
@@ -127,7 +127,7 @@ export const DailyDiet = ({ diet }: DailyDietProps) => {
   const { uploadStates } = useDietContext();
 
   return (
-    <div className='flex w-[calc((100%-12px)/3)] flex-col items-center justify-center'>
+    <div className='flex w-[calc((100%-12px)/3)] flex-col items-center justify-between'>
       <div className='mb-1 w-full'>
         {/* 단식일때 */}
         {diet.fast && (

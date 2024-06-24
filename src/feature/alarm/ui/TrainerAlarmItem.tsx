@@ -60,7 +60,7 @@ export const TrainerAlarmItem = ({ data, sender }: AlarmItemProps) => {
           )}
           onClick={handleCheckAlarm}>
           <Image
-            src={sender ? sender?.profileUrl : ''}
+            src={sender ? `${sender?.profileUrl}?w=300&h=300&q=90` : ''}
             width={37}
             height={37}
             alt='alarm profile'

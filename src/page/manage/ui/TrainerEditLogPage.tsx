@@ -182,7 +182,7 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
           {images.map((image, index) => (
             <div key={index} className='relative'>
               <Image
-                src={image.fileUrl}
+                src={`${image.fileUrl}?w=400&q=90`}
                 alt={'staged image'}
                 width={300}
                 height={300}

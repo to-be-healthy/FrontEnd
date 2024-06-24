@@ -21,7 +21,7 @@ export const TrainerMyPage = () => {
             <div className='flex'>
               {data?.profile ? (
                 <Image
-                  src={data.profile.fileUrl}
+                  src={`${data.profile.fileUrl}?w=300&h=300&=q=90`}
                   alt='profile'
                   width={80}
                   height={80}

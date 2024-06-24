@@ -29,7 +29,7 @@ const CommunityPost = ({ workout }: { workout: Workout }) => {
         className={cn(Typography.TITLE_3, 'mb-6 flex flex-row items-center gap-3')}>
         {member.profile ? (
           <Image
-            src={member.profile.fileUrl}
+            src={`${member.profile.fileUrl}?w=800&q=90`}
             alt='profile'
             width={32}
             height={32}

@@ -61,7 +61,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                 <Image
                   width={80}
                   height={80}
-                  src={memberInfo.fileUrl}
+                  src={`${memberInfo.fileUrl}?w=300&h=300&q=90`}
                   alt='profile'
                   className={cn(
                     'h-[80px] w-[80px] rounded-full border border-gray-300 object-cover',
@@ -259,14 +259,20 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                                   Typography.HEADING_2,
                                   'mb-7 flex items-center text-black'
                                 )}>
-                                {memberInfo?.rank.ranking}
-                                <span
-                                  className={cn(
-                                    Typography.HEADING_5,
-                                    'ml-[2px] mr-1 text-gray-700'
-                                  )}>
-                                  위
-                                </span>
+                                {memberInfo?.rank.ranking === 999 ? (
+                                  '-'
+                                ) : (
+                                  <>
+                                    <span>{memberInfo?.rank.ranking}</span>
+                                    <span
+                                      className={cn(
+                                        Typography.HEADING_5,
+                                        'ml-[2px] mr-1 text-gray-700'
+                                      )}>
+                                      위
+                                    </span>
+                                  </>
+                                )}
                                 {memberInfo?.rank?.ranking ===
                                 memberInfo?.rank?.lastMonthRanking ? (
                                   ''

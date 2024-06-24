@@ -97,13 +97,11 @@ const TrainerLogPage = ({ memberId }: Props) => {
           <div className='hide-scrollbar mt-1 flex h-full flex-1 flex-grow flex-col overflow-y-auto px-7 pb-7'>
             <div className='mb-7 flex w-full flex-col gap-y-6 pb-6'>
               {contents.map((log) => {
-                const date = dayjs(log.createdAt);
-                const formattedDate = date.format('M월 D일 (ddd)');
                 return (
                   <Link key={log.id} href={`${pathname}/${log.id}`}>
                     <Card className='w-full gap-0 px-6 py-7'>
                       <CardHeader className={cn(Typography.TITLE_3)}>
-                        {formattedDate}
+                        {log.lessonDt}
                         {` `}
                         {log.lessonTime}
                       </CardHeader>

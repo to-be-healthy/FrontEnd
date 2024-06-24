@@ -34,9 +34,6 @@ const TrainerLogDetailPage = ({ memberId, logId }: Props) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const value = useLogTrainerComment({ memberId, logId, ref: inputRef });
 
-  const date = dayjs(data?.createdAt);
-  const formattedDate = date.format('M월 D일 (ddd)');
-
   return (
     <LogTrainerCommentContext.Provider value={value}>
       <Layout>
@@ -46,7 +43,7 @@ const TrainerLogDetailPage = ({ memberId, logId }: Props) => {
             <Layout.Contents className='hide-scrollbar px-7 py-6'>
               <Card className='w-full gap-0 px-0 pb-0 pt-7'>
                 <CardHeader className={cn(Typography.TITLE_3, 'px-6')}>
-                  {formattedDate}
+                  {data.lessonDt}
                   {` `}
                   {data.lessonTime}
                 </CardHeader>

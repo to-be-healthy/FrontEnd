@@ -32,7 +32,7 @@ export const StudentMyPage = () => {
                 {data?.profile ? (
                   <div className='h-[80px] w-[80px] overflow-hidden rounded-full'>
                     <Image
-                      src={data?.profile.fileUrl}
+                      src={`${data?.profile.fileUrl}?w=300&h=300&q=90`}
                       width={80}
                       height={80}
                       alt='profile'

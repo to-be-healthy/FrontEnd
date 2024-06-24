@@ -199,13 +199,15 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
         <div className='flex-col space-y-3'>
           <div className='flex items-center justify-between'>
             <h3 className={cn(Typography.TITLE_3)}>작성할 수업</h3>
-            <Button
-              variant='ghost'
-              size='auto'
-              className='text-gray-500'
-              onClick={() => setSelectLessonMode(true)}>
-              변경하기
-            </Button>
+            {selectedLesson !== null && (
+              <Button
+                variant='ghost'
+                size='auto'
+                className='text-gray-500'
+                onClick={() => setSelectLessonMode(true)}>
+                변경하기
+              </Button>
+            )}
           </div>
           <div className='h-[85px] flex-col space-y-4 rounded-lg border border-gray-200 p-6'>
             {selectedLesson === null && (
@@ -270,7 +272,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
           {images.map((image, index) => (
             <div key={index} className='relative'>
               <Image
-                src={image.fileUrl}
+                src={`${image.fileUrl}?w=400&q=90`}
                 width={300}
                 height={300}
                 alt={'staged image'}

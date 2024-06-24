@@ -1,7 +1,11 @@
 import { ChangeEvent, createContext, useContext, useState } from 'react';
 
-import { DietWithFasting, MealType, useDietUploadImageMutation } from '@/entity/diet';
-import { ImageType } from '@/entity/image';
+import { DietWithFasting, MealType } from '@/entity/diet';
+import {
+  ImageType,
+  useCreateS3PresignedUrlMutation,
+  useS3UploadImagesMutation,
+} from '@/entity/image';
 import { useShowErrorToast } from '@/shared/hooks';
 
 import { DietImageType } from '../model/types';
@@ -30,9 +34,8 @@ const useDiet = () => {
     dinner: false,
   });
   const { showErrorToast } = useShowErrorToast();
-
-  const { mutate: uploadImageMutate, isPending: isUploadImagePending } =
-    useDietUploadImageMutation();
+  const { mutate: imageMutate } = useCreateS3PresignedUrlMutation();
+  const { mutate: s3UploadMutate } = useS3UploadImagesMutation();
 
   const setSortedImages = (images: DietImageType[]) => {
     const sortedImages = images.sort(
@@ -41,38 +44,49 @@ const useDiet = () => {
     setImages(sortedImages);
   };
 
-  //파일등록
-  const uploadFiles = (e: ChangeEvent<HTMLInputElement>, type: MealType) => {
-    const uploadFiles = e.target.files;
+  //s3 이미지 업로드
+  const uploadImageDiet = (e: ChangeEvent<HTMLInputElement>, type: MealType) => {
+    const uploadFiles = e.currentTarget.files;
     if (!uploadFiles) return;
 
     setUploadStates((prev) => ({ ...prev, [type]: true }));
 
-    uploadImageMutate(
-      {
-        uploadFiles,
+    const fileListArray = Array.from(uploadFiles);
+    const fileNamesArray = fileListArray.map((file) => file.name);
+    imageMutate(fileNamesArray, {
+      onSuccess: ({ data }) => {
+        const image: ImageType[] = [
+          {
+            fileUrl: data[0].fileUrl.split('?')[0],
+            fileOrder: data[0].fileOrder,
+          },
+        ];
+        s3UploadMutate(
+          { url: data[0].fileUrl, file: uploadFiles[0] },
+          {
+            onSuccess: () => {
+              const imagesWithType = image.map((image: ImageType) => ({
+                ...image,
+                type,
+                fast: false,
+              }));
+
+              setImages((prev) => {
+                const filteredImages = prev.filter((image) => image.type !== type);
+
+                const newImages = [...filteredImages, ...imagesWithType];
+                setSortedImages(newImages);
+                return newImages;
+              });
+              setUploadStates((prev) => ({ ...prev, [type]: false }));
+            },
+          }
+        );
       },
-      {
-        onSuccess: (data) => {
-          const imagesWithType = data.data.map((image: ImageType) => ({
-            ...image,
-            type,
-            fast: false,
-          }));
-          setImages((prev) => {
-            const filteredImages = prev.filter((image) => image.type !== type);
-            const newImages = [...filteredImages, ...imagesWithType];
-            setSortedImages(newImages);
-            return newImages;
-          });
-          setUploadStates((prev) => ({ ...prev, [type]: false }));
-        },
-        onError: (error) => {
-          showErrorToast(error?.response?.data.message ?? 'Error uploading files');
-          setUploadStates((prev) => ({ ...prev, [type]: false }));
-        },
-      }
-    );
+      onError: (error) => {
+        showErrorToast(error?.response?.data.message ?? '에러가 발생했습니다');
+      },
+    });
   };
 
   //단식 체크
@@ -170,8 +184,7 @@ const useDiet = () => {
     images,
     uploadStates,
     setImages: setSortedImages,
-    uploadFiles,
-    isUploadImagePending,
+    uploadImageDiet,
     onClickCheckFasting,
     onClickCancelFasting,
     clearImages,

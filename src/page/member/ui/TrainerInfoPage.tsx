@@ -47,7 +47,7 @@ const TrainerInfoPage = () => {
               <div className='mb-6 flex h-[80px] w-[80px] items-center justify-center overflow-hidden rounded-full border border-gray-300'>
                 {data.trainer.profile ? (
                   <Image
-                    src={data?.trainer.profile.fileUrl}
+                    src={`${data?.trainer.profile.fileUrl}?w=300&h=300&q=90`}
                     width={80}
                     height={80}
                     alt='profile'

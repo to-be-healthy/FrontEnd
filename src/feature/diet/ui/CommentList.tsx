@@ -95,7 +95,7 @@ const CommentItem = ({
           <div className={cn('flex space-x-2 py-4', depth !== 0 && 'ml-[47px]')}>
             {commentItem.member.fileUrl ? (
               <Image
-                src={commentItem.member.fileUrl}
+                src={`${commentItem.member.fileUrl}?w=300&h=300&q=90`}
                 width={80}
                 height={80}
                 alt='staged image'
