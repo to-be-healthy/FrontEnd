@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { PropsWithChildren } from 'react';
 
-import { Typography } from '@/shared/mixin';
+import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { SheetTrigger } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
@@ -27,61 +27,61 @@ const Board = ({
     dayjs(startDate).add(i, 'day').toDate()
   );
   return (
-    <div className='relative h-full w-full'>
-      <div
-        className={cn(`absolute left-7 top-0 z-50 h-[48px] w-[21px] border bg-white`)}
-      />
-      <div className='hide-scrollbar relative ml-7 mt-7 flex h-full overflow-auto rounded-sm'>
-        <div className='relative mr-[21px] flex h-full w-fit flex-col'>
-          {/* Day of Week Axis */}
-          <div className='sticky top-0 z-10 ml-7 flex border-l'>
-            {dayOfWeekAxis.map((day) => {
+    <div className='mt-7 flex h-full w-screen max-w-[var(--max-width)] flex-1 overflow-hidden'>
+      <div className='hide-scrollbar relative ml-7 flex-1 overflow-auto'>
+        <div className='w-fit pb-[100px] pr-8'>
+          <div className='sticky top-0 z-20 flex bg-white'>
+            <div className='sticky left-0 z-30 w-[21px] border border-gray-200 bg-white' />
+            {dayOfWeekAxis.map((day, i) => {
               const dayOfWeek = dayjs(day).format('ddd');
-              const isToday = today.toDateString() === day.toDateString();
+              const textColor =
+                today.toDateString() === day.toDateString()
+                  ? 'text-primary-500'
+                  : 'text-gray-700';
               return (
                 <SheetTrigger
-                  key={dayOfWeek}
+                  key={i}
                   className={cn(
                     Typography.BODY_4_MEDIUM,
-                    'flex h-[48px] w-[64px] flex-col items-center justify-center border-b border-r border-t bg-white text-gray-700',
-                    isToday && 'text-blue-300'
+                    FLEX_CENTER,
+                    textColor,
+                    'h-[48px] w-[64px] flex-1 flex-col border border-l-0 border-gray-200'
                   )}
                   onClick={() => openChangeClosedDay(day)}>
                   {dayOfWeek}
-                  <p className={cn(Typography.TITLE_3, isToday && 'text-primary-500')}>
+                  <p className={cn(Typography.TITLE_3, textColor)}>
                     {dayjs(day).format('D')}
                   </p>
                 </SheetTrigger>
               );
             })}
           </div>
-          <div className='flex h-fit'>
-            {/* Timetable */}
-            <div
-              className='relative mb-[80px] border-b bg-gray-100'
-              style={{
-                width: `100%`,
-                height: `${64 * (HOURS_TO - HOURS_FROM) + 1}px`,
-                backgroundImage: 'url(/images/grid-pattern.svg)',
-                backgroundSize: `64px 64px`,
-                backgroundPositionX: '20px',
-              }}>
-              {/* Hour Axis */}
-              <div className='sticky left-0 z-10 flex h-fit w-[21px] select-none flex-col border-t bg-transparent'>
-                {hourAxis.map((hour) => (
-                  <div
-                    key={hour}
-                    className={cn(
-                      Typography.BODY_4_MEDIUM,
-                      'h-[64px] border-x border-b bg-white text-center text-gray-700'
-                    )}>
-                    {hour}
-                  </div>
-                ))}
-              </div>
-              <div className='absolute left-[21px] top-[1px] h-full w-[calc(100%-21px)]'>
-                {children}
-              </div>
+          <div className='relative flex'>
+            <div className='bg-wthie sticky left-0 z-10 w-[21px] text-center'>
+              {hourAxis.map((hour) => (
+                <div
+                  key={hour}
+                  className={cn(
+                    Typography.BODY_4_MEDIUM,
+                    'h-16 border border-t-0 border-gray-200 bg-white text-center text-gray-700'
+                  )}>
+                  {hour}
+                </div>
+              ))}
+            </div>
+            {dayOfWeekAxis.map((day, i) => {
+              return (
+                <div key={i} className='w-[64px] flex-1'>
+                  {hourAxis.map((_, j) => (
+                    <div
+                      key={j}
+                      className='h-16 border-b border-r border-gray-200 bg-gray-100'></div>
+                  ))}
+                </div>
+              );
+            })}
+            <div className='absolute left-[21px] top-0 z-0 h-full w-[calc(64*7px)]'>
+              {children}
             </div>
           </div>
         </div>

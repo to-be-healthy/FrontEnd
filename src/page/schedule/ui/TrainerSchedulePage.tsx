@@ -1,45 +1,18 @@
 'use client';
 
-import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import {
-  useTrainerCreateSchedulesMutation,
-  useWeeklySchedules,
-  WeeklyTimetable,
-} from '@/feature/schedule';
+import { useWeeklySchedules, WeeklyTimetable } from '@/feature/schedule';
 import { IconGear } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, WeekPicker } from '@/widget';
 
 export const TrainerSchedulePage = () => {
-  const { showErrorToast } = useShowErrorToast();
-  const { startDate, changeWeek, weeklySchedules, isPending, refetch } =
+  const { startDate, changeWeek, weeklySchedules, isPending, createWeeklySchedules } =
     useWeeklySchedules();
-
-  const { mutate } = useTrainerCreateSchedulesMutation();
-
-  const createWeeklySchedules = () => {
-    mutate(
-      {
-        lessonStartDt: dayjs(startDate).format('YYYY-MM-DD'),
-        lessonEndDt: dayjs(startDate).add(6, 'days').format('YYYY-MM-DD'),
-      },
-      {
-        onSuccess: async () => {
-          await refetch();
-        },
-        onError: (error) => {
-          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
-        },
-      }
-    );
-  };
 
   return (
     <Layout type='trainer' className='bg-white'>
