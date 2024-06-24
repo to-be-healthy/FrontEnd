@@ -51,6 +51,7 @@ const TrainerInfoPage = () => {
                     width={80}
                     height={80}
                     alt='profile'
+                    className='object-contain'
                   />
                 ) : (
                   <IconAvatar width={80} height={80} />
