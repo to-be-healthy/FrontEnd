@@ -23,7 +23,7 @@ const NoAlarm = () => {
       className={cn(
         Typography.TITLE_1_BOLD,
         FLEX_CENTER,
-        'flex-col py-28 text-gray-700'
+        'flex-col py-[200px] text-gray-700'
       )}>
       <IconAlarmBig />
       <p className={cn(Typography.HEADING_4_BOLD, 'mt-6 text-gray-400')}>

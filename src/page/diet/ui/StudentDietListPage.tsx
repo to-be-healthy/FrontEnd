@@ -106,9 +106,9 @@ export const StudentDietListPage = () => {
       {!isPending && (
         <>
           <Layout.Header className='bg-gray-100'>
-            <Link href='/student'>
+            <button onClick={() => router.back()}>
               <IconArrowLeft stroke='black' />
-            </Link>
+            </button>
             <h2
               className={cn(
                 Typography.HEADING_4_SEMIBOLD,
@@ -181,7 +181,7 @@ export const StudentDietListPage = () => {
                                       {!meal.fast && meal.dietFile?.fileUrl && (
                                         <div className='h-[88px] w-full'>
                                           <img
-                                            src={meal.dietFile.fileUrl}
+                                            src={`${meal.dietFile.fileUrl}?w=400&q=90`}
                                             alt={`${meal.type} image`}
                                             className='custom-image rounded-md'
                                           />

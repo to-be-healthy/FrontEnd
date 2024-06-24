@@ -4,14 +4,14 @@
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import Image from 'next/image';
-import { ChangeEvent, useState } from 'react';
+import { FormEvent, useState } from 'react';
 
+import { DietWithFasting, MealType, useRegisterHomeDietMutation } from '@/entity/diet';
 import {
-  DietWithFasting,
-  MealType,
-  useDietUploadImageMutation,
-  useRegisterHomeDietMutation,
-} from '@/entity/diet';
+  ImageType,
+  useCreateS3PresignedUrlMutation,
+  useS3UploadImagesMutation,
+} from '@/entity/image';
 import {
   IconCameraUpload,
   IconCheck,
@@ -33,17 +33,50 @@ import { cn } from '@/shared/utils';
 
 interface SelectImageProps {
   type: MealType;
-  uploadFiles: (e: ChangeEvent<HTMLInputElement>) => void;
+  registerDiet: (fast: boolean, file?: string) => void;
 }
 
-const ImageUpload = ({ type, uploadFiles }: SelectImageProps) => {
+const ImageUpload = ({ type, registerDiet }: SelectImageProps) => {
+  const { mutate: imageMutate } = useCreateS3PresignedUrlMutation();
+  const { mutate: s3UploadMutate } = useS3UploadImagesMutation();
+  const { showErrorToast } = useShowErrorToast();
+
+  const s3uploadImage = (e: FormEvent<HTMLInputElement>) => {
+    const files = e.currentTarget.files;
+    if (files) {
+      const fileListArray = Array.from(files);
+      const fileNamesArray = fileListArray.map((file) => file.name);
+      imageMutate(fileNamesArray, {
+        onSuccess: ({ data }) => {
+          const image: ImageType[] = [
+            {
+              fileUrl: data[0].fileUrl.split('?')[0],
+              fileOrder: data[0].fileOrder,
+            },
+          ];
+          s3UploadMutate(
+            { url: data[0].fileUrl, file: files[0] },
+            {
+              onSuccess: () => {
+                registerDiet(false, image[0].fileUrl.split('?')[0]);
+              },
+            }
+          );
+        },
+        onError: (error) => {
+          showErrorToast(error?.response?.data.message ?? '에러가 발생했습니다');
+        },
+      });
+    }
+  };
+
   return (
     <label htmlFor={`today-${type}-album-input`} className='cursor-pointer'>
       <Input
         id={`today-${type}-album-input`}
         type='file'
         className='hidden'
-        onChange={uploadFiles}
+        onChange={s3uploadImage}
       />
       <p className='flex items-center justify-start px-7 py-6'>
         <IconCameraUpload width={24} height={24} />
@@ -114,29 +147,10 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
   const queryClient = useQueryClient();
   const { showErrorToast } = useShowErrorToast();
 
-  const { mutate: uploadImageMutate, isPending: isUploadPending } =
-    useDietUploadImageMutation();
   const { mutate: registerDietMutate, isPending: isRegisterPending } =
     useRegisterHomeDietMutation();
 
-  const isAnyLoading = isUploadPending || isRegisterPending || isRefetching;
-
-  const uploadFiles = (e: ChangeEvent<HTMLInputElement>) => {
-    const uploadFiles = e.target.files;
-    if (!uploadFiles) return;
-
-    uploadImageMutate(
-      {
-        uploadFiles,
-      },
-      {
-        onSuccess: (data) => {
-          registerDiet(false, data.data[0].fileUrl);
-        },
-      }
-    );
-    setIsSheetOpen(false);
-  };
+  const isAnyLoading = isRegisterPending || isRefetching;
 
   const registerDiet = (fast: boolean, file?: string) => {
     const params = {
@@ -168,7 +182,6 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
   return (
     <div className='flex w-[calc((100%-12px)/3)] items-center justify-center'>
       {/* 단식일때 */}
-
       {diet.fast && (
         <Sheet open={issheetOpen} onOpenChange={setIsSheetOpen}>
           <SheetTrigger className='flex h-[88px] w-full items-center justify-center rounded-md bg-gray-100 p-0'>
@@ -195,12 +208,12 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
                 Typography.TITLE_1_SEMIBOLD,
                 'py-5 text-black sm:text-center'
               )}>
-              {diet.type && dietText[diet.type]}
+              {type && dietText[type]}
             </SheetHeader>
 
             <ul>
               <li className='h-[56px] border-t border-gray-100'>
-                <ImageUpload type={type} uploadFiles={uploadFiles} />
+                <ImageUpload type={type} registerDiet={registerDiet} />
               </li>
               <li className='h-[56px] border-t border-gray-100'>
                 <CancelFasting registerDiet={registerDiet} />
@@ -220,8 +233,8 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
               </div>
             ) : diet?.dietFile?.fileUrl ? (
               <img
-                src={diet?.dietFile?.fileUrl}
-                alt={`${diet.type} image`}
+                src={`${diet?.dietFile?.fileUrl}?w=400&h=400&q=90`}
+                alt={`${type} image`}
                 className='custom-image rounded-md'
               />
             ) : (
@@ -241,7 +254,7 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
 
             <ul>
               <li className='h-[56px] border-t border-gray-100'>
-                <ImageUpload type={diet.type} uploadFiles={uploadFiles} />
+                <ImageUpload type={diet.type} registerDiet={registerDiet} />
               </li>
               {diet?.dietFile?.fileUrl ? (
                 <>

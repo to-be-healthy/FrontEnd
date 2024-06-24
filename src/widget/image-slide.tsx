@@ -48,7 +48,7 @@ const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
                 )}>
                 <CardContent className={cn(FLEX_CENTER, 'w-full')}>
                   <Image
-                    src={file.fileUrl}
+                    src={`${file.fileUrl}?w=1200?q=99`}
                     alt={'React Rendezvous'}
                     width={300}
                     height={300}
@@ -56,7 +56,7 @@ const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
                       'h-full w-full rounded-lg bg-white object-cover transition-all',
                       enlargeState
                         ? 'aspect-auto h-full w-full rounded-none'
-                        : 'aspect-square object-cover'
+                        : 'aspect-square'
                     )}
                     priority
                   />

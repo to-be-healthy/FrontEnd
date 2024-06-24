@@ -48,7 +48,7 @@ const CommunityDetailPage = ({ workoutHistoryId }: { workoutHistoryId: number })
                   className='flex w-fit items-center gap-3'>
                   {data.member.profile ? (
                     <Image
-                      src={data.member.profile.fileUrl}
+                      src={`${data.member.profile.fileUrl}?w=300&h=300&q=90`}
                       alt='profile'
                       width={32}
                       height={32}

@@ -184,7 +184,7 @@ export const TrainerStudentDietListPage = ({ memberId }: Props) => {
                                   {!meal.fast && meal.dietFile?.fileUrl && (
                                     <div className='h-[88px] w-full'>
                                       <img
-                                        src={meal.dietFile.fileUrl}
+                                        src={`${meal.dietFile.fileUrl}?w=400&q=90`}
                                         alt={`${meal.type} image`}
                                         className='custom-image rounded-md'
                                       />

@@ -119,7 +119,7 @@ const StudentCommentInput = () => {
           {images.map((image, index) => (
             <div key={index} className='flex items-start space-x-[4px] overflow-hidden'>
               <Image
-                src={image.fileUrl}
+                src={`${image.fileUrl}?w=300&h=300&q=90`}
                 width={80}
                 height={80}
                 alt='staged image'

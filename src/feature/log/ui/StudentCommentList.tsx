@@ -86,7 +86,7 @@ const CommentItem = ({
           <div className={cn('flex space-x-2 px-6 py-4', depth !== 0 && 'ml-[47px]')}>
             {comment.member.fileUrl ? (
               <Image
-                src={comment.member.fileUrl}
+                src={`${comment.member.fileUrl}?w=300&h=300&q=90`}
                 width={80}
                 height={80}
                 alt='staged image'
@@ -107,7 +107,7 @@ const CommentItem = ({
                     {comment.files.map((file, index) => (
                       <div key={index} className='overflow-hidden'>
                         <Image
-                          src={file.fileUrl}
+                          src={`${file.fileUrl}?w=300&h=300&q=90`}
                           width={90}
                           height={90}
                           alt='staged image'

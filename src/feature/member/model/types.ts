@@ -14,7 +14,7 @@ interface RegisteredStudent {
   ranking: number;
   lessonCnt: number;
   remainLessonCnt: number;
-  fileUrl: null;
+  fileUrl: string | null;
 }
 
 interface InviteForm {

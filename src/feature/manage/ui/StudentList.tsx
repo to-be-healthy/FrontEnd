@@ -184,7 +184,7 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
                             <Image
                               width={32}
                               height={32}
-                              src={item.fileUrl}
+                              src={`${item.fileUrl}?w=300&h=300&q=90`}
                               alt='profile'
                               className={cn(
                                 'h-10 w-10 rounded-full border border-gray-300 object-contain',

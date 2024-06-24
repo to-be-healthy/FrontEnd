@@ -1,6 +1,5 @@
 'use client';
 
-import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
@@ -29,9 +28,6 @@ const StudentLogDetailPage = ({ logId }: Props) => {
 
   const value = useLogStudentComment({ logId, ref: inputRef });
 
-  const date = dayjs(data?.createdAt);
-  const formattedDate = date.format('M월 D일 (ddd)');
-
   return (
     <Layout>
       <Layout.Header>
@@ -47,7 +43,7 @@ const StudentLogDetailPage = ({ logId }: Props) => {
             </div>
             <Card className='w-full px-0 pb-0'>
               <CardHeader className={cn(Typography.TITLE_3, 'px-6')}>
-                {formattedDate}
+                {data?.lessonDt}
                 {` `}
                 {data.lessonTime}
               </CardHeader>

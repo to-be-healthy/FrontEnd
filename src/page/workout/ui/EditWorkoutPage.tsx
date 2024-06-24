@@ -159,7 +159,7 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
           {images.map((image, index) => (
             <div key={index} className='relative'>
               <Image
-                src={image.fileUrl}
+                src={`${image.fileUrl}?w=800&q=90`}
                 width={300}
                 height={300}
                 alt='staged image'

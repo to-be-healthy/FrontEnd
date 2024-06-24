@@ -108,7 +108,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
     cancelLikeMutate(dietId, {
       onSuccess: async () => {
         await queryClient.refetchQueries({
-          queryKey: ['studentDietDetail'],
+          queryKey: ['studentDietDetail', dietId],
         });
       },
       onError: (error) => {
@@ -247,7 +247,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                                       variant='ghost'
                                       className='h-[88px] w-full p-0'>
                                       <img
-                                        src={meal.dietFile.fileUrl}
+                                        src={`${meal.dietFile.fileUrl}?w=400&q=90`}
                                         alt={meal.type}
                                         className='custom-image rounded-md'
                                       />
@@ -261,7 +261,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                                     </div>
                                     <div className='flex h-[calc(100%-56px)] w-full items-center justify-center'>
                                       <img
-                                        src={meal.dietFile.fileUrl}
+                                        src={`${meal.dietFile.fileUrl}?w=1200&q=90`}
                                         alt={meal.type}
                                         className='max-w-screen h-full object-contain'
                                       />

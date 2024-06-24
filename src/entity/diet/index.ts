@@ -6,7 +6,6 @@ export { useDietCommentListQuery } from './api/useDietCommentListQuery';
 export { useDietLikeMutation } from './api/useDietLikeMutation';
 export { useDietListQuery } from './api/useDietListQuery';
 export { useDietShowNoticeMutation } from './api/useDietShowNoticeMutation';
-export { useDietUploadImageMutation } from './api/useDietUploadImageMutation';
 export { useEditDietCommentMutation } from './api/useEditDietCommentMutation';
 export { useEditDietMutation } from './api/useEditDietMutation';
 export { useRegisterDietMutation } from './api/useRegisterDietMutation';

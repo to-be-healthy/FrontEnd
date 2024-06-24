@@ -1,8 +1,11 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 
-import { ImageType } from '@/entity/image';
-
-import { useUploadImageMutation } from '../api/useUploadImageMutation';
+import {
+  ImageType,
+  useCreateS3PresignedUrlMutation,
+  useS3UploadImagesMutation,
+} from '@/entity/image';
+import { useShowErrorToast } from '@/shared/hooks';
 
 const MAX_IMAGES_COUNT = 3;
 
@@ -13,7 +16,9 @@ interface Options {
 const useImages = ({ maxCount = MAX_IMAGES_COUNT }: Options = {}) => {
   const [images, setImages] = useState<ImageType[]>([]);
 
-  const { mutate } = useUploadImageMutation();
+  const { mutate: imageMutate } = useCreateS3PresignedUrlMutation();
+  const { mutate: s3UploadMutate } = useS3UploadImagesMutation();
+  const { showErrorToast } = useShowErrorToast();
 
   const updateImages = (images: ImageType[]) => {
     setImages(images);
@@ -27,17 +32,31 @@ const useImages = ({ maxCount = MAX_IMAGES_COUNT }: Options = {}) => {
       return;
     }
 
-    mutate(
-      {
-        uploadFiles,
+    const fileListArray = Array.from(uploadFiles);
+    const fileNamesArray = fileListArray.map((file) => file.name);
+    imageMutate(fileNamesArray, {
+      onSuccess: ({ data }) => {
+        const res = data.map((file) => ({
+          fileOrder: file.fileOrder,
+          fileUrl: file.fileUrl.split('?')[0],
+        }));
+        e.target.value = '';
+
+        data.map((file, index) => {
+          s3UploadMutate(
+            { url: file.fileUrl, file: fileListArray[index] },
+            {
+              onSuccess: () => {
+                setImages((prev) => [...prev, ...res]);
+              },
+            }
+          );
+        });
       },
-      {
-        onSuccess: (data) => {
-          setImages((prev) => [...prev, ...data.data]);
-          e.target.value = '';
-        },
-      }
-    );
+      onError: (error) => {
+        showErrorToast(error?.response?.data.message ?? '에러가 발생했습니다');
+      },
+    });
   };
 
   const clearImages = useCallback(() => {

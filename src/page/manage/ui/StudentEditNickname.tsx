@@ -156,7 +156,7 @@ const StudentEditNickname = ({ memberId }: Props) => {
             <Image
               width={80}
               height={80}
-              src={memberInfo.fileUrl}
+              src={`${memberInfo.fileUrl}?w=300&h=300&q=90`}
               alt='profile'
               className={cn(
                 'h-[80px] w-[80px] rounded-full border border-gray-300 object-cover'
