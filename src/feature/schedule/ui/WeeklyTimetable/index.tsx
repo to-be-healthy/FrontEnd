@@ -73,6 +73,7 @@ const WeeklyTimetable = ({
       onOpenChange={(open) => {
         if (!open && dailyBottomSheet) {
           setDailyBottomSheet(null);
+          return;
         }
         if (open && dailyBottomSheet) {
           changeSelectedSchedule(null);
@@ -80,10 +81,22 @@ const WeeklyTimetable = ({
       }}>
       <Board startDate={startDate} openChangeClosedDay={openChangeClosedDay}>
         {flatSchedules.map((schedule) => {
+          const isBefore = dayjs(schedule.date + ' ' + schedule.lessonStartTime).isBefore(
+            dayjs()
+          );
           return (
             <SheetTrigger
               key={schedule.scheduleId}
-              onPointerDown={() => changeSelectedSchedule(schedule)}>
+              onPointerDown={() => {
+                if (
+                  isBefore &&
+                  (schedule.reservationStatus === 'AVAILABLE' ||
+                    schedule.reservationStatus === 'DISABLED')
+                ) {
+                  showErrorToast('시간이 지난 스케줄입니다.');
+                }
+                changeSelectedSchedule(schedule);
+              }}>
               <Cell schedule={schedule} />
             </SheetTrigger>
           );
