@@ -67,7 +67,7 @@ const FindPasswordPage = () => {
                   </label>
                   <div
                     className={cn(
-                      'rounded-md border border-gray-200 px-6 py-[13px]',
+                      'flex rounded-md border border-gray-200 px-6 py-[13px]',
                       errors.name && 'border-point'
                     )}>
                     <Input
@@ -101,7 +101,7 @@ const FindPasswordPage = () => {
                   </label>
                   <div
                     className={cn(
-                      'rounded-md border border-gray-200 px-6 py-[13px]',
+                      'flex rounded-md border border-gray-200 px-6 py-[13px]',
                       errors.email && 'border-point'
                     )}>
                     <Input
