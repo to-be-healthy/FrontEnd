@@ -30,7 +30,7 @@ const InputOTPGroup = forwardRef<ElementRef<'div'>, ComponentPropsWithoutRef<'di
   ({ className, ...props }, ref) => (
     <div
       ref={ref}
-      className={cn('flex w-[300px] items-center justify-between', className)}
+      className={cn('flex w-[320px] items-center justify-between', className)}
       {...props}
     />
   )
@@ -44,11 +44,17 @@ const InputOTPSlot = forwardRef<
   const inputOTPContext = useContext(OTPInputContext);
   const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index];
 
+  React.useEffect(() => {
+    if (index === 0 && ref && 'current' in ref && ref.current) {
+      (ref.current as HTMLElement).focus();
+    }
+  }, [index, ref]);
+
   return (
     <div
       ref={ref}
       className={cn(
-        'rounded-2 relative flex h-10 w-10 items-center justify-center border-input text-sm transition-all',
+        'rounded-2 relative flex h-[44px] w-[44px] items-center justify-center border-input text-sm transition-all',
         isActive && 'z-10 ring-2 ring-primary-500 ring-offset-primary-500',
         className
       )}

@@ -46,4 +46,5 @@ export type {
 } from './model/types';
 export { AddStudentDialog } from './ui/AddStudentDialog';
 export { CourseCard, CourseCardContent, CourseCardHeader } from './ui/CourseCard';
+export { GymVerificationCode } from './ui/GymVerificationCode';
 export { SelectGym } from './ui/SelectGym';

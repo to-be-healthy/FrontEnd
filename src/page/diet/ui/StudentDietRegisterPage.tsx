@@ -10,7 +10,7 @@ dayjs.extend(isBetween);
 
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { DateFormatter, DayProps } from 'react-day-picker';
 
@@ -57,6 +57,7 @@ export const StudentDietRegisterPage = () => {
 
   const today = new Date();
   const queryClient = useQueryClient();
+  const router = useRouter();
   const { toast } = useToast();
   const { images, initialImages } = useDietContext();
 
@@ -84,7 +85,6 @@ export const StudentDietRegisterPage = () => {
   const { mutate: registerMutate, isPending: isRegisterPending } =
     useRegisterDietMutation();
 
-  const month = dayjs(today).format('YYYY-MM');
   const monthRightButtonDiabled = dayjs(currentMonth).isSame(dayjs(today), 'month');
   const weekRightButtonDiabled = dayjs(currentWeek.end).isAfter(dayjs(today), 'day');
 
@@ -271,9 +271,9 @@ export const StudentDietRegisterPage = () => {
   return (
     <Layout>
       <Layout.Header className='bg-white'>
-        <Link href={`/student/diet?month=${month}`}>
-          <IconClose />
-        </Link>
+        <button onClick={() => router.back()}>
+          <IconArrowLeft stroke='black' />
+        </button>
         <h2
           className={cn(
             Typography.HEADING_4_SEMIBOLD,

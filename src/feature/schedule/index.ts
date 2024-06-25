@@ -25,6 +25,7 @@ export type {
   TodaySchedule,
   TrainerSchedule,
 } from './model/type';
+export { ClassTimeSetting } from './ui/ClassTimeSetting';
 export { ReservationBottomSheet } from './ui/ReservationBottomSheet';
 export { StudentMyReservationSchedule } from './ui/StudentMyReservationSchedule';
 export { StudentMyWaitingSchedule } from './ui/StudentMyWaitingSchedule';

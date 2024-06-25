@@ -1,11 +1,7 @@
 import { SelectGymPage } from '@/page/member';
 
 const SelectGym = () => {
-  return (
-    <div>
-      <SelectGymPage />
-    </div>
-  );
+  return <SelectGymPage />;
 };
 
 export default SelectGym;

@@ -1,0 +1,32 @@
+/* 테일윈드로 변경 */
+.timeSwiper {
+  width: calc(100% / 3);
+  height: 108px;
+}
+
+.timeSwiper .swiper-slide {
+  height: 36px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 22px;
+  color: #cbcfd3;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+.timeSwiper .swiper-slide-active {
+  color: #000;
+  font-size: 22px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 150%;
+}
+
+.timeSwiper .swiper-slide-prev {
+  color: #cbcfd3;
+}
+
+.timeSwiper .swiper-slide-next {
+  color: #cbcfd3;
+}

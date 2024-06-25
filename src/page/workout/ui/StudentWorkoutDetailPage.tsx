@@ -2,7 +2,6 @@
 
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
@@ -17,7 +16,7 @@ import {
   WorkoutCommentsWrapper,
 } from '@/feature/workout';
 import {
-  IconBack,
+  IconArrowLeft,
   IconDotsVertical,
   IconEdit,
   IconGroup,
@@ -80,9 +79,9 @@ const StudentWorkoutDetailPage = ({ workoutHistoryId }: Props) => {
     <WorkoutCommentContext.Provider value={value}>
       <Layout>
         <Layout.Header>
-          <Link href={`/student/workout`}>
-            <IconBack />
-          </Link>
+          <button onClick={() => router.back()}>
+            <IconArrowLeft stroke='black' />
+          </button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant='ghost' className={Typography.TITLE_1_SEMIBOLD}>
