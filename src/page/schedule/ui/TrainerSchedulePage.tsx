@@ -44,6 +44,7 @@ export const TrainerSchedulePage = () => {
               )}>{`회원님들은 매주 일요일 자정 이후에\n해당 주 예약이 가능합니다.`}</p>
           </div>
         )}
+        {/* TODO) 스케줄이 없고(null) 지난 주의 경우 - 화면 요청 중 */}
       </Layout.Contents>
     </Layout>
   );

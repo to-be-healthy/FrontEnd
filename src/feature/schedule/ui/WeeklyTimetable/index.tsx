@@ -1,21 +1,15 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { useState } from 'react';
 
-import { IconCalendarRefresh } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { DialogClose, Sheet, SheetContent, SheetTrigger } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-import { useTrainerChangeReservationMutation } from '../../api/useTrainerChangeReservationMutation';
+import { HOURS_FROM, HOURS_TO } from '../../consts';
 import { useWeeklyTimetable } from '../../hook/useWeeklyTimetable';
 import { TrainerSchedule } from '../../model/type';
-import { Board } from './Board';
-import { BottomSheet } from './BottomSheet';
-import { Cell } from './Cell';
+import { DayOfWeekRow } from './DayOfWeekRow';
+import { ScheduleItem } from './ScheduleItem';
 
 const WeeklyTimetable = ({
   schedules,
@@ -24,106 +18,55 @@ const WeeklyTimetable = ({
   schedules: [string, TrainerSchedule[]][];
   startDate: Date;
 }) => {
-  const queryClient = useQueryClient();
-  const { showErrorToast } = useShowErrorToast();
-
-  const { flatSchedules, selectedSchedule, changeSelectedSchedule } = useWeeklyTimetable({
+  const { flatSchedules } = useWeeklyTimetable({
     schedules,
     startDate,
   });
-  const { mutate } = useTrainerChangeReservationMutation();
 
-  const [dailyBottomSheet, setDailyBottomSheet] = useState<string | null>(null);
-
-  const openChangeClosedDay = (date: Date) => {
-    setDailyBottomSheet(dayjs(date).format('YYYY-MM-DD'));
-  };
-
-  const handleChangeClosedDay = () => {
-    const scheduleIds = flatSchedules
-      .filter(
-        (item) =>
-          item.date === dayjs(dailyBottomSheet).format('YYYY-MM-DD') &&
-          item.reservationStatus !== 'DISABLED'
-      )
-      .map((item) => item.scheduleId);
-
-    if (scheduleIds.length === 0) {
-      return;
-    }
-
-    mutate(
-      { status: 'DISABLED', scheduleIds },
-      {
-        onSuccess: async () => {
-          await queryClient.refetchQueries({
-            queryKey: ['schedule'].filter(Boolean),
-          });
-        },
-        onError: (error) => {
-          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
-        },
-      }
-    );
-  };
+  const hourAxis = Array.from(
+    { length: HOURS_TO - HOURS_FROM },
+    (_, i) => i + HOURS_FROM
+  );
+  const dayOfWeekAxis = Array.from({ length: 7 }, (_, i) =>
+    dayjs(startDate).add(i, 'day').toDate()
+  );
 
   return (
-    <Sheet
-      onOpenChange={(open) => {
-        if (!open && dailyBottomSheet) {
-          setDailyBottomSheet(null);
-          return;
-        }
-        if (open && dailyBottomSheet) {
-          changeSelectedSchedule(null);
-        }
-      }}>
-      <Board startDate={startDate} openChangeClosedDay={openChangeClosedDay}>
-        {flatSchedules.map((schedule) => {
-          const isBefore = dayjs(schedule.date + ' ' + schedule.lessonStartTime).isBefore(
-            dayjs()
-          );
-          return (
-            <SheetTrigger
-              key={schedule.scheduleId}
-              onPointerDown={() => {
-                if (
-                  isBefore &&
-                  (schedule.reservationStatus === 'AVAILABLE' ||
-                    schedule.reservationStatus === 'DISABLED')
-                ) {
-                  showErrorToast('시간이 지난 스케줄입니다.');
-                }
-                changeSelectedSchedule(schedule);
-              }}>
-              <Cell schedule={schedule} />
-            </SheetTrigger>
-          );
-        })}
-        {selectedSchedule && <BottomSheet schedule={selectedSchedule} />}
-        {dailyBottomSheet && (
-          <SheetContent side='bottom'>
-            <div className='flex w-full flex-col'>
-              <h3 className={cn(Typography.HEADING_3)}>
-                {dayjs(dailyBottomSheet).format('M.DD(ddd)')}
-              </h3>
-              <div className={cn('mt-7 flex w-full justify-center gap-6')}>
-                <DialogClose
+    <div className='mt-7 flex h-full w-screen max-w-[var(--max-width)] flex-1 overflow-hidden'>
+      <div className='hide-scrollbar relative ml-7 flex-1 overflow-auto'>
+        <div className='w-fit pb-[100px] pr-8'>
+          <DayOfWeekRow startDate={startDate} flatSchedules={flatSchedules} />
+          <div className='relative flex'>
+            <div className='bg-wthie sticky left-0 z-10 w-[21px] text-center'>
+              {hourAxis.map((hour) => (
+                <div
+                  key={hour}
                   className={cn(
-                    Typography.TITLE_1_SEMIBOLD,
-                    'flex h-[120px] w-[120px] flex-col items-center justify-center gap-5 rounded-lg border border-gray-200'
-                  )}
-                  onClick={handleChangeClosedDay}>
-                  <IconCalendarRefresh />
-                  휴무일로 변경
-                </DialogClose>
-              </div>
+                    Typography.BODY_4_MEDIUM,
+                    'h-16 border border-t-0 border-gray-200 bg-white text-center text-gray-700'
+                  )}>
+                  {hour}
+                </div>
+              ))}
             </div>
-          </SheetContent>
-        )}
-      </Board>
-    </Sheet>
+            {dayOfWeekAxis.map((_, i) => (
+              <div key={i} className='w-[64px] flex-1'>
+                {hourAxis.map((_, j) => (
+                  <div
+                    key={j}
+                    className='h-16 border-b border-r border-gray-200 bg-gray-100'></div>
+                ))}
+              </div>
+            ))}
+            <div className='absolute left-[21px] top-0 z-0 h-full w-[calc(64*7px)]'>
+              {flatSchedules.map((schedule) => {
+                return <ScheduleItem key={schedule.scheduleId} schedule={schedule} />;
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
