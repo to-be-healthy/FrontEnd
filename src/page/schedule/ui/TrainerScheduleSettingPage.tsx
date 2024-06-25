@@ -6,7 +6,7 @@ import './swiper.css';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
-import { IconBack } from '@/shared/assets';
+import { IconAlert, IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 
 dayjs.extend(customParseFormat);
@@ -51,7 +51,7 @@ const dayOfWeekMap: Record<DayOfWeek, string> = {
   SUNDAY: '일',
 };
 
-const classTime = [30, 60, 90, 120];
+const classTime = [60];
 const timePeriods = ['오전', '오후'];
 const hours = Array.from({ length: 12 }, (_, i) => String(i + 1));
 const minutes = ['00', '30'];
@@ -278,6 +278,7 @@ const TrainerScheduleSettingPage = () => {
         classTimeData.lunchStartTime === null && classTimeData.lunchEndTime === null
       );
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [classTimeData]);
 
   useEffect(() => {
@@ -334,44 +335,51 @@ const TrainerScheduleSettingPage = () => {
                     </Button>
                   </dd>
                 </dl>
-
                 {timeList.map((timeSetting, idx) =>
                   (timeSetting.name === 'lessonStartTime' && timeSetting.state) ||
                   (timeSetting.name === 'lessonEndTime' && timeSetting.state) ? (
-                    <div
-                      className='relative mt-9 flex items-center justify-center'
-                      key={`${timeSetting.name}_${idx}`}>
-                      <TimeSwiper
-                        items={timePeriods}
-                        loop={false}
-                        initialSlide={timePeriods.indexOf(timeSetting.timePeriods)}
-                        onSlideChange={(e) =>
-                          changeSlide(
-                            'timePeriods',
-                            timePeriods[e.realIndex],
-                            timeSetting.name
-                          )
-                        }
-                        className='timeSwiper'
-                      />
-                      <TimeSwiper
-                        items={hours}
-                        initialSlide={hours.indexOf(timeSetting.hours)}
-                        onSlideChange={(e) =>
-                          changeSlide('hours', hours[e.realIndex], timeSetting.name)
-                        }
-                        className='timeSwiper'
-                      />
-                      <TimeSwiper
-                        items={minutes}
-                        loop={false}
-                        initialSlide={minutes.indexOf(timeSetting.minutes)}
-                        onSlideChange={(e) =>
-                          changeSlide('minutes', minutes[e.realIndex], timeSetting.name)
-                        }
-                        className='timeSwiper'
-                      />
-                      <div className='absolute left-4 right-4 top-1/2 h-9 -translate-y-1/2 rounded-lg bg-[#f2f3f5] text-2xl'></div>
+                    <div key={`${timeSetting.name}_${idx}`} className='flex flex-col'>
+                      <div className='relative mt-9 flex items-center justify-center'>
+                        <TimeSwiper
+                          items={timePeriods}
+                          loop={false}
+                          initialSlide={timePeriods.indexOf(timeSetting.timePeriods)}
+                          onSlideChange={(e) =>
+                            changeSlide(
+                              'timePeriods',
+                              timePeriods[e.realIndex],
+                              timeSetting.name
+                            )
+                          }
+                          className='timeSwiper'
+                        />
+                        <TimeSwiper
+                          items={hours}
+                          initialSlide={hours.indexOf(timeSetting.hours)}
+                          onSlideChange={(e) =>
+                            changeSlide('hours', hours[e.realIndex], timeSetting.name)
+                          }
+                          className='timeSwiper'
+                        />
+                        <TimeSwiper
+                          items={minutes}
+                          loop={false}
+                          initialSlide={minutes.indexOf(timeSetting.minutes)}
+                          onSlideChange={(e) =>
+                            changeSlide('minutes', minutes[e.realIndex], timeSetting.name)
+                          }
+                          className='timeSwiper'
+                        />
+                        <div className='absolute left-4 right-4 top-1/2 h-9 -translate-y-1/2 rounded-lg bg-[#f2f3f5] text-2xl'></div>
+                      </div>
+                      <p
+                        className={cn(
+                          Typography.BODY_3,
+                          'mt-7 flex items-center gap-1 px-4 text-gray-500'
+                        )}>
+                        <IconAlert width={12} height={12} />
+                        근무 시간은 오전 6시부터 밤 12시까지 설정이 가능해요.
+                      </p>
                     </div>
                   ) : null
                 )}
@@ -426,40 +434,48 @@ const TrainerScheduleSettingPage = () => {
                 {timeList.map((timeSetting, idx) =>
                   (timeSetting.name === 'lunchStartTime' && timeSetting.state) ||
                   (timeSetting.name === 'lunchEndTime' && timeSetting.state) ? (
-                    <div
-                      className='relative mt-9 flex items-center justify-center'
-                      key={`${timeSetting.name}_${idx}`}>
-                      <TimeSwiper
-                        items={timePeriods}
-                        loop={false}
-                        initialSlide={timePeriods.indexOf(timeSetting.timePeriods)}
-                        onSlideChange={(e) =>
-                          changeSlide(
-                            'timePeriods',
-                            timePeriods[e.realIndex],
-                            timeSetting.name
-                          )
-                        }
-                        className='timeSwiper'
-                      />
-                      <TimeSwiper
-                        items={hours}
-                        initialSlide={hours.indexOf(timeSetting.hours)}
-                        onSlideChange={(e) =>
-                          changeSlide('hours', hours[e.realIndex], timeSetting.name)
-                        }
-                        className='timeSwiper'
-                      />
-                      <TimeSwiper
-                        items={minutes}
-                        loop={false}
-                        initialSlide={minutes.indexOf(timeSetting.minutes)}
-                        onSlideChange={(e) =>
-                          changeSlide('minutes', minutes[e.realIndex], timeSetting.name)
-                        }
-                        className='timeSwiper'
-                      />
-                      <div className='absolute left-4 right-4 top-1/2 h-9 -translate-y-1/2 rounded-lg bg-[#f2f3f5] text-2xl'></div>
+                    <div key={`${timeSetting.name}_${idx}`} className='flex flex-col'>
+                      <div className='relative mt-9 flex items-center justify-center'>
+                        <TimeSwiper
+                          items={timePeriods}
+                          loop={false}
+                          initialSlide={timePeriods.indexOf(timeSetting.timePeriods)}
+                          onSlideChange={(e) =>
+                            changeSlide(
+                              'timePeriods',
+                              timePeriods[e.realIndex],
+                              timeSetting.name
+                            )
+                          }
+                          className='timeSwiper'
+                        />
+                        <TimeSwiper
+                          items={hours}
+                          initialSlide={hours.indexOf(timeSetting.hours)}
+                          onSlideChange={(e) =>
+                            changeSlide('hours', hours[e.realIndex], timeSetting.name)
+                          }
+                          className='timeSwiper'
+                        />
+                        <TimeSwiper
+                          items={minutes}
+                          loop={false}
+                          initialSlide={minutes.indexOf(timeSetting.minutes)}
+                          onSlideChange={(e) =>
+                            changeSlide('minutes', minutes[e.realIndex], timeSetting.name)
+                          }
+                          className='timeSwiper'
+                        />
+                        <div className='absolute left-4 right-4 top-1/2 h-9 -translate-y-1/2 rounded-lg bg-[#f2f3f5] text-2xl'></div>
+                      </div>
+                      <p
+                        className={cn(
+                          Typography.BODY_3,
+                          'mt-7 flex items-center gap-1 px-4 text-gray-500'
+                        )}>
+                        <IconAlert width={12} height={12} />
+                        근무 시간 내에서 설정할 수 있어요.
+                      </p>
                     </div>
                   ) : null
                 )}
