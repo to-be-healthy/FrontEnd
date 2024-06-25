@@ -23,7 +23,9 @@ import { cn } from '@/shared/utils';
 const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
   const pathname = usePathname();
   return (
-    <nav className={cn('bg-white', className)} {...props}>
+    <nav
+      className={cn('rounded-tl-md rounded-tr-md bg-white shadow-nav', className)}
+      {...props}>
       <ul className='flex items-center justify-between px-11 py-[18px]'>
         <li>
           <Link
@@ -119,7 +121,9 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
   };
 
   return (
-    <nav className={cn('bg-white', className)} {...props}>
+    <nav
+      className={cn('rounded-tl-md rounded-tr-md bg-white shadow-nav', className)}
+      {...props}>
       <ul className='flex items-center justify-between px-11 py-[18px]'>
         <li>
           <Link

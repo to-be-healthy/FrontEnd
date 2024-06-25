@@ -32,16 +32,16 @@ export const AddStudentDialog = ({ children }: { children?: React.ReactNode }) =
           <h1 className={cn(Typography.HEADING_4)}>회원추가</h1>
           <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
         </Layout.Header>
-        <Layout.Contents className='flex flex-row items-center justify-evenly py-6'>
+        <Layout.Contents className='flex w-full flex-row items-center justify-evenly py-6'>
           <Link
             href={'/trainer/manage/invite'}
-            className='flex flex-col items-center justify-center gap-y-2'>
+            className='flex w-full flex-col items-center justify-center gap-y-2'>
             <IconMail />
             <p className={cn(Typography.HEADING_5)}>회원 초대하기</p>
           </Link>
           <Link
             href={'/trainer/manage/append'}
-            className='flex flex-col items-center justify-center gap-y-2'>
+            className='flex w-full flex-col items-center justify-center gap-y-2'>
             <IconPeopleAdd />
             <p className={cn(Typography.HEADING_5)}>가입된 회원 추가</p>
           </Link>

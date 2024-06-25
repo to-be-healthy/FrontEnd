@@ -1,9 +1,0 @@
-<!-- public/grid-pattern.svg -->
-<svg width="10" height="10" xmlns="http://www.w3.org/2000/svg">
-  <defs>
-    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
-      <rect width="64" height="64" fill="none" stroke="#E2E4E8" stroke-width="0.3" />
-    </pattern>
-  </defs>
-  <rect width="100%" height="100%" fill="url(#grid)" />
-</svg>

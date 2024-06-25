@@ -3,12 +3,14 @@
 import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { ChangeEvent } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { AppendMemberForm } from '@/feature/member';
 import { useAppendMemberMutation } from '@/feature/member/api/useAppendMemberMutation';
 import { IconCheck, IconError } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
+import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { Button, Input } from '@/shared/ui';
 import { toast } from '@/shared/ui/toast/use-toast';
@@ -17,6 +19,7 @@ import { Layout } from '@/widget';
 
 export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => {
   const router = useRouter();
+  const { showErrorToast } = useShowErrorToast();
   const searchParams = useSearchParams();
   const name = searchParams?.get('name');
   if (!name || !memberId) {
@@ -56,16 +59,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          toast({
-            className: 'h-12',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconError />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          showErrorToast(message);
         },
       }
     );
@@ -137,7 +131,15 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
                 className={cn(Typography.TITLE_1_SEMIBOLD, 'w-full')}
                 {...register('lessonCnt', {
                   required: true,
+                  max: 500,
                 })}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  const count = Number(e.target.value);
+                  if (count > 500) {
+                    showErrorToast('수강권 횟수는 최대 500회까지 입력할 수 있습니다.');
+                    e.target.value = String(500);
+                  }
+                }}
               />
               <div className={cn(Typography.BODY_1, 'right-6 text-gray-500')}>회</div>
             </div>

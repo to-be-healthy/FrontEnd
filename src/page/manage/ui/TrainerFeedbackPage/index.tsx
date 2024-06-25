@@ -65,7 +65,7 @@ const TrainerFeedbackPage = () => {
             }}
             formatters={{
               formatCaption: () => {
-                return `${dayjs(date).format('MMMM')} ${dayjs(date).week() - dayjs(date).startOf('month').week() + 1}주차`;
+                return `${dayjs(date).format('MMMM')}`;
               },
             }}
             modifiersStyles={{
