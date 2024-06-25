@@ -2,12 +2,13 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { InviteForm, useInviteStudentMutation, useMyInfoQuery } from '@/feature/member';
 import { IconCheck, IconError } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
+import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { Button, Dialog, DialogContent, Input, useToast } from '@/shared/ui';
 import { cn, twSelector } from '@/shared/utils';
@@ -20,6 +21,7 @@ export const TrainerInvitePage = () => {
     reset,
     formState: { errors },
   } = useForm<InviteForm>();
+  const { showErrorToast } = useShowErrorToast();
   const [invitationUrl, setInvitationUrl] = useState<string>('');
   const dialogOpen = !!invitationUrl;
 
@@ -178,7 +180,15 @@ export const TrainerInvitePage = () => {
                 )}
                 {...register('lessonCnt', {
                   required: true,
+                  max: 500,
                 })}
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                  const count = Number(e.target.value);
+                  if (count > 500) {
+                    showErrorToast('수강권 횟수는 최대 500회까지 입력할 수 있습니다.');
+                    e.target.value = String(500);
+                  }
+                }}
               />
               <div
                 className={cn(
