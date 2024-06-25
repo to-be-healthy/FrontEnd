@@ -140,10 +140,9 @@ const DayOfWeekRow = ({ startDate, flatSchedules }: Props) => {
           <h3
             className={cn(
               Typography.TITLE_1_BOLD
-            )}>{`4.10(수) 예약된 수업이 있습니다.\n휴무일로 변경하시겠습니까?`}</h3>
+            )}>{`${dayjs(confirm).format('M.DD(ddd)')} 예약된 수업이 있습니다.\n휴무일로 변경하시겠습니까?`}</h3>
           <p className={cn(Typography.BODY_2, 'mt-4')}>
-            건강해짐 계정을 삭제하면 회원님의 수강권, 운동기록, 식단 등 모든 정보가 함께
-            사라지게 됩니다.
+            해당 날짜에 예약된 수업은 취소됩니다.
           </p>
           <div className='mt-8 flex gap-3'>
             <DialogClose
