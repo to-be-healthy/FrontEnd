@@ -3,6 +3,7 @@ export { useChangeEmailMutation } from './api/useChangeEmailMutation';
 export { useChangeMyNameMutation } from './api/useChangeMyNameMutation';
 export { useChangePasswordMutation } from './api/useChangePasswordMutation';
 export { useDeleteProfileImageMutation } from './api/useDeleteProfileImageMutation';
+export { useDeleteRefundStudentMutation } from './api/useDeleteRefundStudentMutation';
 export { useDeleteStudentCourseMutation } from './api/useDeleteStudentCourseMutation';
 export { useDeleteStudentMutation } from './api/useDeleteStudentMutation';
 export { useFcmTokenMutation } from './api/useFcmTokenMutation';
