@@ -144,9 +144,9 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
         {dietData && commentData && (
           <>
             <Layout.Header>
-              <Link href={`/student/diet?month=${month}`}>
+              <button onClick={() => router.back()}>
                 <IconArrowLeft stroke='black' />
-              </Link>
+              </button>
               <h2
                 className={cn(
                   Typography.HEADING_4_SEMIBOLD,

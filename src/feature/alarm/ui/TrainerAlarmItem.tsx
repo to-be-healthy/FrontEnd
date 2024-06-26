@@ -36,7 +36,7 @@ export const TrainerAlarmItem = ({ data, sender }: AlarmItemProps) => {
           data.notificationCategoryAndType === 'SCHEDULE-WAITING'
         ) {
           return router.push(
-            `/trainer/manage/${data.receiverId}/reservation?name=${data.receiverName}`
+            `/trainer/manage/${data.studentId}/reservation?name=${data.studentName}`
           );
         }
 
@@ -44,7 +44,7 @@ export const TrainerAlarmItem = ({ data, sender }: AlarmItemProps) => {
           data.notificationCategoryAndType === 'SCHEDULE-WRITE' ||
           data.notificationCategoryAndType === 'SCHEDULE-REPLY'
         ) {
-          return router.push(`/trainer/manage/${data.receiverId}/log/${data.targetId}`);
+          return router.push(`/trainer/manage/${data.studentId}/log/${data.targetId}`);
         }
       },
     });
