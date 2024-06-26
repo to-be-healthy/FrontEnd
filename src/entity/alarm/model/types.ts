@@ -21,6 +21,8 @@ interface AlarmData {
   targetId: number;
   receiverId: number;
   receiverName: string;
+  studentId: number;
+  studentName: string;
 }
 
 interface SenderType {

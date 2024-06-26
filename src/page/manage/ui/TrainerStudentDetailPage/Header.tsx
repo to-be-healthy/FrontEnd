@@ -2,8 +2,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { useDeleteStudentMutation } from '@/feature/member';
-import { IconBack, IconDotsVertical } from '@/shared/assets';
+import {
+  useDeleteRefundStudentMutation,
+  useDeleteStudentMutation,
+} from '@/feature/member';
+import { IconBack, IconCheck, IconDotsVertical } from '@/shared/assets';
+import IconNoCircleCheck from '@/shared/assets/images/noCircleCheck.svg';
 import { useShowErrorToast } from '@/shared/hooks';
 import { HEADER_TITLE_CENTER, Typography } from '@/shared/mixin';
 import {
@@ -20,21 +24,58 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetDescription,
+  SheetFooter,
+  SheetHeader,
+  useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const Header = ({ name, memberId }: { name: string; memberId: number }) => {
   const router = useRouter();
+  const { toast } = useToast();
   const { showErrorToast } = useShowErrorToast();
   const [open, setOpen] = useState(false);
   const [modal, setModal] = useState(false);
+  const [sheet, setSheet] = useState(false);
+  const [checked, setChecked] = useState(false);
 
   const { mutate } = useDeleteStudentMutation();
+  const { mutate: deleteRefundMutate } = useDeleteRefundStudentMutation();
+
+  const changeCheck = () => {
+    setChecked((prev) => !prev);
+  };
 
   const deleteStudent = () => {
     mutate(memberId, {
       onSuccess: () => {
+        router.replace('/trainer/manage');
+      },
+      onError: (error) => {
+        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+        showErrorToast(message);
+      },
+    });
+  };
+
+  const deleteRefundStudent = () => {
+    deleteRefundMutate(memberId, {
+      onSuccess: ({ message }) => {
+        toast({
+          className: 'h-12',
+          description: (
+            <div className='flex items-center justify-center'>
+              <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
+              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
+            </div>
+          ),
+          duration: 2000,
+        });
         router.replace('/trainer/manage');
       },
       onError: (error) => {
@@ -59,7 +100,7 @@ const Header = ({ name, memberId }: { name: string; memberId: number }) => {
             <IconDotsVertical />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
+        <DropdownMenuContent className='absolute -right-5 top-0 flex w-[130px] flex-col bg-white'>
           <DropdownMenuGroup className='flex flex-col'>
             <DropdownMenuItem className={cn(Typography.TITLE_3, 'px-6 py-5')} asChild>
               <Link href={`/trainer/manage/${memberId}/edit/nickname`}>별칭 설정</Link>
@@ -68,6 +109,11 @@ const Header = ({ name, memberId }: { name: string; memberId: number }) => {
               className={cn(Typography.TITLE_3, 'px-6 py-5 text-start')}
               onClick={() => setModal(true)}>
               회원 삭제
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className={cn(Typography.TITLE_3, 'px-6 py-5 text-start text-point')}
+              onClick={() => setSheet(true)}>
+              환불 회원 삭제
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
@@ -100,6 +146,53 @@ const Header = ({ name, memberId }: { name: string; memberId: number }) => {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
+      <Sheet open={sheet} onOpenChange={setSheet}>
+        <SheetContent className='p-7 pb-9'>
+          <SheetHeader
+            className={cn(Typography.HEADING_4_BOLD, 'mb-7 text-left text-black')}>
+            환불 회원 삭제하기
+          </SheetHeader>
+
+          <SheetDescription className={cn(Typography.BODY_1, 'mb-10 text-gray-600')}>
+            회원 삭제시 회원 정보, 운동 기록, 예약 내역, 수강권 등은 복구되지 않습니다.
+          </SheetDescription>
+
+          <label className='custom-checkbox mb-10 flex items-center'>
+            <input
+              type='checkbox'
+              className='peer hidden'
+              checked={checked}
+              onChange={changeCheck}
+            />
+            <span className='flex h-7 w-7 items-center justify-center rounded-sm border border-solid border-gray-300 peer-checked:border-none peer-checked:bg-primary-500'>
+              {checked && <IconNoCircleCheck width={15} height={12} fill='white' />}
+            </span>
+            <p className={cn(Typography.BODY_2, 'ml-3 text-black')}>
+              위 내용을 확인하였으며, 회원을 삭제합니다.
+            </p>
+          </label>
+
+          <SheetFooter className='flex-row justify-between gap-x-3'>
+            <SheetClose
+              className={cn(
+                Typography.TITLE_1_SEMIBOLD,
+                'h-12 w-full rounded-md bg-gray-100 text-gray-600'
+              )}>
+              취소
+            </SheetClose>
+            <Button
+              className={cn(
+                Typography.TITLE_1_SEMIBOLD,
+                'h-12 w-full rounded-md text-white',
+                checked ? 'bg-point' : 'bg-gray-300'
+              )}
+              disabled={!checked}
+              onClick={deleteRefundStudent}>
+              회원 삭제
+            </Button>
+          </SheetFooter>
+        </SheetContent>
+      </Sheet>
     </Layout.Header>
   );
 };
