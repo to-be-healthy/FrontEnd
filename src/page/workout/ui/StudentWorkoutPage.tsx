@@ -10,7 +10,7 @@ import { useInView } from 'react-intersection-observer';
 import { useAuthSelector } from '@/entity/auth';
 import { NoWorkout, useWorkoutQuery, WorkoutPost } from '@/feature/workout';
 import { IconArrowLeft, IconPlus } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
@@ -84,13 +84,11 @@ const StudentWorkoutPage = () => {
                 </div>
               ))}
             </div>
-            <div ref={ref}>
-              {isFetchingNextPage && (
-                <div className={cn(FLEX_CENTER, 'w-full')}>
-                  <Image src='/images/loading.gif' width={30} height={30} alt='loading' />
-                </div>
-              )}
-            </div>
+            {isFetchingNextPage && (
+              <div ref={ref} className='h-7 p-3 text-center'>
+                <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
+              </div>
+            )}
             {data.pages[0].content === null && <NoWorkout />}
           </div>
         )}
