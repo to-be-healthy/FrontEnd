@@ -59,7 +59,7 @@ const TrainerCommentInput = () => {
   };
 
   useEffect(() => {
-    if (target && target.comment.files.length > 0) {
+    if (target && target.comment.files.length > 0 && !target.isReply) {
       updateImages(target.comment.files);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
