@@ -3,7 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   AppendNewExerciseType,
@@ -43,6 +43,10 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
   const [content, setContent] = useState('');
   const [viewMySelf, setViewMySelf] = useState(true);
   const [completedExercises, setCompletedExercises] = useState<ComplexExercise[]>([]);
+
+  const setNumRef = useRef<HTMLInputElement>(null);
+  const numberOfCyclesRef = useRef<HTMLInputElement>(null);
+  const weightRef = useRef<HTMLInputElement>(null);
 
   const appendExcercise = (newExcerciseTypes: ExerciseType[]) => {
     const newExcercises = newExcerciseTypes.map((item) => ({
@@ -220,8 +224,16 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
                       className={cn(
                         'w-full rounded-sm border border-gray-100 bg-gray-100 p-1',
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
-                      )}>
+                      )}
+                      onClick={() => {
+                        setNumRef.current?.focus();
+                        setNumRef.current?.setSelectionRange(
+                          String(completedExcercise.setNum).length,
+                          String(completedExcercise.setNum).length
+                        );
+                      }}>
                       <input
+                        ref={setNumRef}
                         type='text'
                         value={completedExcercise.setNum}
                         pattern='[0-9]*'
@@ -256,8 +268,16 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
                       className={cn(
                         'w-full rounded-sm border border-gray-100 bg-gray-100 p-1',
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
-                      )}>
+                      )}
+                      onClick={() => {
+                        numberOfCyclesRef.current?.focus();
+                        numberOfCyclesRef.current?.setSelectionRange(
+                          String(completedExcercise.numberOfCycles).length,
+                          String(completedExcercise.numberOfCycles).length
+                        );
+                      }}>
                       <input
+                        ref={numberOfCyclesRef}
                         type='text'
                         value={completedExcercise.numberOfCycles}
                         pattern='[0-9]*'
@@ -293,8 +313,16 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
                       className={cn(
                         'w-full rounded-sm border border-gray-100 bg-gray-100 p-1',
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
-                      )}>
+                      )}
+                      onClick={() => {
+                        weightRef.current?.focus();
+                        weightRef.current?.setSelectionRange(
+                          String(completedExcercise.weight).length,
+                          String(completedExcercise.weight).length
+                        );
+                      }}>
                       <input
+                        ref={weightRef}
                         type='text'
                         value={completedExcercise.weight}
                         pattern='[0-9]*'
