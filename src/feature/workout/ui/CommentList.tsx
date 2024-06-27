@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { Fragment, useState } from 'react';
 
 import { useAuthSelector } from '@/entity/auth';
-import { IconProfileDefault } from '@/shared/assets';
+import { IconDotsVertical, IconProfileDefault } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {
   Button,
@@ -72,84 +72,89 @@ const CommentLi = ({ comment, depth, className, ...props }: CommentLiProps) => {
   const active = opened || target?.comment.id === comment.id;
 
   return (
-    <DropdownMenu
-      open={opened}
-      onOpenChange={(state) => {
-        if (comment.delYn) return;
-        if (comment.member.memberId !== myMemberId) return;
-        setOpened(state);
-      }}
-      modal={false}>
-      <DropdownMenuTrigger asChild>
-        <li className={cn(active && 'bg-blue-10', className)} {...props}>
-          <div className={cn('flex space-x-2 px-6 py-4', depth !== 0 && 'ml-[47px]')}>
-            {comment.member.fileUrl ? (
-              <Image
-                src={`${comment.member.fileUrl}?w=300&q=90`}
-                width={80}
-                height={80}
-                alt='staged image'
-                className={cn('aspect-square h-8 w-8 rounded-full object-cover')}
-                priority
-              />
-            ) : (
-              <IconProfileDefault width={24} height={24} />
-            )}
-            <div className='flex-col'>
-              <div className='flex-col'>
-                <p className={cn(Typography.HEADING_5)}>{comment.member.name}</p>
-                <p className={cn(Typography.BODY_3, comment.delYn && 'text-gray-500')}>
-                  {comment.content}
-                </p>
-              </div>
-              {!comment.delYn && depth === 0 && (
-                <Button
-                  variant='ghost'
-                  size='auto'
-                  className={cn(Typography.BODY_4_REGULAR, 'z-50 text-gray-500')}
-                  onPointerDown={(e) => {
-                    e.stopPropagation();
-                    changeTarget({
-                      comment,
-                      isReply: true,
-                      mode: 'create',
-                    });
-                  }}
-                  onClick={() => {
-                    focusOnInput();
-                  }}>
-                  답글달기
-                </Button>
-              )}
-            </div>
+    <li
+      className={cn('flex justify-between', active && 'bg-blue-10', className)}
+      {...props}>
+      <div className={cn('flex space-x-2 px-6 py-4', depth !== 0 && 'ml-[47px]')}>
+        {comment.member.fileUrl ? (
+          <Image
+            src={`${comment.member.fileUrl}?w=300&q=90`}
+            width={80}
+            height={80}
+            alt='staged image'
+            className={cn('aspect-square h-8 w-8 rounded-full object-cover')}
+            priority
+          />
+        ) : (
+          <IconProfileDefault width={24} height={24} />
+        )}
+        <div className='flex-col'>
+          <div className='flex-col'>
+            <p className={cn(Typography.HEADING_5)}>{comment.member.name}</p>
+            <p className={cn(Typography.BODY_3, comment.delYn && 'text-gray-500')}>
+              {comment.content}
+            </p>
           </div>
-        </li>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white p-0'>
-        <DropdownMenuGroup className='flex flex-col'>
-          <DropdownMenuItem
-            className={cn(Typography.TITLE_3, 'px-6 py-5')}
-            onClick={() => {
-              changeTarget({
-                comment,
-                isReply: false,
-                mode: 'edit',
-              });
-              focusOnInput();
-            }}>
-            댓글 수정
-          </DropdownMenuItem>
-          <DropdownMenuItem
-            className={cn(Typography.TITLE_3, 'px-6 py-5')}
-            onClick={() => {
-              deleteComment(comment.id);
-              setOpened(false);
-            }}>
-            댓글 삭제
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          {!comment.delYn && depth === 0 && (
+            <Button
+              variant='ghost'
+              size='auto'
+              className={cn(Typography.BODY_4_REGULAR, 'z-50 text-gray-500')}
+              onPointerDown={(e) => {
+                e.stopPropagation();
+                changeTarget({
+                  comment,
+                  isReply: true,
+                  mode: 'create',
+                });
+              }}
+              onClick={() => {
+                focusOnInput();
+              }}>
+              답글달기
+            </Button>
+          )}
+        </div>
+      </div>
+      {!comment.delYn && comment.member.memberId === myMemberId && (
+        <DropdownMenu
+          open={opened}
+          onOpenChange={(state) => {
+            setOpened(state);
+          }}
+          modal={false}>
+          <DropdownMenuTrigger asChild>
+            <Button variant='ghost' size='icon' className='mr-6 mt-4'>
+              <IconDotsVertical />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white p-0'>
+            <DropdownMenuGroup className='flex flex-col'>
+              <DropdownMenuItem
+                className={cn(Typography.TITLE_3, 'px-6 py-5')}
+                onClick={() => {
+                  changeTarget({
+                    comment,
+                    isReply: false,
+                    mode: 'edit',
+                  });
+                  focusOnInput();
+                }}>
+                댓글 수정
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className={cn(Typography.TITLE_3, 'px-6 py-5')}
+                onClick={() => {
+                  deleteComment(comment.id);
+                  setOpened(false);
+                }}>
+                댓글 삭제
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      )}
+    </li>
   );
 };
 
