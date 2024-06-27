@@ -3,12 +3,10 @@
 import { useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ChangeEvent } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { ChangeEvent, useState } from 'react';
 
-import { AppendMemberForm } from '@/feature/member';
 import { useAppendMemberMutation } from '@/feature/member/api/useAppendMemberMutation';
-import { IconCheck, IconError } from '@/shared/assets';
+import { IconCheck } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
@@ -26,19 +24,27 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
     throw new Error();
   }
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<AppendMemberForm>();
+  const [lessonCnt, setLessonCnt] = useState(0);
 
   const queryClient = useQueryClient();
   const { mutate } = useAppendMemberMutation();
 
-  const onValidSubmit: SubmitHandler<AppendMemberForm> = (form) => {
+  const handleLessonCnt = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '').replace(/^0+(?!$)/, '') || '0';
+
+    const count = Number(value);
+
+    setLessonCnt(count);
+
+    if (count > 500) {
+      showErrorToast('수강권 횟수는 최대 500회까지 입력할 수 있습니다.');
+      setLessonCnt(500);
+    }
+  };
+
+  const submit = () => {
     mutate(
-      { ...form, memberId },
+      { name, lessonCnt, memberId },
       {
         onSuccess: async () => {
           await queryClient.refetchQueries({ queryKey: ['notRegisteredStudents'] });
@@ -65,22 +71,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
     );
   };
 
-  const onInvalidSubmit = () => {
-    toast({
-      className: 'h-12',
-      description: (
-        <div className='flex items-center justify-center'>
-          <IconError />
-          <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-            입력이 필요한 항목이 있습니다.
-          </p>
-        </div>
-      ),
-      duration: 2000,
-    });
-  };
-
-  const buttonDisabled = !watch('lessonCnt');
+  const buttonDisabled = !lessonCnt;
 
   return (
     <Layout className='bg-white'>
@@ -102,7 +93,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
             Typography.HEADING_3,
             'whitespace-pre-wrap break-keep'
           )}>{`${name}님의 수강 정보를\n알려주세요.`}</h2>
-        <form
+        <div
           id='append-member-form'
           className={cn(Typography.TITLE_3, 'mt-[42px] flex justify-center gap-x-3')}>
           <div className='flex flex-col gap-y-3'>
@@ -112,10 +103,9 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
                 'flex rounded-md border border-gray-200 bg-white px-6 py-[11.5px]'
               )}>
               <Input
-                defaultValue={name}
+                value={name}
                 readOnly
                 className={cn(Typography.TITLE_1_SEMIBOLD, 'read-only:text- w-full')}
-                {...register('name')}
               />
             </div>
           </div>
@@ -123,35 +113,26 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
             <p>수업 할 PT 횟수</p>
             <div
               className={cn(
-                'flex gap-x-4 rounded-md border border-gray-200 bg-white px-6 py-[11.5px] focus-within:border-primary-500',
-                errors.lessonCnt && 'border-point focus-within:border-point'
+                'flex gap-x-4 rounded-md border border-gray-200 bg-white px-6 py-[11.5px] focus-within:border-primary-500'
               )}>
               <Input
-                type='number'
+                type='text'
+                pattern='[0-9]*'
+                inputMode='numeric'
                 className={cn(Typography.TITLE_1_SEMIBOLD, 'w-full')}
-                {...register('lessonCnt', {
-                  required: true,
-                  max: 500,
-                })}
-                onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                  const count = Number(e.target.value);
-                  if (count > 500) {
-                    showErrorToast('수강권 횟수는 최대 500회까지 입력할 수 있습니다.');
-                    e.target.value = String(500);
-                  }
-                }}
+                value={lessonCnt}
+                onChange={handleLessonCnt}
               />
               <div className={cn(Typography.BODY_1, 'right-6 text-gray-500')}>회</div>
             </div>
           </div>
-        </form>
+        </div>
       </Layout.Contents>
       <Layout.BottomArea>
         <Button
-          formTarget='append-member-form'
           variant='default'
           size='full'
-          onClick={handleSubmit(onValidSubmit, onInvalidSubmit)}
+          onClick={submit}
           disabled={buttonDisabled}
           className={cn(Typography.TITLE_1_BOLD)}>
           추가하기
