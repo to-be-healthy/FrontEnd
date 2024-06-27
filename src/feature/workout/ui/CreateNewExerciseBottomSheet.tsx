@@ -1,7 +1,7 @@
 'use client';
 
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import { IconPlus } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
@@ -36,6 +36,8 @@ const CreateNewExerciseBottomSheet = ({
   const [selectedCategory, setCategory] = useState<string | null>(null);
   const [muscles, setMuscles] = useState('');
   const { mutate, isPending } = useCreateExerciseMutation();
+
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const submit = () => {
     if (isPending) return;
@@ -74,6 +76,12 @@ const CreateNewExerciseBottomSheet = ({
     if (open && defaultSearch) {
       setName(defaultSearch);
     }
+
+    if (open) {
+      setTimeout(() => {
+        inputRef.current?.focus();
+      }, 0);
+    }
   }, [defaultSearch, open]);
 
   return (
@@ -105,6 +113,7 @@ const CreateNewExerciseBottomSheet = ({
             </p>
             <div className='rounded-md border border-gray-200 px-6 py-[13px]'>
               <Input
+                ref={inputRef}
                 type='text'
                 placeholder='추가할 운동 이름을 입력해주세요.'
                 value={name}

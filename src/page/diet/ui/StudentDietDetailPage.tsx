@@ -210,13 +210,13 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
             </Layout.Header>
             <Layout.Contents>
               <div className='px-7 py-6'>
-                <Card className='w-full'>
+                <Card className='w-full px-0'>
                   <CardHeader
-                    className={(Typography.TITLE_3, 'mb-4 text-left text-gray-600')}>
+                    className={(Typography.TITLE_3, 'mb-4 px-7 text-left text-gray-600')}>
                     {dietValue === todayValue ? '오늘' : dietValue}
                   </CardHeader>
                   <CardContent>
-                    <article className='mb-6 flex justify-between'>
+                    <article className='mb-6 flex justify-between px-7'>
                       {dietDay.map((mealType: MealType) => {
                         const meal = dietData[mealType];
                         return (
@@ -282,7 +282,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                       })}
                     </article>
 
-                    <div className='mb-7 flex items-center justify-start'>
+                    <div className='mb-7 flex items-center justify-start px-7'>
                       <div className='flex items-center'>
                         {dietData.liked ? (
                           <Button

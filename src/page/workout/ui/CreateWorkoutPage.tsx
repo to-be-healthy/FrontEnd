@@ -3,7 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
 import {
   AppendNewExerciseType,
@@ -37,6 +37,10 @@ const CreateWorkoutPage = () => {
   const [content, setContent] = useState('');
   const [viewMySelf, setViewMySelf] = useState(true);
   const [completedExercises, setCompletedExercises] = useState<ComplexExercise[]>([]);
+
+  const setNumRef = useRef<HTMLInputElement>(null);
+  const numberOfCyclesRef = useRef<HTMLInputElement>(null);
+  const weightRef = useRef<HTMLInputElement>(null);
 
   const appendExcercise = (newExcerciseTypes: ExerciseType[]) => {
     const newExcercises = newExcerciseTypes.map((item) => ({
@@ -190,8 +194,16 @@ const CreateWorkoutPage = () => {
                       className={cn(
                         'w-full rounded-sm border border-gray-100 bg-gray-100 p-1',
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
-                      )}>
+                      )}
+                      onClick={() => {
+                        setNumRef.current?.focus();
+                        setNumRef.current?.setSelectionRange(
+                          String(completedExcercise.setNum).length,
+                          String(completedExcercise.setNum).length
+                        );
+                      }}>
                       <input
+                        ref={setNumRef}
                         type='text'
                         value={completedExcercise.setNum}
                         pattern='[0-9]*'
@@ -226,8 +238,16 @@ const CreateWorkoutPage = () => {
                       className={cn(
                         'w-full rounded-sm border border-gray-100 bg-gray-100 p-1',
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
-                      )}>
+                      )}
+                      onClick={() => {
+                        numberOfCyclesRef.current?.focus();
+                        numberOfCyclesRef.current?.setSelectionRange(
+                          String(completedExcercise.numberOfCycles).length,
+                          String(completedExcercise.numberOfCycles).length
+                        );
+                      }}>
                       <input
+                        ref={numberOfCyclesRef}
                         type='text'
                         pattern='[0-9]*'
                         inputMode='numeric'
@@ -258,13 +278,20 @@ const CreateWorkoutPage = () => {
                   </div>
                   <div className='flex w-full flex-col items-center justify-between gap-2'>
                     <span className={cn(Typography.TITLE_3, 'text-gray-600')}>KG</span>
-
                     <div
                       className={cn(
                         'w-full rounded-sm border border-gray-100 bg-gray-100 p-1',
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
-                      )}>
+                      )}
+                      onClick={() => {
+                        weightRef.current?.focus();
+                        weightRef.current?.setSelectionRange(
+                          String(completedExcercise.weight).length,
+                          String(completedExcercise.weight).length
+                        );
+                      }}>
                       <input
+                        ref={weightRef}
                         type='text'
                         value={completedExcercise.weight}
                         pattern='[0-9]*'

@@ -47,7 +47,7 @@ const AppendNewExerciseType = ({
   const debouncedSearch = useDebounce(search, 500);
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedTypes, setSelectedTypes] = useState<number[]>([]);
+  const [selectedTypes, setSelectedTypes] = useState<ExerciseType[]>([]);
 
   const { data: categories } = useWorkoutCategoryListQuery();
   const {
@@ -83,11 +83,7 @@ const AppendNewExerciseType = ({
 
   const submit = () => {
     if (!types || buttonDisabled) return;
-
-    const selectedExercises = types.filter((item) =>
-      selectedTypes.includes(item.exerciseId)
-    );
-    appendExcercise(selectedExercises);
+    appendExcercise(selectedTypes);
     close();
   };
 
@@ -189,7 +185,7 @@ const AppendNewExerciseType = ({
           <div>
             <ul className='flex h-fit w-full flex-col'>
               {filteredTypes.map((type) => {
-                const selected = selectedTypes.includes(type.exerciseId);
+                const selected = selectedTypes.includes(type);
                 return (
                   <li key={type.exerciseId}>
                     <label
@@ -206,11 +202,11 @@ const AppendNewExerciseType = ({
                           checked={selected}
                           onChange={() => {
                             if (!selected) {
-                              setSelectedTypes((prev) => [...prev, type.exerciseId]);
+                              setSelectedTypes((prev) => [...prev, type]);
                             }
                             if (selected) {
                               setSelectedTypes((prev) =>
-                                prev.filter((id) => id !== type.exerciseId)
+                                prev.filter((item) => item.exerciseId !== type.exerciseId)
                               );
                             }
                           }}

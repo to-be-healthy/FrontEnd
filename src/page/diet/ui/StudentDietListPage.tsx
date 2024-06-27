@@ -95,7 +95,7 @@ export const StudentDietListPage = () => {
   }, [queryClient]);
 
   return (
-    <Layout type='student'>
+    <Layout>
       {isPending && (
         <div className='flex h-full w-full items-center justify-center'>
           <div ref={ref} className='flex w-full justify-center p-3'>
