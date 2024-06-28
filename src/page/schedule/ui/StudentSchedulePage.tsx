@@ -22,7 +22,7 @@ import {
   useStudentMyWaitingListQuery,
   WaitingBottomSheet,
 } from '@/feature/schedule';
-import { IconBack, IconNoSchedule } from '@/shared/assets';
+import { IconNoSchedule } from '@/shared/assets';
 import { IconNotification } from '@/shared/assets';
 import DownIcon from '@/shared/assets/images/icon_arrow_bottom.svg';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
@@ -33,7 +33,7 @@ import { cn, twSelector } from '@/shared/utils';
 dayjs.extend(isBetween);
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useSearchParams } from 'next/navigation';
 import { DateFormatter, DayProps } from 'react-day-picker';
 
 import { Layout } from '@/widget';
@@ -41,7 +41,6 @@ import { Layout } from '@/widget';
 export const StudentSchedulePage = () => {
   const searchParams = useSearchParams();
   const initTab = searchParams?.get('tab') ?? 'classReservation';
-  const router = useRouter();
 
   const [activeTab, setActiveTab] = useState(initTab);
   const [date, setDate] = useState<Date | undefined>(new Date());
@@ -150,11 +149,7 @@ export const StudentSchedulePage = () => {
 
   return (
     <Layout type='student'>
-      <Layout.Header className='flex justify-start bg-white'>
-        <Button variant='ghost' className='p-0' onClick={() => router.back()}>
-          <IconBack />
-        </Button>
-      </Layout.Header>
+      <Layout.Header className='flex justify-start bg-white' />
       <Layout.Contents className='bg-gray-100'>
         <Tabs defaultValue={activeTab} value={activeTab} onValueChange={setActiveTab}>
           <TabsList className='bg-white'>
