@@ -91,11 +91,11 @@ const CommunityPage = () => {
                   );
                 })}
             </div>
-            {isFetchingNextPage && (
-              <div ref={ref} className={cn(FLEX_CENTER, 'p-7')}>
+            <div ref={ref} className={cn(FLEX_CENTER, 'p-7')}>
+              {isFetchingNextPage && (
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
-              </div>
-            )}
+              )}
+            </div>
           </div>
         )}
       </Layout.Contents>
