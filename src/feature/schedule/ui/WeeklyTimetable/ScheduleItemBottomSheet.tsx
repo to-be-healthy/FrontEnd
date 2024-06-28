@@ -96,7 +96,7 @@ const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
               variant='default'
               size={'full'}
               onClick={handleCancelReservation}
-              className='py-[13px]'>
+              className='rounded-md py-[13px]'>
               예
             </Button>
           </DialogClose>
