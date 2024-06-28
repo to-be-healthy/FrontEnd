@@ -5,12 +5,13 @@ import 'dayjs/locale/ko';
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { AlarmType, useAlarmQuery } from '@/entity/alarm';
 import { TrainerAlarmItem } from '@/feature/alarm';
 import { IconAlarmBig, IconBack } from '@/shared/assets';
+import { useQueryString } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -35,8 +36,13 @@ const ITEMS_PER_PAGE = 20;
 
 const TrainerAlarmPage = () => {
   const router = useRouter();
-  const [tabState, setTabState] = useState<AlarmType>('SCHEDULE');
   const queryClient = useQueryClient();
+  const { getQueryString, setQueryString } = useQueryString();
+
+  const validTabs: AlarmType[] = ['SCHEDULE', 'COMMUNITY'];
+  const tabState: AlarmType = validTabs.includes(getQueryString('tab') as AlarmType)
+    ? (getQueryString('tab') as AlarmType)
+    : 'SCHEDULE';
 
   const { data, hasNextPage, fetchNextPage, isPending } = useAlarmQuery({
     type: tabState,
@@ -48,9 +54,7 @@ const TrainerAlarmPage = () => {
   });
 
   const handleValueChange = (value: string) => {
-    if (value === 'SCHEDULE' || value === 'COMMUNITY') {
-      setTabState(value);
-    }
+    setQueryString('tab', value);
   };
 
   useEffect(() => {
@@ -88,7 +92,7 @@ const TrainerAlarmPage = () => {
           className='flex h-full w-full flex-col'
           onValueChange={(value) => handleValueChange(value)}>
           <TabsList>
-            <TabsTrigger value='SCHEDULE' onClick={() => setTabState('SCHEDULE')}>
+            <TabsTrigger value='SCHEDULE'>
               <p className={cn(Typography.TITLE_1_BOLD, 'relative')}>
                 <span
                   className={
@@ -101,10 +105,7 @@ const TrainerAlarmPage = () => {
                 수업
               </p>
             </TabsTrigger>
-            <TabsTrigger
-              value='COMMUNITY'
-              className='relative'
-              onClick={() => setTabState('COMMUNITY')}>
+            <TabsTrigger value='COMMUNITY' className='relative'>
               <p className={cn(Typography.TITLE_1_BOLD, 'relative')}>
                 커뮤니티
                 <span
