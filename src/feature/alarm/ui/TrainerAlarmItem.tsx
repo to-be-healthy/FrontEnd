@@ -42,7 +42,8 @@ export const TrainerAlarmItem = ({ data, sender }: AlarmItemProps) => {
 
         if (
           data.notificationCategoryAndType === 'SCHEDULE-WRITE' ||
-          data.notificationCategoryAndType === 'SCHEDULE-REPLY'
+          data.notificationCategoryAndType === 'SCHEDULE-REPLY' ||
+          data.notificationCategoryAndType === 'SCHEDULE-COMMENT'
         ) {
           return router.push(`/trainer/manage/${data.studentId}/log/${data.targetId}`);
         }

@@ -225,7 +225,16 @@ export const ClassTimeSettingPage = () => {
           자유롭게 변경하실 수 있습니다.
         </p>
 
-        <ClassTimeSetting />
+        <ClassTimeSetting
+          timeList={timeList}
+          setTimeList={setTimeList}
+          isLunchTimeUnset={isLunchTimeUnset}
+          setIsLunchTimeUnset={setIsLunchTimeUnset}
+          classTimeState={classTimeState}
+          setClassTimeState={setClassTimeState}
+          dayOff={dayOff}
+          setDayOff={setDayOff}
+        />
       </Layout.Contents>
 
       <Layout.BottomArea className='w-full p-7'>

@@ -9,7 +9,8 @@ type NotificationCategoryAndType =
   | 'COMMUNITY-WRITE' // 커뮤니티 게시글 작성
   | 'COMMUNITY-REPLY' //커뮤니티 게시글 댓글
   | 'SCHEDULE-WRITE' //수업일지 게시글 작성
-  | 'SCHEDULE-REPLY'; //수업일지 게시글 댓글
+  | 'SCHEDULE-REPLY' //수업일지 게시글 댓글
+  | 'SCHEDULE-COMMENT'; //수업일지 게시글 댓글
 
 interface AlarmData {
   notificationId: number;

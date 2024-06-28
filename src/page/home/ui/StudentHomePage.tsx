@@ -99,12 +99,15 @@ export const StudentHomePage = () => {
 
   const onMessageFCM = async () => {
     //서비스워커의 토큰은 한번 등록하면 안바뀜
-    const registration = await navigator.serviceWorker.register(
-      '/firebase-messaging-sw.js'
-    );
+    // eslint-disable-next-line no-console
+    console.log('토큰등록로직');
     if (!('serviceWorker' in navigator) && !('Notification' in window)) {
       return;
     }
+
+    const registration = await navigator.serviceWorker.register(
+      '/firebase-messaging-sw.js'
+    );
 
     const permission = await Notification.requestPermission();
     if (permission !== 'granted') {
