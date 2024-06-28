@@ -6,10 +6,9 @@ import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 
 dayjs.extend(customParseFormat);
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
-import { ClassTimeSettingData, DayOfWeek } from '@/feature/schedule';
-import { useGetTrainerClassTimeSettingQuery } from '@/feature/schedule/api/useGetTrainerClassTimeSettingQuery';
+import { DayOfWeek } from '@/feature/schedule';
 import { IconAlert } from '@/shared/assets';
 import IconNoCircleCheck from '@/shared/assets/images/noCircleCheck.svg';
 import { Typography } from '@/shared/mixin';
@@ -46,34 +45,27 @@ const timePeriods = ['오전', '오후'];
 const hours = Array.from({ length: 12 }, (_, i) => String(i + 1));
 const minutes = ['00', '30'];
 
-export const ClassTimeSetting = () => {
-  const { data: classTimeData } = useGetTrainerClassTimeSettingQuery();
-  const [timeList, setTimeList] = useState<TimeListType[]>([]);
-  const [isLunchTimeUnset, setIsLunchTimeUnset] = useState(false); //점심시간 설정 체크 유무
+interface Props {
+  timeList: TimeListType[];
+  setTimeList: React.Dispatch<React.SetStateAction<TimeListType[]>>;
+  isLunchTimeUnset: boolean;
+  setIsLunchTimeUnset: React.Dispatch<React.SetStateAction<boolean>>;
+  classTimeState: number;
+  setClassTimeState: React.Dispatch<React.SetStateAction<number>>;
+  dayOff: DayOfWeek[];
+  setDayOff: React.Dispatch<React.SetStateAction<DayOfWeek[]>>;
+}
+export const ClassTimeSetting = ({
+  timeList,
+  setTimeList,
+  isLunchTimeUnset,
+  setIsLunchTimeUnset,
+  classTimeState,
+  setClassTimeState,
+  dayOff,
+  setDayOff,
+}: Props) => {
   const [isClassTimeSheetOpen, setIsClassTimeSheetOpen] = useState(false); // 수업시간 sheet
-  const [classTimeState, setClassTimeState] = useState(0); //수업시간
-  const [dayOff, setDayOff] = useState<DayOfWeek[]>([]); //휴무일
-
-  const formatTimeTo12Hour = (timeString: string) => {
-    if (!timeString) return '';
-    const formattedTime = dayjs(timeString, 'HH:mm').format('A h:mm');
-    const [periodKor, timeRest] = formattedTime.split(' ');
-
-    return [periodKor, ...timeRest.split(':')];
-  };
-
-  const convertTimeData = (classTimeData: ClassTimeSettingData) => {
-    return {
-      lessonStartTime: formatTimeTo12Hour(classTimeData?.lessonStartTime),
-      lessonEndTime: formatTimeTo12Hour(classTimeData?.lessonEndTime),
-      lunchStartTime: formatTimeTo12Hour(
-        classTimeData?.lunchStartTime ? classTimeData?.lunchStartTime : '12:00'
-      ),
-      lunchEndTime: formatTimeTo12Hour(
-        classTimeData?.lunchEndTime ? classTimeData?.lunchEndTime : '13:00'
-      ),
-    };
-  };
 
   const openTimePicker = (selectedTime: TimeSettings) => {
     setTimeList((prev) =>
@@ -129,59 +121,6 @@ export const ClassTimeSetting = () => {
       setDayOff([...dayOff, day]);
     }
   };
-
-  useEffect(() => {
-    if (classTimeData) {
-      const settingTimeData = convertTimeData(classTimeData);
-
-      const newTimeList: TimeListType[] = [
-        {
-          name: 'lessonStartTime',
-          timePeriods: settingTimeData?.lessonStartTime[0],
-          hours: settingTimeData?.lessonStartTime[1],
-          minutes: settingTimeData?.lessonStartTime[2],
-          state: false,
-        },
-        {
-          name: 'lessonEndTime',
-          timePeriods: settingTimeData?.lessonEndTime[0],
-          hours: settingTimeData?.lessonEndTime[1],
-          minutes: settingTimeData?.lessonEndTime[2],
-          state: false,
-        },
-        {
-          name: 'lunchStartTime',
-          timePeriods: !settingTimeData.lunchStartTime
-            ? '오후'
-            : settingTimeData?.lunchStartTime[0],
-          hours: !settingTimeData.lunchStartTime
-            ? '12'
-            : settingTimeData?.lunchStartTime[1],
-          minutes: !settingTimeData.lunchStartTime
-            ? '00'
-            : settingTimeData?.lunchStartTime[2],
-          state: false,
-        },
-        {
-          name: 'lunchEndTime',
-          timePeriods: !settingTimeData.lunchEndTime
-            ? '오후'
-            : settingTimeData?.lunchEndTime[0],
-          hours: !settingTimeData.lunchEndTime ? '1' : settingTimeData?.lunchEndTime[1],
-          minutes: !settingTimeData.lunchEndTime
-            ? '00'
-            : settingTimeData?.lunchEndTime[2],
-          state: false,
-        },
-      ];
-      setTimeList(newTimeList);
-      setClassTimeState(classTimeData.lessonTime);
-      setDayOff(classTimeData.closedDays);
-      setIsLunchTimeUnset(
-        classTimeData.lunchStartTime === null && classTimeData.lunchEndTime === null
-      );
-    }
-  }, [classTimeData]);
 
   return (
     <div>

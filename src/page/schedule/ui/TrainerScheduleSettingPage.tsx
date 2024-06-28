@@ -234,7 +234,16 @@ const TrainerScheduleSettingPage = () => {
         </Button>
       </Layout.Header>
       <Layout.Contents className='bg-white px-7'>
-        <ClassTimeSetting />
+        <ClassTimeSetting
+          timeList={timeList}
+          setTimeList={setTimeList}
+          isLunchTimeUnset={isLunchTimeUnset}
+          setIsLunchTimeUnset={setIsLunchTimeUnset}
+          classTimeState={classTimeState}
+          setClassTimeState={setClassTimeState}
+          dayOff={dayOff}
+          setDayOff={setDayOff}
+        />
       </Layout.Contents>
     </Layout>
   );
