@@ -75,9 +75,9 @@ const CommunityPage = () => {
         </Layout.Header>
       )}
       d
-      <Layout.Contents className='overflow-y-hidden pt-6'>
+      <Layout.Contents className='pt-6'>
         {posts && (
-          <div className='hide-scrollbar mt-1 flex h-full flex-1 flex-grow flex-col overflow-y-auto px-7 pb-7'>
+          <div className='hide-scrollbar flex h-full flex-1 flex-grow flex-col overflow-y-auto px-7 pb-7'>
             <div className='flex w-full flex-col gap-5'>
               {posts.length === 0 && <NoPosts />}
               {posts.length > 0 &&
@@ -91,11 +91,9 @@ const CommunityPage = () => {
                   );
                 })}
             </div>
-            <div ref={ref}>
+            <div ref={ref} className={cn(FLEX_CENTER, 'p-7')}>
               {isFetchingNextPage && (
-                <div className={cn(FLEX_CENTER, 'mt-7 w-full')}>
-                  <Image src='/images/loading.gif' width={30} height={30} alt='loading' />
-                </div>
+                <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               )}
             </div>
           </div>

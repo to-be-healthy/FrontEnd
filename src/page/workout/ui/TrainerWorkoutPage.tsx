@@ -9,7 +9,7 @@ import { useInView } from 'react-intersection-observer';
 
 import { NoWorkout, useWorkoutQuery, WorkoutPost } from '@/feature/workout';
 import { IconBack } from '@/shared/assets';
-import { Typography } from '@/shared/mixin';
+import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
@@ -77,11 +77,11 @@ const TrainerWorkoutPage = ({ memberId }: { memberId: number }) => {
                 </div>
               ))}
             </div>
-            {isFetchingNextPage && (
-              <div ref={ref} className='h-7 p-3 text-center'>
+            <div ref={ref} className={cn(FLEX_CENTER, 'p-7')}>
+              {isFetchingNextPage && (
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
-              </div>
-            )}
+              )}
+            </div>
             {data.pages[0].content === null && <NoWorkout />}
           </div>
         )}

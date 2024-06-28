@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
-import { IconCalendarRefresh } from '@/shared/assets';
+import { IconCalendarCheck, IconCalendarRefresh } from '@/shared/assets';
 import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import {
@@ -31,7 +31,7 @@ const DayOfWeekRow = ({ startDate, flatSchedules }: Props) => {
 
   const [confirm, setConfirm] = useState<Date | null>(null);
 
-  const onClickDayOfWeek = (day: Date) => {
+  const turnCloseDay = (day: Date) => {
     const hasSchedule = flatSchedules.some(
       (item) =>
         item.date === dayjs(day).format('YYYY-MM-DD') &&
@@ -44,6 +44,27 @@ const DayOfWeekRow = ({ startDate, flatSchedules }: Props) => {
     }
 
     handleChangeClosedDay(day);
+  };
+
+  const turnOpenDay = (day: Date) => {
+    const scheduleIds = flatSchedules
+      .filter((item) => item.date === dayjs(day).format('YYYY-MM-DD'))
+      .map((item) => item.scheduleId);
+
+    mutate(
+      { status: 'AVAILABLE', scheduleIds },
+      {
+        onSuccess: async () => {
+          await queryClient.refetchQueries({
+            queryKey: ['schedule'].filter(Boolean),
+          });
+        },
+        onError: (error) => {
+          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
+          showErrorToast(message);
+        },
+      }
+    );
   };
 
   const handleChangeClosedDay = (targetDate: Date | null) => {
@@ -90,6 +111,9 @@ const DayOfWeekRow = ({ startDate, flatSchedules }: Props) => {
         const dayOfWeek = dayjs(day).format('ddd');
         const isToday = dayjs().isSame(day, 'day');
         const isBefore = dayjs(day.toDateString()).isBefore(dayjs(), 'day');
+        const isClosedDay = flatSchedules
+          .filter((item) => item.date === dayjs(day).format('YYYY-MM-DD'))
+          .every((item) => item.reservationStatus === 'DISABLED');
         return (
           <Sheet key={dayOfWeek}>
             <SheetTrigger
@@ -110,7 +134,7 @@ const DayOfWeekRow = ({ startDate, flatSchedules }: Props) => {
                 {dayjs(day).format('D')}
               </p>
             </SheetTrigger>
-            {!isBefore && (
+            {!isBefore && !isClosedDay && (
               <SheetContent side='bottom' className='p-7 pb-11'>
                 <div className='flex w-full flex-col'>
                   <h3 className={cn(Typography.HEADING_3)}>
@@ -123,10 +147,34 @@ const DayOfWeekRow = ({ startDate, flatSchedules }: Props) => {
                         'flex h-[120px] w-[120px] flex-col items-center justify-center gap-5 rounded-lg border border-gray-200'
                       )}
                       onClick={() => {
-                        onClickDayOfWeek(day);
+                        turnCloseDay(day);
                       }}>
                       <IconCalendarRefresh />
                       휴무일로 변경
+                    </DialogClose>
+                  </div>
+                </div>
+              </SheetContent>
+            )}
+            {!isBefore && isClosedDay && (
+              <SheetContent side='bottom' className='p-7 pb-11'>
+                <div className='flex w-full flex-col'>
+                  <h3 className={cn(Typography.HEADING_3)}>
+                    {dayjs(day).format('M.DD(ddd)')}
+                    {` `}
+                    <span className={cn(Typography.HEADING_3, 'text-point')}>휴무</span>
+                  </h3>
+                  <div className={cn('mt-7 flex w-full justify-center gap-6')}>
+                    <DialogClose
+                      className={cn(
+                        Typography.TITLE_1_SEMIBOLD,
+                        'flex h-[120px] w-[120px] flex-col items-center justify-center gap-5 rounded-lg border border-gray-200'
+                      )}
+                      onClick={() => {
+                        turnOpenDay(day);
+                      }}>
+                      <IconCalendarCheck />
+                      수업 운영하기
                     </DialogClose>
                   </div>
                 </div>
