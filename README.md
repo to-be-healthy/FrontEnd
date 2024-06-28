@@ -53,7 +53,7 @@
 
 ### Local
 ```
-git clone https://github.com/jinyoung4478/mqtt-react](https://github.com/to-be-healthy/FrontEnd.git
+git clone https://github.com/to-be-healthy/FrontEnd.git
 
 cd FrontEnd
 npm i
