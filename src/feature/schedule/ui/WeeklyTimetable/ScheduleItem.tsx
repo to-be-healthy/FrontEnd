@@ -17,18 +17,18 @@ const ScheduleItem = ({ schedule }: { schedule: FlatSchedule }) => {
   );
 
   return (
-    <Sheet key={schedule.scheduleId}>
-      <SheetTrigger
-        tabIndex={-1}
-        onPointerDown={() => {
-          if (
-            isBefore &&
-            (reservationStatus === 'AVAILABLE' || reservationStatus === 'DISABLED')
-          ) {
-            showErrorToast('시간이 지난 스케줄입니다.');
-          }
-        }}
-        asChild>
+    <Sheet
+      key={schedule.scheduleId}
+      onOpenChange={(state) => {
+        if (
+          state &&
+          isBefore &&
+          (reservationStatus === 'AVAILABLE' || reservationStatus === 'DISABLED')
+        ) {
+          showErrorToast('시간이 지난 스케줄입니다.');
+        }
+      }}>
+      <SheetTrigger tabIndex={-1} asChild>
         <div
           className={cn(
             'absolute flex w-[63px] flex-col items-center justify-center border-transparent'
