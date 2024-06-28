@@ -76,6 +76,7 @@ const ImageUpload = ({ type, registerDiet }: SelectImageProps) => {
         id={`today-${type}-album-input`}
         type='file'
         className='hidden'
+        accept='image/*'
         onChange={s3uploadImage}
       />
       <p className='flex items-center justify-start px-7 py-6'>

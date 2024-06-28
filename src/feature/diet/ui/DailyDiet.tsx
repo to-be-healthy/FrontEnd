@@ -39,6 +39,7 @@ const ImageUpload = ({ type, setIsSheetOpen }: SelectImageProps) => {
         id={`new-${type}-album-input`}
         type='file'
         className='hidden'
+        accept='image/*'
         onChange={(e) => {
           uploadImageDiet(e, type);
           setIsSheetOpen(false);
