@@ -55,6 +55,7 @@ export const StudentHomePage = () => {
   const { data: homeAlarmData } = useHomeAlarmQuery();
   const { mutate } = useRegisterTokenMutation();
 
+  const [token, setToken] = useState('');
   const month = dayjs(new Date()).format('YYYY-MM');
   const nextScheduledDay = data?.myReservation
     ? dayjs(data?.myReservation?.lessonDt).format('MM.DD (ddd)')
@@ -78,6 +79,7 @@ export const StudentHomePage = () => {
         vapidKey: process.env.VAPIDKEY,
         serviceWorkerRegistration: registration,
       });
+      setToken(currentToken);
       if (currentToken) {
         mutate(currentToken, {
           onSuccess: () => {
@@ -102,6 +104,8 @@ export const StudentHomePage = () => {
     // eslint-disable-next-line no-console
     console.log('토큰등록로직');
     if (!('serviceWorker' in navigator) && !('Notification' in window)) {
+      // eslint-disable-next-line no-console
+      console.log('리턴');
       return;
     }
 
@@ -111,6 +115,8 @@ export const StudentHomePage = () => {
 
     const permission = await Notification.requestPermission();
     if (permission !== 'granted') {
+      // eslint-disable-next-line no-console
+      console.log(permission);
       alert('알림을 허용해 주세요.');
       return;
     }
@@ -151,6 +157,7 @@ export const StudentHomePage = () => {
           </div>
         ) : (
           <>
+            <p>{token}</p>
             <article className='mb-7'>
               {/* 수강권 있을때 */}
               {data?.course && (

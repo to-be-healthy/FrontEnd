@@ -74,7 +74,7 @@ const CommunityPage = () => {
           </h1>
         </Layout.Header>
       )}
-      d
+
       <Layout.Contents className='pt-6'>
         {posts && (
           <div className='hide-scrollbar flex h-full flex-1 flex-grow flex-col overflow-y-auto px-7 pb-7'>
