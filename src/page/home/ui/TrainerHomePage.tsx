@@ -2,7 +2,7 @@
 
 import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
-import { getMessaging, getToken } from 'firebase/messaging';
+import { getMessaging, getToken, Messaging } from 'firebase/messaging';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect } from 'react';
@@ -101,9 +101,8 @@ export const TrainerHomePage = () => {
 
   const hasTodaySchedule = Array.isArray(todaySchedule) && todaySchedule.length > 0;
 
-  const messaging = getMessaging(firebaseApp);
-
   const attemptToGetToken = async (
+    messaging: Messaging,
     registration: ServiceWorkerRegistration,
     attempt = 1
   ) => {
@@ -124,7 +123,7 @@ export const TrainerHomePage = () => {
       }
     } catch (error) {
       if (attempt < MAX_RETRY_ATTEMPTS) {
-        await attemptToGetToken(registration, attempt + 1);
+        await attemptToGetToken(messaging, registration, attempt + 1);
       } else {
         showErrorToast(`Failed to get token after ${MAX_RETRY_ATTEMPTS} attempts`);
       }
@@ -133,8 +132,9 @@ export const TrainerHomePage = () => {
 
   const onMessageFCM = async () => {
     //서비스워커의 토큰은 한번 등록하면 안바뀜
-    if (!('serviceWorker' in navigator) && !('Notification' in window)) {
-      return;
+    let messaging;
+    if ('serviceWorker' in navigator && 'Notification' in window) {
+      messaging = getMessaging(firebaseApp);
     }
     const registration = await navigator.serviceWorker.register(
       '/firebase-messaging-sw.js'
@@ -147,11 +147,11 @@ export const TrainerHomePage = () => {
     }
 
     if (!localStorage.getItem('serviceWorkerRegistration')) {
-      if (registration) {
+      if (registration && messaging) {
         try {
-          await attemptToGetToken(registration);
+          await attemptToGetToken(messaging, registration);
         } catch (e) {
-          await attemptToGetToken(registration);
+          await attemptToGetToken(messaging, registration);
         }
       }
     }
