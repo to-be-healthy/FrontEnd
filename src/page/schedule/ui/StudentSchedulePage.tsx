@@ -33,6 +33,7 @@ import { cn, twSelector } from '@/shared/utils';
 dayjs.extend(isBetween);
 import { useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
+import Image from 'next/image';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { DateFormatter, DayProps } from 'react-day-picker';
 
@@ -227,7 +228,9 @@ export const StudentSchedulePage = () => {
             </article>
 
             {isPending ? (
-              <p>로딩중...</p>
+              <div className='flex h-full items-center justify-center'>
+                <Image src='/images/loading.gif' width={30} height={30} alt='loading' />
+              </div>
             ) : (
               <div className='p-7'>
                 {scheduleListData?.morning !== null && (

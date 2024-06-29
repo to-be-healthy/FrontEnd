@@ -5,7 +5,7 @@ dayjs.locale('ko');
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 import dayjs from 'dayjs';
-import { getMessaging, getToken } from 'firebase/messaging';
+import { getMessaging, getToken, Messaging } from 'firebase/messaging';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
@@ -55,7 +55,6 @@ export const StudentHomePage = () => {
   const { data: homeAlarmData } = useHomeAlarmQuery();
   const { mutate } = useRegisterTokenMutation();
 
-  const [token, setToken] = useState('');
   const month = dayjs(new Date()).format('YYYY-MM');
   const nextScheduledDay = data?.myReservation
     ? dayjs(data?.myReservation?.lessonDt).format('MM.DD (ddd)')
@@ -68,9 +67,8 @@ export const StudentHomePage = () => {
     setIsOpen((prev) => !prev);
   };
 
-  const messaging = getMessaging(firebaseApp);
-
   const attemptToGetToken = async (
+    messaging: Messaging,
     registration: ServiceWorkerRegistration,
     attempt = 1
   ) => {
@@ -79,7 +77,6 @@ export const StudentHomePage = () => {
         vapidKey: process.env.VAPIDKEY,
         serviceWorkerRegistration: registration,
       });
-      setToken(currentToken);
       if (currentToken) {
         mutate(currentToken, {
           onSuccess: () => {
@@ -92,7 +89,7 @@ export const StudentHomePage = () => {
       }
     } catch (error) {
       if (attempt < MAX_RETRY_ATTEMPTS) {
-        await attemptToGetToken(registration, attempt + 1);
+        await attemptToGetToken(messaging, registration, attempt + 1);
       } else {
         showErrorToast(`Failed to get token after ${MAX_RETRY_ATTEMPTS} attempts`);
       }
@@ -101,12 +98,9 @@ export const StudentHomePage = () => {
 
   const onMessageFCM = async () => {
     //서비스워커의 토큰은 한번 등록하면 안바뀜
-    // eslint-disable-next-line no-console
-    console.log('토큰등록로직');
-    if (!('serviceWorker' in navigator) && !('Notification' in window)) {
-      // eslint-disable-next-line no-console
-      console.log('리턴');
-      return;
+    let messaging;
+    if ('serviceWorker' in navigator && 'Notification' in window) {
+      messaging = getMessaging(firebaseApp);
     }
 
     const registration = await navigator.serviceWorker.register(
@@ -115,18 +109,16 @@ export const StudentHomePage = () => {
 
     const permission = await Notification.requestPermission();
     if (permission !== 'granted') {
-      // eslint-disable-next-line no-console
-      console.log(permission);
       alert('알림을 허용해 주세요.');
       return;
     }
 
     if (!localStorage.getItem('serviceWorkerRegistration')) {
-      if (registration) {
+      if (registration && messaging) {
         try {
-          await attemptToGetToken(registration);
+          await attemptToGetToken(messaging, registration);
         } catch (e) {
-          await attemptToGetToken(registration);
+          await attemptToGetToken(messaging, registration);
         }
       }
     }
@@ -157,7 +149,6 @@ export const StudentHomePage = () => {
           </div>
         ) : (
           <>
-            <p>{token}</p>
             <article className='mb-7'>
               {/* 수강권 있을때 */}
               {data?.course && (

@@ -3,7 +3,7 @@
 import { useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useEffect, useRef, useState } from 'react';
+import { createRef, RefObject, useEffect, useRef, useState } from 'react';
 
 import {
   AppendNewExerciseType,
@@ -41,20 +41,25 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
 
   const [open, setOpen] = useState(false);
   const [content, setContent] = useState('');
-  const [viewMySelf, setViewMySelf] = useState(true);
+  const [viewMySelf, setViewMySelf] = useState(false);
   const [completedExercises, setCompletedExercises] = useState<ComplexExercise[]>([]);
 
-  const setNumRef = useRef<HTMLInputElement>(null);
-  const numberOfCyclesRef = useRef<HTMLInputElement>(null);
-  const weightRef = useRef<HTMLInputElement>(null);
+  const setNumRef = useRef<RefObject<HTMLInputElement>[]>([]);
+  const numberOfCyclesRef = useRef<RefObject<HTMLInputElement>[]>([]);
+  const weightRef = useRef<RefObject<HTMLInputElement>[]>([]);
 
   const appendExcercise = (newExcerciseTypes: ExerciseType[]) => {
-    const newExcercises = newExcerciseTypes.map((item) => ({
-      ...item,
-      setNum: 0,
-      weight: 0,
-      numberOfCycles: 0,
-    }));
+    const newExcercises = newExcerciseTypes.map((item) => {
+      setNumRef.current.push(createRef<HTMLInputElement>());
+      numberOfCyclesRef.current.push(createRef<HTMLInputElement>());
+      weightRef.current.push(createRef<HTMLInputElement>());
+      return {
+        ...item,
+        setNum: 0,
+        weight: 0,
+        numberOfCycles: 0,
+      };
+    });
     setCompletedExercises((prev) => [...prev, ...newExcercises]);
   };
 
@@ -89,7 +94,7 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
     );
   };
 
-  const buttonDisabled = !content || completedExercises.length === 0;
+  const buttonDisabled = completedExercises.length === 0;
 
   useEffect(() => {
     if (data && types) {
@@ -100,6 +105,9 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
       setCompletedExercises(
         completedExercises.map((item) => {
           const type = types.find((type) => type.exerciseId === item.exerciseId);
+          setNumRef.current.push(createRef<HTMLInputElement>());
+          numberOfCyclesRef.current.push(createRef<HTMLInputElement>());
+          weightRef.current.push(createRef<HTMLInputElement>());
           return {
             ...item,
             category: type?.category ?? '',
@@ -202,7 +210,7 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
             <IconPlus width={14} height={14} />
           </Button>
           {completedExercises.length > 0 &&
-            completedExercises.map((completedExcercise) => (
+            completedExercises.map((completedExcercise, index) => (
               <div
                 key={completedExcercise.exerciseId}
                 className='flex w-full flex-col gap-7 rounded-lg border border-gray-200 px-6 py-7'>
@@ -226,14 +234,14 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
                       )}
                       onClick={() => {
-                        setNumRef.current?.focus();
-                        setNumRef.current?.setSelectionRange(
+                        setNumRef.current[index].current?.focus();
+                        setNumRef.current[index].current?.setSelectionRange(
                           String(completedExcercise.setNum).length,
                           String(completedExcercise.setNum).length
                         );
                       }}>
                       <input
-                        ref={setNumRef}
+                        ref={setNumRef.current[index]}
                         type='text'
                         value={completedExcercise.setNum}
                         pattern='[0-9]*'
@@ -270,14 +278,14 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
                       )}
                       onClick={() => {
-                        numberOfCyclesRef.current?.focus();
-                        numberOfCyclesRef.current?.setSelectionRange(
+                        numberOfCyclesRef.current[index].current?.focus();
+                        numberOfCyclesRef.current[index].current?.setSelectionRange(
                           String(completedExcercise.numberOfCycles).length,
                           String(completedExcercise.numberOfCycles).length
                         );
                       }}>
                       <input
-                        ref={numberOfCyclesRef}
+                        ref={numberOfCyclesRef.current[index]}
                         type='text'
                         value={completedExcercise.numberOfCycles}
                         pattern='[0-9]*'
@@ -315,14 +323,14 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
                         'focus-within:border focus-within:border-primary focus-within:bg-white'
                       )}
                       onClick={() => {
-                        weightRef.current?.focus();
-                        weightRef.current?.setSelectionRange(
+                        weightRef.current[index].current?.focus();
+                        weightRef.current[index].current?.setSelectionRange(
                           String(completedExcercise.weight).length,
                           String(completedExcercise.weight).length
                         );
                       }}>
                       <input
-                        ref={weightRef}
+                        ref={weightRef.current[index]}
                         type='text'
                         value={completedExcercise.weight}
                         pattern='[0-9]*'
