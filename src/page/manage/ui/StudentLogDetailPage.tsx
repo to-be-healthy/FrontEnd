@@ -24,7 +24,7 @@ const StudentLogDetailPage = ({ logId }: Props) => {
   const router = useRouter();
   const { data } = useLogDetailQuery({ lessonHistoryId: logId });
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
 
   const value = useLogStudentComment({ logId, ref: inputRef });
 

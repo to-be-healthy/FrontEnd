@@ -86,7 +86,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
   const { mutate: cancelLikeMutate } = useDietCancelLikeMutation();
   const { mutate: deleteDietMutate } = useDeleteDietMutation();
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const value = useDietComment({ dietId, ref: inputRef });
   const dietValue = dayjs(dietData?.eatDate).format('MM월 DD일 (dd)');
   const todayValue = dayjs(new Date()).format('MM월 DD일 (dd)');

@@ -25,7 +25,7 @@ const CommunityDetailPage = ({ workoutHistoryId }: { workoutHistoryId: number })
 
   const { data } = useWorkoutDetailQuery(workoutHistoryId);
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const value = useWorkoutComment({
     workoutHistoryId,
     ref: inputRef,

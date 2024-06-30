@@ -1,7 +1,7 @@
 import { useCreateDietCommentMutation, useEditDietCommentMutation } from '@/entity/diet';
 import { IconArrowTop } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Button, Input } from '@/shared/ui';
+import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
 import { useCommentContext } from '../hooks/useComment';
@@ -93,12 +93,12 @@ const CommentInput = () => {
 
       <div className={cn('flex items-center justify-between space-x-4')}>
         <div className='flex-1 rounded-md border px-6 py-[13px] focus-within:border-primary-500'>
-          <Input
+          <textarea
             ref={ref}
             placeholder='댓글을 입력하세요.'
             value={text}
             onChange={changeText}
-            className='w-full'
+            className='hide-scrollbar h-8 w-full resize-none appearance-none border-0 align-middle leading-4 outline-none outline outline-0 ring-0 '
           />
         </div>
         {text && (

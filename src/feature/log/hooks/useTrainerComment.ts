@@ -33,7 +33,7 @@ type CommentTarget = {
 interface Props {
   memberId: number;
   logId: number;
-  ref: MutableRefObject<HTMLInputElement | null>;
+  ref: MutableRefObject<HTMLTextAreaElement | null>;
 }
 
 const useTrainerComment = ({ memberId, logId, ref }: Props) => {
@@ -48,7 +48,7 @@ const useTrainerComment = ({ memberId, logId, ref }: Props) => {
     });
   };
 
-  const changeText = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const changeText = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   }, []);
 
