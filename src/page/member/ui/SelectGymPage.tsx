@@ -35,7 +35,7 @@ export const SelectGymPage = () => {
 
     if (auth.memberType === 'TRAINER') {
       mutate(
-        { memberType: auth.memberType, gymId: selectGymId, joinCode: Number(authValue) },
+        { memberType: auth.memberType, gymId: selectGymId, joinCode: authValue },
         {
           onSuccess: () => {
             setUserInfo({ ...auth, gymId: selectGymId });
