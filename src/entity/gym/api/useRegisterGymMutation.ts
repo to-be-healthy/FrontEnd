@@ -6,7 +6,7 @@ import { BaseError, BaseResponse } from '@/shared/api';
 interface RegisterGymRequest {
   memberType: string;
   gymId: number;
-  joinCode?: number;
+  joinCode?: string;
 }
 
 export const useRegisterGymMutation = () => {

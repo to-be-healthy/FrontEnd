@@ -1,5 +1,7 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
+
 import { Typography } from '@/shared/mixin';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -10,6 +12,14 @@ interface Props {
 }
 
 export const GymVerificationCode = ({ authValue, setAuthValue }: Props) => {
+  const ref = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (ref.current) {
+      ref.current.focus();
+    }
+  }, []);
+
   return (
     <div>
       <p className={cn(Typography.HEADING_1, 'mb-[30px] text-center')}>
@@ -17,6 +27,7 @@ export const GymVerificationCode = ({ authValue, setAuthValue }: Props) => {
       </p>
       <div className='flex justify-center'>
         <InputOTP
+          ref={ref}
           className='h-60px'
           maxLength={6}
           value={authValue}

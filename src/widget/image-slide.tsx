@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useState } from 'react';
 
 import { ImageFile } from '@/feature/log';
+import { IconWhiteClose } from '@/shared/assets';
 import { FLEX_CENTER } from '@/shared/mixin';
 import {
   Card,
@@ -23,9 +24,13 @@ interface ImageSlideProps {
 const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
   const [enlargeState, setEnlargeState] = useState(false);
 
-  const changeEnlargeMode = () => {
-    if (!enlargeMode) return;
+  const openDetailView = () => {
+    if (!enlargeMode || enlargeState) return;
     setEnlargeState((prev) => !prev);
+  };
+
+  const closeDetailView = () => {
+    setEnlargeState(false);
   };
 
   return (
@@ -34,8 +39,8 @@ const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
         enlargeState &&
           'fixed left-1/2 top-0 flex h-full w-[var(--max-width)] max-w-[var(--max-width)] -translate-x-1/2 items-center justify-center bg-black'
       )}
-      onClick={changeEnlargeMode}>
-      <Carousel className={cn(enlargeState && '')}>
+      onClick={openDetailView}>
+      <Carousel>
         <CarouselContent className={cn('bg-white p-0')}>
           {images.map((file, index) => (
             <CarouselItem key={index}>
@@ -48,7 +53,7 @@ const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
                 )}>
                 <CardContent className={cn(FLEX_CENTER, 'w-full')}>
                   <Image
-                    src={`${file.fileUrl}?w=1200?q=99`}
+                    src={`${file.fileUrl}?w=${enlargeState ? 1200 : 400}?q=99`}
                     alt={'React Rendezvous'}
                     width={300}
                     height={300}
@@ -67,6 +72,11 @@ const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
         </CarouselContent>
         <CarouselNav className={cn(enlargeState && 'absolute bottom-[56px]')} />
       </Carousel>
+      <div className='absolute left-0 top-0 z-50 mt-8 px-7 py-6'>
+        <button onClick={closeDetailView}>
+          <IconWhiteClose stroke='white' />
+        </button>
+      </div>
     </div>
   );
 };
