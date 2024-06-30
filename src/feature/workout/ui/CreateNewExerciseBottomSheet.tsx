@@ -79,7 +79,7 @@ const CreateNewExerciseBottomSheet = ({
 
     if (open) {
       setTimeout(() => {
-        inputRef.current?.focus();
+        inputRef.current?.blur();
       }, 0);
     }
   }, [defaultSearch, open]);
