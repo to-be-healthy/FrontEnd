@@ -1,17 +1,18 @@
 'use client';
 
 import dayjs from 'dayjs';
-import { useState } from 'react';
 
 import { useTrainerScheduleQuery } from '@/feature/schedule/api/useTrainerScheduleQuery';
-import { useShowErrorToast } from '@/shared/hooks';
+import { useQueryString, useShowErrorToast } from '@/shared/hooks';
 import { getStartOfWeek } from '@/shared/utils';
 
 import { useTrainerCreateSchedulesMutation } from '../api/useTrainerCreateSchedulesMutation';
 
 const useWeeklySchedules = () => {
   const currentStartOfWeek = getStartOfWeek();
-  const [startDate, setStartDate] = useState(currentStartOfWeek);
+  const { getQueryString, setQueryString } = useQueryString();
+  const date = getQueryString('date');
+  const startDate = date ? dayjs(date, 'YYYY-MM-DD').toDate() : currentStartOfWeek;
   const { showErrorToast } = useShowErrorToast();
 
   const {
@@ -26,7 +27,7 @@ const useWeeklySchedules = () => {
   const { mutate, isPending: creationPending } = useTrainerCreateSchedulesMutation();
 
   const changeWeek = (date: Date) => {
-    setStartDate(date);
+    setQueryString('date', dayjs(date).format('YYYY-MM-DD'));
   };
 
   const weeklySchedules =
