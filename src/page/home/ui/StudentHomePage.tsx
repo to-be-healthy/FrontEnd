@@ -107,11 +107,12 @@ export const StudentHomePage = () => {
       '/firebase-messaging-sw.js'
     );
 
-    const permission = await Notification.requestPermission();
-    if (permission !== 'granted') {
-      alert('알림을 허용해 주세요.');
-      return;
-    }
+    // TODO: 첫로그인시에만 띄우기
+    // const permission = await Notification.requestPermission();
+    // if (permission !== 'granted') {
+    //   alert('알림을 허용해 주세요.');
+    //   return;
+    // }
 
     if (!localStorage.getItem('serviceWorkerRegistration')) {
       if (registration && messaging) {
