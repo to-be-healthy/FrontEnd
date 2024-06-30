@@ -1,7 +1,6 @@
 'use client';
 
 /* eslint-disable @next/next/no-img-element */
-import Image from 'next/image';
 import { useState } from 'react';
 
 import { MealType } from '@/entity/diet';
@@ -125,7 +124,6 @@ const dietText = {
 
 export const DailyDiet = ({ diet }: DailyDietProps) => {
   const [issheetOpen, setIsSheetOpen] = useState(false);
-  const { uploadStates } = useDietContext();
 
   return (
     <div className='flex w-[calc((100%-12px)/3)] flex-col items-center justify-between'>
@@ -168,19 +166,14 @@ export const DailyDiet = ({ diet }: DailyDietProps) => {
         {!diet.fast && (
           <Sheet open={issheetOpen} onOpenChange={setIsSheetOpen}>
             <SheetTrigger className='flex h-[88px] w-full cursor-pointer items-center justify-center rounded-md bg-gray-100'>
-              {uploadStates[diet.type] && (
-                <div className='flex h-[88px] w-full items-center justify-center'>
-                  <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
-                </div>
-              )}
-              {diet?.fileUrl && !uploadStates[diet.type] && (
+              {diet?.fileUrl && (
                 <img
                   src={diet?.fileUrl}
                   alt={`${diet.type} image`}
                   className='custom-image rounded-md'
                 />
               )}
-              {!diet?.fileUrl && !uploadStates[diet.type] && (
+              {!diet?.fileUrl && (
                 <IconPlus width={20} height={20} fill={'var(--gray-500)'} />
               )}
             </SheetTrigger>

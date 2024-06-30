@@ -9,6 +9,7 @@ import { ChangeEvent } from 'react';
 import { useAuthAction } from '@/entity/auth';
 import {
   useDeleteProfileImageMutation,
+  useLogOutMutation,
   useMyInfoQuery,
   useSetProfileImageMutation,
 } from '@/feature/member';
@@ -42,6 +43,7 @@ const EditMyInfoPage = () => {
   const { data } = useMyInfoQuery();
   const { mutate: deleteProfileImage } = useDeleteProfileImageMutation();
   const { mutate: setProfileImage } = useSetProfileImageMutation();
+  const { mutate: logoutMutate } = useLogOutMutation();
 
   const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -78,6 +80,26 @@ const EditMyInfoPage = () => {
   };
 
   const isSocialAccount = data?.socialType !== 'NONE';
+
+  const onClickLogOut = () => {
+    logoutMutate(undefined, {
+      onSuccess: async () => {
+        deleteUserInfo();
+        localStorage.clear();
+        if ('serviceWorker' in navigator) {
+          const registrations = await navigator.serviceWorker.getRegistrations();
+          for (const registration of registrations) {
+            await registration.unregister();
+          }
+        }
+        router.push('/');
+      },
+      onError: (error) => {
+        const message = error.response?.data?.message ?? '문제가 발생했습니다.';
+        showErrorToast(message);
+      },
+    });
+  };
 
   return (
     <Layout className='bg-white'>
@@ -216,10 +238,7 @@ const EditMyInfoPage = () => {
           <section className='mb-[60px] mt-auto flex w-full items-center justify-center gap-3'>
             <button
               className={cn(Typography.BODY_2, 'bg-transparent text-gray-500')}
-              onClick={() => {
-                deleteUserInfo();
-                router.push('/');
-              }}>
+              onClick={onClickLogOut}>
               로그아웃
             </button>
             <div className='h-4 w-[1px] bg-gray-300' />

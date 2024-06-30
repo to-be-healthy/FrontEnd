@@ -28,11 +28,7 @@ const dietOrder = ['breakfast', 'lunch', 'dinner'];
 
 const useDiet = () => {
   const [images, setImages] = useState<DietImageType[]>([]);
-  const [uploadStates, setUploadStates] = useState<Record<string, boolean>>({
-    breakfast: false,
-    lunch: false,
-    dinner: false,
-  });
+
   const { showErrorToast } = useShowErrorToast();
   const { mutate: imageMutate } = useCreateS3PresignedUrlMutation();
   const { mutate: s3UploadMutate } = useS3UploadImagesMutation();
@@ -49,10 +45,19 @@ const useDiet = () => {
     const uploadFiles = e.currentTarget.files;
     if (!uploadFiles) return;
 
-    setUploadStates((prev) => ({ ...prev, [type]: true }));
-
     const fileListArray = Array.from(uploadFiles);
     const fileNamesArray = fileListArray.map((file) => file.name);
+
+    const imageUrls = fileListArray.map((file) => URL.createObjectURL(file));
+    const newPreviewImages = imageUrls.map((fileUrl) => ({ fileUrl, type, fast: false }));
+
+    setImages((prevImages) => {
+      const filteredImages = prevImages.filter((image) => image.type !== type);
+      const newImages = [...filteredImages, ...newPreviewImages];
+      setSortedImages(newImages);
+      return newImages;
+    });
+
     imageMutate(fileNamesArray, {
       onSuccess: ({ data }) => {
         const image: ImageType[] = [
@@ -78,7 +83,6 @@ const useDiet = () => {
                 setSortedImages(newImages);
                 return newImages;
               });
-              setUploadStates((prev) => ({ ...prev, [type]: false }));
             },
           }
         );
@@ -182,7 +186,6 @@ const useDiet = () => {
 
   return {
     images,
-    uploadStates,
     setImages: setSortedImages,
     uploadImageDiet,
     onClickCheckFasting,
