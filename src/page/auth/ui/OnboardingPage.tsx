@@ -4,7 +4,6 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { redirect, useRouter, useSearchParams } from 'next/navigation';
 
-import { POLICY_URL, PRIVACY_URL } from '@/entity/auth/consts';
 import { SocialSignIn } from '@/feature/auth';
 import { IconLogo } from '@/shared/assets';
 import IconBack from '@/shared/assets/images/icon_back.svg';
@@ -115,17 +114,15 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
             className={cn(Typography.TITLE_3, 'mt-5 text-gray-500 hover:no-underline')}>
             <Link href={`/sign-in?type=${memberType}`}>아이디 로그인</Link>
           </Button>
-          <p className='w-2/3 break-keep pt-10 text-center text-[11px] text-gray-400'>
-            로그인 시{' '}
-            <a target='_blank' href={PRIVACY_URL} className='underline' rel='noreferrer'>
-              개인정보 처리방침
-            </a>{' '}
-            및{' '}
-            <a target='_blank' href={POLICY_URL} className='underline' rel='noreferrer'>
-              서비스 이용약관
-            </a>
-            에 동의함으로 간주합니다.
-          </p>
+          <Link
+            href={'/cs'}
+            className={cn(
+              Typography.BODY_4_REGULAR,
+              'mt-10 w-2/3 break-keep text-center text-gray-400 underline underline-offset-4'
+            )}
+            rel='noreferrer'>
+            건강해짐 고객센터
+          </Link>
         </div>
       </Layout.Contents>
     </Layout>
