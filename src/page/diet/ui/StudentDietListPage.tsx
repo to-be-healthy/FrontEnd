@@ -233,7 +233,7 @@ export const StudentDietListPage = () => {
               </ul>
 
               {!data?.pages[data?.pages.length - 1].isLast && hasNextPage && (
-                <div ref={ref} className='h-7 p-3 text-center'>
+                <div ref={ref} className='flex h-7 items-center justify-center p-3'>
                   <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
                 </div>
               )}

@@ -46,6 +46,7 @@ const ImageUpload = ({ type, registerDiet }: SelectImageProps) => {
     if (files) {
       const fileListArray = Array.from(files);
       const fileNamesArray = fileListArray.map((file) => file.name);
+
       imageMutate(fileNamesArray, {
         onSuccess: ({ data }) => {
           const image: ImageType[] = [
