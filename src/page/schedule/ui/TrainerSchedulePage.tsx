@@ -1,18 +1,20 @@
 'use client';
 
+import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
 import { useWeeklySchedules, WeeklyTimetable } from '@/feature/schedule';
-import { IconGear } from '@/shared/assets';
+import { IconCalendarX, IconGear } from '@/shared/assets';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
-import { cn } from '@/shared/utils';
+import { cn, getStartOfWeek } from '@/shared/utils';
 import { Layout, WeekPicker } from '@/widget';
 
 export const TrainerSchedulePage = () => {
   const { startDate, changeWeek, weeklySchedules, isPending, createWeeklySchedules } =
     useWeeklySchedules();
+  const isBefore = dayjs(startDate.toDateString()).isBefore(getStartOfWeek(), 'day');
 
   return (
     <Layout type='trainer' className='bg-white'>
@@ -32,7 +34,7 @@ export const TrainerSchedulePage = () => {
         {!isPending && weeklySchedules !== null && (
           <WeeklyTimetable startDate={startDate} schedules={weeklySchedules} />
         )}
-        {!isPending && weeklySchedules === null && (
+        {!isPending && weeklySchedules === null && !isBefore && (
           <div className={cn(FLEX_CENTER, 'h-full w-full flex-col space-y-6')}>
             <Button size='lg' onClick={createWeeklySchedules}>
               일정 등록
@@ -44,7 +46,16 @@ export const TrainerSchedulePage = () => {
               )}>{`회원님들은 매주 일요일 자정 이후에\n해당 주 예약이 가능합니다.`}</p>
           </div>
         )}
-        {/* TODO) 스케줄이 없고(null) 지난 주의 경우 - 화면 요청 중 */}
+        {!isPending && weeklySchedules === null && isBefore && (
+          <div className={cn(FLEX_CENTER, 'h-full w-full flex-col gap-1')}>
+            <IconCalendarX />
+            <p
+              className={cn(
+                Typography.HEADING_5,
+                'whitespace-pre-wrap break-keep text-center text-gray-400'
+              )}>{`예약된 수업이 없습니다.`}</p>
+          </div>
+        )}
       </Layout.Contents>
     </Layout>
   );
