@@ -1,9 +1,5 @@
-import {
-  GOOGLE_SOCIAL_AUTH_URL,
-  KAKAO_SOCIAL_AUTH_URL,
-  NAVER_SOCIAL_AUTH_URL,
-} from '@/entity/auth';
-import { IconGoogleLogo, IconKakaoLogo, IconNaverLogo } from '@/shared/assets';
+import { KAKAO_SOCIAL_AUTH_URL, NAVER_SOCIAL_AUTH_URL } from '@/entity/auth';
+import { IconKakaoLogo, IconNaverLogo } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -44,14 +40,14 @@ export const SocialSignIn = ({ memberType, uuid }: Props) => {
         <IconNaverLogo />
         네이버로 시작하기
       </Button>
-      <Button
+      {/* <Button
         className='h-[48px] gap-x-2 rounded-xl border border-gray-600 bg-white p-4 text-gray-600'
         onClick={() => {
           window.location.href = `${GOOGLE_SOCIAL_AUTH_URL}&state=${generateClientState()}`;
         }}>
         <IconGoogleLogo />
         Google로 시작하기
-      </Button>
+      </Button> */}
     </div>
   );
 };
