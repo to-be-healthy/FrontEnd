@@ -3,14 +3,14 @@ import { Pageable } from '@/shared/api';
 
 interface DietImageData {
   fast: boolean;
-  fileOrder: number;
+  fileOrder?: number;
   fileUrl: string | null;
   type: MealType;
 }
 
 interface DietImageType {
   fileUrl: string | null;
-  fileOrder: number;
+  fileOrder?: number;
   type: MealType;
   fast: boolean;
 }
