@@ -35,7 +35,7 @@ type CommentTarget = {
 
 interface Props {
   workoutHistoryId: number;
-  ref: MutableRefObject<HTMLInputElement | null>;
+  ref: MutableRefObject<HTMLTextAreaElement | null>;
 }
 
 const useWorkoutComment = ({ workoutHistoryId, ref }: Props) => {
@@ -52,7 +52,7 @@ const useWorkoutComment = ({ workoutHistoryId, ref }: Props) => {
   const { mutate: deleteCommentMutate } =
     useDeleteWorkoutCommentMutation(workoutHistoryId);
 
-  const changeText = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+  const changeText = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
     setText(e.target.value);
   }, []);
 

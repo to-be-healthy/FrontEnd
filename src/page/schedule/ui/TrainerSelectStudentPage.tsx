@@ -28,7 +28,7 @@ const TrainerSelectStudentPage = ({ scheduleId }: { scheduleId: number }) => {
           await queryClient.refetchQueries({
             queryKey: ['schedule'].filter(Boolean),
           });
-          router.push('/trainer/schedule');
+          router.back();
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';

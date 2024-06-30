@@ -189,62 +189,6 @@
 }
 
 @layer utilities {
-  .typography-heading-1 {
-    @apply text-[24px]/[130%] font-bold;
-  }
-
-  .typography-heading-2 {
-    @apply text-[22px]/[130%] font-bold;
-  }
-
-  .typography-heading-3 {
-    @apply text-[20px]/[130%] font-bold;
-  }
-
-  .typography-heading-4 {
-    @apply text-[18px]/[130%] font-bold;
-  }
-
-  .typography-heading-5 {
-    @apply text-[13px]/[150%] font-semibold;
-  }
-
-  .typography-title-1 {
-    @apply text-[16px]/[140%] font-bold;
-  }
-
-  .typography-title-2 {
-    @apply text-[15px]/[140%] font-semibold;
-  }
-
-  .typography-title-3 {
-    @apply text-[14px]/[150%] font-semibold;
-  }
-
-  .typography-body-1 {
-    @apply text-[16px]/[150%] font-normal;
-  }
-
-  .typography-body-2 {
-    @apply text-[14px]/[150%] font-normal;
-  }
-
-  .typography-body-3 {
-    @apply text-[13px]/[150%] font-normal;
-  }
-
-  .typography-body-4 {
-    @apply text-[12px]/[150%] font-normal;
-  }
-}
-
-@layer utilities {
-  .flex-center {
-    @apply flex items-center justify-center;
-  }
-}
-
-@layer utilities {
   /* input-otp width, clip-path 덮어쓰기 */
   .input-otp-override {
     width: 100% !important;

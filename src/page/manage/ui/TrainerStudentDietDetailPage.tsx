@@ -68,7 +68,7 @@ export const TrainerStudentDietDetailPage = ({ memberId, dietId }: Props) => {
   const { mutate: likeMutate } = useDietLikeMutation();
   const { mutate: cancelLikeMutate } = useDietCancelLikeMutation();
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const value = useDietComment({ dietId, ref: inputRef });
   const dietDate = dayjs(dietData?.eatDate).format('MM월 DD일 (dd)');
   const todayValue = dayjs(new Date()).format('MM월 DD일 (dd)');
@@ -187,7 +187,7 @@ export const TrainerStudentDietDetailPage = ({ memberId, dietId }: Props) => {
                                       </div>
                                       <div className='flex h-[calc(100%-56px)] w-full items-center justify-center'>
                                         <img
-                                         src={`${meal.dietFile.fileUrl}?w=1200&q=90`}
+                                          src={`${meal.dietFile.fileUrl}?w=1200&q=90`}
                                           alt={meal.type}
                                           className='max-w-screen h-full object-contain'
                                         />

@@ -31,7 +31,7 @@ interface Props {
 const TrainerLogDetailPage = ({ memberId, logId }: Props) => {
   const { data } = useLogDetailQuery({ lessonHistoryId: logId });
 
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const inputRef = useRef<HTMLTextAreaElement | null>(null);
   const value = useLogTrainerComment({ memberId, logId, ref: inputRef });
 
   return (
