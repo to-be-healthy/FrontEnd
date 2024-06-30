@@ -2,7 +2,6 @@ import '@/app/_styles/global.css';
 
 import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata, Viewport } from 'next';
-import Head from 'next/head';
 import { Suspense } from 'react';
 
 import { KakaoScript, MSWComponent, QueryProvider } from './_providers';
@@ -32,12 +31,6 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang='ko'>
-      <Head>
-        <meta
-          name='viewport'
-          content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0'
-        />
-      </Head>
       <KakaoScript />
       <body>
         <QueryProvider>
