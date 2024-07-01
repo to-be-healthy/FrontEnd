@@ -218,7 +218,7 @@ export const TrainerHomePage = () => {
           {!hasTodaySchedule && (
             <div className='px-7'>
               <Card className={cn(FLEX_CENTER, 'h-[100px] w-full gap-1 shadow-sm')}>
-                {homeInfo?.todaySchedule.scheduleTotalCount === 0 && (
+                {homeInfo?.todaySchedule.schedule.length === 0 && (
                   <>
                     <IconCalendarX width={42} />
                     <p className={cn(Typography.HEADING_5, 'text-gray-500')}>
