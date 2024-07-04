@@ -75,7 +75,7 @@ const FindPasswordPage = () => {
                       placeholder='이름 입력'
                       className={cn(
                         Typography.BODY_1,
-                        'bg-transparent placeholder:text-gray-500'
+                        'w-full bg-transparent placeholder:text-gray-500'
                       )}
                       {...register('name', {
                         required: {
@@ -107,10 +107,11 @@ const FindPasswordPage = () => {
                     <Input
                       id='email'
                       type='email'
+                      inputMode='email'
                       placeholder='이메일 주소 입력'
                       className={cn(
                         Typography.BODY_1,
-                        'bg-transparent placeholder:text-gray-500'
+                        'w-full bg-transparent placeholder:text-gray-500'
                       )}
                       {...register('email', {
                         required: {
