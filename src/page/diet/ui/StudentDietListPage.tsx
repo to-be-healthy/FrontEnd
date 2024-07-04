@@ -12,8 +12,8 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { useAuthSelector } from '@/entity/auth';
 import { MealType, useDietListQuery } from '@/entity/diet';
+import { useMyInfoQuery } from '@/feature/member';
 import {
   IconArrowLeft,
   IconChat,
@@ -52,7 +52,7 @@ export const StudentDietListPage = () => {
   const month = searchParams.get('month');
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { name } = useAuthSelector(['name']);
+  const { data: userInfo } = useMyInfoQuery();
 
   const [selectedMonth, setSelectedMonth] = useState<Date>(dayjs(month).toDate());
   const [ref, inView] = useInView({
@@ -94,6 +94,8 @@ export const StudentDietListPage = () => {
     };
   }, [queryClient]);
 
+  const title = userInfo?.name ? `${userInfo.name}님 식단` : '식단';
+
   return (
     <Layout>
       {isPending && (
@@ -114,7 +116,7 @@ export const StudentDietListPage = () => {
                 Typography.HEADING_4_SEMIBOLD,
                 'absolute left-1/2 translate-x-[-50%] text-black'
               )}>
-              {name}님 식단
+              {title}
             </h2>
             <Link href='/student/diet/register'>
               <IconPlus width={20} height={20} />
