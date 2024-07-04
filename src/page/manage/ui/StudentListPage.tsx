@@ -11,7 +11,7 @@ import { Layout } from '@/widget';
 
 const StudentListPage = () => {
   return (
-    <Layout className='flex flex-col'>
+    <Layout type='trainer'>
       <Layout.Header className='bg-transparent'>
         <Link href={'/trainer'}>
           <IconBack />

@@ -31,7 +31,11 @@ const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
           <Link
             href='/trainer'
             className='flex flex-col items-center justify-between gap-y-2'>
-            {pathname === '/trainer' ? <IconHomeFilled /> : <IconHomeOutlined />}
+            {pathname === '/trainer' || pathname === '/trainer/manage' ? (
+              <IconHomeFilled />
+            ) : (
+              <IconHomeOutlined />
+            )}
             <span
               className={cn(
                 Typography.NAV_TEXT,
