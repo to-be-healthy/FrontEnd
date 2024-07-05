@@ -1,7 +1,6 @@
 import { Children, HTMLAttributes, isValidElement, ReactNode } from 'react';
 
 import { LowercaseMemberType } from '@/entity/auth';
-import { Toaster } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
 import { StudentNavigation, TrainerNavigation } from './navigation';
@@ -36,7 +35,6 @@ export const Layout = ({ type, className, children, ...props }: LayoutProps) => 
         {type === 'trainer' && <TrainerNavigation />}
         {type === 'student' && <StudentNavigation />}
         {type === undefined && footer}
-        <Toaster />
       </div>
     </div>
   );

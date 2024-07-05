@@ -5,6 +5,7 @@ import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 
 import { KakaoScript, MSWComponent, QueryProvider } from './_providers';
+import { ToastProvider } from './_providers/ToastProvider';
 
 export const viewport: Viewport = {
   width: 'device-width',
@@ -37,6 +38,7 @@ export default function RootLayout({
           <MSWComponent />
           <Suspense>{children}</Suspense>
         </QueryProvider>
+        <ToastProvider />
       </body>
       <GoogleAnalytics gaId={gaId} />
     </html>
