@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { useAuthSelector } from '@/entity/auth';
+import { useMyInfoQuery } from '@/feature/member';
 import { NoWorkout, useWorkoutQuery, WorkoutPost } from '@/feature/workout';
 import { IconArrowLeft, IconPlus } from '@/shared/assets';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
@@ -16,9 +17,10 @@ import { Layout, MonthPicker } from '@/widget';
 
 const StudentWorkoutPage = () => {
   const router = useRouter();
-  const { name, memberId } = useAuthSelector(['name', 'memberId']);
+  const { memberId } = useAuthSelector(['memberId']);
+  const { data: userInfo } = useMyInfoQuery();
 
-  if (!name || !memberId) {
+  if (!memberId) {
     throw new Error();
   }
 
@@ -42,6 +44,8 @@ const StudentWorkoutPage = () => {
     }
   }, [fetchNextPage, hasNextPage, inView]);
 
+  const title = userInfo?.name ? `${userInfo.name}님 운동기록` : '운동기록';
+
   return (
     <Layout>
       <Layout.Header>
@@ -53,7 +57,7 @@ const StudentWorkoutPage = () => {
             Typography.HEADING_4_SEMIBOLD,
             'absolute left-1/2 -translate-x-1/2'
           )}>
-          {name}님 운동기록
+          {title}
         </h1>
         <Link href={'/student/workout/create'}>
           <IconPlus width={20} height={20} fill='black' />
