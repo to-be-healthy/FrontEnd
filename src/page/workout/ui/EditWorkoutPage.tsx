@@ -118,7 +118,6 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
         })
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pagedTypes]);
 
   if (open) {

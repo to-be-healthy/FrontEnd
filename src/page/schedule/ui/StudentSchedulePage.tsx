@@ -92,7 +92,6 @@ export const StudentSchedulePage = () => {
   const weekStart = dayjs(date).startOf('week');
   const weekEnd = dayjs(date).endOf('week');
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const modifiers = {
     hidden: (day: string | number | Date | dayjs.Dayjs | null | undefined) =>
       isToggle && !dayjs(day).isBetween(weekStart, weekEnd, null, '[]'),

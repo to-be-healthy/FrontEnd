@@ -21,7 +21,6 @@ export const SetupPassword = () => {
   useEffect(() => {
     clearErrors('password');
     clearErrors('passwordConfirm');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [passwordValue, passwordConfirmValue]);
 
   return (

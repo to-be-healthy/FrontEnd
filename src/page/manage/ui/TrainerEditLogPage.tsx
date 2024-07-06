@@ -76,7 +76,6 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
       setContent(data.content);
       updateImages(data.files);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   const submitButtonDisabled = !content;

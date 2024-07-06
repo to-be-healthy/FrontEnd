@@ -95,8 +95,6 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
         : 0;
       setSelectedLesson(unwrittenLessonList[index]);
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unwrittenLessonList]);
 
   if (selectLessonMode) {
