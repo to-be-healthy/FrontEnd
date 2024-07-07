@@ -72,11 +72,13 @@ const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
         </CarouselContent>
         <CarouselNav className={cn(enlargeState && 'absolute bottom-[56px]')} />
       </Carousel>
-      <div className='absolute left-0 top-0 z-50 mt-8 px-7 py-6'>
-        <button onClick={closeDetailView}>
-          <IconWhiteClose stroke='white' />
-        </button>
-      </div>
+      {enlargeState && (
+        <div className='absolute left-0 top-0 z-50 mt-8 px-7 py-6'>
+          <button onClick={closeDetailView}>
+            <IconWhiteClose stroke='white' />
+          </button>
+        </div>
+      )}
     </div>
   );
 };

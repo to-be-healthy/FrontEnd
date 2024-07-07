@@ -1,7 +1,6 @@
 'use client';
 import dayjs from 'dayjs';
-import Link from 'next/link';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import {
@@ -54,8 +53,7 @@ interface Props {
 export const StudentDietEditPage = ({ dietId }: Props) => {
   const { showErrorToast } = useShowErrorToast();
   const { toast } = useToast();
-  const searchParams = useSearchParams();
-  const month = searchParams.get('month');
+
   const router = useRouter();
   const { images, initialImages } = useDietContext();
 
@@ -111,7 +109,7 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
             ),
             duration: 2000,
           });
-          router.push(`/student/diet/${dietId}/?month=${month}`);
+          router.back();
         },
         onError: (error) => {
           showErrorToast(error?.response?.data.message ?? '');
@@ -147,12 +145,12 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
             </AlertDialogHeader>
             <AlertDialogFooter className='grid w-full grid-cols-2 items-center justify-center gap-3'>
               <AlertDialogAction
-                asChild
+                onClick={() => router.back()}
                 className={cn(
                   Typography.TITLE_1_SEMIBOLD,
                   'mt-0 h-[48px] rounded-md bg-primary-50  text-primary-500'
                 )}>
-                <Link href={`/student/diet/${dietId}?month=${month}`}>확인</Link>
+                확인
               </AlertDialogAction>
               <AlertDialogCancel
                 className={cn(

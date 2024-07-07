@@ -203,7 +203,6 @@ const TrainerScheduleSettingPage = () => {
         classTimeData.lunchStartTime === null && classTimeData.lunchEndTime === null
       );
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [classTimeData]);
 
   useEffect(() => {

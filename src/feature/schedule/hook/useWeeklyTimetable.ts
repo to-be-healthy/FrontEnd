@@ -77,7 +77,6 @@ const useWeeklyTimetable = ({
           return { ...item, date, offset, color };
         })
       ),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     [getScheduleColor, schedules, startDate]
   );
 

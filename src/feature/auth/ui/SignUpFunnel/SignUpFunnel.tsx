@@ -96,7 +96,6 @@ export const SignUpFunnel = ({
       setIsIdVerified(false); //TODO: 중복확인 후 글자 입력시 focus아웃됨
       setIdSuccessMsg('');
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userIdValue]);
 
   const isNextButtonDisabled = () => {

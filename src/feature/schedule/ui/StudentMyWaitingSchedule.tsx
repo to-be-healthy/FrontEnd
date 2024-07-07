@@ -108,7 +108,6 @@ export const StudentMyWaitingSchedule = ({ data }: Props) => {
 
   useEffect(() => {
     handleIsPastDate();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!data) {

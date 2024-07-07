@@ -104,7 +104,6 @@ const PostMetrics = ({
     if (likedState.liked !== defaultLiked) {
       mutateLikedState();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedLikedState]);
 
   return (

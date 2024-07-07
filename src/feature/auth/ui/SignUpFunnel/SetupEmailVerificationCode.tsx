@@ -31,7 +31,6 @@ export const SetupEmailVerificationCode = ({
 
   useEffect(() => {
     clearErrors('emailVerifiedCode');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [verificationCodeValue]);
 
   return (

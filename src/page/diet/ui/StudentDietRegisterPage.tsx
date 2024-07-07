@@ -109,7 +109,6 @@ export const StudentDietRegisterPage = () => {
     );
   };
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const modifiers = {
     hidden: (day: string | number | Date | dayjs.Dayjs | null | undefined) =>
       isArrowToggle &&

@@ -56,7 +56,6 @@ export default function Page({ params }: Props) {
         },
       }
     );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (!code || !state) throw new Error();
