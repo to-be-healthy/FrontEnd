@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
 import { useEditMemoMutation } from '@/feature/manage';
-import { IconCheck, IconError } from '@/shared/assets';
 import IconBack from '@/shared/assets/images/icon_back.svg';
 import { Typography } from '@/shared/mixin';
 import { Button, useToast } from '@/shared/ui';
@@ -20,7 +19,7 @@ interface Props {
 
 const StudentEditMemo = ({ memberId }: Props) => {
   const router = useRouter();
-  const { toast } = useToast();
+  const { successToast, errorToast } = useToast();
   const { memberInfo, refetchMemberInfo } = useStudentInfo(memberId);
   const { mutate } = useEditMemoMutation();
   const memoTextareaRef = useRef<HTMLTextAreaElement>(null);
@@ -34,33 +33,11 @@ const StudentEditMemo = ({ memberId }: Props) => {
       {
         onSuccess: async () => {
           await refetchMemberInfo();
-          toast({
-            className: 'py-5 px-6',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-                  메모를 저장했습니다.
-                </p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          successToast('메모를 저장했습니다.');
           router.push(`/trainer/manage/${memberId}`);
         },
         onError: (error) => {
-          toast({
-            className: 'py-5 px-6',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconError />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-                  {error.response?.data.message}
-                </p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          errorToast(error.response?.data.message);
         },
       }
     );

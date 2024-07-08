@@ -7,9 +7,8 @@ import { useAuthAction, useAuthSelector } from '@/entity/auth';
 import { useRegisterGymMutation } from '@/entity/gym';
 import { GymVerificationCode, SelectGym } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button } from '@/shared/ui';
+import { Button, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
@@ -17,7 +16,7 @@ export const SelectGymPage = () => {
   const [step, setStep] = useState(1);
   const [selectGymId, setSelectGymId] = useState<number | null>(null);
   const [authValue, setAuthValue] = useState('');
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const router = useRouter();
   const auth = useAuthSelector(['accessToken', 'memberType', 'refreshToken', 'userId']);
   const { setUserInfo } = useAuthAction();
@@ -42,7 +41,7 @@ export const SelectGymPage = () => {
             router.push('/class-time-setting');
           },
           onError: (error) => {
-            showErrorToast(error?.response?.data.message ?? '에러가 발생했습니다');
+            errorToast(error?.response?.data.message);
           },
         }
       );
@@ -55,7 +54,7 @@ export const SelectGymPage = () => {
             router.push('/student');
           },
           onError: (error) => {
-            showErrorToast(error?.response?.data.message ?? '에러가 발생했습니다');
+            errorToast(error?.response?.data.message);
           },
         }
       );

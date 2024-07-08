@@ -6,10 +6,9 @@ import {
   useDeleteRefundStudentMutation,
   useDeleteStudentMutation,
 } from '@/feature/member';
-import { IconBack, IconCheck, IconDotsVertical } from '@/shared/assets';
+import { IconBack, IconDotsVertical } from '@/shared/assets';
 import IconNoCircleCheck from '@/shared/assets/images/noCircleCheck.svg';
-import { useShowErrorToast } from '@/shared/hooks';
-import { HEADER_TITLE_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -37,8 +36,7 @@ import { Layout } from '@/widget';
 
 const Header = ({ name, memberId }: { name: string; memberId: number }) => {
   const router = useRouter();
-  const { toast } = useToast();
-  const { showErrorToast } = useShowErrorToast();
+  const { successToast, errorToast } = useToast();
   const [open, setOpen] = useState(false);
   const [modal, setModal] = useState(false);
   const [sheet, setSheet] = useState(false);
@@ -58,7 +56,7 @@ const Header = ({ name, memberId }: { name: string; memberId: number }) => {
       },
       onError: (error) => {
         const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        errorToast(message);
       },
     });
   };
@@ -66,21 +64,12 @@ const Header = ({ name, memberId }: { name: string; memberId: number }) => {
   const deleteRefundStudent = () => {
     deleteRefundMutate(memberId, {
       onSuccess: ({ message }) => {
-        toast({
-          className: 'h-12',
-          description: (
-            <div className='flex items-center justify-center'>
-              <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
-            </div>
-          ),
-          duration: 2000,
-        });
+        successToast(message);
         router.replace('/trainer/manage');
       },
       onError: (error) => {
         const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        errorToast(message);
       },
     });
   };
@@ -90,8 +79,7 @@ const Header = ({ name, memberId }: { name: string; memberId: number }) => {
       <button onClick={() => router.back()}>
         <IconBack />
       </button>
-      <h2
-        className={cn(Typography.HEADING_4_SEMIBOLD, HEADER_TITLE_CENTER, 'text-black')}>
+      <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title text-black')}>
         회원 정보
       </h2>
       <DropdownMenu open={open} onOpenChange={(state) => setOpen(state)}>

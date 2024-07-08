@@ -4,7 +4,6 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 
 import { IconPlus } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
   Button,
@@ -14,6 +13,7 @@ import {
   SheetFooter,
   SheetHeader,
   SheetTrigger,
+  useToast,
 } from '@/shared/ui';
 import { cn, twSelector } from '@/shared/utils';
 
@@ -28,7 +28,7 @@ const CreateNewExerciseBottomSheet = ({
   defaultSearch: string;
 }) => {
   const queryClient = useQueryClient();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
 
   const [open, setOpen] = useState(false);
 
@@ -58,7 +58,7 @@ const CreateNewExerciseBottomSheet = ({
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );

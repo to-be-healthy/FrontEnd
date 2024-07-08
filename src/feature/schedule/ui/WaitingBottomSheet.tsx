@@ -6,10 +6,8 @@ import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
-import { IconCheck } from '@/shared/assets';
 import CancelCalendarIcon from '@/shared/assets/images/icon_cancel_calendar.svg';
 import ReservationCalendarIcon from '@/shared/assets/images/icon_reservation_calendar.svg';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
   Button,
@@ -34,13 +32,12 @@ interface Props {
 }
 
 export const WaitingBottomSheet = ({ data, date }: Props) => {
+  const { successToast, errorToast } = useToast();
+  const queryClient = useQueryClient();
+
   const classDate = new Date(`${data?.lessonDt} ${data?.lessonStartTime}`);
 
   const [isSheetOpen, setIsSheetOpen] = useState(false);
-
-  const { toast } = useToast();
-  const { showErrorToast } = useShowErrorToast();
-  const queryClient = useQueryClient();
 
   const [lessonStartTime, period] = convertTo12HourFormat(
     data?.lessonStartTime ?? '00:00:00'
@@ -65,19 +62,10 @@ export const WaitingBottomSheet = ({ data, date }: Props) => {
         void queryClient.invalidateQueries({
           queryKey: ['StudentMyWaitingList'],
         });
-        toast({
-          className: 'h-12',
-          description: (
-            <div className='flex items-center justify-center'>
-              <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
-            </div>
-          ),
-          duration: 2000,
-        });
+        successToast(message);
       },
       onError: (error) => {
-        showErrorToast(error.response?.data.message ?? '에러가 발생했습니다');
+        errorToast(error.response?.data.message);
       },
     });
   };

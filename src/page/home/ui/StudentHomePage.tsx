@@ -31,7 +31,6 @@ import {
   IconCheck,
   IconLogo,
 } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
   Card,
@@ -40,6 +39,7 @@ import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
+  useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -47,7 +47,7 @@ import { Layout } from '@/widget';
 const MAX_RETRY_ATTEMPTS = 3;
 
 export const StudentHomePage = () => {
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -91,7 +91,7 @@ export const StudentHomePage = () => {
       if (attempt < MAX_RETRY_ATTEMPTS) {
         await attemptToGetToken(messaging, registration, attempt + 1);
       } else {
-        showErrorToast(`Failed to get token after ${MAX_RETRY_ATTEMPTS} attempts`);
+        errorToast(`Failed to get token after ${MAX_RETRY_ATTEMPTS} attempts`);
       }
     }
   };

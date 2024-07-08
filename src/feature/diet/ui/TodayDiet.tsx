@@ -19,7 +19,6 @@ import {
   IconDeleteCircleX,
   IconPlus,
 } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
   Button,
@@ -28,6 +27,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTrigger,
+  useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
@@ -39,7 +39,7 @@ interface SelectImageProps {
 const ImageUpload = ({ type, registerDiet }: SelectImageProps) => {
   const { mutate: imageMutate } = useCreateS3PresignedUrlMutation();
   const { mutate: s3UploadMutate } = useS3UploadImagesMutation();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
 
   const s3uploadImage = (e: FormEvent<HTMLInputElement>) => {
     const files = e.currentTarget.files;
@@ -65,7 +65,7 @@ const ImageUpload = ({ type, registerDiet }: SelectImageProps) => {
           );
         },
         onError: (error) => {
-          showErrorToast(error?.response?.data.message ?? '에러가 발생했습니다');
+          errorToast(error?.response?.data.message ?? '에러가 발생했습니다');
         },
       });
     }
@@ -147,7 +147,7 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
   const [isRefetching, setIsRefetching] = useState(false);
 
   const queryClient = useQueryClient();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
 
   const { mutate: registerDietMutate, isPending: isRegisterPending } =
     useRegisterHomeDietMutation();
@@ -176,7 +176,7 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
           .finally(() => setIsRefetching(false));
       },
       onError: (error) => {
-        showErrorToast(error?.response?.data.message ?? '에러가 발생했습니다');
+        errorToast(error?.response?.data.message ?? '에러가 발생했습니다');
       },
     });
   };

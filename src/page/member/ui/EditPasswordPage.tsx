@@ -6,15 +6,14 @@ import { useState } from 'react';
 
 import { useChangePasswordMutation, useVerifyPasswordMutation } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button, Input } from '@/shared/ui';
+import { Button, Input, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const EditPasswordPage = () => {
   const router = useRouter();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const [step, setStep] = useState(1);
   const [password, setPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
@@ -31,7 +30,7 @@ const EditPasswordPage = () => {
       },
       onError: (error) => {
         const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        errorToast(message);
         setPassword('');
       },
     });
@@ -50,7 +49,7 @@ const EditPasswordPage = () => {
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );

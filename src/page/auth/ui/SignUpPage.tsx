@@ -7,9 +7,8 @@ import { SubmitHandler } from 'react-hook-form';
 import { SignUpRequest, useSignUpMutation } from '@/entity/auth';
 import { SignUpCancelDialog, SignUpFunnel, useSignUpFunnel } from '@/feature/auth';
 import BackIcon from '@/shared/assets/images/icon_back.svg';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button, GenericForm } from '@/shared/ui';
+import { Button, GenericForm, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
@@ -19,7 +18,7 @@ const SignUpPage = () => {
   const type = params?.get('type');
   const uuid = params?.get('uuid');
   const { step, Step, Funnel, setStep } = useSignUpFunnel(1);
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
 
   const [isIdVerified, setIsIdVerified] = useState(false); //아이디 중복 확인 완료 여부
   const [isEmailVerified, setIsEmailVerified] = useState(false); //이메일 인증 완료 여부
@@ -44,10 +43,10 @@ const SignUpPage = () => {
 
   const onSubmit: SubmitHandler<SignUpRequest> = (data) => {
     if (!isEmailVerified) {
-      return showErrorToast('이메일 인증을 해주세요');
+      return errorToast('이메일 인증을 해주세요');
     }
     if (!isIdVerified) {
-      return showErrorToast('아이디 중복확인을 해주세요');
+      return errorToast('아이디 중복확인을 해주세요');
     }
     if (!type) return;
 
@@ -62,7 +61,7 @@ const SignUpPage = () => {
           router.push(`/sign-up/complete?type=${type}&name=${data.name}`);
         },
         onError: (error) => {
-          showErrorToast(error.response?.data.message ?? '회원가입에 실패했습니다');
+          errorToast(error.response?.data.message ?? '회원가입에 실패했습니다');
         },
       }
     );

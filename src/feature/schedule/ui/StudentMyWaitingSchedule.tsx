@@ -4,11 +4,10 @@ import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 
-import { IconCheck, IconNoSchedule } from '@/shared/assets';
+import { IconNoSchedule } from '@/shared/assets';
 import CancelCalendarIcon from '@/shared/assets/images/icon_cancel_calendar.svg';
 import ReservationCalendarIcon from '@/shared/assets/images/icon_reservation_calendar.svg';
 import WaitingIcon from '@/shared/assets/images/icon_waiting.svg';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
   Button,
@@ -48,12 +47,11 @@ interface Props {
 }
 
 export const StudentMyWaitingSchedule = ({ data }: Props) => {
+  const { successToast, errorToast } = useToast();
+  const queryClient = useQueryClient();
+
   const currentTime = new Date();
   const classDate = new Date(`${data?.lessonDt} ${data?.lessonStartTime}`);
-
-  const { toast } = useToast();
-  const { showErrorToast } = useShowErrorToast();
-  const queryClient = useQueryClient();
 
   const [isWaitingInfoSheetOpen, setIsWaitingInfoSheetOpen] = useState(false);
   const [isCancelSheetOpen, setIsCancelSheetOpen] = useState(false);
@@ -89,19 +87,10 @@ export const StudentMyWaitingSchedule = ({ data }: Props) => {
         void queryClient.invalidateQueries({
           queryKey: ['scheduleList'],
         });
-        toast({
-          className: 'h-12',
-          description: (
-            <div className='flex items-center justify-center'>
-              <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
-            </div>
-          ),
-          duration: 2000,
-        });
+        successToast(message);
       },
       onError: (error) => {
-        showErrorToast(error.response?.data.message ?? '에러가 발생했습니다');
+        errorToast(error.response?.data.message ?? '에러가 발생했습니다');
       },
     });
   };

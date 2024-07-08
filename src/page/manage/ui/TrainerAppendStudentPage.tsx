@@ -6,18 +6,16 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 
 import { useAppendMemberMutation } from '@/feature/member/api/useAppendMemberMutation';
-import { IconCheck } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { Button, Input } from '@/shared/ui';
-import { toast } from '@/shared/ui/toast/use-toast';
+import { useToast } from '@/shared/ui/toast/use-toast';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => {
   const router = useRouter();
-  const { showErrorToast } = useShowErrorToast();
+  const { successToast, errorToast } = useToast();
   const searchParams = useSearchParams();
   const name = searchParams?.get('name');
   if (!name || !memberId) {
@@ -37,7 +35,7 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
     setLessonCnt(count);
 
     if (count > 500) {
-      showErrorToast('수강권 횟수는 최대 500회까지 입력할 수 있습니다.');
+      errorToast('수강권 횟수는 최대 500회까지 입력할 수 있습니다.');
       setLessonCnt(500);
     }
   };
@@ -48,24 +46,12 @@ export const TrainerAppendStudentPage = ({ memberId }: { memberId: number }) => 
       {
         onSuccess: async () => {
           await queryClient.refetchQueries({ queryKey: ['notRegisteredStudents'] });
-
-          toast({
-            className: 'h-12',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-                  회원이 추가되었습니다.
-                </p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          successToast('회원이 추가되었습니다.');
           router.replace('/trainer/manage/append');
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );

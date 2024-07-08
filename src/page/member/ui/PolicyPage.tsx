@@ -1,8 +1,8 @@
 'use client';
 
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
-import { POLICY_URL, PRIVACY_URL } from '@/entity/auth/consts';
 import { IconArrowRightSmall, IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
@@ -24,22 +24,20 @@ const PolicyPage = () => {
           약관 및 정책
         </h1>
         <section className='mt-7'>
-          <a
-            target='_blank'
-            href={POLICY_URL}
+          <Link
+            href={'/policy/terms'}
             className='flex items-center justify-between px-7 py-[15px]'
             rel='noreferrer'>
             <p className={cn(Typography.BODY_1)}>서비스 이용약관</p>
             <IconArrowRightSmall stroke={'var(--gray-400)'} />
-          </a>
-          <a
-            target='_blank'
-            href={PRIVACY_URL}
+          </Link>
+          <Link
+            href={'/policy/privacy'}
             className='flex items-center justify-between px-7 py-[15px]'
             rel='noreferrer'>
             <p className={cn(Typography.BODY_1)}>개인정보 처리방침</p>
             <IconArrowRightSmall stroke={'var(--gray-400)'} />
-          </a>
+          </Link>
         </section>
       </Layout.Contents>
     </Layout>

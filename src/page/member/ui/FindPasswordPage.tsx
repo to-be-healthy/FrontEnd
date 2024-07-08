@@ -8,15 +8,14 @@ import { EMAIL_REGEXP, NAME_REGEXP, SocialIcon, socialProviders } from '@/entity
 import { FindPasswordRequest, FindPasswordResponse } from '@/feature/member';
 import { useFindPasswordMutation } from '@/feature/member/api/useFindPasswordMutation';
 import { IconClose, IconLoveLetter } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button, Input } from '@/shared/ui';
+import { Button, Input, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const FindPasswordPage = () => {
   const router = useRouter();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const [completed, setCompleted] = useState<FindPasswordResponse | null>(null);
 
   const { mutate } = useFindPasswordMutation();
@@ -36,8 +35,8 @@ const FindPasswordPage = () => {
         setCompleted(data);
       },
       onError: (error) => {
-        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        const message = error?.response?.data.message;
+        errorToast(message);
       },
     });
   };

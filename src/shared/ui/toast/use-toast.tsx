@@ -3,10 +3,14 @@
 // Inspired by react-hot-toast library
 import * as React from 'react';
 
+import { IconCheck, IconError } from '@/shared/assets';
+import { Typography } from '@/shared/mixin';
 import type { ToastActionElement, ToastProps } from '@/shared/ui';
+import { cn } from '@/shared/utils';
 
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 1000000;
+const TOAST_DURATION = 2000;
 
 type ToasterToast = ToastProps & {
   id: string;
@@ -185,6 +189,34 @@ function useToast() {
     ...state,
     toast,
     dismiss: (toastId?: string) => dispatch({ type: 'DISMISS_TOAST', toastId }),
+    successToast: (message: string) =>
+      toast({
+        className: 'h-auto',
+        description: (
+          <div className='flex items-center justify-center'>
+            <div className='h-8 w-8'>
+              <IconCheck fill={'var(--primary-500)'} />
+            </div>
+            <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
+          </div>
+        ),
+        duration: TOAST_DURATION,
+      }),
+    errorToast: (message?: string) =>
+      toast({
+        className: 'h-auto',
+        description: (
+          <div className='flex items-center justify-center'>
+            <div className='h-8 w-8'>
+              <IconError />
+            </div>
+            <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
+              {message ?? '문제가 발생했습니다.'}
+            </p>
+          </div>
+        ),
+        duration: TOAST_DURATION,
+      }),
   };
 }
 

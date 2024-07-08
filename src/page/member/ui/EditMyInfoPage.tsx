@@ -22,9 +22,8 @@ import {
   IconKakaoLogo,
   IconNaverLogo,
 } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
-import { Button } from '@/shared/ui';
+import { Button, useToast } from '@/shared/ui';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -38,7 +37,7 @@ import { Layout } from '@/widget';
 const EditMyInfoPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const { deleteUserInfo } = useAuthAction();
   const { data } = useMyInfoQuery();
   const { mutate: deleteProfileImage } = useDeleteProfileImageMutation();
@@ -58,7 +57,7 @@ const EditMyInfoPage = () => {
           },
           onError: (error) => {
             const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-            showErrorToast(message);
+            errorToast(message);
           },
         }
       );
@@ -74,7 +73,7 @@ const EditMyInfoPage = () => {
       },
       onError: (error) => {
         const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        errorToast(message);
       },
     });
   };
@@ -96,7 +95,7 @@ const EditMyInfoPage = () => {
       },
       onError: (error) => {
         const message = error.response?.data?.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        errorToast(message);
       },
     });
   };

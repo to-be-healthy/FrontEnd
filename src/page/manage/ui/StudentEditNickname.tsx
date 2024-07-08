@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useEditNicknameMutation } from '@/feature/manage';
-import { IconCheck, IconError } from '@/shared/assets';
 import IconClose from '@/shared/assets/images/icon_close.svg';
 import IconDefaultProfile from '@/shared/assets/images/icon_default_profile.svg';
 import { Typography } from '@/shared/mixin';
@@ -33,40 +32,20 @@ interface Props {
 
 const StudentEditNickname = ({ memberId }: Props) => {
   const router = useRouter();
-  const { toast } = useToast();
+  const { successToast, errorToast } = useToast();
   const { mutate } = useEditNicknameMutation();
   const { memberInfo, refetchMemberInfo } = useStudentInfo(memberId);
   const [newNickName, setNewNickName] = useState(memberInfo?.nickName ?? '');
 
   const onSubmit = () => {
     if (!newNickName) {
-      return toast({
-        className: 'py-5 px-6',
-        description: (
-          <div className='flex items-center justify-center'>
-            <IconError />
-            <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-              별칭을 입력해주세요.
-            </p>
-          </div>
-        ),
-        duration: 2000,
-      });
+      errorToast('별칭을 입력해주세요.');
+      return;
     }
 
     if (memberInfo?.nickName === newNickName) {
-      return toast({
-        className: 'py-5 px-6',
-        description: (
-          <div className='flex items-center justify-center'>
-            <IconError />
-            <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-              기존 별칭과 같습니다.
-            </p>
-          </div>
-        ),
-        duration: 2000,
-      });
+      errorToast('기존 별칭과 같습니다.');
+      return;
     }
 
     changeNickname();
@@ -78,33 +57,11 @@ const StudentEditNickname = ({ memberId }: Props) => {
       {
         onSuccess: async (data) => {
           await refetchMemberInfo();
-          toast({
-            className: 'py-5 px-6',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-                  {data.message}
-                </p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          successToast(data.message);
           router.replace(`/trainer/manage/${memberId}`);
         },
         onError: (error) => {
-          toast({
-            className: 'py-5 px-6',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconError />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-                  {error.response?.data.message}
-                </p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          errorToast(error.response?.data.message);
         },
       }
     );

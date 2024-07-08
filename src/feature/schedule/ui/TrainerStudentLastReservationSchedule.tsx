@@ -4,8 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 
-import { IconCheck, IconNoSchedule } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
+import { IconNoSchedule } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {
   Button,
@@ -47,9 +46,8 @@ interface Props {
 }
 
 export const TrainerStudentLastReservationSchedule = ({ data }: Props) => {
+  const { successToast, errorToast } = useToast();
   const queryClient = useQueryClient();
-  const { toast } = useToast();
-  const { showErrorToast } = useShowErrorToast();
 
   const [isSheetOpen, setIsSheetOpen] = useState(false);
 
@@ -68,45 +66,27 @@ export const TrainerStudentLastReservationSchedule = ({ data }: Props) => {
     if (reservationStatus === 'COMPLETED') {
       noShowMutate(scheduleId, {
         onSuccess: async ({ message }) => {
-          toast({
-            className: 'h-12',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          successToast(message);
           setIsSheetOpen(false);
           await queryClient.refetchQueries({
             queryKey: ['TrainerStudentLastReservationList'],
           });
         },
         onError: (error) => {
-          showErrorToast(error.response?.data.message ?? '에러가 발생했습니다');
+          errorToast(error.response?.data.message);
         },
       });
     } else {
       cancelNoShowMutate(scheduleId, {
         onSuccess: async ({ message }) => {
-          toast({
-            className: 'h-12',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          successToast(message);
           setIsSheetOpen(false);
           await queryClient.refetchQueries({
             queryKey: ['TrainerStudentLastReservationList'],
           });
         },
         onError: (error) => {
-          showErrorToast(error.response?.data.message ?? '에러가 발생했습니다');
+          errorToast(error.response?.data.message);
         },
       });
     }

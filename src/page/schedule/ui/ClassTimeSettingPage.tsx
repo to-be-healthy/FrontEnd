@@ -14,8 +14,6 @@ import {
   useTrainerClassTimeSettingMutation,
 } from '@/feature/schedule';
 import { useGetTrainerClassTimeSettingQuery } from '@/feature/schedule/api/useGetTrainerClassTimeSettingQuery';
-import { IconCheck } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { Button, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -36,14 +34,14 @@ interface TimeListType {
 }
 
 export const ClassTimeSettingPage = () => {
+  const router = useRouter();
+  const { successToast, errorToast } = useToast();
+
   const { data: classTimeData } = useGetTrainerClassTimeSettingQuery();
   const [timeList, setTimeList] = useState<TimeListType[]>([]);
   const [isLunchTimeUnset, setIsLunchTimeUnset] = useState(false); //점심시간 설정 체크 유무
   const [classTimeState, setClassTimeState] = useState(0); //수업시간
   const [dayOff, setDayOff] = useState<DayOfWeek[]>([]); //휴무일
-  const { showErrorToast } = useShowErrorToast();
-  const { toast } = useToast();
-  const router = useRouter();
   const { mutate } = useTrainerClassTimeSettingMutation();
 
   const formatTo24HourTime = (timeList: TimeListType) => {
@@ -94,20 +92,11 @@ export const ClassTimeSettingPage = () => {
     const registrationData = (data: ClassTimeSettingData) => {
       mutate(data, {
         onSuccess: ({ message }) => {
-          toast({
-            className: 'py-5 px-6',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          successToast(message);
           router.push('/trainer');
         },
         onError: (error) => {
-          showErrorToast(error.response?.data?.message ?? 'Unknown error');
+          errorToast(error.response?.data?.message ?? 'Unknown error');
         },
       });
     };
@@ -132,7 +121,7 @@ export const ClassTimeSettingPage = () => {
         !isValidTime(selectedTimeList[0], selectedTimeList[1]) ||
         !isValidTime(selectedTimeList[2], selectedTimeList[3])
       ) {
-        return showErrorToast('시작 시간은 종료 시간보다 빨라야 합니다');
+        return errorToast('시작 시간은 종료 시간보다 빨라야 합니다');
       }
 
       if (classTimeState && selectedTimeList) {

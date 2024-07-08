@@ -3,14 +3,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useDeleteLogMutation, useLogTrainerCommentContext } from '@/feature/log';
-import {
-  IconBack,
-  IconCheck,
-  IconDotsVertical,
-  IconEdit,
-  IconTrash,
-} from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
+import { IconBack, IconDotsVertical, IconEdit, IconTrash } from '@/shared/assets';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import {
   AlertDialog,
@@ -32,10 +25,9 @@ import { Layout } from '@/widget';
 
 const Header = () => {
   const router = useRouter();
-  const { toast } = useToast();
+  const { successToast, errorToast } = useToast();
   const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
-  const { showErrorToast } = useShowErrorToast();
   const { logId, memberId } = useLogTrainerCommentContext();
   const { mutate } = useDeleteLogMutation();
 
@@ -45,24 +37,12 @@ const Header = () => {
       {
         onSuccess: async () => {
           await queryClient.refetchQueries({ queryKey: ['studentLogList', memberId] });
-          // TODO) positive toast hook
-          toast({
-            className: 'py-5 px-6',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-                  수업 일지가 삭제되었습니다.
-                </p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          successToast('수업 일지가 삭제되었습니다.');
           router.replace(`/trainer/manage/${memberId}/log`);
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );
@@ -81,7 +61,7 @@ const Header = () => {
         <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
           <DropdownMenuGroup className='flex flex-col'>
             <DropdownMenuItem
-              className={cn(Typography.TITLE_3,'flex items-center gap-3 px-6 py-5')} 
+              className={cn(Typography.TITLE_3, 'flex items-center gap-3 px-6 py-5')}
               onClick={() =>
                 router.replace(`/trainer/manage/${memberId}/log/${logId}/edit`)
               }>
@@ -89,7 +69,10 @@ const Header = () => {
               수정
             </DropdownMenuItem>
             <DropdownMenuItem
-              className={cn(Typography.TITLE_3,'flex items-center gap-3 px-6 py-5 text-point')} 
+              className={cn(
+                Typography.TITLE_3,
+                'flex items-center gap-3 px-6 py-5 text-point'
+              )}
               onClick={() => setOpen(true)}>
               <IconTrash />
               삭제

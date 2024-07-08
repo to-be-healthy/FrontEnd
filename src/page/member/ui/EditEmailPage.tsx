@@ -7,9 +7,8 @@ import { useState } from 'react';
 import { useSendVerificationCodeMutation } from '@/entity/auth';
 import { useChangeEmailMutation, useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button, Input } from '@/shared/ui';
+import { Button, Input, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
@@ -22,7 +21,7 @@ const EditEmailPage = () => {
 
   const { mutate: sendCode } = useSendVerificationCodeMutation();
   const { mutate: changeEmail } = useChangeEmailMutation();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const queryClient = useQueryClient();
 
   const sendVerificationCode = () => {
@@ -32,7 +31,7 @@ const EditEmailPage = () => {
       },
       onError: (error) => {
         const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        errorToast(message);
       },
     });
   };
@@ -49,7 +48,7 @@ const EditEmailPage = () => {
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );

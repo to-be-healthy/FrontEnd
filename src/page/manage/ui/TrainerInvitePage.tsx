@@ -6,9 +6,7 @@ import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { InviteForm, useInviteStudentMutation, useMyInfoQuery } from '@/feature/member';
-import { IconCheck, IconError } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { Button, Dialog, DialogContent, Input, useToast } from '@/shared/ui';
 import { cn, twSelector } from '@/shared/utils';
@@ -21,11 +19,10 @@ export const TrainerInvitePage = () => {
     reset,
     formState: { errors },
   } = useForm<InviteForm>();
-  const { showErrorToast } = useShowErrorToast();
+  const { successToast, errorToast } = useToast();
   const [invitationUrl, setInvitationUrl] = useState<string>('');
   const dialogOpen = !!invitationUrl;
 
-  const { toast } = useToast();
   const { mutate } = useInviteStudentMutation();
   const { data } = useMyInfoQuery();
   const gymName = data?.gym.name ?? '';
@@ -38,34 +35,14 @@ export const TrainerInvitePage = () => {
         setInvitationUrl(invitationLink);
       },
       onError: (error) => {
-        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        toast({
-          className: 'h-[48px]',
-          description: (
-            <div className='flex items-center justify-center'>
-              <IconError />
-              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
-            </div>
-          ),
-          duration: 2000,
-        });
+        const message = error?.response?.data.message;
+        errorToast(message);
       },
     });
   };
 
   const onInvalidSubmit = () => {
-    toast({
-      className: 'h-[48px]',
-      description: (
-        <div className='flex items-center justify-center'>
-          <IconError />
-          <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-            입력이 필요한 항목이 있습니다.
-          </p>
-        </div>
-      ),
-      duration: 2000,
-    });
+    errorToast('입력이 필요한 항목이 있습니다.');
   };
 
   const resetInvitationForm = () => {
@@ -76,18 +53,7 @@ export const TrainerInvitePage = () => {
   const copyUrl = async () => {
     await navigator.clipboard.writeText(invitationUrl);
     resetInvitationForm();
-    toast({
-      className: 'h-[48px]',
-      description: (
-        <div className='flex items-center justify-center'>
-          <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-          <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-            초대 링크를 복사했어요.
-          </p>
-        </div>
-      ),
-      duration: 2000,
-    });
+    successToast('초대 링크를 복사했어요.');
   };
 
   const shareUrl = () => {
@@ -185,7 +151,7 @@ export const TrainerInvitePage = () => {
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   const count = Number(e.target.value);
                   if (count > 500) {
-                    showErrorToast('수강권 횟수는 최대 500회까지 입력할 수 있습니다.');
+                    errorToast('수강권 횟수는 최대 500회까지 입력할 수 있습니다.');
                     e.target.value = String(500);
                   }
                 }}

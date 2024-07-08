@@ -23,7 +23,6 @@ import {
   IconLock,
   IconTrash,
 } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
   Button,
@@ -35,6 +34,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { ImageSlide, Layout } from '@/widget';
@@ -44,7 +44,7 @@ interface Props {
 }
 
 const StudentWorkoutDetailPage = ({ workoutHistoryId }: Props) => {
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
 
   const queryClient = useQueryClient();
   const router = useRouter();
@@ -69,8 +69,8 @@ const StudentWorkoutDetailPage = ({ workoutHistoryId }: Props) => {
         router.replace('/student/workout');
       },
       onError: (error) => {
-        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        const message = error?.response?.data.message;
+        errorToast(message);
       },
     });
   };

@@ -10,7 +10,6 @@ import { useEditLogMutation, useLogDetailQuery } from '@/feature/log';
 import { IconCloseBlack } from '@/shared/assets';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
-import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import {
   AlertDialog,
@@ -23,6 +22,7 @@ import {
   Button,
   Input,
   Textarea,
+  useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -37,7 +37,7 @@ const MAX_IMAGES_COUNT = 3;
 const TrainerEditLogPage = ({ memberId, logId }: Props) => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
 
   const { data } = useLogDetailQuery({ lessonHistoryId: logId });
 
@@ -65,7 +65,7 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );

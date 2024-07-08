@@ -27,7 +27,6 @@ import {
   IconLike,
   IconWhiteClose,
 } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import {
   Button,
@@ -37,6 +36,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -59,7 +59,8 @@ export const TrainerStudentDietDetailPage = ({ memberId, dietId }: Props) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const queryClient = useQueryClient();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
+
   const month = searchParams.get('month');
   const name = searchParams.get('name');
 
@@ -81,7 +82,7 @@ export const TrainerStudentDietDetailPage = ({ memberId, dietId }: Props) => {
         });
       },
       onError: (error) => {
-        showErrorToast(error?.response?.data.message ?? '');
+        errorToast(error?.response?.data.message);
       },
     });
   };
@@ -94,7 +95,7 @@ export const TrainerStudentDietDetailPage = ({ memberId, dietId }: Props) => {
         });
       },
       onError: (error) => {
-        showErrorToast(error?.response?.data.message ?? '');
+        errorToast(error?.response?.data.message);
       },
     });
   };
