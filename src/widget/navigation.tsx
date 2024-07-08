@@ -15,9 +15,8 @@ import {
   IconProfileFilled,
   IconProfileOutlined,
 } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button } from '@/shared/ui';
+import { Button, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
 const TrainerNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElement>) => {
@@ -108,7 +107,7 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
   const pathname = usePathname();
   const router = useRouter();
 
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const { refetch } = useCheckTrainerMemberMappingQuery();
 
   const clickCheckMappedTrainer = async () => {
@@ -117,10 +116,10 @@ const StudentNavigation = ({ className, ...props }: HTMLAttributes<HTMLDivElemen
       if (newData.data?.mapped) {
         router.replace('/student/schedule');
       } else {
-        showErrorToast('트레이너가 지정된 후에 예약 가능합니다');
+        errorToast('트레이너가 지정된 후에 예약 가능합니다');
       }
     } catch (error) {
-      showErrorToast('트레이너가 지정된 후에 예약 가능합니다');
+      errorToast('트레이너가 지정된 후에 예약 가능합니다');
     }
   };
 

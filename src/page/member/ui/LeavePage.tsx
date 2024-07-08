@@ -6,9 +6,15 @@ import { ChangeEvent, useState } from 'react';
 import { useAuthAction, useDeleteAccountMutation } from '@/entity/auth';
 import { IconBack } from '@/shared/assets';
 import NoCircleCheckIcon from '@/shared/assets/images/noCircleCheck.svg';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button, Dialog, DialogClose, DialogContent, DialogTrigger } from '@/shared/ui';
+import {
+  Button,
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogTrigger,
+  useToast,
+} from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
@@ -16,7 +22,7 @@ const LeavePage = () => {
   const router = useRouter();
   const [agreement, setAgreement] = useState(false);
   const { mutate } = useDeleteAccountMutation();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const { deleteUserInfo } = useAuthAction();
 
   const changeAgreement = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,7 +37,7 @@ const LeavePage = () => {
       },
       onError: (error) => {
         const message = error.response?.data?.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        errorToast(message);
       },
     });
   };

@@ -17,7 +17,6 @@ import {
 } from '@/feature/member';
 import { TrainerSchedule } from '@/feature/schedule';
 import { IconAlarmWhite, IconCalendarX, IconMedalGold, IconPlus } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import {
   Button,
@@ -28,6 +27,7 @@ import {
   DialogClose,
   DialogContent,
   DialogTrigger,
+  useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, TrainerNavigation } from '@/widget';
@@ -38,7 +38,7 @@ const MAX_RETRY_ATTEMPTS = 3;
 
 export const TrainerHomePage = () => {
   const queryClient = useQueryClient();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const { mutate: addStudentCourseMutate } = useAddStudentCourseMutation();
   const { mutate: tokenMutate } = useRegisterTokenMutation();
 
@@ -63,7 +63,7 @@ export const TrainerHomePage = () => {
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );
@@ -125,7 +125,7 @@ export const TrainerHomePage = () => {
       if (attempt < MAX_RETRY_ATTEMPTS) {
         await attemptToGetToken(messaging, registration, attempt + 1);
       } else {
-        showErrorToast(`Failed to get token after ${MAX_RETRY_ATTEMPTS} attempts`);
+        errorToast(`Failed to get token after ${MAX_RETRY_ATTEMPTS} attempts`);
       }
     }
   };

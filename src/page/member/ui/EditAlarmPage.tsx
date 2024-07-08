@@ -6,9 +6,8 @@ import { useRouter } from 'next/navigation';
 import { useToggleAlarmStatusMutation } from '@/feature/manage';
 import { useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button, Switch } from '@/shared/ui';
+import { Button, Switch, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
@@ -16,7 +15,7 @@ const EditAlarmPage = () => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const { data } = useMyInfoQuery();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const { mutate } = useToggleAlarmStatusMutation();
 
   const changeAlarm = (
@@ -32,7 +31,7 @@ const EditAlarmPage = () => {
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );

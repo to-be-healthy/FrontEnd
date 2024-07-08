@@ -5,7 +5,7 @@ import {
   useCreateS3PresignedUrlMutation,
   useS3UploadImagesMutation,
 } from '@/entity/image';
-import { useShowErrorToast } from '@/shared/hooks';
+import { useToast } from '@/shared/ui';
 
 const MAX_IMAGES_COUNT = 3;
 
@@ -14,11 +14,12 @@ interface Options {
 }
 
 const useImages = ({ maxCount = MAX_IMAGES_COUNT }: Options = {}) => {
+  const { errorToast } = useToast();
+
   const [images, setImages] = useState<ImageType[]>([]);
 
   const { mutate: imageMutate } = useCreateS3PresignedUrlMutation();
   const { mutate: s3UploadMutate } = useS3UploadImagesMutation();
-  const { showErrorToast } = useShowErrorToast();
 
   const updateImages = (images: ImageType[]) => {
     setImages(images);
@@ -54,7 +55,7 @@ const useImages = ({ maxCount = MAX_IMAGES_COUNT }: Options = {}) => {
         });
       },
       onError: (error) => {
-        showErrorToast(error?.response?.data.message ?? '에러가 발생했습니다');
+        errorToast(error?.response?.data.message);
       },
     });
   };

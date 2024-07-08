@@ -1,15 +1,14 @@
 import dayjs from 'dayjs';
 
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Sheet, SheetTrigger } from '@/shared/ui';
+import { Sheet, SheetTrigger, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
 import { FlatSchedule } from '../../model/type';
 import { ScheduleItemBottomSheet } from './ScheduleItemBottomSheet';
 
 const ScheduleItem = ({ schedule }: { schedule: FlatSchedule }) => {
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const { reservationStatus, duration, applicantName, offset, color } = schedule;
 
   const isBefore = dayjs(schedule.date + ' ' + schedule.lessonStartTime).isBefore(
@@ -25,7 +24,7 @@ const ScheduleItem = ({ schedule }: { schedule: FlatSchedule }) => {
           isBefore &&
           (reservationStatus === 'AVAILABLE' || reservationStatus === 'DISABLED')
         ) {
-          showErrorToast('시간이 지난 스케줄입니다.');
+          errorToast('시간이 지난 스케줄입니다.');
         }
       }}>
       <SheetTrigger tabIndex={-1} asChild>

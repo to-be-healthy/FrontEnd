@@ -32,7 +32,6 @@ import {
   IconTrash,
   IconWhiteClose,
 } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import {
   AlertDialog,
@@ -77,8 +76,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
   const queryClient = useQueryClient();
   const searchParams = useSearchParams();
   const month = searchParams.get('month');
-  const { toast } = useToast();
-  const { showErrorToast } = useShowErrorToast();
+  const { successToast, errorToast } = useToast();
 
   const { data: dietData } = useStudentDietDetailQuery(dietId);
   const { data: commentData } = useDietCommentListQuery({ dietId, size: ITEMS_PER_PAGE });
@@ -99,7 +97,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
         });
       },
       onError: (error) => {
-        showErrorToast(error?.response?.data.message ?? '');
+        errorToast(error?.response?.data.message);
       },
     });
   };
@@ -112,7 +110,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
         });
       },
       onError: (error) => {
-        showErrorToast(error?.response?.data.message ?? '');
+        errorToast(error?.response?.data.message);
       },
     });
   };
@@ -121,19 +119,10 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
     deleteDietMutate(dietId, {
       onSuccess: ({ message }) => {
         router.push(`/student/diet?month=${month}`);
-        toast({
-          className: 'h-12',
-          description: (
-            <div className='flex items-center justify-center'>
-              <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
-            </div>
-          ),
-          duration: 2000,
-        });
+        successToast(message);
       },
       onError: (error) => {
-        showErrorToast(error?.response?.data.message ?? 'error');
+        errorToast(error?.response?.data.message);
       },
     });
   };

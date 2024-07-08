@@ -9,8 +9,9 @@ import {
   WorkoutDetail,
 } from '@/feature/workout';
 import { IconChat, IconLike } from '@/shared/assets';
-import { useDebounce, useShowErrorToast } from '@/shared/hooks';
+import { useDebounce } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
+import { useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
 const PostMetrics = ({
@@ -27,7 +28,7 @@ const PostMetrics = ({
   const queryKey = ['workoutDetail', workoutHistoryId];
   const queryClient = useQueryClient();
 
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
 
   const { mutate: like } = useWorkoutLikeMutation();
   const { mutate: dislike } = useWorkoutCancelLikeMutation();
@@ -75,7 +76,7 @@ const PostMetrics = ({
         onError: (error) => {
           restoreLikedState();
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
         onSettled: async () => {
           await queryClient.invalidateQueries({ queryKey });
@@ -91,7 +92,7 @@ const PostMetrics = ({
         onError: (error) => {
           restoreLikedState();
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
         onSettled: async () => {
           await queryClient.invalidateQueries({ queryKey });

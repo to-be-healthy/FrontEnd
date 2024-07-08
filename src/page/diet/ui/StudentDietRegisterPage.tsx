@@ -31,12 +31,10 @@ import {
 import {
   IconArrowLeft,
   IconArrowRight,
-  IconCheck,
   IconClose,
   IconNotification,
 } from '@/shared/assets';
 import DownIcon from '@/shared/assets/images/icon_arrow_bottom.svg';
-import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { Button, Calendar, Card, CardContent, CardHeader, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -53,12 +51,11 @@ export const DietRegisterProvider = () => {
 };
 
 export const StudentDietRegisterPage = () => {
-  const { showErrorToast } = useShowErrorToast();
+  const { successToast, errorToast } = useToast();
 
   const today = new Date();
   const queryClient = useQueryClient();
   const router = useRouter();
-  const { toast } = useToast();
   const { images, initialImages } = useDietContext();
 
   const [hasMounted, setHasMounted] = useState(false);
@@ -220,17 +217,7 @@ export const StudentDietRegisterPage = () => {
         { ...newRequestData, eatDate: dayjs(date).format('YYYY-MM-DD') },
         {
           onSuccess: async ({ message }) => {
-            toast({
-              className: 'h-12',
-              description: (
-                <div className='flex items-center justify-center'>
-                  <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                  <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
-                </div>
-              ),
-              duration: 2000,
-            });
-
+            successToast(message);
             await queryClient.refetchQueries({
               queryKey: ['studentCalendarMyDietList'],
             });
@@ -238,12 +225,12 @@ export const StudentDietRegisterPage = () => {
             setDate(undefined);
           },
           onError: (error) => {
-            showErrorToast(error?.response?.data.message ?? 'error');
+            errorToast(error?.response?.data.message ?? 'error');
           },
         }
       );
     } else {
-      showErrorToast('식단을 등록해주세요');
+      errorToast('식단을 등록해주세요');
     }
   };
 

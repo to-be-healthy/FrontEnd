@@ -26,8 +26,7 @@ import {
   useStudentCourseDetailQuery,
 } from '@/feature/member';
 import { IconArrowLeft, IconPlus } from '@/shared/assets';
-import { IconCheck, IconNotification } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
+import { IconNotification } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
@@ -50,7 +49,7 @@ interface Props {
 const ITEMS_PER_PAGE = 20;
 
 export const StudentCourseDetailPage = ({ memberId }: Props) => {
-  const { toast } = useToast();
+  const { successToast, errorToast } = useToast();
   const router = useRouter();
   const params = useSearchParams();
   const name = params.get('name');
@@ -61,7 +60,6 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
   const [isRegisterSheetOpen, setIsRegisterSheetOpen] = useState(false);
   const [addInput, setAddInput] = useState('');
   const [registerInput, setRegisterInput] = useState('');
-  const { showErrorToast } = useShowErrorToast();
 
   const queryClient = useQueryClient();
   const [ref, inView] = useInView({
@@ -97,21 +95,11 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           void queryClient.invalidateQueries({
             queryKey: ['studentCourseHistory'],
           });
-          return toast({
-            className: 'h-12',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-                  {reslut.message}
-                </p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          successToast(reslut.message);
+          return;
         },
         onError: (error) => {
-          showErrorToast(error.response?.data.message ?? '');
+          errorToast(error.response?.data.message);
         },
       }
     );
@@ -132,21 +120,11 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
           void queryClient.invalidateQueries({
             queryKey: ['studentCourseHistory'],
           });
-          return toast({
-            className: 'h-12',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-                  {addInput}회가 연장되었습니다.
-                </p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          successToast(`${addInput}회가 연장되었습니다.`);
+          return;
         },
         onError: (error) => {
-          showErrorToast(error.response?.data.message ?? '');
+          errorToast(error.response?.data.message);
         },
       }
     );
@@ -158,21 +136,11 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
         void queryClient.invalidateQueries({
           queryKey: ['studentCourseHistory'],
         });
-        return toast({
-          className: 'h-12',
-          description: (
-            <div className='flex items-center justify-center'>
-              <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>
-                {result.message}
-              </p>
-            </div>
-          ),
-          duration: 2000,
-        });
+        successToast(result.message);
+        return;
       },
       onError: (error) => {
-        showErrorToast(error.response?.data.message ?? '');
+        errorToast(error.response?.data.message);
       },
     });
   };

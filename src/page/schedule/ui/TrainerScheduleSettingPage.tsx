@@ -17,8 +17,6 @@ import {
   useTrainerClassTimeSettingMutation,
 } from '@/feature/schedule';
 import { useGetTrainerClassTimeSettingQuery } from '@/feature/schedule/api/useGetTrainerClassTimeSettingQuery';
-import { IconCheck } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Button, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -45,8 +43,7 @@ const TrainerScheduleSettingPage = () => {
   const [dayOff, setDayOff] = useState<DayOfWeek[]>([]); //휴무일
   const [selectedTimeListArr, setSelectedTimeListArr] = useState<string[]>([]);
 
-  const { showErrorToast } = useShowErrorToast();
-  const { toast } = useToast();
+  const { successToast, errorToast } = useToast();
   const router = useRouter();
 
   const { data: classTimeData } = useGetTrainerClassTimeSettingQuery();
@@ -98,20 +95,11 @@ const TrainerScheduleSettingPage = () => {
   const registrationData = (data: ClassTimeSettingData) => {
     mutate(data, {
       onSuccess: ({ message }) => {
-        toast({
-          className: 'py-5 px-6',
-          description: (
-            <div className='flex items-center justify-center'>
-              <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-              <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
-            </div>
-          ),
-          duration: 2000,
-        });
+        successToast(message);
         router.push('/trainer/schedule');
       },
       onError: (error) => {
-        showErrorToast(error.response?.data?.message ?? 'Unknown error');
+        errorToast(error.response?.data?.message);
       },
     });
   };
@@ -136,7 +124,7 @@ const TrainerScheduleSettingPage = () => {
       !isValidTime(selectedTimeListArr[0], selectedTimeListArr[1]) ||
       !isValidTime(selectedTimeListArr[2], selectedTimeListArr[3])
     ) {
-      return showErrorToast('시작 시간은 종료 시간보다 빨라야 합니다');
+      return errorToast('시작 시간은 종료 시간보다 빨라야 합니다');
     }
 
     const settings = {

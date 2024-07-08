@@ -3,7 +3,6 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 
 import { IconCalendarCheck, IconCalendarRefresh } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import {
   Button,
@@ -13,6 +12,7 @@ import {
   Sheet,
   SheetContent,
   SheetTrigger,
+  useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
@@ -26,7 +26,7 @@ interface Props {
 
 const DayOfWeekRow = ({ startDate, flatSchedules }: Props) => {
   const queryClient = useQueryClient();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const { mutate } = useTrainerChangeReservationMutation();
 
   const [confirm, setConfirm] = useState<Date | null>(null);
@@ -61,7 +61,7 @@ const DayOfWeekRow = ({ startDate, flatSchedules }: Props) => {
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );
@@ -94,7 +94,7 @@ const DayOfWeekRow = ({ startDate, flatSchedules }: Props) => {
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );

@@ -3,9 +3,8 @@ import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { useAuthAction, useSignInMutation } from '@/entity/auth';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button, TextInput } from '@/shared/ui';
+import { Button, TextInput, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
 import { LoginForm } from '../model/types';
@@ -14,7 +13,7 @@ export const SignInForm = ({ memberType }: { memberType: 'trainer' | 'student' }
   const router = useRouter();
   const { mutate } = useSignInMutation();
   const { setUserInfo } = useAuthAction();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
 
   const {
     register,
@@ -32,7 +31,7 @@ export const SignInForm = ({ memberType }: { memberType: 'trainer' | 'student' }
         },
         onError: (error) => {
           const message = error.response?.data?.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );

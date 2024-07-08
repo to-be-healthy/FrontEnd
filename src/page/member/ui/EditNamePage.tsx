@@ -6,9 +6,8 @@ import { ChangeEvent, useState } from 'react';
 
 import { useChangeMyNameMutation, useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button, Input } from '@/shared/ui';
+import { Button, Input, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
@@ -17,7 +16,7 @@ const EditNamePage = () => {
   const { data } = useMyInfoQuery();
   const [name, setName] = useState('');
   const { mutate } = useChangeMyNameMutation();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const queryClient = useQueryClient();
 
   const changeName = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,8 +32,8 @@ const EditNamePage = () => {
         router.replace('../info');
       },
       onError: (error) => {
-        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        const message = error?.response?.data.message;
+        errorToast(message);
       },
     });
   };

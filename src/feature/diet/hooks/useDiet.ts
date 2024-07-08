@@ -6,7 +6,7 @@ import {
   useCreateS3PresignedUrlMutation,
   useS3UploadImagesMutation,
 } from '@/entity/image';
-import { useShowErrorToast } from '@/shared/hooks';
+import { useToast } from '@/shared/ui';
 
 import { DietImageType } from '../model/types';
 
@@ -27,9 +27,10 @@ const useDietContext = () => {
 const dietOrder = ['breakfast', 'lunch', 'dinner'];
 
 const useDiet = () => {
+  const { errorToast } = useToast();
+
   const [images, setImages] = useState<DietImageType[]>([]);
 
-  const { showErrorToast } = useShowErrorToast();
   const { mutate: imageMutate } = useCreateS3PresignedUrlMutation();
   const { mutate: s3UploadMutate } = useS3UploadImagesMutation();
 
@@ -88,7 +89,7 @@ const useDiet = () => {
         );
       },
       onError: (error) => {
-        showErrorToast(error?.response?.data.message ?? '에러가 발생했습니다');
+        errorToast(error?.response?.data.message ?? '에러가 발생했습니다');
       },
     });
   };

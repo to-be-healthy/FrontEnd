@@ -11,7 +11,7 @@ import {
   IconSearch,
 } from '@/shared/assets';
 import IconNoCircleCheck from '@/shared/assets/images/noCircleCheck.svg';
-import { useDebounce, useShowErrorToast } from '@/shared/hooks';
+import { useDebounce } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import {
   Button,
@@ -20,6 +20,7 @@ import {
   SheetContent,
   SheetHeader,
   SheetTrigger,
+  useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -41,7 +42,7 @@ const AppendNewExerciseType = ({
   appendExcercise,
   close,
 }: Props) => {
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
 
   const [search, setSearch] = useState('');
   const debouncedSearch = useDebounce(search, 500);
@@ -76,7 +77,7 @@ const AppendNewExerciseType = ({
       },
       onError: (error) => {
         const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        errorToast(message);
       },
     });
   };

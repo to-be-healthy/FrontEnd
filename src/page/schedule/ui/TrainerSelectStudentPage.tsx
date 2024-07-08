@@ -8,8 +8,8 @@ import { StudentList } from '@/feature/manage';
 import { AddStudentDialog } from '@/feature/member';
 import { useAddScheduleMutation } from '@/feature/schedule';
 import { IconBack } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
+import { useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
@@ -18,7 +18,7 @@ const TrainerSelectStudentPage = ({ scheduleId }: { scheduleId: number }) => {
   const { mutate } = useAddScheduleMutation();
   const queryClient = useQueryClient();
 
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
 
   const addSchedule = (studentId: number) => {
     mutate(
@@ -31,8 +31,8 @@ const TrainerSelectStudentPage = ({ scheduleId }: { scheduleId: number }) => {
           router.back();
         },
         onError: (error) => {
-          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          const message = error?.response?.data.message;
+          errorToast(message);
         },
       }
     );

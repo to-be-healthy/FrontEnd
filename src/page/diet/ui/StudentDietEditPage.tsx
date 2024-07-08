@@ -16,8 +16,7 @@ import {
   useDiet,
   useDietContext,
 } from '@/feature/diet';
-import { IconCheck, IconClose } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
+import { IconClose } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
@@ -51,8 +50,7 @@ interface Props {
 }
 
 export const StudentDietEditPage = ({ dietId }: Props) => {
-  const { showErrorToast } = useShowErrorToast();
-  const { toast } = useToast();
+  const { successToast, errorToast } = useToast();
 
   const router = useRouter();
   const { images, initialImages } = useDietContext();
@@ -99,20 +97,11 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
     if (newRequestData) {
       editMutate(newRequestData, {
         onSuccess: ({ message }) => {
-          toast({
-            className: 'h-12',
-            description: (
-              <div className='flex items-center justify-center'>
-                <IconCheck fill={'var(--primary-500)'} width={17} height={17} />
-                <p className={cn(Typography.HEADING_5, 'ml-6 text-white')}>{message}</p>
-              </div>
-            ),
-            duration: 2000,
-          });
+          successToast(message);
           router.back();
         },
         onError: (error) => {
-          showErrorToast(error?.response?.data.message ?? '');
+          errorToast(error?.response?.data.message);
         },
       });
     }

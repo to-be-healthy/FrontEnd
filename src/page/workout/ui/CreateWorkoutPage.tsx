@@ -19,16 +19,15 @@ import {
   IconDelete,
   IconPlus,
 } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
-import { Button, Input, Switch, Textarea } from '@/shared/ui';
+import { Button, Input, Switch, Textarea, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const CreateWorkoutPage = () => {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const { images, uploadFiles, updateImages } = useWorkoutImages();
 
   const { mutate } = useCreateWorkoutMutation();
@@ -80,8 +79,8 @@ const CreateWorkoutPage = () => {
           router.replace('/student/workout');
         },
         onError: (error) => {
-          const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          const message = error?.response?.data.message;
+          errorToast(message);
         },
       }
     );

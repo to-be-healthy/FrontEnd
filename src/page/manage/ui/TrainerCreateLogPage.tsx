@@ -9,7 +9,6 @@ import { UnwrittenLesson, useCreateLogMutation, useLessonListQuery } from '@/fea
 import { IconBack, IconCloseBlack } from '@/shared/assets';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
-import { useShowErrorToast } from '@/shared/hooks';
 import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import {
   AlertDialog,
@@ -23,6 +22,7 @@ import {
   Card,
   Input,
   Textarea,
+  useToast,
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -35,7 +35,7 @@ const MAX_IMAGES_COUNT = 3;
 
 const TrainerCreateLogPage = ({ memberId }: Props) => {
   const router = useRouter();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const searchParams = useSearchParams();
   const name = searchParams.get('name');
   const lessonDate = searchParams.get('lessonDate');
@@ -69,7 +69,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );

@@ -14,9 +14,8 @@ import {
   IconCameraPositive,
   IconDocumentProfile,
 } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button, DialogClose, DialogContent, SheetContent } from '@/shared/ui';
+import { Button, DialogClose, DialogContent, SheetContent, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
 import { useTrainerCancelReservationMutation } from '../../api/useTrainerCancelReservationMutation';
@@ -40,7 +39,7 @@ const sheetMapper = (schedule: FlatSchedule) => ({
 
 const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
   const queryClient = useQueryClient();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const { mutate: cancelReservation } = useTrainerCancelReservationMutation();
   const { mutate: changeNoShow } = useTrainerChangeNoShowMutation();
   const { date, applicantName, scheduleId, applicantId, lessonStartTime, lessonEndTime } =
@@ -59,7 +58,7 @@ const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
       },
       onError: (error) => {
         const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        errorToast(message);
       },
     });
   };
@@ -74,7 +73,7 @@ const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
       },
       onError: (error) => {
         const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        errorToast(message);
       },
     });
   };
@@ -149,7 +148,7 @@ const CompletedSheet = ({ schedule }: { schedule: FlatSchedule }) => {
 };
 
 const AvailableSheet = ({ schedule }: { schedule: FlatSchedule }) => {
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const { mutate } = useTrainerChangeReservationMutation();
 
   const queryClient = useQueryClient();
@@ -170,7 +169,7 @@ const AvailableSheet = ({ schedule }: { schedule: FlatSchedule }) => {
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );
@@ -213,7 +212,7 @@ const AvailableSheet = ({ schedule }: { schedule: FlatSchedule }) => {
 
 const NoShowSheet = ({ schedule }: { schedule: FlatSchedule }) => {
   const queryClient = useQueryClient();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const { date, applicantId, scheduleId, applicantName, lessonStartTime, lessonEndTime } =
     schedule;
   const title = `${dayjs(date).format('M.DD(ddd) A')} ${lessonStartTime} ~ ${lessonEndTime}`;
@@ -228,7 +227,7 @@ const NoShowSheet = ({ schedule }: { schedule: FlatSchedule }) => {
       },
       onError: (error) => {
         const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        errorToast(message);
       },
     });
   };
@@ -270,7 +269,7 @@ const NoShowSheet = ({ schedule }: { schedule: FlatSchedule }) => {
 };
 
 const DisabledSheet = ({ schedule }: { schedule: FlatSchedule }) => {
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const { mutate } = useTrainerChangeReservationMutation();
   const queryClient = useQueryClient();
 
@@ -293,7 +292,7 @@ const DisabledSheet = ({ schedule }: { schedule: FlatSchedule }) => {
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );

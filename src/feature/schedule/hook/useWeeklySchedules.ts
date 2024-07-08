@@ -3,7 +3,8 @@
 import dayjs from 'dayjs';
 
 import { useTrainerScheduleQuery } from '@/feature/schedule/api/useTrainerScheduleQuery';
-import { useQueryString, useShowErrorToast } from '@/shared/hooks';
+import { useQueryString } from '@/shared/hooks';
+import { useToast } from '@/shared/ui';
 import { getStartOfWeek } from '@/shared/utils';
 
 import { useTrainerCreateSchedulesMutation } from '../api/useTrainerCreateSchedulesMutation';
@@ -13,7 +14,7 @@ const useWeeklySchedules = () => {
   const { getQueryString, setQueryString } = useQueryString();
   const date = getQueryString('date');
   const startDate = date ? dayjs(date, 'YYYY-MM-DD').toDate() : currentStartOfWeek;
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
 
   const {
     data,
@@ -45,7 +46,7 @@ const useWeeklySchedules = () => {
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-          showErrorToast(message);
+          errorToast(message);
         },
       }
     );

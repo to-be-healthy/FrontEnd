@@ -8,15 +8,14 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { EMAIL_REGEXP, NAME_REGEXP, SocialIcon, socialProviders } from '@/entity/auth';
 import { FindIdRequest, FindIdResponse, useFindIdMutation } from '@/feature/member';
 import { IconClose } from '@/shared/assets';
-import { useShowErrorToast } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
-import { Button, Input } from '@/shared/ui';
+import { Button, Input, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const FindIdPage = () => {
   const router = useRouter();
-  const { showErrorToast } = useShowErrorToast();
+  const { errorToast } = useToast();
   const [completed, setCompleted] = useState<FindIdResponse | null>(null);
 
   const { mutate } = useFindIdMutation();
@@ -36,8 +35,8 @@ const FindIdPage = () => {
         setCompleted(data);
       },
       onError: (error) => {
-        const message = error?.response?.data.message ?? '문제가 발생했습니다.';
-        showErrorToast(message);
+        const message = error?.response?.data.message;
+        errorToast(message);
       },
     });
   };
