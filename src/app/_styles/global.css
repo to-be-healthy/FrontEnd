@@ -240,4 +240,40 @@
   .calendar-shadow {
     box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.04);
   }
+
+  .policy-container {
+    @apply whitespace-pre-wrap break-keep px-7 py-10;
+  }
+
+  .policy-container h2 {
+    @apply text-[22px]/[130%] font-bold;
+  }
+
+  .policy-container h3 {
+    @apply text-[14px]/[150%] font-semibold;
+  }
+
+  .policy-container p {
+    @apply text-[14px]/[150%] font-normal leading-[21px];
+  }
+
+  .policy-container section {
+    @apply mt-12 flex flex-col gap-6;
+  }
+
+  .policy-container ol {
+    @apply list-decimal pl-7;
+  }
+
+  .policy-container ul {
+    @apply list-disc pl-7;
+  }
+
+  .policy-container li {
+    @apply text-[13px]/[150%] font-normal;
+  }
+
+  .policy-container u {
+    @apply underline underline-offset-4;
+  }
 }
