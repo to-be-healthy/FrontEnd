@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 
 import { IconArrowLeft, IconArrowRight, IconBack } from '@/shared/assets';
 import { useQueryString } from '@/shared/hooks';
-import { FLEX_CENTER, HEADER_TITLE_CENTER, Typography } from '@/shared/mixin';
+import { FLEX_CENTER, Typography } from '@/shared/mixin';
 import { Calendar, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 import { cn, getStartOfWeek } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -39,7 +39,7 @@ const TrainerFeedbackPage = () => {
         <button onClick={() => router.back()}>
           <IconBack />
         </button>
-        <h1 className={cn(Typography.HEADING_4_SEMIBOLD, HEADER_TITLE_CENTER)}>
+        <h1 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           피드백 작성
         </h1>
       </Layout.Header>

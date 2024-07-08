@@ -8,7 +8,7 @@ import {
 } from '@/feature/member';
 import { IconBack, IconDotsVertical } from '@/shared/assets';
 import IconNoCircleCheck from '@/shared/assets/images/noCircleCheck.svg';
-import { HEADER_TITLE_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -79,8 +79,7 @@ const Header = ({ name, memberId }: { name: string; memberId: number }) => {
       <button onClick={() => router.back()}>
         <IconBack />
       </button>
-      <h2
-        className={cn(Typography.HEADING_4_SEMIBOLD, HEADER_TITLE_CENTER, 'text-black')}>
+      <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title text-black')}>
         회원 정보
       </h2>
       <DropdownMenu open={open} onOpenChange={(state) => setOpen(state)}>

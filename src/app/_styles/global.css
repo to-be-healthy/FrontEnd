@@ -98,6 +98,12 @@
   }
 }
 
+@layer utilities {
+  .layout-header-title {
+    @apply absolute left-1/2 my-auto -translate-x-1/2;
+  }
+}
+
 @layer base {
   @font-face {
     font-family: Pretendard;
