@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
 import { useEditMemoMutation } from '@/feature/manage';
-import IconBack from '@/shared/assets/images/icon_back.svg';
+import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, useToast } from '@/shared/ui';
 import { Textarea } from '@/shared/ui/textarea';
