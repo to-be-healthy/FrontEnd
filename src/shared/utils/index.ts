@@ -1,3 +1,4 @@
+export { generateUUID } from './common';
 export {
   convertTo12HourFormat,
   formatTimestampToRelativeTime,
