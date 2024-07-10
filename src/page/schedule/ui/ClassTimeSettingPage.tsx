@@ -13,7 +13,7 @@ import {
   DayOfWeek,
   useTrainerClassTimeSettingMutation,
 } from '@/feature/schedule';
-import { useGetTrainerClassTimeSettingQuery } from '@/feature/schedule/api/useGetTrainerClassTimeSettingQuery';
+import { useGetTrainerClassTimeSettingQuery } from '@/feature/schedule';
 import { Typography } from '@/shared/mixin';
 import { Button, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';

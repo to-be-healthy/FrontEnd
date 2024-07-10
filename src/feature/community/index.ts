@@ -1,4 +1,4 @@
-export { useCommunityQuery } from './api/useCommunityQuery';
+export { useCommunityQuery } from './api/queries';
 export type {
   ComplexExercise,
   Exercise,

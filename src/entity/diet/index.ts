@@ -1,19 +1,23 @@
-export { useCreateDietCommentMutation } from './api/useCreateDietCommentMutation';
-export { useDeleteDietCommentMutation } from './api/useDeleteDietCommentMutation';
-export { useDeleteDietMutation } from './api/useDeleteDietMutation';
-export { useDietCancelLikeMutation } from './api/useDietCancelLikeMutation';
-export { useDietCommentListQuery } from './api/useDietCommentListQuery';
-export { useDietLikeMutation } from './api/useDietLikeMutation';
-export { useDietListQuery } from './api/useDietListQuery';
-export { useDietShowNoticeMutation } from './api/useDietShowNoticeMutation';
-export { useEditDietCommentMutation } from './api/useEditDietCommentMutation';
-export { useEditDietMutation } from './api/useEditDietMutation';
-export { useRegisterDietMutation } from './api/useRegisterDietMutation';
-export { useRegisterHomeDietMutation } from './api/useRegisterHomeDietMutation';
-export { useStudentCalendarMyDietListQuery } from './api/useStudentCalendarMyDietListQuery';
-export { useStudentDietDetailQuery } from './api/useStudentDietDetailQuery';
-export { useStudentFeedbackDietListQuery } from './api/useStudentFeedbackDietListQuery';
-export { useTrainerStudentDietListQuery } from './api/useTrainerStudentDietListQuery';
+export {
+  useCreateDietCommentMutation,
+  useDeleteDietCommentMutation,
+  useDeleteDietMutation,
+  useDietCancelLikeMutation,
+  useDietLikeMutation,
+  useDietShowNoticeMutation,
+  useEditDietCommentMutation,
+  useEditDietMutation,
+  useRegisterDietMutation,
+  useRegisterHomeDietMutation,
+} from './api/mutations';
+export {
+  useDietCommentListQuery,
+  useDietListQuery,
+  useStudentCalendarMyDietListQuery,
+  useStudentDietDetailQuery,
+  useStudentFeedbackDietListQuery,
+  useTrainerStudentDietListQuery,
+} from './api/queries';
 export type {
   DailyDiet,
   Diet,

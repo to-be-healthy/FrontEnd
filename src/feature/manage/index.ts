@@ -1,6 +1,8 @@
-export { useEditMemoMutation } from './api/useEditMemoMutation';
-export { useEditNicknameMutation } from './api/useEditNicknameMutation';
-export { useToggleAlarmStatusMutation } from './api/useToggleAlarmStatusMutation';
+export {
+  useEditMemoMutation,
+  useEditNicknameMutation,
+  useToggleAlarmStatusMutation,
+} from './api/mutations';
 export {
   CourseSheet,
   CourseSheetContent,

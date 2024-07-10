@@ -1,26 +1,34 @@
-export { useAddStudentCourseMutation } from './api/useAddStudentCourseMutation';
-export { useChangeEmailMutation } from './api/useChangeEmailMutation';
-export { useChangeMyNameMutation } from './api/useChangeMyNameMutation';
-export { useChangePasswordMutation } from './api/useChangePasswordMutation';
-export { useDeleteProfileImageMutation } from './api/useDeleteProfileImageMutation';
-export { useDeleteRefundStudentMutation } from './api/useDeleteRefundStudentMutation';
-export { useDeleteStudentCourseMutation } from './api/useDeleteStudentCourseMutation';
-export { useDeleteStudentMutation } from './api/useDeleteStudentMutation';
-export { useFcmTokenMutation } from './api/useFcmTokenMutation';
-export { useFindIdMutation } from './api/useFindIdMutation';
-export { useInviteStudentMutation } from './api/useInviteStudentMutation';
-export { useLogOutMutation } from './api/useLogOutMutation';
-export { useMyCourseHistoryQuery } from './api/useMyCourseHistoryQuery';
-export { useMyInfoQuery } from './api/useMyInfoQuery';
-export { useNotRegisteredStudentsQuery } from './api/useNotRegisteredStudentsQuery';
-export { useRegisteredStudentsQuery } from './api/useRegisteredStudentsQuery';
-export { useRegisterStudentCourseMutation } from './api/useRegisterStudentCourseMutation';
-export { useSetProfileImageMutation } from './api/useSetProfileImageMutation';
-export { useStudentCourseDetailQuery } from './api/useStudentCourseDetailQuery';
-export { useStudentDetailQuery } from './api/useStudentDetailQuery';
-export { useStudentHomeDataQuery } from './api/useStudentHomeDataQuery';
-export { useStudentPointHistoryQuery } from './api/useStudentPointHistoryQuery';
-export { useVerifyPasswordMutation } from './api/useVerifyPasswordMutation';
+export {
+  useAddStudentCourseMutation,
+  useAppendMemberMutation,
+  useChangeEmailMutation,
+  useChangeMyNameMutation,
+  useChangePasswordMutation,
+  useDeleteProfileImageMutation,
+  useDeleteRefundStudentMutation,
+  useDeleteStudentCourseMutation,
+  useDeleteStudentMutation,
+  useFcmTokenMutation,
+  useFindIdMutation,
+  useFindPasswordMutation,
+  useInviteStudentMutation,
+  useLogOutMutation,
+  useRegisterStudentCourseMutation,
+  useSetProfileImageMutation,
+  useVerifyPasswordMutation,
+} from './api/mutations';
+export {
+  useMyCourseHistoryQuery,
+  useMyInfoQuery,
+  useMyPointHistoryQuery,
+  useNotRegisteredStudentsQuery,
+  useRegisteredStudentsQuery,
+  useStudentCourseDetailQuery,
+  useStudentDetailQuery,
+  useStudentHomeDataQuery,
+  useStudentMypageTrainerInfoQuery,
+  useStudentPointHistoryQuery,
+} from './api/queries';
 export { courseHistoryTypes, pointHistoryTypes } from './const';
 export {
   StudentDetailContext,

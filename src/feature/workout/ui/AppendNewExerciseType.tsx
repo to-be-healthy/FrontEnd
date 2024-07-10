@@ -25,9 +25,8 @@ import {
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
-import { useDeleteExerciseMutation } from '../api/useDeleteExerciseMutation';
-import { useWorkoutCategoryListQuery } from '../api/useWorkoutCategoryListQuery';
-import { useWorkoutTypeListQuery } from '../api/useWorkoutTypeListQuery';
+import { useDeleteExerciseMutation } from '../api/mutations';
+import { useWorkoutCategoryListQuery, useWorkoutTypeListQuery } from '../api/queries';
 import { ExerciseType } from '../model/types';
 import { CreateNewExerciseBottomSheet } from './CreateNewExerciseBottomSheet';
 

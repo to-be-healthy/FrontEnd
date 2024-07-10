@@ -1,15 +1,22 @@
-export { useCancelLikeMutation as useWorkoutCancelLikeMutation } from './api/useCancelLikeMutation';
-export { useCreateExerciseMutation } from './api/useCreateExerciseMutation';
-export { useCreateWorkoutMutation } from './api/useCreateWorkoutMutation';
-export { useDeleteExerciseMutation } from './api/useDeleteExerciseMutation';
-export { useDeleteWorkoutMutation } from './api/useDeleteWorkoutMutation';
-export { useEditWorkoutMutation } from './api/useEditWorkoutMutation';
-export { useLikeMutation as useWorkoutLikeMutation } from './api/useLikeMutation';
-export { useWorkoutCategoryListQuery } from './api/useWorkoutCategoryListQuery';
-export { useWorkoutCommentQuery } from './api/useWorkoutCommentQuery';
-export { useWorkoutDetailQuery } from './api/useWorkoutDetailQuery';
-export { useWorkoutQuery } from './api/useWorkoutQuery';
-export { useWorkoutTypeListQuery } from './api/useWorkoutTypeListQuery';
+export {
+  useCreateExerciseMutation,
+  useCreateWorkoutCommentMutation,
+  useCreateWorkoutMutation,
+  useDeleteExerciseMutation,
+  useDeleteWorkoutCommentMutation,
+  useDeleteWorkoutMutation,
+  useEditWorkoutCommentMutation,
+  useEditWorkoutMutation,
+  useCancelLikeMutation as useWorkoutCancelLikeMutation,
+  useLikeMutation as useWorkoutLikeMutation,
+} from './api/mutations';
+export {
+  useWorkoutCategoryListQuery,
+  useWorkoutCommentQuery,
+  useWorkoutDetailQuery,
+  useWorkoutQuery,
+  useWorkoutTypeListQuery,
+} from './api/queries';
 export {
   useWorkoutComment,
   useWorkoutCommentContext,

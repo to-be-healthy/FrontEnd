@@ -1,11 +1,13 @@
 export { authApi } from './api/authApi';
-export { useCheckVailableIdMutation } from './api/useCheckVailableIdMutation';
-export { useCheckVerificationCodeMutation } from './api/useCheckVerificationCodeMutation';
-export { useDeleteAccountMutation } from './api/useDeleteAccountMutation';
-export { useSendVerificationCodeMutation } from './api/useSendVerificationCodeMutation';
-export { useSignInMutation } from './api/useSignInMutation';
-export { useSignUpMutation } from './api/useSignUpMutation';
-export { useSocialSignInMutation } from './api/useSocialSignInMutation';
+export {
+  useCheckVailableIdMutation,
+  useCheckVerificationCodeMutation,
+  useDeleteAccountMutation,
+  useSendVerificationCodeMutation,
+  useSignInMutation,
+  useSignUpMutation,
+  useSocialSignInMutation,
+} from './api/mutations';
 export {
   GOOGLE_SOCIAL_AUTH_URL,
   KAKAO_SOCIAL_AUTH_URL,

@@ -23,7 +23,7 @@ import {
 } from '@/shared/ui';
 import { cn, convertTo12HourFormat } from '@/shared/utils';
 
-import { useStudentCancelReservationScheduleMutation } from '../api/useStudentCancelReservationScheduleMutation';
+import { useStudentCancelReservationScheduleMutation } from '../api/mutations';
 import { ScheduleData } from '../model/type';
 
 const NoReservation = () => {

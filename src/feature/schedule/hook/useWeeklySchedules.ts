@@ -2,12 +2,13 @@
 
 import dayjs from 'dayjs';
 
-import { useTrainerScheduleQuery } from '@/feature/schedule/api/useTrainerScheduleQuery';
+import {
+  useTrainerCreateSchedulesMutation,
+  useTrainerScheduleQuery,
+} from '@/feature/schedule';
 import { useQueryString } from '@/shared/hooks';
 import { useToast } from '@/shared/ui';
 import { getStartOfWeek } from '@/shared/utils';
-
-import { useTrainerCreateSchedulesMutation } from '../api/useTrainerCreateSchedulesMutation';
 
 const useWeeklySchedules = () => {
   const currentStartOfWeek = getStartOfWeek();

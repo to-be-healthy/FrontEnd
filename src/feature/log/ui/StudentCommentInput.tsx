@@ -8,9 +8,11 @@ import { Typography } from '@/shared/mixin';
 import { Button, Input } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-import { useCreateLogCommentMutation } from '../api/useCreateLogCommentMutation';
-import { useCreateLogReplyMutation } from '../api/useCreateLogReplyMutation';
-import { useEditLogCommentMutation } from '../api/useEditLogCommentMutation';
+import {
+  useCreateLogCommentMutation,
+  useCreateLogReplyMutation,
+  useEditLogCommentMutation,
+} from '../api/mutations';
 import { useStudentCommentContext } from '../hooks/useStudentComment';
 
 const StudentCommentInput = () => {

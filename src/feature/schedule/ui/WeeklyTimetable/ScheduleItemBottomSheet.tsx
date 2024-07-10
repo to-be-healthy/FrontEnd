@@ -18,10 +18,12 @@ import { Typography } from '@/shared/mixin';
 import { Button, DialogClose, DialogContent, SheetContent, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-import { useTrainerCancelReservationMutation } from '../../api/useTrainerCancelReservationMutation';
-import { useTrainerChangeNoShowMutation } from '../../api/useTrainerChangeNoShowMutation';
-import { useTrainerChangeReservationMutation } from '../../api/useTrainerChangeReservationMutation';
-import { useTrainerChangeShowMutation } from '../../api/useTrainerChangeShowMutation';
+import {
+  useTrainerCancelReservationMutation,
+  useTrainerChangeNoShowMutation,
+  useTrainerChangeReservationMutation,
+  useTrainerChangeShowMutation,
+} from '../../api/mutations';
 import { FlatSchedule } from '../../model/type';
 
 const ScheduleItemBottomSheet = ({ schedule }: { schedule: FlatSchedule }) => {

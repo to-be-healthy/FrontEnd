@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 
-import { useAppendMemberMutation } from '@/feature/member/api/useAppendMemberMutation';
+import { useAppendMemberMutation } from '@/feature/member';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import { Typography } from '@/shared/mixin';
 import { Button, Input } from '@/shared/ui';

@@ -16,7 +16,7 @@ import {
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-import { useTrainerChangeReservationMutation } from '../../api/useTrainerChangeReservationMutation';
+import { useTrainerChangeReservationMutation } from '../../api/mutations';
 import { FlatSchedule } from '../../model/type';
 
 interface Props {

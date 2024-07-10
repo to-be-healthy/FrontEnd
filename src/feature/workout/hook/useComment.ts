@@ -7,10 +7,12 @@ import {
   useState,
 } from 'react';
 
-import { useCreateWorkoutCommentMutation } from '../api/useCreateWorkoutCommentMutation';
-import { useDeleteWorkoutCommentMutation } from '../api/useDeleteWorkoutCommentMutation';
-import { useEditWorkoutCommentMutation } from '../api/useEditWorkoutCommentMutation';
-import { useWorkoutCommentQuery } from '../api/useWorkoutCommentQuery';
+import {
+  useCreateWorkoutCommentMutation,
+  useDeleteWorkoutCommentMutation,
+  useEditWorkoutCommentMutation,
+} from '../api/mutations';
+import { useWorkoutCommentQuery } from '../api/queries';
 import { WorkoutComment } from '../model/types';
 
 type ContextType = ReturnType<typeof useWorkoutComment> | null;
