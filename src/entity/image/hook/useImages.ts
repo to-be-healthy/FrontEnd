@@ -2,9 +2,9 @@ import { ChangeEvent, useCallback, useState } from 'react';
 
 import { useToast } from '@/shared/ui';
 
-import { useCreateS3PresignedUrlMutation } from '../api/useCreateS3PresignedUrlMutation';
-import { useS3UploadImagesMutation } from '../api/useS3UploadImagesMutation';
+import { useCreateS3PresignedUrlMutation } from '../api/mutations';
 import { ImageType } from '../model/types';
+import { useS3UploadImagesMutation } from './../api/mutations';
 
 const MAX_IMAGES_COUNT = 3;
 

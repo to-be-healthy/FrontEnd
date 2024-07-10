@@ -16,9 +16,9 @@ import {
 } from '@/shared/ui/dropdown-menu';
 import { cn } from '@/shared/utils';
 
-import { useDeleteCommentMutation } from '../api/useDeleteCommentMutation';
+import { useDeleteCommentMutation } from '../api/mutations';
 import { useTrainerCommentContext } from '../hooks/useTrainerComment';
-import type { Comment } from '../model/types';
+import { Comment } from '../model/types';
 
 type Props = PropsWithChildren<{
   comments: Comment[];

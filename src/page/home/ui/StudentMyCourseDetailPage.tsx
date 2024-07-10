@@ -7,8 +7,13 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { courseHistoryTypes, useMyCourseHistoryQuery } from '@/feature/member';
-import { CourseCard, CourseCardContent, CourseCardHeader } from '@/feature/member';
+import {
+  CourseCard,
+  CourseCardContent,
+  CourseCardHeader,
+  courseHistoryTypes,
+  useMyCourseHistoryQuery,
+} from '@/feature/member';
 import { IconClose, IconNotification } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';

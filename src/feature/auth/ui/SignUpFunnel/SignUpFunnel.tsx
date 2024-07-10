@@ -26,7 +26,7 @@ import { Typography } from '@/shared/mixin';
 import { Button, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-import { useInvitationInfoQuery } from '../../api/useInvitationInfoQuery';
+import { useInvitationInfoQuery } from '../../api/queries';
 import { FunnelProps, StepProps } from '../../hooks/useSignUpFunnel';
 import { SetupEmail } from './SetupEmail';
 import { SetupEmailVerificationCode } from './SetupEmailVerificationCode';

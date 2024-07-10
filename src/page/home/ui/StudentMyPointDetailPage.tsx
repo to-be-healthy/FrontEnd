@@ -10,8 +10,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
-import { pointHistoryTypes } from '@/feature/member';
-import { useMyPointHistoryQuery } from '@/feature/member/api/useMyPointHistoryQuery';
+import { pointHistoryTypes, useMyPointHistoryQuery } from '@/feature/member';
 import { IconClose, IconNotification } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Card, CardContent, CardHeader } from '@/shared/ui';

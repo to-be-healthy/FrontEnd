@@ -22,8 +22,10 @@ import {
 } from '@/shared/ui';
 import { cn, convertTo12HourFormat } from '@/shared/utils';
 
-import { useTrainerChangeNoShowMutation } from '../api/useTrainerChangeNoShowMutation';
-import { useTrainerChangeShowMutation } from '../api/useTrainerChangeShowMutation';
+import {
+  useTrainerChangeNoShowMutation,
+  useTrainerChangeShowMutation,
+} from '../api/mutations';
 import { ScheduleData } from '../model/type';
 
 const NoReservation = () => {

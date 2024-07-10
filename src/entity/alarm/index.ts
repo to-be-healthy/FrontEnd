@@ -1,6 +1,5 @@
-export { useAlarmQuery } from './api/useAlarmQuery';
-export { useHomeAlarmQuery } from './api/useHomeAlarmQuery';
-export { useReadAlarmMutation } from './api/useReadAlarmMutation';
+export { useReadAlarmMutation } from './api/mutations';
+export { useAlarmQuery, useHomeAlarmQuery } from './api/queries';
 export type {
   AlarmData,
   AlarmType,

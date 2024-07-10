@@ -16,9 +16,9 @@ import {
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-import { useDeleteCommentMutation } from '../api/useDeleteCommentMutation';
+import { useDeleteCommentMutation } from '../api/mutations';
 import { useStudentCommentContext } from '../hooks/useStudentComment';
-import type { Comment } from '../model/types';
+import { Comment } from '../model/types';
 
 type Props = PropsWithChildren<{
   comments: Comment[];

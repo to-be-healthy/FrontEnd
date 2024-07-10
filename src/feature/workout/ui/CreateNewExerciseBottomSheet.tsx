@@ -17,7 +17,7 @@ import {
 } from '@/shared/ui';
 import { cn, twSelector } from '@/shared/utils';
 
-import { useCreateExerciseMutation } from '../api/useCreateExerciseMutation';
+import { useCreateExerciseMutation } from '../api/mutations';
 import { WorkoutCategory } from '../model/types';
 
 const CreateNewExerciseBottomSheet = ({

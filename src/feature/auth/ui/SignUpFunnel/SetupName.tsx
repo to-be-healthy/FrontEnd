@@ -9,7 +9,7 @@ import { Typography } from '@/shared/mixin';
 import { TextInput } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-import { useInvitationInfoQuery } from '../../api/useInvitationInfoQuery';
+import { useInvitationInfoQuery } from '../../api/queries';
 
 export const SetupName = () => {
   const {

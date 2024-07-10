@@ -24,7 +24,7 @@ import {
 } from '@/shared/ui';
 import { cn, convertTo12HourFormat } from '@/shared/utils';
 
-import { useStudentCancelWaitingScheduleMutation } from '../api/useStudentCancelWaitingScheduleMutation';
+import { useStudentCancelWaitingScheduleMutation } from '../api/mutations';
 import { ScheduleData } from '../model/type';
 
 const NoWaiting = () => {

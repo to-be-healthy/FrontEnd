@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { HTMLAttributes } from 'react';
 
-import { useCheckTrainerMemberMappingQuery } from '@/feature/schedule/api/useCheckTrainerMemberMappingQuery';
+import { useCheckTrainerMemberMappingQuery } from '@/feature/schedule';
 import {
   IconCalendarFilled,
   IconCalendarOutlined,

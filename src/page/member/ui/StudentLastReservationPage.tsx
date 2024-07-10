@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useState } from 'react';
 
-import { useStudentMyLastReservationListQuery } from '@/feature/schedule/api/useStudentMyLastReservationListQuery';
+import { useStudentMyLastReservationListQuery } from '@/feature/schedule';
 import { IconBack, IconNoSchedule } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {

@@ -21,7 +21,7 @@ import {
 } from '@/shared/ui';
 import { cn, convertTo12HourFormat } from '@/shared/utils';
 
-import { useStudentReservationScheduleMutation } from '../api/useStudentReservationScheduleMutation';
+import { useStudentReservationScheduleMutation } from '../api/mutations';
 import { AllScheduleData } from '../model/type';
 
 dayjs.locale('ko');

@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useMemo } from 'react';
 
-import { useStudentDetailQuery } from '../api/useStudentDetailQuery';
+import { useStudentDetailQuery } from '../api/queries';
 
 const useStudentDetail = (memberId: number) => {
   const { data, isPending, refetch } = useStudentDetailQuery(memberId);

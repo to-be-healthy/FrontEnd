@@ -14,9 +14,9 @@ import {
   ClassTimeSetting,
   ClassTimeSettingData,
   DayOfWeek,
+  useGetTrainerClassTimeSettingQuery,
   useTrainerClassTimeSettingMutation,
 } from '@/feature/schedule';
-import { useGetTrainerClassTimeSettingQuery } from '@/feature/schedule/api/useGetTrainerClassTimeSettingQuery';
 import { Button, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';

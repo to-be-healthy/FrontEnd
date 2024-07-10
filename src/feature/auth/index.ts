@@ -1,4 +1,4 @@
-export { useInvitationInfoQuery } from './api/useInvitationInfoQuery';
+export { useInvitationInfoQuery } from './api/queries';
 export { useSignUpFunnel } from './hooks/useSignUpFunnel';
 export { SignInForm } from './ui/SignInForm';
 export { SignUpCancelDialog } from './ui/SignUpFunnel/SignUpCancelDialog';
