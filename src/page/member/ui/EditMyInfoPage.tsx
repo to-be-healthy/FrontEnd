@@ -22,7 +22,7 @@ import {
   IconKakaoLogo,
   IconNaverLogo,
 } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { Button, useToast } from '@/shared/ui';
 import {
   DropdownMenu,
@@ -179,17 +179,17 @@ const EditMyInfoPage = () => {
                 <div className='flex items-center justify-between px-6 py-7'>
                   <p className={cn(Typography.TITLE_1_SEMIBOLD)}>계정 연동 설정</p>
                   {data.socialType === 'KAKAO' && (
-                    <div className={cn(FLEX_CENTER, 'rounded-full bg-[#FEE500] p-1')}>
+                    <div className='flex-center rounded-full bg-[#FEE500] p-1'>
                       <IconKakaoLogo />
                     </div>
                   )}
                   {data.socialType === 'GOOGLE' && (
-                    <div className={cn(FLEX_CENTER, 'rounded-full bg-white p-1')}>
+                    <div className='flex-center rounded-full bg-white p-1'>
                       <IconGoogleLogo />
                     </div>
                   )}
                   {data.socialType === 'NAVER' && (
-                    <div className={cn(FLEX_CENTER, 'rounded-full bg-[#03C75A] p-1')}>
+                    <div className='flex-center rounded-full bg-[#03C75A] p-1'>
                       <IconNaverLogo />
                     </div>
                   )}

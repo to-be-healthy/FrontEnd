@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import { useState } from 'react';
 
 import { IconCalendarCheck, IconCalendarRefresh } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import {
   Button,
   Dialog,
@@ -119,8 +119,7 @@ const DayOfWeekRow = ({ startDate, flatSchedules }: Props) => {
             <SheetTrigger
               className={cn(
                 Typography.BODY_4_MEDIUM,
-                FLEX_CENTER,
-                'h-[48px] w-[64px] flex-1 flex-col border border-l-0 border-gray-200 text-gray-700',
+                'flex-center h-[48px] w-[64px] flex-1 flex-col border border-l-0 border-gray-200 text-gray-700',
                 isToday && 'text-primary-500'
               )}
               tabIndex={-1}>

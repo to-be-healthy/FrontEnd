@@ -11,7 +11,7 @@ import { CommunityPost, NoPosts, useCommunityQuery } from '@/feature/community';
 import { useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
 import { useQueryString } from '@/shared/hooks';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -91,7 +91,7 @@ const CommunityPage = () => {
                   );
                 })}
             </div>
-            <div ref={ref} className={cn(FLEX_CENTER, 'p-7')}>
+            <div ref={ref} className='flex-center p-7'>
               {isFetchingNextPage && (
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               )}

@@ -9,7 +9,7 @@ import { UnwrittenLesson, useCreateLogMutation, useLessonListQuery } from '@/fea
 import { IconBack, IconCloseBlack } from '@/shared/assets';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -172,16 +172,14 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
                 onClick={() => router.back()}
                 className={cn(
                   Typography.TITLE_1_SEMIBOLD,
-                  FLEX_CENTER,
-                  'h-full w-full bg-blue-50 py-[13px] text-primary-500'
+                  'flex-center h-full w-full bg-blue-50 py-[13px] text-primary-500'
                 )}>
                 확인
               </AlertDialogCancel>
               <AlertDialogCancel
                 className={cn(
                   Typography.TITLE_1_SEMIBOLD,
-                  FLEX_CENTER,
-                  'h-full w-full bg-primary-500 py-[13px] text-white'
+                  'flex-center h-full w-full bg-primary-500 py-[13px] text-white'
                 )}>
                 취소
               </AlertDialogCancel>
@@ -210,7 +208,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
           <div className='h-[85px] flex-col space-y-4 rounded-lg border border-gray-200 p-6'>
             {selectedLesson === null && (
               <div
-                className={cn(Typography.HEADING_5, FLEX_CENTER, 'h-full text-gray-500')}>
+                className={cn(Typography.HEADING_5, 'flex-center h-full text-gray-500')}>
                 수업일지가 모두 작성 완료되었습니다.
               </div>
             )}
@@ -258,8 +256,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             <label
               htmlFor='image-input'
               className={cn(
-                FLEX_CENTER,
-                'h-[60px] w-[60px] cursor-pointer flex-col gap-1 rounded-sm border border-gray-200'
+                'flex-center h-[60px] w-[60px] cursor-pointer flex-col gap-1 rounded-sm border border-gray-200'
               )}>
               <IconCamera />
               <span className={cn(Typography.BODY_4_MEDIUM, 'text-gray-500')}>

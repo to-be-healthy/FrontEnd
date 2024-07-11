@@ -10,7 +10,7 @@ import { useRouter } from 'next/navigation';
 
 import { IconArrowLeft, IconArrowRight, IconBack } from '@/shared/assets';
 import { useQueryString } from '@/shared/hooks';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { Calendar, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 import { cn, getStartOfWeek } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -82,12 +82,12 @@ const TrainerFeedbackPage = () => {
           <div className='absolute right-7 top-6 flex items-center gap-8 py-[3.5px]'>
             <button
               onClick={() => changeDate(dayjs(date).subtract(7, 'days').toDate())}
-              className={cn(FLEX_CENTER, 'h-6 w-6')}>
+              className='flex-center h-6 w-6'>
               <IconArrowLeft stroke={'#000'} />
             </button>
             <button
               onClick={() => changeDate(dayjs(date).add(7, 'days').toDate())}
-              className={cn(FLEX_CENTER, 'h-6 w-6')}
+              className='flex-center h-6 w-6'
               disabled={rightButtonDiabled}>
               <IconArrowRight stroke={rightButtonDiabled ? 'var(--gray-400)' : '#000'} />
             </button>

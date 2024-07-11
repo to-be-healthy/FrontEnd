@@ -12,7 +12,7 @@ import {
 } from '@/shared/assets';
 import IconNoCircleCheck from '@/shared/assets/images/noCircleCheck.svg';
 import { useDebounce } from '@/shared/hooks';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import {
   Button,
   Sheet,
@@ -166,7 +166,7 @@ const AppendNewExerciseType = ({
           </div>
         )}
         {!filteredTypes && (
-          <div className={cn(FLEX_CENTER, 'mt-10 w-full')}>
+          <div className='flex-center mt-10 w-full'>
             <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
           </div>
         )}
@@ -174,8 +174,7 @@ const AppendNewExerciseType = ({
           <div
             className={cn(
               Typography.HEADING_4_SEMIBOLD,
-              FLEX_CENTER,
-              'mt-10 flex w-full flex-col gap-5 text-gray-400'
+              'flex-center mt-10 flex w-full flex-col gap-5 text-gray-400'
             )}>
             <IconNotification width={33} height={33} stroke='var(--gray-300)' />
             추가 가능한 운동이 없습니다.
@@ -224,7 +223,7 @@ const AppendNewExerciseType = ({
                       </div>
                       {type.custom && (
                         <Sheet>
-                          <SheetTrigger className={cn(FLEX_CENTER, 'h-6 w-6')}>
+                          <SheetTrigger className='flex-center h-6 w-6'>
                             <IconDotsVertical />
                           </SheetTrigger>
                           <SheetContent
@@ -256,7 +255,7 @@ const AppendNewExerciseType = ({
               })}
             </ul>
             {filteredTypes && hasNextPage && (
-              <div ref={ref} className={cn(FLEX_CENTER, 'h-7 w-full p-3')}>
+              <div ref={ref} className='flex-center h-7 w-full p-3'>
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               </div>
             )}

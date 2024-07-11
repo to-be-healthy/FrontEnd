@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useDeleteLogMutation, useLogTrainerCommentContext } from '@/feature/log';
 import { IconBack, IconDotsVertical, IconEdit, IconTrash } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -55,7 +55,7 @@ const Header = () => {
       </button>
       <DropdownMenu>
         <DropdownMenuTrigger
-          className={cn(Typography.TITLE_1_SEMIBOLD, FLEX_CENTER, 'w-6')}>
+          className={cn(Typography.TITLE_1_SEMIBOLD, 'flex-center w-6')}>
           <IconDotsVertical />
         </DropdownMenuTrigger>
         <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>

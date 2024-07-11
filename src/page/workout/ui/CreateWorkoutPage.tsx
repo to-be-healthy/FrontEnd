@@ -19,7 +19,7 @@ import {
   IconDelete,
   IconPlus,
 } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { Button, Input, Switch, Textarea, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -126,8 +126,7 @@ const CreateWorkoutPage = () => {
             <label
               htmlFor='image-input'
               className={cn(
-                FLEX_CENTER,
-                'h-[60px] w-[60px] cursor-pointer flex-col gap-1 rounded-sm border border-gray-200'
+                'flex-center h-[60px] w-[60px] cursor-pointer flex-col gap-1 rounded-sm border border-gray-200'
               )}>
               <IconCamera />
               <span className={cn(Typography.BODY_4_MEDIUM, 'text-gray-500')}>

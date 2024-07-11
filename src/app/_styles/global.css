@@ -98,12 +98,6 @@
   }
 }
 
-@layer utilities {
-  .layout-header-title {
-    @apply absolute left-1/2 my-auto -translate-x-1/2;
-  }
-}
-
 @layer base {
   @font-face {
     font-family: Pretendard;
@@ -195,6 +189,14 @@
 }
 
 @layer utilities {
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
+
+  .layout-header-title {
+    @apply absolute left-1/2 my-auto -translate-x-1/2;
+  }
+
   /* input-otp width, clip-path 덮어쓰기 */
   .input-otp-override {
     width: 100% !important;

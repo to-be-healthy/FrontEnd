@@ -11,7 +11,7 @@ import { useAuthSelector } from '@/entity/auth';
 import { useMyInfoQuery } from '@/feature/member';
 import { NoWorkout, useWorkoutQuery, WorkoutPost } from '@/feature/workout';
 import { IconArrowLeft, IconPlus } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
@@ -88,7 +88,7 @@ const StudentWorkoutPage = () => {
                 </div>
               ))}
             </div>
-            <div ref={ref} className={cn(FLEX_CENTER, 'p-7')}>
+            <div ref={ref} className='flex-center p-7'>
               {isFetchingNextPage && (
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               )}

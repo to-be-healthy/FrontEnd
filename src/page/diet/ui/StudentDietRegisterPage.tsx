@@ -35,7 +35,7 @@ import {
   IconNotification,
 } from '@/shared/assets';
 import DownIcon from '@/shared/assets/images/icon_arrow_bottom.svg';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { Button, Calendar, Card, CardContent, CardHeader, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -319,7 +319,7 @@ export const StudentDietRegisterPage = () => {
                           )
                       : () => handleWeekChange('prev')
                   }
-                  className={cn(FLEX_CENTER, 'h-6 w-6')}>
+                  className='flex-center h-6 w-6'>
                   <IconArrowLeft stroke={'#000'} />
                 </button>
                 <button
@@ -332,7 +332,7 @@ export const StudentDietRegisterPage = () => {
                   disabled={
                     !isArrowToggle ? monthRightButtonDiabled : weekRightButtonDiabled
                   }
-                  className={cn(FLEX_CENTER, 'h-6 w-6')}>
+                  className='flex-center h-6 w-6'>
                   {!isArrowToggle ? (
                     <IconArrowRight
                       stroke={monthRightButtonDiabled ? 'var(--gray-400)' : '#000'}

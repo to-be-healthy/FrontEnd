@@ -1,7 +1,7 @@
 'use client';
 
 import { IconArrowTop } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -16,7 +16,7 @@ const CommentInput = () => {
     <Layout.BottomArea className='p-0'>
       <div className={cn('border-t border-gray-200 bg-white px-6 py-6')}>
         {target !== null && target.mode === 'create' && target.isReply && (
-          <div className={cn(Typography.BODY_4_REGULAR, FLEX_CENTER, 'gap-2 pb-4')}>
+          <div className={cn(Typography.BODY_4_REGULAR, 'flex-center gap-2 pb-4')}>
             {target.comment.member.name}님에게 답글 남기는 중
             <span className='h-1 w-1 rounded-full bg-gray-500' />
             <Button
@@ -31,7 +31,7 @@ const CommentInput = () => {
           </div>
         )}
         {target !== null && target.mode === 'edit' && (
-          <div className={cn(Typography.BODY_4_REGULAR, FLEX_CENTER, 'gap-2 pb-4')}>
+          <div className={cn(Typography.BODY_4_REGULAR, 'flex-center gap-2 pb-4')}>
             댓글 수정 중
             <span className='h-1 w-1 rounded-full bg-gray-500' />
             <Button
@@ -45,7 +45,7 @@ const CommentInput = () => {
             </Button>
           </div>
         )}
-        <div className={cn(FLEX_CENTER, 'space-x-6')}>
+        <div className='flex-center space-x-6'>
           <div className='flex-1 rounded-md border px-6 py-[13px] focus-within:border-primary-500'>
             <textarea
               ref={ref}
