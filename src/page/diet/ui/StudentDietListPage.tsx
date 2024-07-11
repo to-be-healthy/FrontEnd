@@ -15,7 +15,7 @@ import { useInView } from 'react-intersection-observer';
 import { MealType, useDietListQuery } from '@/entity/diet';
 import { useMyInfoQuery } from '@/feature/member';
 import {
-  IconArrowLeft,
+  IconBack,
   IconChat,
   IconCheck,
   IconLike,
@@ -109,7 +109,7 @@ export const StudentDietListPage = () => {
         <>
           <Layout.Header className='bg-gray-100'>
             <button onClick={() => router.back()}>
-              <IconArrowLeft stroke='black' />
+              <IconBack />
             </button>
             <h2
               className={cn(

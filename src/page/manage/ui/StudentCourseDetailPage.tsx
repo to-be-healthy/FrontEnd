@@ -25,7 +25,7 @@ import {
   useRegisterStudentCourseMutation,
   useStudentCourseDetailQuery,
 } from '@/feature/member';
-import { IconArrowLeft, IconPlus } from '@/shared/assets';
+import { IconBack, IconPlus } from '@/shared/assets';
 import { IconNotification } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {
@@ -163,7 +163,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
     <Layout type='trainer'>
       <Layout.Header className='justify-start bg-white'>
         <button onClick={() => router.back()}>
-          <IconArrowLeft stroke='black' />
+          <IconBack />
         </button>
         <h2
           className={cn(

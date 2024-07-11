@@ -31,6 +31,7 @@ import {
 import {
   IconArrowLeft,
   IconArrowRight,
+  IconBack,
   IconClose,
   IconNotification,
 } from '@/shared/assets';
@@ -258,7 +259,7 @@ export const StudentDietRegisterPage = () => {
     <Layout>
       <Layout.Header className='bg-white'>
         <button onClick={() => router.back()}>
-          <IconArrowLeft stroke='black' />
+          <IconBack />
         </button>
         <h2
           className={cn(

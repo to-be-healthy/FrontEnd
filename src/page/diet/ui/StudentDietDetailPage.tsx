@@ -23,7 +23,7 @@ import {
   useDietComment,
 } from '@/feature/diet';
 import {
-  IconArrowLeft,
+  IconBack,
   IconChat,
   IconCheck,
   IconEdit,
@@ -134,7 +134,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
           <>
             <Layout.Header>
               <button onClick={() => router.back()}>
-                <IconArrowLeft stroke='black' />
+                <IconBack />
               </button>
               <h2
                 className={cn(

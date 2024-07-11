@@ -10,7 +10,7 @@ import { useInView } from 'react-intersection-observer';
 import { useAuthSelector } from '@/entity/auth';
 import { useMyInfoQuery } from '@/feature/member';
 import { NoWorkout, useWorkoutQuery, WorkoutPost } from '@/feature/workout';
-import { IconArrowLeft, IconPlus } from '@/shared/assets';
+import { IconBack, IconPlus } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
@@ -50,7 +50,7 @@ const StudentWorkoutPage = () => {
     <Layout>
       <Layout.Header>
         <button onClick={() => router.back()}>
-          <IconArrowLeft stroke='black' />
+          <IconBack />
         </button>
         <h1
           className={cn(

@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useStudentLogListQuery } from '@/feature/log';
-import { IconArrowLeft, IconCalendarX, IconChat } from '@/shared/assets';
+import { IconBack, IconCalendarX, IconChat } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -27,7 +27,7 @@ const StudentLogPage = () => {
     <Layout>
       <Layout.Header>
         <button onClick={() => router.back()}>
-          <IconArrowLeft stroke='black' />
+          <IconBack />
         </button>
         <h1
           className={cn(
