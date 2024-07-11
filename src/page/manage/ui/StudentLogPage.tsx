@@ -29,11 +29,7 @@ const StudentLogPage = () => {
         <button onClick={() => router.back()}>
           <IconBack />
         </button>
-        <h1
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 my-auto -translate-x-1/2'
-          )}>
+        <h1 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           수업일지
         </h1>
       </Layout.Header>

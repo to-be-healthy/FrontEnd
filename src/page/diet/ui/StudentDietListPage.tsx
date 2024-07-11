@@ -111,11 +111,7 @@ export const StudentDietListPage = () => {
             <button onClick={() => router.back()}>
               <IconBack />
             </button>
-            <h2
-              className={cn(
-                Typography.HEADING_4_SEMIBOLD,
-                'absolute left-1/2 translate-x-[-50%] text-black'
-              )}>
+            <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
               {title}
             </h2>
             <Link href='/student/diet/register'>

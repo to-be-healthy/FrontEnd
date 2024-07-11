@@ -151,11 +151,7 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 translate-x-[-50%] text-black'
-          )}>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           식단 수정
         </h2>
       </Layout.Header>

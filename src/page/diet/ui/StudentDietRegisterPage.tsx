@@ -261,11 +261,7 @@ export const StudentDietRegisterPage = () => {
         <button onClick={() => router.back()}>
           <IconBack />
         </button>
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 translate-x-[-50%] text-black'
-          )}>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           식단 올리기
         </h2>
       </Layout.Header>

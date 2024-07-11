@@ -194,7 +194,7 @@
   }
 
   .layout-header-title {
-    @apply absolute left-1/2 my-auto -translate-x-1/2;
+    @apply absolute left-1/2 -translate-x-1/2;
   }
 
   /* input-otp width, clip-path 덮어쓰기 */

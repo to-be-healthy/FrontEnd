@@ -135,11 +135,7 @@ const EditWorkoutPage = ({ workoutHistoryId }: { workoutHistoryId: number }) => 
         <Button variant='ghost' className='p-0' onClick={() => router.back()}>
           <IconClose />
         </Button>
-        <h1
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 -translate-x-1/2'
-          )}>
+        <h1 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           운동기록 작성
         </h1>
       </Layout.Header>

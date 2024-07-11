@@ -114,11 +114,7 @@ export const TrainerStudentDietListPage = ({ memberId }: Props) => {
         <button onClick={() => router.back()}>
           <IconBack />
         </button>
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 translate-x-[-50%] text-black'
-          )}>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           {name ? name : memberInfo?.name}님 식단
         </h2>
       </Layout.Header>

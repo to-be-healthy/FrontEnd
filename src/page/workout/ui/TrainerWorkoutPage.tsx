@@ -44,11 +44,7 @@ const TrainerWorkoutPage = ({ memberId }: { memberId: number }) => {
         <button onClick={() => router.back()}>
           <IconBack />
         </button>
-        <h1
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 -translate-x-1/2'
-          )}>
+        <h1 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           {title}
         </h1>
       </Layout.Header>

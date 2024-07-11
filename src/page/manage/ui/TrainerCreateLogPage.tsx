@@ -107,11 +107,7 @@ const TrainerCreateLogPage = ({ memberId }: Props) => {
             onClick={() => setSelectLessonMode(false)}>
             <IconBack />
           </Button>
-          <p
-            className={cn(
-              Typography.HEADING_4_SEMIBOLD,
-              'absolute left-1/2 flex h-full -translate-x-1/2 items-center'
-            )}>
+          <p className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
             작성할 수업 선택
           </p>
         </Layout.Header>

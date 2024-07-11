@@ -77,13 +77,7 @@ const StudentAlarmPage = () => {
         <Button variant='ghost' className='p-0' onClick={() => router.back()}>
           <IconBack />
         </Button>
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 my-auto -translate-x-1/2'
-          )}>
-          알림
-        </h2>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>알림</h2>
       </Layout.Header>
       <Layout.Contents className='bg-white'>
         <Tabs
