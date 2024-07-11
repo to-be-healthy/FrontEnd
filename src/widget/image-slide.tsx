@@ -37,7 +37,7 @@ const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
     <div
       className={cn(
         enlargeState &&
-          'fixed left-1/2 top-0 flex h-full w-[var(--max-width)] max-w-[var(--max-width)] -translate-x-1/2 items-center justify-center bg-black'
+          'fixed left-1/2 top-0 flex h-full w-screen max-w-[var(--max-width)] -translate-x-1/2 items-center justify-center bg-black'
       )}
       onClick={openDetailView}>
       <Carousel>
