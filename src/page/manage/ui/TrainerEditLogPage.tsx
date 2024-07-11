@@ -89,7 +89,7 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
               <IconClose width={20} height={20} />
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent className='gap-0 px-7 py-8'>
+          <AlertDialogContent className='py-8'>
             <AlertDialogTitle className={cn(Typography.HEADING_4_BOLD)}>
               수업일지 수정을 그만둘까요?
             </AlertDialogTitle>

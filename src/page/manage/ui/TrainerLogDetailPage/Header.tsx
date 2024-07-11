@@ -81,9 +81,9 @@ const Header = () => {
         </DropdownMenuContent>
       </DropdownMenu>
       <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogContent className='space-y-8 px-7 py-11'>
+        <AlertDialogContent>
           <AlertDialogHeader
-            className={cn(Typography.TITLE_1_SEMIBOLD, 'mx-auto text-center')}>
+            className={cn(Typography.TITLE_1_SEMIBOLD, 'mb-8 text-center')}>
             게시글을 삭제하시겠습니까?
           </AlertDialogHeader>
           <AlertDialogFooter className='grid w-full grid-cols-2 items-center justify-center gap-3'>

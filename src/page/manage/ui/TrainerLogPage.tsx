@@ -69,10 +69,10 @@ const TrainerLogPage = ({ memberId }: Props) => {
               <IconPlus fill='black' width={20} height={20} />
             </AlertDialogTrigger>
             <AlertDialogContent className='gap-0 px-7 py-8'>
-              <AlertDialogTitle className={cn(Typography.HEADING_4_BOLD)}>
+              <AlertDialogTitle className={cn(Typography.HEADING_4_BOLD, 'mb-8')}>
                 수업일지가 모두 작성 완료되었습니다.
               </AlertDialogTitle>
-              <AlertDialogFooter className='mt-8 flex flex-row gap-3'>
+              <AlertDialogFooter className='flex flex-row gap-3'>
                 <AlertDialogCancel
                   className={cn(
                     Typography.TITLE_1_SEMIBOLD,

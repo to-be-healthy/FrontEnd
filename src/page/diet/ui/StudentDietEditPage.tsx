@@ -124,7 +124,7 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
           <AlertDialogTrigger>
             <IconClose />
           </AlertDialogTrigger>
-          <AlertDialogContent className='gap-y-8 px-7 py-8'>
+          <AlertDialogContent className='gap-y-8 py-8'>
             <AlertDialogHeader
               className={cn(Typography.HEADING_4_BOLD, 'mb-3 text-left text-black')}>
               식단 수정을 그만둘까요?

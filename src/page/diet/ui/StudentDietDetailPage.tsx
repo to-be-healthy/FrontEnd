@@ -177,7 +177,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                 </DropdownMenuContent>
               </DropdownMenu>
               <AlertDialog open={open} onOpenChange={setOpen}>
-                <AlertDialogContent className='space-y-8 px-7 py-11'>
+                <AlertDialogContent className='gap-y-8 py-11'>
                   <AlertDialogHeader
                     className={cn(Typography.TITLE_1_SEMIBOLD, 'mx-auto text-center')}>
                     식단을 삭제하시겠습니까?

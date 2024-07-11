@@ -272,7 +272,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                         수강권 삭제
                       </Button>
                     </AlertDialogTrigger>
-                    <AlertDialogContent className='px-7 py-11'>
+                    <AlertDialogContent className='py-11'>
                       <AlertDialogHeader className='mb-8 text-center'>
                         <AlertDialogTitle className={cn(Typography.TITLE_1)}>
                           수강권을 삭제하시겠습니까?
