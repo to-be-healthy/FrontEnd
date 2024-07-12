@@ -13,7 +13,7 @@ import {
   LogTrainerCommentList,
   useLogDetailQuery,
   useLogTrainerComment,
-} from '@/feature/log';
+} from '@/feature/log-class';
 import { IconChat } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';

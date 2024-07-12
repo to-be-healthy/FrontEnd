@@ -1,7 +1,7 @@
 import { useInfiniteQuery } from '@tanstack/react-query';
 
 import { authApi } from '@/entity/auth';
-import { Comment } from '@/feature/diet';
+import { Comment } from '@/feature/log-diet';
 import { BaseError, BaseResponse } from '@/shared/api';
 
 interface DietCommentRequest {

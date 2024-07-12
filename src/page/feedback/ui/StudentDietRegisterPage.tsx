@@ -27,7 +27,7 @@ import {
   DietImageData,
   useDiet,
   useDietContext,
-} from '@/feature/diet';
+} from '@/feature/log-diet';
 import {
   IconArrowLeft,
   IconArrowRight,

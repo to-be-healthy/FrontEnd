@@ -5,7 +5,11 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { useImages } from '@/entity/image';
-import { UnwrittenLesson, useCreateLogMutation, useLessonListQuery } from '@/feature/log';
+import {
+  UnwrittenLesson,
+  useCreateLogMutation,
+  useLessonListQuery,
+} from '@/feature/log-class';
 import { IconBack, IconCloseBlack } from '@/shared/assets';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';

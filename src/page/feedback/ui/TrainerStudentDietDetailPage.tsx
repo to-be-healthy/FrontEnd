@@ -19,7 +19,7 @@ import {
   DietCommentList,
   useDietComment,
   useDietCommentListQuery,
-} from '@/feature/diet';
+} from '@/feature/log-diet';
 import { IconBack, IconChat, IconCheck, IconLike, IconWhiteClose } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {

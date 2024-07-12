@@ -15,7 +15,7 @@ import {
   DietImageData,
   useDiet,
   useDietContext,
-} from '@/feature/diet';
+} from '@/feature/log-diet';
 import { IconClose } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {

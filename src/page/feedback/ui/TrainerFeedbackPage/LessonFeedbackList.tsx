@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useLessonListQuery } from '@/feature/log';
+import { useLessonListQuery } from '@/feature/log-class';
 import { IconAlertCircle, IconCheckCircle } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, Card } from '@/shared/ui';

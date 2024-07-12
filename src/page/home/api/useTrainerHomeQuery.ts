@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { authApi } from '@/entity/auth';
-import { ImageFile } from '@/feature/log';
+import { ImageFile } from '@/feature/log-class';
 import { TodaySchedule } from '@/feature/schedule';
 import { BaseError, BaseResponse } from '@/shared/api';
 

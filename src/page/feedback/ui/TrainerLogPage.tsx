@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { useLessonListQuery, useTrainerLogListQuery } from '@/feature/log';
+import { useLessonListQuery, useTrainerLogListQuery } from '@/feature/log-class';
 import { IconBack, IconCalendarX, IconChat, IconPlus } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {

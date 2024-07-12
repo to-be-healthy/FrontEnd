@@ -2,7 +2,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { useDeleteLogMutation, useLogTrainerCommentContext } from '@/feature/log';
+import { useDeleteLogMutation, useLogTrainerCommentContext } from '@/feature/log-class';
 import { IconBack, IconDotsVertical, IconEdit, IconTrash } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {

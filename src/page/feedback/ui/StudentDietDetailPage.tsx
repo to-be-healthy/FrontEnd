@@ -21,7 +21,7 @@ import {
   DietCommentList,
   useDietComment,
   useDietCommentListQuery,
-} from '@/feature/diet';
+} from '@/feature/log-diet';
 import {
   IconBack,
   IconChat,

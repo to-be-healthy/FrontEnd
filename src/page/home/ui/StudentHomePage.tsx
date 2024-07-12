@@ -14,7 +14,7 @@ import { useEffect } from 'react';
 import { firebaseApp } from '@/app/_providers/Firebase';
 import { useHomeAlarmQuery } from '@/entity/alarm';
 import { useRegisterTokenMutation } from '@/feature/alarm';
-import { TodayDiet } from '@/feature/diet';
+import { TodayDiet } from '@/feature/log-diet';
 import {
   CourseCard,
   CourseCardContent,

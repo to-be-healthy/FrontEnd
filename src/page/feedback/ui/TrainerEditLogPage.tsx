@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { useImages } from '@/entity/image';
-import { useEditLogMutation, useLogDetailQuery } from '@/feature/log';
+import { useEditLogMutation, useLogDetailQuery } from '@/feature/log-class';
 import { IconCloseBlack } from '@/shared/assets';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
