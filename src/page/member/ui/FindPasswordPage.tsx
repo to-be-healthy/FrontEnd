@@ -50,11 +50,7 @@ const FindPasswordPage = () => {
         <Button variant='ghost' onClick={() => router.back()}>
           <IconClose width={14} height={14} />
         </Button>
-        <h1
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 my-auto -translate-x-1/2'
-          )}>
+        <h1 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           비밀번호 찾기
         </h1>
       </Layout.Header>

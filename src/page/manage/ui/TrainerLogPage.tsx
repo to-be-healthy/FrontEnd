@@ -11,7 +11,7 @@ import { useState } from 'react';
 
 import { useLessonListQuery, useTrainerLogListQuery } from '@/feature/log';
 import { IconBack, IconCalendarX, IconChat, IconPlus } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -58,26 +58,28 @@ const TrainerLogPage = ({ memberId }: Props) => {
         <button onClick={() => router.back()}>
           <IconBack />
         </button>
-        <h2 className={cn(Typography.HEADING_4_SEMIBOLD)}>{title}</h2>
-        {hasUnwrittenLesson ? (
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
+          {title}
+        </h2>
+        {lessonList && hasUnwrittenLesson && (
           <Link href={`/trainer/manage/${memberId}/log/write`}>
             <IconPlus fill='black' width={20} height={20} />
           </Link>
-        ) : (
+        )}
+        {lessonList && !hasUnwrittenLesson && (
           <AlertDialog>
             <AlertDialogTrigger>
               <IconPlus fill='black' width={20} height={20} />
             </AlertDialogTrigger>
             <AlertDialogContent className='gap-0 px-7 py-8'>
-              <AlertDialogTitle className={cn(Typography.HEADING_4_BOLD)}>
+              <AlertDialogTitle className={cn(Typography.HEADING_4_BOLD, 'mb-8')}>
                 수업일지가 모두 작성 완료되었습니다.
               </AlertDialogTitle>
-              <AlertDialogFooter className='mt-8 flex flex-row gap-3'>
+              <AlertDialogFooter className='flex flex-row gap-3'>
                 <AlertDialogCancel
                   className={cn(
                     Typography.TITLE_1_SEMIBOLD,
-                    FLEX_CENTER,
-                    'h-full w-full bg-primary-500 py-[13px] text-white'
+                    'flex-center h-full w-full bg-primary-500 py-[13px] text-white'
                   )}>
                   확인
                 </AlertDialogCancel>

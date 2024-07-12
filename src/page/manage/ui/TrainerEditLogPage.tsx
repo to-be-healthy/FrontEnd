@@ -10,7 +10,7 @@ import { useEditLogMutation, useLogDetailQuery } from '@/feature/log';
 import { IconCloseBlack } from '@/shared/assets';
 import IconCamera from '@/shared/assets/images/icon_camera.svg';
 import IconClose from '@/shared/assets/images/icon_close.svg';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -28,13 +28,12 @@ import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 interface Props {
-  memberId: number;
   logId: number;
 }
 
 const MAX_IMAGES_COUNT = 3;
 
-const TrainerEditLogPage = ({ memberId, logId }: Props) => {
+const TrainerEditLogPage = ({ logId }: Props) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { errorToast } = useToast();
@@ -61,7 +60,7 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
           await queryClient.refetchQueries({
             queryKey: ['logDetail', logId],
           });
-          router.push(`/trainer/manage/${memberId}/log`);
+          router.back();
         },
         onError: (error) => {
           const message = error?.response?.data.message ?? '문제가 발생했습니다.';
@@ -89,7 +88,7 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
               <IconClose width={20} height={20} />
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent className='gap-0 px-7 py-8'>
+          <AlertDialogContent className='py-8'>
             <AlertDialogTitle className={cn(Typography.HEADING_4_BOLD)}>
               수업일지 수정을 그만둘까요?
             </AlertDialogTitle>
@@ -99,19 +98,17 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
             </AlertDialogDescription>
             <AlertDialogFooter className='mt-8 flex flex-row gap-3'>
               <AlertDialogCancel
-                onClick={() => router.push(`/trainer/manage/${memberId}/log`)}
+                onClick={() => router.back()}
                 className={cn(
                   Typography.TITLE_1_SEMIBOLD,
-                  FLEX_CENTER,
-                  'h-full w-full bg-blue-50 py-[13px] text-primary-500'
+                  'flex-center h-full w-full bg-blue-50 py-[13px] text-primary-500'
                 )}>
                 확인
               </AlertDialogCancel>
               <AlertDialogCancel
                 className={cn(
                   Typography.TITLE_1_SEMIBOLD,
-                  FLEX_CENTER,
-                  'h-full w-full bg-primary-500 py-[13px] text-white'
+                  'flex-center h-full w-full bg-primary-500 py-[13px] text-white'
                 )}>
                 취소
               </AlertDialogCancel>
@@ -119,7 +116,7 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
           </AlertDialogContent>
         </AlertDialog>
         <p className={cn(Typography.HEADING_4, 'flex h-full items-center')}>
-          수업 일지 작성
+          수업 일지 수정
         </p>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
       </Layout.Header>
@@ -169,8 +166,7 @@ const TrainerEditLogPage = ({ memberId, logId }: Props) => {
             <label
               htmlFor='image-input'
               className={cn(
-                FLEX_CENTER,
-                'h-[60px] w-[60px] cursor-pointer flex-col gap-1 rounded-sm border border-gray-200'
+                'flex-center h-[60px] w-[60px] cursor-pointer flex-col gap-1 rounded-sm border border-gray-200'
               )}>
               <IconCamera />
               <span className={cn(Typography.BODY_4_MEDIUM, 'text-gray-500')}>

@@ -5,7 +5,6 @@ import {
   IconKakaoLogoCircle,
   IconNaverLogoCircle,
 } from '@/shared/assets';
-import { FLEX_CENTER } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
 
 import { SocialType } from '../model/types';
@@ -37,7 +36,7 @@ const SocialIcon = ({ socialType }: { socialType: Exclude<SocialType, 'NONE'> })
   const social = socialProviders[socialType];
 
   return (
-    <span className={cn(FLEX_CENTER, 'h-[44px] w-[44px] rounded-full', social.style)}>
+    <span className={cn('flex-center h-[44px] w-[44px] rounded-full', social.style)}>
       {social.logo}
     </span>
   );

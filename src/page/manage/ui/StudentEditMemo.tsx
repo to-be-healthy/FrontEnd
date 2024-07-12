@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useRef } from 'react';
 
 import { useEditMemoMutation } from '@/feature/manage';
-import IconBack from '@/shared/assets/images/icon_back.svg';
+import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, useToast } from '@/shared/ui';
 import { Textarea } from '@/shared/ui/textarea';
@@ -34,7 +34,7 @@ const StudentEditMemo = ({ memberId }: Props) => {
         onSuccess: async () => {
           await refetchMemberInfo();
           successToast('메모를 저장했습니다.');
-          router.push(`/trainer/manage/${memberId}`);
+          router.back();
         },
         onError: (error) => {
           errorToast(error.response?.data.message);
@@ -48,12 +48,9 @@ const StudentEditMemo = ({ memberId }: Props) => {
       {memberInfo && (
         <>
           <Layout.Header>
-            <Button
-              variant='ghost'
-              size='icon'
-              onClick={() => router.replace(`/trainer/manage/${memberId}`)}>
+            <button onClick={() => router.back()}>
               <IconBack />
-            </Button>
+            </button>
             <h2 className={Typography.HEADING_4_SEMIBOLD}>{memberInfo.name}님 메모장</h2>
             <Button
               variant='ghost'

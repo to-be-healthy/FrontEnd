@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import { useWeeklySchedules, WeeklyTimetable } from '@/feature/schedule';
 import { IconCalendarX, IconGear } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import { cn, getStartOfWeek } from '@/shared/utils';
 import { Layout, WeekPicker } from '@/widget';
@@ -27,7 +27,7 @@ export const TrainerSchedulePage = () => {
       <Layout.Contents className='mt-6 overflow-hidden'>
         <WeekPicker startDate={startDate} onWeekChange={changeWeek} />
         {isPending && (
-          <div className={cn(FLEX_CENTER, 'h-full w-full')}>
+          <div className='flex-center h-full w-full'>
             <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
           </div>
         )}
@@ -35,7 +35,7 @@ export const TrainerSchedulePage = () => {
           <WeeklyTimetable startDate={startDate} schedules={weeklySchedules} />
         )}
         {!isPending && weeklySchedules === null && !isBefore && (
-          <div className={cn(FLEX_CENTER, 'h-full w-full flex-col space-y-6')}>
+          <div className='flex-center h-full w-full flex-col space-y-6'>
             <Button size='lg' onClick={createWeeklySchedules}>
               일정 등록
             </Button>
@@ -47,7 +47,7 @@ export const TrainerSchedulePage = () => {
           </div>
         )}
         {!isPending && weeklySchedules === null && isBefore && (
-          <div className={cn(FLEX_CENTER, 'h-full w-full flex-col gap-1')}>
+          <div className='flex-center h-full w-full flex-col gap-1'>
             <IconCalendarX />
             <p
               className={cn(

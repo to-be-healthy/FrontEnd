@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useDeleteLogMutation, useLogTrainerCommentContext } from '@/feature/log';
 import { IconBack, IconDotsVertical, IconEdit, IconTrash } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -55,7 +55,7 @@ const Header = () => {
       </button>
       <DropdownMenu>
         <DropdownMenuTrigger
-          className={cn(Typography.TITLE_1_SEMIBOLD, FLEX_CENTER, 'w-6')}>
+          className={cn(Typography.TITLE_1_SEMIBOLD, 'flex-center w-6')}>
           <IconDotsVertical />
         </DropdownMenuTrigger>
         <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
@@ -81,9 +81,9 @@ const Header = () => {
         </DropdownMenuContent>
       </DropdownMenu>
       <AlertDialog open={open} onOpenChange={setOpen}>
-        <AlertDialogContent className='space-y-8 px-7 py-11'>
+        <AlertDialogContent>
           <AlertDialogHeader
-            className={cn(Typography.TITLE_1_SEMIBOLD, 'mx-auto text-center')}>
+            className={cn(Typography.TITLE_1_SEMIBOLD, 'mb-8 text-center')}>
             게시글을 삭제하시겠습니까?
           </AlertDialogHeader>
           <AlertDialogFooter className='grid w-full grid-cols-2 items-center justify-center gap-3'>

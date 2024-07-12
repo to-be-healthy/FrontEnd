@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useStudentLogListQuery } from '@/feature/log';
-import { IconArrowLeft, IconCalendarX, IconChat } from '@/shared/assets';
+import { IconBack, IconCalendarX, IconChat } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -27,13 +27,9 @@ const StudentLogPage = () => {
     <Layout>
       <Layout.Header>
         <button onClick={() => router.back()}>
-          <IconArrowLeft stroke='black' />
+          <IconBack />
         </button>
-        <h1
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 my-auto -translate-x-1/2'
-          )}>
+        <h1 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           수업일지
         </h1>
       </Layout.Header>

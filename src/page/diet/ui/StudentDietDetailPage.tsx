@@ -23,7 +23,7 @@ import {
   useDietComment,
 } from '@/feature/diet';
 import {
-  IconArrowLeft,
+  IconBack,
   IconChat,
   IconCheck,
   IconEdit,
@@ -32,7 +32,7 @@ import {
   IconTrash,
   IconWhiteClose,
 } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import {
   AlertDialog,
   AlertDialogAction,
@@ -134,13 +134,9 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
           <>
             <Layout.Header>
               <button onClick={() => router.back()}>
-                <IconArrowLeft stroke='black' />
+                <IconBack />
               </button>
-              <h2
-                className={cn(
-                  Typography.HEADING_4_SEMIBOLD,
-                  'absolute left-1/2 translate-x-[-50%] text-black'
-                )}>
+              <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
                 {dietValue === todayValue
                   ? '오늘 '
                   : dayjs(dietData?.eatDate).format('MM월 DD일 ')}
@@ -148,7 +144,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
               </h2>
               <DropdownMenu>
                 <DropdownMenuTrigger
-                  className={cn(Typography.TITLE_1_SEMIBOLD, FLEX_CENTER, 'w-6')}>
+                  className={cn(Typography.TITLE_1_SEMIBOLD, 'flex-center w-6')}>
                   <IconKebabMenu />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className='absolute -right-5 top-0 flex w-[120px] flex-col bg-white'>
@@ -177,7 +173,7 @@ export const StudentDietDetailPage = ({ dietId }: Props) => {
                 </DropdownMenuContent>
               </DropdownMenu>
               <AlertDialog open={open} onOpenChange={setOpen}>
-                <AlertDialogContent className='space-y-8 px-7 py-11'>
+                <AlertDialogContent className='gap-y-8 py-11'>
                   <AlertDialogHeader
                     className={cn(Typography.TITLE_1_SEMIBOLD, 'mx-auto text-center')}>
                     식단을 삭제하시겠습니까?

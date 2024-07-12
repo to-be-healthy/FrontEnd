@@ -124,7 +124,7 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
           <AlertDialogTrigger>
             <IconClose />
           </AlertDialogTrigger>
-          <AlertDialogContent className='gap-y-8 px-7 py-8'>
+          <AlertDialogContent className='gap-y-8 py-8'>
             <AlertDialogHeader
               className={cn(Typography.HEADING_4_BOLD, 'mb-3 text-left text-black')}>
               식단 수정을 그만둘까요?
@@ -151,11 +151,7 @@ export const StudentDietEditPage = ({ dietId }: Props) => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 translate-x-[-50%] text-black'
-          )}>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           식단 수정
         </h2>
       </Layout.Header>

@@ -11,9 +11,9 @@ import {
   useTrainerStudentLastReservationListQuery,
   useTrainerStudentReservationListQuery,
 } from '@/feature/schedule';
-import { IconArrowLeft } from '@/shared/assets';
+import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
-import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 import { cn, twSelector } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
@@ -44,15 +44,10 @@ export const TrainerStudentReservationPage = ({ memberId }: Props) => {
   return (
     <Layout>
       <Layout.Header>
-        <Button className='p-0' variant='ghost' onClick={() => router.back()}>
-          <IconArrowLeft stroke='black' />
-        </Button>
-
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 translate-x-[-50%] text-black'
-          )}>
+        <button onClick={() => router.back()}>
+          <IconBack />
+        </button>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           {name && `${name}님 예약 내역`}
         </h2>
       </Layout.Header>

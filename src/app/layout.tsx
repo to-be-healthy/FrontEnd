@@ -4,8 +4,7 @@ import { GoogleAnalytics } from '@next/third-parties/google';
 import type { Metadata, Viewport } from 'next';
 import { Suspense } from 'react';
 
-import { KakaoScript, MSWComponent, QueryProvider } from './_providers';
-import { ToastProvider } from './_providers/ToastProvider';
+import { KakaoScript, MSWComponent, QueryProvider, ToastProvider } from './_providers';
 
 export const viewport: Viewport = {
   width: 'device-width',

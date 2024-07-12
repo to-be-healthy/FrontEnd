@@ -17,7 +17,7 @@ import {
 } from '@/feature/member';
 import { TrainerSchedule } from '@/feature/schedule';
 import { IconAlarmWhite, IconCalendarX, IconMedalGold, IconPlus } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import {
   Button,
   Card,
@@ -198,8 +198,7 @@ export const TrainerHomePage = () => {
                       key={item.scheduleId}>
                       <div
                         className={cn(
-                          FLEX_CENTER,
-                          'mr-4 h-[100px] w-[100px] flex-col gap-4 rounded-md border border-gray-200 bg-white p-8 shadow-sm',
+                          'flex-center mr-4 h-[100px] w-[100px] flex-col gap-4 rounded-md border border-gray-200 bg-white p-8 shadow-sm',
                           isClosestSchedule && 'border-[#00D1FF]'
                         )}>
                         <span className={cn(Typography.BODY_2, 'text-gray-500')}>
@@ -217,7 +216,7 @@ export const TrainerHomePage = () => {
           )}
           {!hasTodaySchedule && (
             <div className='px-7'>
-              <Card className={cn(FLEX_CENTER, 'h-[100px] w-full gap-1 shadow-sm')}>
+              <Card className='flex-center h-[100px] w-full gap-1 shadow-sm'>
                 {homeInfo?.todaySchedule.schedule.length === 0 && (
                   <>
                     <IconCalendarX width={42} />

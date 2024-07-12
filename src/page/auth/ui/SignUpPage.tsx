@@ -6,7 +6,7 @@ import { SubmitHandler } from 'react-hook-form';
 
 import { SignUpRequest, useSignUpMutation } from '@/entity/auth';
 import { SignUpCancelDialog, SignUpFunnel, useSignUpFunnel } from '@/feature/auth';
-import BackIcon from '@/shared/assets/images/icon_back.svg';
+import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, GenericForm, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
@@ -77,7 +77,7 @@ const SignUpPage = () => {
     <Layout className='bg-white'>
       <Layout.Header>
         <Button className='bg-transparent p-0' onClick={clickBack}>
-          <BackIcon />
+          <IconBack />
         </Button>
         <h2 className={cn(Typography.HEADING_4_SEMIBOLD)}>
           {type === 'trainer' && '트레이너'} 회원가입

@@ -5,7 +5,6 @@ import { useState } from 'react';
 
 import { ImageFile } from '@/feature/log';
 import { IconWhiteClose } from '@/shared/assets';
-import { FLEX_CENTER } from '@/shared/mixin';
 import {
   Card,
   CardContent,
@@ -37,11 +36,11 @@ const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
     <div
       className={cn(
         enlargeState &&
-          'fixed left-1/2 top-0 flex h-full w-[var(--max-width)] max-w-[var(--max-width)] -translate-x-1/2 items-center justify-center bg-black'
+          'fixed left-1/2 top-0 flex h-full w-screen max-w-[var(--max-width)] -translate-x-1/2 items-center justify-center bg-black'
       )}
       onClick={openDetailView}>
       <Carousel>
-        <CarouselContent className={cn('bg-white p-0')}>
+        <CarouselContent className='p-0'>
           {images.map((file, index) => (
             <CarouselItem key={index}>
               <Card
@@ -51,10 +50,10 @@ const ImageSlide = ({ images, enlargeMode = false }: ImageSlideProps) => {
                     ? 'flex h-full items-center justify-center rounded-none bg-black'
                     : 'bg-white'
                 )}>
-                <CardContent className={cn(FLEX_CENTER, 'w-full')}>
+                <CardContent className='flex-center w-full'>
                   <Image
                     src={`${file.fileUrl}?w=${enlargeState ? 1200 : 400}?q=99`}
-                    alt={'React Rendezvous'}
+                    alt={`slide image - ${index}`}
                     width={300}
                     height={300}
                     className={cn(

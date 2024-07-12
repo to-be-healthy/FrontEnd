@@ -25,7 +25,7 @@ import {
   useRegisterStudentCourseMutation,
   useStudentCourseDetailQuery,
 } from '@/feature/member';
-import { IconArrowLeft, IconPlus } from '@/shared/assets';
+import { IconBack, IconPlus } from '@/shared/assets';
 import { IconNotification } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {
@@ -163,13 +163,9 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
     <Layout type='trainer'>
       <Layout.Header className='justify-start bg-white'>
         <button onClick={() => router.back()}>
-          <IconArrowLeft stroke='black' />
+          <IconBack />
         </button>
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 translate-x-[-50%] text-black'
-          )}>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           {name}님 수강권
         </h2>
 
@@ -272,7 +268,7 @@ export const StudentCourseDetailPage = ({ memberId }: Props) => {
                         수강권 삭제
                       </Button>
                     </AlertDialogTrigger>
-                    <AlertDialogContent className='px-7 py-11'>
+                    <AlertDialogContent className='py-11'>
                       <AlertDialogHeader className='mb-8 text-center'>
                         <AlertDialogTitle className={cn(Typography.TITLE_1)}>
                           수강권을 삭제하시겠습니까?

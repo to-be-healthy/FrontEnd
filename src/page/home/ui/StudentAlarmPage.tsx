@@ -12,7 +12,7 @@ import { AlarmType, useAlarmQuery } from '@/entity/alarm';
 import { StudentAlarmItem } from '@/feature/alarm';
 import { IconAlarmBig, IconBack } from '@/shared/assets';
 import { useQueryString } from '@/shared/hooks';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { Button, Tabs, TabsContent, TabsList, TabsTrigger } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -22,8 +22,7 @@ const NoAlarm = () => {
     <li
       className={cn(
         Typography.TITLE_1_BOLD,
-        FLEX_CENTER,
-        'flex-col py-[200px] text-gray-700'
+        'flex-center flex-col py-[200px] text-gray-700'
       )}>
       <IconAlarmBig />
       <p className={cn(Typography.HEADING_4_BOLD, 'mt-6 text-gray-400')}>
@@ -78,13 +77,7 @@ const StudentAlarmPage = () => {
         <Button variant='ghost' className='p-0' onClick={() => router.back()}>
           <IconBack />
         </Button>
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 my-auto -translate-x-1/2'
-          )}>
-          알림
-        </h2>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>알림</h2>
       </Layout.Header>
       <Layout.Contents className='bg-white'>
         <Tabs
@@ -122,7 +115,7 @@ const StudentAlarmPage = () => {
           </TabsList>
           <TabsContent value='SCHEDULE' className='mt-0 flex-grow'>
             {isPending && (
-              <div className={cn(FLEX_CENTER, 'h-[500px] w-full')}>
+              <div className='flex-center h-[500px] w-full'>
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               </div>
             )}
@@ -154,7 +147,7 @@ const StudentAlarmPage = () => {
           </TabsContent>
           <TabsContent value='COMMUNITY' className='mt-0 flex-grow'>
             {isPending && (
-              <div className={cn(FLEX_CENTER, 'h-[500px] w-full')}>
+              <div className='flex-center h-[500px] w-full'>
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               </div>
             )}

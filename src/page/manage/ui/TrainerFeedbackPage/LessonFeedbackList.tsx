@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 import { useLessonListQuery } from '@/feature/log';
 import { IconAlertCircle, IconCheckCircle } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { Button, Card } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
@@ -14,16 +14,16 @@ const LessonFeedbackList = ({ lessonDate }: { lessonDate: string }) => {
 
   if (!data) {
     return (
-      <div className={cn(FLEX_CENTER, 'mt-12 h-full w-full')}>
+      <div className='flex-center mt-12 h-full w-full'>
         <Image src='/images/loading.gif' width={40} height={40} alt='loading' />
       </div>
     );
   }
 
   return (
-    <div className={cn(FLEX_CENTER, 'flex-col gap-4 py-6')}>
+    <div className='flex-center flex-col gap-4 py-6'>
       {data.length === 0 && (
-        <div className={cn(FLEX_CENTER, 'mt-12 h-full flex-col gap-5')}>
+        <div className='flex-center mt-12 h-full flex-col gap-5'>
           <IconAlertCircle />
           <p className={cn(Typography.TITLE_1_BOLD, 'text-gray-700')}>
             작성해야 할 피드백이 없습니다.

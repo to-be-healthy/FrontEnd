@@ -6,8 +6,6 @@ import { useEffect, useState } from 'react';
 
 import { auth } from '@/entity/auth';
 import { OnboardingPage } from '@/page/auth';
-import { FLEX_CENTER } from '@/shared/mixin';
-import { cn } from '@/shared/utils';
 
 export default function Page() {
   const [role, setRole] = useState<string | null>();
@@ -20,7 +18,7 @@ export default function Page() {
 
   if (role === undefined) {
     return (
-      <div className={cn(FLEX_CENTER, 'h-[100vh] w-[100vw] bg-primary-500')}>
+      <div className='flex-center h-[100vh] w-[100vw] bg-primary-500'>
         <Image
           src='/images/loading_splash.gif'
           width={88}

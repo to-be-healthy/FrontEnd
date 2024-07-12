@@ -61,11 +61,7 @@ export const StudentMyPointDetailPage = () => {
         <Link href='./' className='h-full w-full'>
           <IconClose width={14} height={14} />
         </Link>
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 translate-x-[-50%] text-black'
-          )}>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           포인트
         </h2>
       </Layout.Header>

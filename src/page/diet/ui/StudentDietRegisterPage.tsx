@@ -31,11 +31,12 @@ import {
 import {
   IconArrowLeft,
   IconArrowRight,
+  IconBack,
   IconClose,
   IconNotification,
 } from '@/shared/assets';
 import DownIcon from '@/shared/assets/images/icon_arrow_bottom.svg';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { Button, Calendar, Card, CardContent, CardHeader, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -258,13 +259,9 @@ export const StudentDietRegisterPage = () => {
     <Layout>
       <Layout.Header className='bg-white'>
         <button onClick={() => router.back()}>
-          <IconArrowLeft stroke='black' />
+          <IconBack />
         </button>
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 translate-x-[-50%] text-black'
-          )}>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           식단 올리기
         </h2>
       </Layout.Header>
@@ -319,7 +316,7 @@ export const StudentDietRegisterPage = () => {
                           )
                       : () => handleWeekChange('prev')
                   }
-                  className={cn(FLEX_CENTER, 'h-6 w-6')}>
+                  className='flex-center h-6 w-6'>
                   <IconArrowLeft stroke={'#000'} />
                 </button>
                 <button
@@ -332,7 +329,7 @@ export const StudentDietRegisterPage = () => {
                   disabled={
                     !isArrowToggle ? monthRightButtonDiabled : weekRightButtonDiabled
                   }
-                  className={cn(FLEX_CENTER, 'h-6 w-6')}>
+                  className='flex-center h-6 w-6'>
                   {!isArrowToggle ? (
                     <IconArrowRight
                       stroke={monthRightButtonDiabled ? 'var(--gray-400)' : '#000'}

@@ -24,11 +24,7 @@ export const SignInPage = () => {
   return (
     <Layout className='bg-white'>
       <Layout.Header>
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 translate-x-[-50%] text-black'
-          )}>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           {title}
         </h2>
         <Button variant='ghost' className='p-0' onClick={() => router.push('/')}>

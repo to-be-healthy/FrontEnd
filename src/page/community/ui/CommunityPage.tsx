@@ -11,7 +11,7 @@ import { CommunityPost, NoPosts, useCommunityQuery } from '@/feature/community';
 import { useMyInfoQuery } from '@/feature/member';
 import { IconBack } from '@/shared/assets';
 import { useQueryString } from '@/shared/hooks';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -51,11 +51,7 @@ const CommunityPage = () => {
     <Layout type={lowercaseMemberType}>
       {!memberId && (
         <Layout.Header className='relative'>
-          <h1
-            className={cn(
-              Typography.HEADING_4_SEMIBOLD,
-              'absolute left-1/2 my-auto -translate-x-1/2'
-            )}>
+          <h1 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
             {userInfo?.gym.name}
           </h1>
         </Layout.Header>
@@ -65,11 +61,7 @@ const CommunityPage = () => {
           <Button variant='ghost' className='p-0' onClick={() => router.back()}>
             <IconBack />
           </Button>
-          <h1
-            className={cn(
-              Typography.HEADING_4_SEMIBOLD,
-              'absolute left-1/2 my-auto -translate-x-1/2'
-            )}>
+          <h1 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
             {posts[0].member.name}님 운동기록
           </h1>
         </Layout.Header>
@@ -91,7 +83,7 @@ const CommunityPage = () => {
                   );
                 })}
             </div>
-            <div ref={ref} className={cn(FLEX_CENTER, 'p-7')}>
+            <div ref={ref} className='flex-center p-7'>
               {isFetchingNextPage && (
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               )}

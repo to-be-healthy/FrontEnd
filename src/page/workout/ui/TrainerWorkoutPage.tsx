@@ -9,7 +9,7 @@ import { useInView } from 'react-intersection-observer';
 
 import { NoWorkout, useWorkoutQuery, WorkoutPost } from '@/feature/workout';
 import { IconBack } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
@@ -44,11 +44,7 @@ const TrainerWorkoutPage = ({ memberId }: { memberId: number }) => {
         <button onClick={() => router.back()}>
           <IconBack />
         </button>
-        <h1
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 -translate-x-1/2'
-          )}>
+        <h1 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           {title}
         </h1>
       </Layout.Header>
@@ -77,7 +73,7 @@ const TrainerWorkoutPage = ({ memberId }: { memberId: number }) => {
                 </div>
               ))}
             </div>
-            <div ref={ref} className={cn(FLEX_CENTER, 'p-7')}>
+            <div ref={ref} className='flex-center p-7'>
               {isFetchingNextPage && (
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               )}

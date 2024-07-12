@@ -10,8 +10,8 @@ import { useInView } from 'react-intersection-observer';
 import { useAuthSelector } from '@/entity/auth';
 import { useMyInfoQuery } from '@/feature/member';
 import { NoWorkout, useWorkoutQuery, WorkoutPost } from '@/feature/workout';
-import { IconArrowLeft, IconPlus } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { IconBack, IconPlus } from '@/shared/assets';
+import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
@@ -50,13 +50,9 @@ const StudentWorkoutPage = () => {
     <Layout>
       <Layout.Header>
         <button onClick={() => router.back()}>
-          <IconArrowLeft stroke='black' />
+          <IconBack />
         </button>
-        <h1
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 -translate-x-1/2'
-          )}>
+        <h1 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           {title}
         </h1>
         <Link href={'/student/workout/create'}>
@@ -88,7 +84,7 @@ const StudentWorkoutPage = () => {
                 </div>
               ))}
             </div>
-            <div ref={ref} className={cn(FLEX_CENTER, 'p-7')}>
+            <div ref={ref} className='flex-center p-7'>
               {isFetchingNextPage && (
                 <Image src='/images/loading.gif' width={20} height={20} alt='loading' />
               )}

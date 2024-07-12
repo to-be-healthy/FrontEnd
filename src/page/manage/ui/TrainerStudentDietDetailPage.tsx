@@ -20,13 +20,7 @@ import {
   DietCommentList,
   useDietComment,
 } from '@/feature/diet';
-import {
-  IconArrowLeft,
-  IconChat,
-  IconCheck,
-  IconLike,
-  IconWhiteClose,
-} from '@/shared/assets';
+import { IconBack, IconChat, IconCheck, IconLike, IconWhiteClose } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import {
   Button,
@@ -107,14 +101,9 @@ export const TrainerStudentDietDetailPage = ({ memberId, dietId }: Props) => {
           <>
             <Layout.Header className='justify-start'>
               <button onClick={() => router.back()}>
-                <IconArrowLeft stroke='black' />
+                <IconBack />
               </button>
-
-              <h2
-                className={cn(
-                  Typography.HEADING_4_SEMIBOLD,
-                  'absolute left-1/2 translate-x-[-50%] text-black'
-                )}>
+              <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
                 {name
                   ? `${name}님 식단`
                   : dietDate === todayValue

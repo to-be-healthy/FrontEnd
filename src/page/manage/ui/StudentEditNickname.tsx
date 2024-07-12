@@ -83,23 +83,25 @@ const StudentEditNickname = ({ memberId }: Props) => {
               완료
             </Button>
           </AlertDialogTrigger>
-          <AlertDialogContent className='space-y-8'>
+          <AlertDialogContent className='gap-8'>
             <AlertDialogHeader className='text-left'>
-              <AlertDialogTitle
-                className={cn(Typography.TITLE_1_SEMIBOLD, 'mx-auto mb-3')}>
+              <AlertDialogTitle className={cn(Typography.TITLE_1_SEMIBOLD, 'mb-3')}>
                 별칭을 저장할까요?
               </AlertDialogTitle>
             </AlertDialogHeader>
-            <AlertDialogFooter className='grid w-full grid-cols-2 items-center justify-center gap-3'>
+            <AlertDialogFooter className='flex flex-row gap-3'>
               <AlertDialogCancel
                 className={cn(
                   Typography.TITLE_1_SEMIBOLD,
-                  'm-0 h-12 rounded-md bg-gray-100 p-4 text-gray-600'
+                  'm-0 h-12 w-full rounded-md bg-gray-100 p-4 text-gray-600'
                 )}>
                 아니요
               </AlertDialogCancel>
               <AlertDialogAction
-                className={cn(Typography.TITLE_1_SEMIBOLD, 'm-0 h-12 p-4 text-white')}
+                className={cn(
+                  Typography.TITLE_1_SEMIBOLD,
+                  'm-0 h-12 w-full p-4 text-white'
+                )}
                 onClick={onSubmit}>
                 예
               </AlertDialogAction>

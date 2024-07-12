@@ -64,11 +64,7 @@ const StudentLastReservationPage = () => {
         <Link href={'/student/mypage'}>
           <IconBack />
         </Link>
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 translate-x-[-50%] text-black'
-          )}>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           지난 예약
         </h2>
       </Layout.Header>

@@ -19,7 +19,7 @@ import {
   IconDelete,
   IconPlus,
 } from '@/shared/assets';
-import { FLEX_CENTER, Typography } from '@/shared/mixin';
+import { Typography } from '@/shared/mixin';
 import { Button, Input, Switch, Textarea, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
@@ -104,11 +104,7 @@ const CreateWorkoutPage = () => {
         <Button variant='ghost' className='p-0' onClick={() => router.back()}>
           <IconClose />
         </Button>
-        <h1
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 -translate-x-1/2'
-          )}>
+        <h1 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           운동기록 작성
         </h1>
       </Layout.Header>
@@ -126,8 +122,7 @@ const CreateWorkoutPage = () => {
             <label
               htmlFor='image-input'
               className={cn(
-                FLEX_CENTER,
-                'h-[60px] w-[60px] cursor-pointer flex-col gap-1 rounded-sm border border-gray-200'
+                'flex-center h-[60px] w-[60px] cursor-pointer flex-col gap-1 rounded-sm border border-gray-200'
               )}>
               <IconCamera />
               <span className={cn(Typography.BODY_4_MEDIUM, 'text-gray-500')}>

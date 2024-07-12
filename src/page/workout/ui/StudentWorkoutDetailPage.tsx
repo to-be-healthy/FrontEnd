@@ -16,7 +16,7 @@ import {
   WorkoutCommentsWrapper,
 } from '@/feature/workout';
 import {
-  IconArrowLeft,
+  IconBack,
   IconDotsVertical,
   IconEdit,
   IconGroup,
@@ -80,7 +80,7 @@ const StudentWorkoutDetailPage = ({ workoutHistoryId }: Props) => {
       <Layout>
         <Layout.Header>
           <button onClick={() => router.back()}>
-            <IconArrowLeft stroke='black' />
+            <IconBack />
           </button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

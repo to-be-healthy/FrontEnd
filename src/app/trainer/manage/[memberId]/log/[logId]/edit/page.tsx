@@ -5,7 +5,7 @@ interface Props {
 }
 
 const Page = ({ params }: Props) => {
-  return <TrainerEditLogPage logId={params.logId} memberId={params.memberId} />;
+  return <TrainerEditLogPage logId={params.logId} />;
 };
 
 export default Page;

@@ -9,7 +9,7 @@ import { useInView } from 'react-intersection-observer';
 
 import { MealType, useTrainerStudentDietListQuery } from '@/entity/diet';
 import {
-  IconArrowLeft,
+  IconBack,
   IconChat,
   IconCheck,
   IconLike,
@@ -112,14 +112,9 @@ export const TrainerStudentDietListPage = ({ memberId }: Props) => {
     <Layout>
       <Layout.Header className='justify-start'>
         <button onClick={() => router.back()}>
-          <IconArrowLeft stroke='black' />
+          <IconBack />
         </button>
-
-        <h2
-          className={cn(
-            Typography.HEADING_4_SEMIBOLD,
-            'absolute left-1/2 translate-x-[-50%] text-black'
-          )}>
+        <h2 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           {name ? name : memberInfo?.name}님 식단
         </h2>
       </Layout.Header>
