@@ -3,7 +3,7 @@
 import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
 
-import { type Exercise } from '../model/types';
+import { type Exercise } from '../../model/types';
 
 /**
  *

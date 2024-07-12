@@ -4,7 +4,7 @@ import { IconAlertCircle } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
 
-const NoPosts = () => {
+const CommunityNoPosts = () => {
   return (
     <div className='flex-center h-full flex-col gap-4 py-[200px]'>
       <IconAlertCircle width={36} height={36} />
@@ -15,4 +15,4 @@ const NoPosts = () => {
   );
 };
 
-export { NoPosts };
+export { CommunityNoPosts };

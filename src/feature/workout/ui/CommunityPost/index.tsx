@@ -8,10 +8,10 @@ import { Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { cn, formatTimestampToRelativeTime } from '@/shared/utils';
 import { ImageSlide } from '@/widget';
 
-import { Workout } from '../model/types';
+import { CommunityWorkout } from '../../model/types';
 import { ExercisePreview } from './ExerciseInfo';
 
-const CommunityPost = ({ workout }: { workout: Workout }) => {
+const CommunityPost = ({ workout }: { workout: CommunityWorkout }) => {
   const {
     member,
     files,

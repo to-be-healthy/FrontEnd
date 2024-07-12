@@ -7,8 +7,8 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { LowercaseMemberType } from '@/entity/auth';
-import { CommunityPost, NoPosts, useCommunityQuery } from '@/feature/community';
 import { useMyInfoQuery } from '@/feature/member';
+import { CommunityNoPosts, CommunityPost, useCommunityQuery } from '@/feature/workout';
 import { IconBack } from '@/shared/assets';
 import { useQueryString } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
@@ -71,7 +71,7 @@ const CommunityPage = () => {
         {posts && (
           <div className='hide-scrollbar flex h-full flex-1 flex-grow flex-col overflow-y-auto px-7 pb-7'>
             <div className='flex w-full flex-col gap-5'>
-              {posts.length === 0 && <NoPosts />}
+              {posts.length === 0 && <CommunityNoPosts />}
               {posts.length > 0 &&
                 posts.map((workout) => {
                   return (
