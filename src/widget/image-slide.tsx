@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 
-import { ImageFile } from '@/feature/log';
+import { ImageFile } from '@/feature/log-class';
 import { IconWhiteClose } from '@/shared/assets';
 import {
   Card,

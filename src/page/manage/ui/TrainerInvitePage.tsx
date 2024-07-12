@@ -5,7 +5,8 @@ import Link from 'next/link';
 import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { InviteForm, useInviteStudentMutation, useMyInfoQuery } from '@/feature/member';
+import { InviteForm, useInviteStudentMutation } from '@/feature/manage';
+import { useMyInfoQuery } from '@/feature/mypage';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import { Typography } from '@/shared/mixin';
 import { Button, Dialog, DialogContent, Input, useToast } from '@/shared/ui';

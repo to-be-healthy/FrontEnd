@@ -1,7 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { authApi } from '@/entity/auth';
-import { ContentType } from '@/feature/diet'; //TODO: Feature ->entity로 이동
 import { BaseError, BaseResponse } from '@/shared/api';
 
 import { HomeDietData, RegisterAndEditDiet } from '../model/types';
@@ -79,26 +78,6 @@ export const useDietShowNoticeMutation = () => {
     mutationFn: async (alarmStatus: string) => {
       const result = await authApi.patch<BaseResponse<boolean>>(
         `/api/members/v1/diet-notice?alarmStatus=${alarmStatus}`
-      );
-      return result.data;
-    },
-  });
-};
-
-interface EditDietRequest {
-  content: string;
-  commentId: number;
-}
-
-export const useEditDietCommentMutation = (dietId: number) => {
-  return useMutation<BaseResponse<ContentType>, BaseError, EditDietRequest>({
-    mutationFn: async ({ content, commentId }: EditDietRequest) => {
-      const payload = {
-        content,
-      };
-      const result = await authApi.patch<BaseResponse<ContentType>>(
-        `/api/diets/v1/${dietId}/comments/${commentId}`,
-        payload
       );
       return result.data;
     },

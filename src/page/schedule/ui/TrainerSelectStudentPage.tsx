@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
 import { StudentList } from '@/feature/manage';
-import { AddStudentDialog } from '@/feature/member';
+import { AddStudentDialog } from '@/feature/manage';
 import { useAddScheduleMutation } from '@/feature/schedule';
 import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';

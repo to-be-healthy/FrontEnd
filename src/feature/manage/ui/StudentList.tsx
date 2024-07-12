@@ -4,11 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 
-import {
-  AddStudentDialog,
-  RegisteredStudent,
-  useRegisteredStudentsQuery,
-} from '@/feature/member';
+import { AddStudentDialog, RegisteredStudent } from '@/feature/manage';
 import { profileBorderStyleMapper } from '@/page/manage/utils';
 import {
   IconAlertCircle,
@@ -27,6 +23,8 @@ import {
   DropdownMenuTrigger,
 } from '@/shared/ui/dropdown-menu';
 import { cn, twSelector } from '@/shared/utils';
+
+import { useRegisteredStudentsQuery } from '../api/queries';
 
 interface SortCondition<T> {
   label: string;

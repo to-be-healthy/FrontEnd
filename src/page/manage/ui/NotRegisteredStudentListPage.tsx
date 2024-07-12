@@ -3,7 +3,8 @@
 import Link from 'next/link';
 import { ChangeEvent, useState } from 'react';
 
-import { Member, useMyInfoQuery, useNotRegisteredStudentsQuery } from '@/feature/member';
+import { Member, useNotRegisteredStudentsQuery } from '@/feature/manage';
+import { useMyInfoQuery } from '@/feature/mypage';
 import { IconAlertCircle, IconSearch } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
 import { Typography } from '@/shared/mixin';

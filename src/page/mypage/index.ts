@@ -1,0 +1,11 @@
+export { EditAlarmPage } from './ui/EditAlarmPage';
+export { EditEmailPage } from './ui/EditEmailPage';
+export { EditMyInfoPage } from './ui/EditMyInfoPage';
+export { EditNamePage } from './ui/EditNamePage';
+export { EditPasswordPage } from './ui/EditPasswordPage';
+export { LeavePage } from './ui/LeavePage';
+export { SelectGymPage } from './ui/SelectGymPage';
+export { StudentLastReservationPage } from './ui/StudentLastReservationPage';
+export { StudentMyPage } from './ui/StudentMyPage';
+export { TrainerInfoPage } from './ui/TrainerInfoPage';
+export { TrainerMyPage } from './ui/TrainerMyPage';

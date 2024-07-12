@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 
 import { MealType } from '@/entity/diet';
-import { CourseCard, CourseCardContent, CourseCardHeader } from '@/feature/member';
+import { CourseCard, CourseCardContent, CourseCardHeader } from '@/feature/course';
 import {
   IconArrowDown,
   IconArrowFilledDown,

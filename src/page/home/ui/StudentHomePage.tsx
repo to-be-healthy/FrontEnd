@@ -14,13 +14,9 @@ import { useEffect } from 'react';
 import { firebaseApp } from '@/app/_providers/Firebase';
 import { useHomeAlarmQuery } from '@/entity/alarm';
 import { useRegisterTokenMutation } from '@/feature/alarm';
-import { TodayDiet } from '@/feature/diet';
-import {
-  CourseCard,
-  CourseCardContent,
-  CourseCardHeader,
-  useStudentHomeDataQuery,
-} from '@/feature/member';
+import { CourseCard, CourseCardContent, CourseCardHeader } from '@/feature/course';
+import { useStudentHomeDataQuery } from '@/feature/home';
+import { TodayDiet } from '@/feature/log-diet';
 import {
   IconAlarm,
   IconArrowDown,

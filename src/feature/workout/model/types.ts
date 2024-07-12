@@ -84,7 +84,21 @@ interface WorkoutCategory {
   name: string;
 }
 
+interface CommunityWorkout {
+  workoutHistoryId: number;
+  content: string;
+  liked: boolean;
+  likeCnt: number;
+  commentCnt: number;
+  viewMySelf: boolean;
+  createdAt: Date;
+  files: ImageType[];
+  completedExercises: Exercise[];
+  member: WorkoutMember;
+}
+
 export type {
+  CommunityWorkout,
   ComplexExercise,
   Exercise,
   ExerciseForCreate,
