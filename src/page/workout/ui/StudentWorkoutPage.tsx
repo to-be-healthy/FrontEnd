@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { useAuthSelector } from '@/entity/auth';
-import { useMyInfoQuery } from '@/feature/member';
+import { useMyInfoQuery } from '@/feature/mypage';
 import { NoWorkout, useWorkoutQuery, WorkoutPost } from '@/feature/workout';
 import { IconBack, IconPlus } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';

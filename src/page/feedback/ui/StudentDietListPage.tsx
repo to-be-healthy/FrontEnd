@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { MealType, useDietListQuery } from '@/entity/diet';
-import { useMyInfoQuery } from '@/feature/member';
+import { useMyInfoQuery } from '@/feature/mypage';
 import {
   IconBack,
   IconChat,

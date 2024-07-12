@@ -18,3 +18,14 @@ export const useRegisterTokenMutation = () => {
     },
   });
 };
+
+export const useFcmTokenMutation = () => {
+  return useMutation<BaseResponse<string>, BaseError, string>({
+    mutationFn: async (token) => {
+      const result = await authApi.post<BaseResponse<string>>('/api/push/register', {
+        token,
+      });
+      return result.data;
+    },
+  });
+};

@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useMyInfoQuery } from '@/feature/member';
+import { useMyInfoQuery } from '@/feature/mypage';
 import { IconArrowRightSmall, IconAvatar } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';

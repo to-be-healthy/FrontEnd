@@ -7,7 +7,7 @@ dayjs.locale('ko');
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
-import { useStudentMypageTrainerInfoQuery } from '@/feature/member';
+import { useStudentMypageTrainerInfoQuery } from '@/feature/mypage';
 import { IconAlertCircle, IconAvatar, IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';

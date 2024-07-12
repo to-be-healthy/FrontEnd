@@ -5,11 +5,8 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { EMAIL_REGEXP, NAME_REGEXP, SocialIcon, socialProviders } from '@/entity/auth';
-import {
-  FindPasswordRequest,
-  FindPasswordResponse,
-  useFindPasswordMutation,
-} from '@/feature/member';
+import { useFindPasswordMutation } from '@/feature/auth';
+import { FindPasswordRequest, FindPasswordResponse } from '@/feature/manage';
 import { IconClose, IconLoveLetter } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, Input, useToast } from '@/shared/ui';

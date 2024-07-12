@@ -1,9 +1,8 @@
 import { SocialType } from '@/entity/auth';
 import { HomeDietData } from '@/entity/diet';
 import { Gym } from '@/entity/gym';
+import { courseHistoryTypes } from '@/feature/course';
 import { Pageable } from '@/shared/api';
-
-import { courseHistoryTypes } from '../const';
 
 interface RegisteredStudent {
   memberId: number;

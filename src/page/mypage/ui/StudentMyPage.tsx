@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import Image from 'next/image';
 import Link from 'next/link';
 
-import { useMyInfoQuery } from '@/feature/member';
+import { useMyInfoQuery } from '@/feature/mypage';
 import {
   IconArrowRightSmall,
   IconAvatar,

@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 
-import { useChangeMyNameMutation, useMyInfoQuery } from '@/feature/member';
+import { useChangeMyNameMutation, useMyInfoQuery } from '@/feature/mypage';
 import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, Input, useToast } from '@/shared/ui';

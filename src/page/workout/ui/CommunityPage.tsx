@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { LowercaseMemberType } from '@/entity/auth';
-import { useMyInfoQuery } from '@/feature/member';
+import { useMyInfoQuery } from '@/feature/mypage';
 import { CommunityNoPosts, CommunityPost, useCommunityQuery } from '@/feature/workout';
 import { IconBack } from '@/shared/assets';
 import { useQueryString } from '@/shared/hooks';

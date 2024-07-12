@@ -8,14 +8,6 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import {
-  CourseSheet,
-  CourseSheetContent,
-  CourseSheetFooter,
-  CourseSheetHeader,
-  CourseSheetInput,
-  CourseSheetTrigger,
-} from '@/feature/manage/ui/CourseBottomSheet';
-import {
   CourseCard,
   CourseCardContent,
   CourseCardHeader,
@@ -24,7 +16,15 @@ import {
   useDeleteStudentCourseMutation,
   useRegisterStudentCourseMutation,
   useStudentCourseDetailQuery,
-} from '@/feature/member';
+} from '@/feature/course';
+import {
+  CourseSheet,
+  CourseSheetContent,
+  CourseSheetFooter,
+  CourseSheetHeader,
+  CourseSheetInput,
+  CourseSheetTrigger,
+} from '@/feature/manage/ui/CourseBottomSheet';
 import { IconBack, IconPlus } from '@/shared/assets';
 import { IconNotification } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';

@@ -10,11 +10,10 @@ import { useEffect } from 'react';
 import { firebaseApp } from '@/app/_providers/Firebase';
 import { useHomeAlarmQuery } from '@/entity/alarm';
 import { useRegisterTokenMutation } from '@/feature/alarm';
-import {
-  AddStudentDialog,
-  useAddStudentCourseMutation,
-  useMyInfoQuery,
-} from '@/feature/member';
+import { useAddStudentCourseMutation } from '@/feature/course';
+import { useTrainerHomeQuery } from '@/feature/home';
+import { AddStudentDialog } from '@/feature/manage';
+import { useMyInfoQuery } from '@/feature/mypage';
 import { TrainerSchedule } from '@/feature/schedule';
 import { IconAlarmWhite, IconCalendarX, IconMedalGold, IconPlus } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
@@ -31,8 +30,6 @@ import {
 } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, TrainerNavigation } from '@/widget';
-
-import { useTrainerHomeQuery } from '../api/useTrainerHomeQuery';
 
 const MAX_RETRY_ATTEMPTS = 3;
 

@@ -5,7 +5,7 @@ import { useState } from 'react';
 import {
   useDeleteRefundStudentMutation,
   useDeleteStudentMutation,
-} from '@/feature/member';
+} from '@/feature/manage';
 import { IconBack, IconDotsVertical } from '@/shared/assets';
 import IconNoCircleCheck from '@/shared/assets/images/noCircleCheck.svg';
 import { Typography } from '@/shared/mixin';

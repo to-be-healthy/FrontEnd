@@ -4,7 +4,7 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 import { useToggleAlarmStatusMutation } from '@/feature/manage';
-import { useMyInfoQuery } from '@/feature/member';
+import { useMyInfoQuery } from '@/feature/mypage';
 import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, Switch, useToast } from '@/shared/ui';

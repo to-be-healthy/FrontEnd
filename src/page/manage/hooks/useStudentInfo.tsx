@@ -1,4 +1,4 @@
-import { useStudentDetailQuery } from '@/feature/member';
+import { useStudentDetailQuery } from '@/feature/manage';
 
 const useStudentInfo = (memberId: number) => {
   const {

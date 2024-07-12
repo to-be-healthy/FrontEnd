@@ -6,7 +6,8 @@ import { useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { EMAIL_REGEXP, NAME_REGEXP, SocialIcon, socialProviders } from '@/entity/auth';
-import { FindIdRequest, FindIdResponse, useFindIdMutation } from '@/feature/member';
+import { useFindIdMutation } from '@/feature/auth';
+import { FindIdRequest, FindIdResponse } from '@/feature/manage';
 import { IconClose } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, Input, useToast } from '@/shared/ui';

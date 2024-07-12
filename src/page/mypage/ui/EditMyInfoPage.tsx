@@ -12,7 +12,7 @@ import {
   useLogOutMutation,
   useMyInfoQuery,
   useSetProfileImageMutation,
-} from '@/feature/member';
+} from '@/feature/mypage';
 import {
   IconArrowRightSmall,
   IconAvatar,

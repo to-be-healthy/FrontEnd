@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-import { useChangePasswordMutation, useVerifyPasswordMutation } from '@/feature/member';
+import { useChangePasswordMutation, useVerifyPasswordMutation } from '@/feature/mypage';
 import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, Input, useToast } from '@/shared/ui';

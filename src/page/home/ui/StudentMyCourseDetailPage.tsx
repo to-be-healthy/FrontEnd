@@ -13,7 +13,7 @@ import {
   CourseCardHeader,
   courseHistoryTypes,
   useMyCourseHistoryQuery,
-} from '@/feature/member';
+} from '@/feature/course';
 import { IconClose, IconNotification } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';

@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 import { useAuthAction, useAuthSelector } from '@/entity/auth';
 import { useRegisterGymMutation } from '@/entity/gym';
-import { GymVerificationCode, SelectGym } from '@/feature/member';
+import { GymVerificationCode, SelectGym } from '@/feature/mypage';
 import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, useToast } from '@/shared/ui';

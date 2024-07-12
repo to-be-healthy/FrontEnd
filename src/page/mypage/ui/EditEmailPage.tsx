@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 import { useSendVerificationCodeMutation } from '@/entity/auth';
-import { useChangeEmailMutation, useMyInfoQuery } from '@/feature/member';
+import { useChangeEmailMutation, useMyInfoQuery } from '@/feature/mypage';
 import { IconBack } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, Input, useToast } from '@/shared/ui';
