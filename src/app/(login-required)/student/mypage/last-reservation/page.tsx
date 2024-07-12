@@ -1,4 +1,4 @@
-import { StudentLastReservationPage } from '@/page/member';
+import { StudentLastReservationPage } from '@/page/mypage';
 
 const Page = () => {
   return <StudentLastReservationPage />;

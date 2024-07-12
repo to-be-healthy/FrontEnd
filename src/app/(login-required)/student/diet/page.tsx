@@ -1,6 +1,6 @@
 'use client';
 
-import { StudentDietListPage } from '@/page/diet';
+import { StudentDietListPage } from '@/page/feedback';
 
 const Page = () => {
   return <StudentDietListPage />;

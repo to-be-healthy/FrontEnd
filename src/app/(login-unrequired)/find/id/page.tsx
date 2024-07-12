@@ -1,4 +1,4 @@
-import { FindIdPage } from '@/page/member';
+import { FindIdPage } from '@/page/public';
 
 const Page = () => {
   return <FindIdPage />;

@@ -20,7 +20,7 @@ import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
-import { useStudentInfo } from '../hooks/useStudentInfo';
+import { useStudentInfo } from '../../manage/hooks/useStudentInfo';
 
 const NoDiet = () => {
   return (

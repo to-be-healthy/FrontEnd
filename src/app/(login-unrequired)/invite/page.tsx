@@ -1,4 +1,4 @@
-import { InvitedPage } from '@/page/auth';
+import { InvitedPage } from '@/page/public';
 
 const Page = () => {
   return <InvitedPage />;

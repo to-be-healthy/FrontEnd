@@ -1,4 +1,4 @@
-import { SelectGymPage } from '@/page/member';
+import { SelectGymPage } from '@/page/mypage';
 
 const SelectGym = () => {
   return <SelectGymPage />;

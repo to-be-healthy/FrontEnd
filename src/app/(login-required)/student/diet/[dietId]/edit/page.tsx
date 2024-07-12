@@ -1,6 +1,6 @@
 'use client';
 
-import { DietEditProvider } from '@/page/diet';
+import { DietEditProvider } from '@/page/feedback';
 
 interface Props {
   params: { dietId: number };

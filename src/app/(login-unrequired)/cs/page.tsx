@@ -1,4 +1,4 @@
-import { CSPage } from '@/page/member';
+import { CSPage } from '@/page/public';
 
 const Page = () => {
   return <CSPage />;

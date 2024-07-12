@@ -1,4 +1,4 @@
-import { LeavePage } from '@/page/member';
+import { LeavePage } from '@/page/mypage';
 
 const Page = () => {
   return <LeavePage />;

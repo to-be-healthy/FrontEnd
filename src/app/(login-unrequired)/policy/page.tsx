@@ -1,4 +1,4 @@
-import { PolicyPage } from '@/page/member';
+import { PolicyPage } from '@/page/public';
 
 const Page = () => {
   return <PolicyPage />;

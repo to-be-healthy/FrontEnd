@@ -1,15 +1,9 @@
-export { CSPage } from './ui/CSPage';
 export { EditAlarmPage } from './ui/EditAlarmPage';
 export { EditEmailPage } from './ui/EditEmailPage';
 export { EditMyInfoPage } from './ui/EditMyInfoPage';
 export { EditNamePage } from './ui/EditNamePage';
 export { EditPasswordPage } from './ui/EditPasswordPage';
-export { FindIdPage } from './ui/FindIdPage';
-export { FindPasswordPage } from './ui/FindPasswordPage';
 export { LeavePage } from './ui/LeavePage';
-export { PolicyPage } from './ui/PolicyPage';
-export { PolicyPrivacyPage } from './ui/PolicyPrivacyPage';
-export { PolicyTermsPage } from './ui/PolicyTermsPage';
 export { SelectGymPage } from './ui/SelectGymPage';
 export { StudentLastReservationPage } from './ui/StudentLastReservationPage';
 export { StudentMyPage } from './ui/StudentMyPage';

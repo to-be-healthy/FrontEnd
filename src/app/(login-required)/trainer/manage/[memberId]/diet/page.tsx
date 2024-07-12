@@ -1,4 +1,4 @@
-import { TrainerStudentDietListPage } from '@/page/manage';
+import { TrainerStudentDietListPage } from '@/page/feedback';
 
 interface Props {
   params: { memberId: number };

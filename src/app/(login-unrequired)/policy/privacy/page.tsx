@@ -1,4 +1,4 @@
-import { PolicyPrivacyPage } from '@/page/member';
+import { PolicyPrivacyPage } from '@/page/public';
 
 const Page = () => {
   return <PolicyPrivacyPage />;

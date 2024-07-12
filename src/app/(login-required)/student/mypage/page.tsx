@@ -1,6 +1,6 @@
 'use client';
 
-import { StudentMyPage } from '@/page/member';
+import { StudentMyPage } from '@/page/mypage';
 
 const Page = () => {
   return <StudentMyPage />;

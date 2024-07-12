@@ -1,4 +1,4 @@
-import { StudentLogPage } from '@/page/manage';
+import { StudentLogPage } from '@/page/feedback';
 
 const Page = () => {
   return <StudentLogPage />;

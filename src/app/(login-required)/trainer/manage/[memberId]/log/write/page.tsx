@@ -1,4 +1,4 @@
-import { TrainerCreateLogPage } from '@/page/manage';
+import { TrainerCreateLogPage } from '@/page/feedback';
 
 interface Props {
   params: { memberId: number };

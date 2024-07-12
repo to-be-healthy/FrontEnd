@@ -1,4 +1,4 @@
-import { FindPasswordPage } from '@/page/member';
+import { FindPasswordPage } from '@/page/public';
 
 const Page = () => {
   return <FindPasswordPage />;

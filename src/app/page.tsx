@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 import { auth } from '@/entity/auth';
-import { OnboardingPage } from '@/page/auth';
+import { OnboardingPage } from '@/page/public';
 
 export default function Page() {
   const [role, setRole] = useState<string | null>();

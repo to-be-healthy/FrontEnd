@@ -1,6 +1,6 @@
 'use client';
 
-import { StudentDietDetailPage } from '@/page/diet';
+import { StudentDietDetailPage } from '@/page/feedback';
 
 interface Props {
   params: { dietId: number };

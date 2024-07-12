@@ -1,4 +1,4 @@
-import { EditNamePage } from '@/page/member';
+import { EditNamePage } from '@/page/mypage';
 
 const Page = () => {
   return <EditNamePage />;

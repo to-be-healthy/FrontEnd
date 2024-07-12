@@ -1,4 +1,4 @@
-import { CommunityDetailPage } from '@/page/community';
+import { CommunityDetailPage } from '@/page/workout';
 
 interface Props {
   params: { workoutHistoryId: number };
