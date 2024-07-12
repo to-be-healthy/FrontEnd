@@ -1,9 +1,10 @@
-import { useCreateDietCommentMutation, useEditDietCommentMutation } from '@/entity/diet';
+import { useCreateDietCommentMutation } from '@/entity/diet';
 import { IconArrowTop } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
+import { useEditDietCommentMutation } from '../api/mutations';
 import { useCommentContext } from '../hooks/useComment';
 
 const CommentInput = () => {

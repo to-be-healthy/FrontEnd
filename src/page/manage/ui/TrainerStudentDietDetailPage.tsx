@@ -10,7 +10,6 @@ import { useRef } from 'react';
 import {
   MealType,
   useDietCancelLikeMutation,
-  useDietCommentListQuery,
   useDietLikeMutation,
   useStudentDietDetailQuery,
 } from '@/entity/diet';
@@ -19,6 +18,7 @@ import {
   DietCommentInput,
   DietCommentList,
   useDietComment,
+  useDietCommentListQuery,
 } from '@/feature/diet';
 import { IconBack, IconChat, IconCheck, IconLike, IconWhiteClose } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';

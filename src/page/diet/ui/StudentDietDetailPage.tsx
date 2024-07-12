@@ -12,7 +12,6 @@ import {
   MealType,
   useDeleteDietMutation,
   useDietCancelLikeMutation,
-  useDietCommentListQuery,
   useDietLikeMutation,
   useStudentDietDetailQuery,
 } from '@/entity/diet';
@@ -21,6 +20,7 @@ import {
   DietCommentInput,
   DietCommentList,
   useDietComment,
+  useDietCommentListQuery,
 } from '@/feature/diet';
 import {
   IconBack,

@@ -5,13 +5,11 @@ export {
   useDietCancelLikeMutation,
   useDietLikeMutation,
   useDietShowNoticeMutation,
-  useEditDietCommentMutation,
   useEditDietMutation,
   useRegisterDietMutation,
   useRegisterHomeDietMutation,
 } from './api/mutations';
 export {
-  useDietCommentListQuery,
   useDietListQuery,
   useStudentCalendarMyDietListQuery,
   useStudentDietDetailQuery,

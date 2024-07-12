@@ -1,3 +1,5 @@
+export { useEditDietCommentMutation } from './api/mutations';
+export { useDietCommentListQuery } from './api/queries';
 export {
   CommentContext as DietCommentContext,
   useComment as useDietComment,
