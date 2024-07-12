@@ -38,7 +38,7 @@ export const SelectGymPage = () => {
         {
           onSuccess: () => {
             setUserInfo({ ...auth, gymId: selectGymId });
-            router.push('/class-time-setting');
+            router.push('/trainer/class-time-setting');
           },
           onError: (error) => {
             errorToast(error?.response?.data.message);
