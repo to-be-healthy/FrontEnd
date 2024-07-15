@@ -49,7 +49,13 @@
 
 ### Development
 
-[개발 환경 데모](https://www-dev.to-be-healthy.site/)
+[개발 환경 데모](https://www.dev.to-be-healthy.site/)
+
+### 테스트계정
+
+> 학생 계정 : healthy-student0 / 12345678a
+
+> 트레이너 계정 : healthy-trainer0 / 12345678a
 
 ### Local
 ```
