@@ -54,7 +54,7 @@ export default function Page({ params }: Props) {
             // eslint-disable-next-line no-console
             console.error(error);
           }
-          router.replace(`/${data.memberType?.toLowerCase()}`);
+          router.push(`/${data.memberType?.toLowerCase()}`);
         },
         onError: (error) => {
           const message = error.response?.data.message ?? '문제가 발생했습니다.';
