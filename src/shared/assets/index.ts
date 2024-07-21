@@ -60,6 +60,8 @@ export { default as IconNaverLogo } from './images/naver_logo.svg';
 export { default as IconNaverLogoCircle } from './images/naver_logo_circle.svg';
 export { default as IconNoSchedule } from './images/no_schedule.svg';
 export { default as IconNotification } from './images/notification.svg';
+export { default as IconPeoplePlus } from './images/people_plus.svg';
+export { default as IconPeoples } from './images/peoples.svg';
 export { default as IconPicture } from './images/picture.svg';
 export { default as IconPlus } from './images/plus.svg';
 export { default as IconProfileDefault } from './images/profile_default.svg';

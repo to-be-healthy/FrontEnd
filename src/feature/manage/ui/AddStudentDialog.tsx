@@ -1,9 +1,7 @@
 import Link from 'next/link';
 
-import { IconPlus } from '@/shared/assets';
+import { IconPeoplePlus, IconPeoples, IconPlus } from '@/shared/assets';
 import CloseIcon from '@/shared/assets/images/icon_close.svg';
-import IconMail from '@/shared/assets/images/icon_mail.svg';
-import IconPeopleAdd from '@/shared/assets/images/icon_people_add.svg';
 import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import { Dialog, DialogClose, DialogContent, DialogTrigger } from '@/shared/ui/dialog';
@@ -29,20 +27,20 @@ export const AddStudentDialog = ({ children }: { children?: React.ReactNode }) =
               <CloseIcon width={20} height={20} />
             </Button>
           </DialogClose>
-          <h1 className={cn(Typography.HEADING_4)}>회원추가</h1>
+          <h1 className={cn(Typography.HEADING_4)}>회원 추가</h1>
           <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
         </Layout.Header>
         <Layout.Contents className='flex w-full flex-row items-center justify-evenly py-6'>
           <Link
             href={'/trainer/manage/invite'}
             className='flex w-full flex-col items-center justify-center gap-y-2'>
-            <IconMail />
-            <p className={cn(Typography.HEADING_5)}>회원 초대하기</p>
+            <IconPeoplePlus />
+            <p className={cn(Typography.HEADING_5)}>회원 직접 추가</p>
           </Link>
           <Link
             href={'/trainer/manage/append'}
             className='flex w-full flex-col items-center justify-center gap-y-2'>
-            <IconPeopleAdd />
+            <IconPeoples />
             <p className={cn(Typography.HEADING_5)}>가입된 회원 추가</p>
           </Link>
         </Layout.Contents>
