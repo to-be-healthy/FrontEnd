@@ -14,6 +14,7 @@ interface RegisteredStudent {
   lessonCnt: number;
   remainLessonCnt: number;
   fileUrl: string | null;
+  nonmember: boolean;
 }
 
 interface InviteForm {
