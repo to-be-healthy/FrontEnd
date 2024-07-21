@@ -26,7 +26,10 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
         </button>
       </Layout.Header>
       <Layout.Contents>
-        <div className={'mt-12 flex flex-col items-center gap-y-9'}>
+        <div
+          className={
+            'mt-12 flex w-screen max-w-[var(--max-width)] flex-col items-center gap-y-9'
+          }>
           <h1
             className={cn(
               Typography.HEADING_1,
