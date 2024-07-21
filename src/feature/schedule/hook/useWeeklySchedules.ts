@@ -64,6 +64,8 @@ const useWeeklySchedules = () => {
     weeklySchedules,
     isCurrentWeek,
     isBeforeWeek,
+    earliestLessonStartTime: data?.earliestLessonStartTime,
+    latestLessonEndTime: data?.latestLessonEndTime,
     refetch,
     changeWeek,
     createWeeklySchedules,

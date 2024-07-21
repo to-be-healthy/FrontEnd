@@ -21,6 +21,8 @@ export const TrainerSchedulePage = () => {
     isBeforeWeek,
     weeklySchedules,
     isPending,
+    earliestLessonStartTime,
+    latestLessonEndTime,
     changeWeek,
     createWeeklySchedules,
   } = useWeeklySchedules();
@@ -65,7 +67,12 @@ export const TrainerSchedulePage = () => {
           </div>
         )}
         {!isPending && weeklySchedules !== null && (
-          <WeeklyTimetable startDate={startDate} schedules={weeklySchedules} />
+          <WeeklyTimetable
+            startDate={startDate}
+            schedules={weeklySchedules}
+            earliestLessonStartTime={earliestLessonStartTime}
+            latestLessonEndTime={latestLessonEndTime}
+          />
         )}
         {!isPending && weeklySchedules === null && !isBeforeWeek && (
           <div className='flex-center h-full w-full flex-col space-y-6'>

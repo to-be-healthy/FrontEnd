@@ -126,6 +126,8 @@ interface TrainerScheduleRequest {
 
 interface TrainerScheduleResponse {
   trainerName: string;
+  earliestLessonStartTime: string;
+  latestLessonEndTime: string;
   schedule: TrainerWeeklySchedule | null;
 }
 
