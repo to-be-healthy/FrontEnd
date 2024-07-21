@@ -5,7 +5,7 @@
     <p align="center">피트니스 센터, 트레이너와 회원을 위한 일정 관리 앱</p>
     <br />
     <p align="center">
-      <a href="https://www.to-be-healthy.site/">웹 사이트</a>
+      <a href="https://main.to-be-healthy.site/">웹 사이트</a>
 <!--       .
       <a href="#">App</a> -->
     </p align="center">
@@ -45,7 +45,7 @@
 
 ### Production
 
-[운영 환경](https://www.to-be-healthy.site/)
+[운영 환경](https://main.to-be-healthy.site/)
 
 ### Development
 
@@ -58,6 +58,7 @@
 > 트레이너 계정 : healthy-trainer0 / 12345678a
 
 ### Local
+
 ```
 git clone https://github.com/to-be-healthy/FrontEnd.git
 
@@ -93,4 +94,4 @@ FSD 아키텍처를 적용하여 책임 크기 단위로 계층을 분리하고,
 
 FSD 아키텍처의 app layer의 컨셉과 Next.js app router의 기능 간의 개념적인 충돌이 있었지만, 프로젝트 특성에 맞도록 최적화하여 구성했습니다.
 
-### 
+###
