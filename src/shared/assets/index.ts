@@ -4,6 +4,7 @@ export { default as IconAlarmWhite } from './images/alarm_white.svg';
 export { default as IconAlbum } from './images/album.svg';
 export { default as IconAlert } from './images/alert.svg';
 export { default as IconAlertCircle } from './images/alert_circle.svg';
+export { default as IconAppleLogo } from './images/apple_logo.svg';
 export { default as IconArrowDown } from './images/arrow_down.svg';
 export { default as IconArrowFilledDown } from './images/arrow_filled_down.svg';
 export { default as IconArrowFilledUp } from './images/arrow_filled_up.svg';

@@ -19,6 +19,8 @@ export default function Page({ params }: Props) {
   const searchParams = useSearchParams();
   const code = searchParams?.get('code');
   const state = searchParams?.get('state');
+  const id_token = searchParams?.get('id_token');
+  const user = searchParams?.get('user');
 
   const router = useRouter();
   const { mutate } = useSocialSignInMutation();
@@ -42,6 +44,8 @@ export default function Page({ params }: Props) {
         state,
         memberType: memberType.toUpperCase(),
         ...(uuid && { uuid }),
+        ...(id_token && { id_token }),
+        ...(user && { user }),
       },
       {
         onSuccess: (result) => {

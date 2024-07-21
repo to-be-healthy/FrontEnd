@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 
 import {
+  IconAppleLogo,
   IconGoogleLogoCircle,
   IconKakaoLogoCircle,
   IconNaverLogoCircle,
@@ -30,6 +31,7 @@ const socialProviders: Record<Exclude<SocialType, 'NONE'>, socialProvider> = {
     logo: <IconKakaoLogoCircle />,
     style: 'bg-[#FEE500]',
   },
+  APPLE: { name: '애플', logo: <IconAppleLogo />, style: 'bg-black' },
 };
 
 const SocialIcon = ({ socialType }: { socialType: Exclude<SocialType, 'NONE'> }) => {

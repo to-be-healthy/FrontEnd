@@ -10,7 +10,7 @@ interface UserInfo {
 
 type LowercaseMemberType = Lowercase<Exclude<'STUDENT' | 'TRAINER', null>> | undefined;
 
-type SocialProvider = 'kakao' | 'naver' | 'google';
+type SocialProvider = 'kakao' | 'naver' | 'google' | 'apple';
 
 type SocialType = 'NONE' | Uppercase<SocialProvider>;
 
