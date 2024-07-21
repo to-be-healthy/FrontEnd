@@ -69,5 +69,6 @@ export { default as IconProfileFilled } from './images/profile_filled.svg';
 export { default as IconProfileOutlined } from './images/profile_outlined.svg';
 export { default as IconSearch } from './images/search.svg';
 export { default as IconSendEmail } from './images/send_email.svg';
+export { default as IconShare } from './images/share.svg';
 export { default as IconTrash } from './images/trash.svg';
 export { default as IconWhiteClose } from './images/white_close.svg';

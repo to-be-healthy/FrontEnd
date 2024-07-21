@@ -23,6 +23,7 @@ const PRIVACY_URL =
   'https://mewing-sun-887.notion.site/fcc610c6a4c04ae2813be8ff3d98c56b?pvs=4';
 
 export {
+  BASE_REDIRECT_URI,
   GOOGLE_SOCIAL_AUTH_URL,
   googleRedirectUri,
   KAKAO_SOCIAL_AUTH_URL,
