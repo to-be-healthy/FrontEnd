@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
@@ -14,6 +14,7 @@ import { cn, twSelector } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 export const TrainerInvitePage = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -31,9 +32,8 @@ export const TrainerInvitePage = () => {
 
   const onValidSubmit: SubmitHandler<InviteForm> = (invitationInfo) => {
     mutate(invitationInfo, {
-      onSuccess: ({ data }) => {
-        const { invitationLink } = data;
-        setInvitationUrl(invitationLink);
+      onSuccess: () => {
+        router.back();
       },
       onError: (error) => {
         const message = error?.response?.data.message;
@@ -86,15 +86,10 @@ export const TrainerInvitePage = () => {
   return (
     <Layout>
       <Layout.Header className='flex-row-reverse'>
-        <Button
-          variant='outline'
-          className='border-none bg-transparent p-0 hover:bg-transparent'
-          asChild>
-          <Link href={'/trainer/manage'}>
-            <CloseIcon width={20} height={20} />
-          </Link>
-        </Button>
-        <h1 className={cn(Typography.HEADING_4)}>회원추가</h1>
+        <button onClick={() => router.back()}>
+          <CloseIcon width={20} height={20} />
+        </button>
+        <h1 className={cn(Typography.HEADING_4)}>회원 추가</h1>
         <div className='w-[40px] cursor-default bg-transparent' tabIndex={-1}></div>
       </Layout.Header>
       <Layout.Contents className='px-7'>

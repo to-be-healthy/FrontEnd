@@ -3,9 +3,8 @@
 import dayjs from 'dayjs';
 
 import { Typography } from '@/shared/mixin';
-import { cn } from '@/shared/utils';
+import { cn, timeToDecimal } from '@/shared/utils';
 
-import { HOURS_FROM, HOURS_TO } from '../../consts';
 import { useWeeklyTimetable } from '../../hook/useWeeklyTimetable';
 import { TrainerSchedule } from '../../model/type';
 import { DayOfWeekRow } from './DayOfWeekRow';
@@ -14,19 +13,25 @@ import { ScheduleItem } from './ScheduleItem';
 const WeeklyTimetable = ({
   schedules,
   startDate,
+  earliestLessonStartTime,
+  latestLessonEndTime,
 }: {
   schedules: [string, TrainerSchedule[]][];
   startDate: Date;
+  earliestLessonStartTime?: string;
+  latestLessonEndTime?: string;
 }) => {
   const { flatSchedules } = useWeeklyTimetable({
     schedules,
     startDate,
+    earliestLessonStartTime,
   });
 
-  const hourAxis = Array.from(
-    { length: HOURS_TO - HOURS_FROM },
-    (_, i) => i + HOURS_FROM
-  );
+  const startHour = earliestLessonStartTime ? timeToDecimal(earliestLessonStartTime) : 6;
+  const endHour = latestLessonEndTime ? timeToDecimal(latestLessonEndTime) : 24;
+
+  const hourAxis = Array.from({ length: endHour - startHour }, (_, i) => i + startHour);
+
   const dayOfWeekAxis = Array.from({ length: 7 }, (_, i) =>
     dayjs(startDate).add(i, 'day').toDate()
   );

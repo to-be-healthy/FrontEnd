@@ -194,7 +194,14 @@ const StudentList = ({ callback }: { callback?: (memberId: number) => void }) =>
                           )}
                         </div>
                         <div className='flex flex-col text-left'>
-                          <p className={cn(Typography.TITLE_1_BOLD)}>{item.name}</p>
+                          <div className='flex flex-row gap-2'>
+                            <p className={cn(Typography.TITLE_1_BOLD)}>{item.name}</p>
+                            {!item.nonmember && (
+                              <span className='flex-center rounded-sm bg-blue-50 px-3 py-[1.5px] text-[10px] text-primary'>
+                                가입
+                              </span>
+                            )}
+                          </div>
                           {item.nickName && (
                             <span
                               className={cn(Typography.BODY_4_REGULAR, 'text-gray-500')}>

@@ -55,10 +55,17 @@ const useWeeklySchedules = () => {
 
   const isPending = queyrPending || creationPending;
 
+  const isCurrentWeek = dayjs(startDate.toDateString()).isSame(getStartOfWeek(), 'day');
+  const isBeforeWeek = dayjs(startDate.toDateString()).isBefore(getStartOfWeek(), 'day');
+
   return {
     startDate,
     isPending,
     weeklySchedules,
+    isCurrentWeek,
+    isBeforeWeek,
+    earliestLessonStartTime: data?.earliestLessonStartTime,
+    latestLessonEndTime: data?.latestLessonEndTime,
     refetch,
     changeWeek,
     createWeeklySchedules,

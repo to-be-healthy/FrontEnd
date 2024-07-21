@@ -64,6 +64,10 @@ interface AppendMemberResponse {
   uuid: string;
 }
 
+/**
+ *
+ * @description 가입된 회원 추가
+ */
 export const useAppendMemberMutation = () => {
   return useMutation<BaseResponse<AppendMemberResponse>, BaseError, AppendMemberRequest>({
     mutationFn: async ({ lessonCnt, memberId }) => {
@@ -103,11 +107,15 @@ interface InviteResponse {
   invitationLink: string;
 }
 
+/**
+ *
+ * @description 미가입 회원 직접 추가하기
+ */
 export const useInviteStudentMutation = () => {
   return useMutation<BaseResponse<InviteResponse>, BaseError, InviteForm>({
     mutationFn: async (invitationInfo) => {
       const result = await authApi.post<BaseResponse<InviteResponse>>(
-        '/api/trainers/v1/invitation',
+        '/api/trainers/v1/nonmember',
         invitationInfo
       );
       return result.data;

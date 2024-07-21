@@ -6,7 +6,6 @@ import { useMemo, useState } from 'react';
 import { timeToDecimal } from '@/shared/utils';
 
 import {
-  HOURS_FROM,
   SCHEDULE_ACTIVE_COLORS,
   SCHEDULE_AVAILABLE_COLOR,
   SCHEDULE_DISABLED_COLORS,
@@ -22,9 +21,11 @@ import {
 const useWeeklyTimetable = ({
   schedules,
   startDate,
+  earliestLessonStartTime,
 }: {
   schedules: [string, TrainerSchedule[]][];
   startDate: Date;
+  earliestLessonStartTime?: string;
 }) => {
   const [selectedSchedule, setSelectedSchedule] = useState<FlatSchedule | null>(null);
   const userList: number[] = [];
@@ -67,9 +68,13 @@ const useWeeklyTimetable = ({
             userList.push(item.applicantId);
           }
 
+          const startHour = earliestLessonStartTime
+            ? timeToDecimal(earliestLessonStartTime)
+            : 6;
+
           const offset: ScheduleOffset = {
             x: dayjs(new Date(date)).diff(startDate, 'day'),
-            y: timeToDecimal(item.lessonStartTime) - HOURS_FROM,
+            y: timeToDecimal(item.lessonStartTime) - startHour,
           };
 
           const color = getScheduleColor(item);

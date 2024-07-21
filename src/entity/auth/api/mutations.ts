@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 
 import { api, BaseError, BaseResponse } from '@/shared/api';
 
-import { googleRedirectUri, kakaoRedirectUri } from '../consts';
+import { appleRedirectUri, googleRedirectUri, kakaoRedirectUri } from '../consts';
 import { SignUpRequest, SocialProvider, UserInfo } from '../model/types';
 import { authApi } from './authApi';
 
@@ -101,6 +101,8 @@ interface SocialSignInRequest {
   memberType: string;
   state: string;
   redirectUrl?: string;
+  id_token?: string;
+  user?: string;
 }
 
 export const useSocialSignInMutation = () => {
@@ -111,6 +113,9 @@ export const useSocialSignInMutation = () => {
       }
       if (provider === 'google') {
         Object.assign(payload, { redirectUrl: googleRedirectUri });
+      }
+      if (provider === 'apple') {
+        Object.assign(payload, { redirectUrl: appleRedirectUri });
       }
       const result = await api.post<BaseResponse<UserInfo>>(
         `/api/auth/v1/access-token/${provider}`,

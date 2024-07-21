@@ -1,5 +1,9 @@
-import { KAKAO_SOCIAL_AUTH_URL, NAVER_SOCIAL_AUTH_URL } from '@/entity/auth';
-import { IconKakaoLogo, IconNaverLogo } from '@/shared/assets';
+import {
+  APPLE_SOCIAL_AUTH_URL,
+  KAKAO_SOCIAL_AUTH_URL,
+  NAVER_SOCIAL_AUTH_URL,
+} from '@/entity/auth';
+import { IconAppleLogo, IconKakaoLogo, IconNaverLogo } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button } from '@/shared/ui';
 import { cn, generateUUID } from '@/shared/utils';
@@ -39,6 +43,14 @@ export const SocialSignIn = ({ memberType, uuid }: Props) => {
         }}>
         <IconNaverLogo />
         네이버로 시작하기
+      </Button>
+      <Button
+        className='h-12 gap-x-2 rounded-xl bg-black p-4 text-white'
+        onClick={() => {
+          window.location.href = `${APPLE_SOCIAL_AUTH_URL}&state=${generateClientState()}`;
+        }}>
+        <IconAppleLogo />
+        애플로 시작하기
       </Button>
       {/* <Button
         className='h-12 gap-x-2 rounded-xl border border-gray-600 bg-white p-4 text-gray-600'

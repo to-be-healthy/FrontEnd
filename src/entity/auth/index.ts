@@ -9,6 +9,8 @@ export {
   useSocialSignInMutation,
 } from './api/mutations';
 export {
+  APPLE_SOCIAL_AUTH_URL,
+  BASE_REDIRECT_URI,
   GOOGLE_SOCIAL_AUTH_URL,
   KAKAO_SOCIAL_AUTH_URL,
   NAVER_SOCIAL_AUTH_URL,

@@ -19,6 +19,8 @@ export default function Page({ params }: Props) {
   const searchParams = useSearchParams();
   const code = searchParams?.get('code');
   const state = searchParams?.get('state');
+  const id_token = searchParams?.get('id_token');
+  const user = searchParams?.get('user');
 
   const router = useRouter();
   const { mutate } = useSocialSignInMutation();
@@ -42,6 +44,8 @@ export default function Page({ params }: Props) {
         state,
         memberType: memberType.toUpperCase(),
         ...(uuid && { uuid }),
+        ...(id_token && { id_token }),
+        ...(user && { user }),
       },
       {
         onSuccess: (result) => {
@@ -54,7 +58,7 @@ export default function Page({ params }: Props) {
             // eslint-disable-next-line no-console
             console.error(error);
           }
-          router.replace(`/${data.memberType?.toLowerCase()}`);
+          router.push(`/${data.memberType?.toLowerCase()}`);
         },
         onError: (error) => {
           const message = error.response?.data.message ?? '문제가 발생했습니다.';
