@@ -32,7 +32,8 @@ export default function Page({ params }: Props) {
     const stringifiedValue = localStorage.getItem(state);
     localStorage.removeItem(state);
     if (!stringifiedValue) {
-      throw new Error();
+      alert('문제가 발생했습니다.');
+      return router.replace('/');
     }
 
     const { memberType, uuid } = JSON.parse(stringifiedValue) as StateType;
