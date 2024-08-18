@@ -9,6 +9,10 @@ const nextConfig = {
         source: '/api/:path*',
         destination: `${process.env.NEXT_PUBLIC_AUTH_URL}/:path*`,
       },
+      {
+        source: '/api/callback/apple',
+        destination: '/api/callback/apple',
+      },
     ];
   },
   ...withPWA({

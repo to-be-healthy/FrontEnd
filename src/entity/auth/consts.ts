@@ -14,7 +14,8 @@ const genRedirectUri = (provider: SocialProvider) =>
 const kakaoRedirectUri = genRedirectUri('kakao');
 const naverRedirectUri = genRedirectUri('naver');
 const googleRedirectUri = genRedirectUri('google');
-const appleRedirectUri = genRedirectUri('apple');
+// const appleRedirectUri = genRedirectUri('apple');
+const appleRedirectUri = `${BASE_REDIRECT_URI}/api/callback/apple`;
 
 const KAKAO_SOCIAL_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${kakaoRedirectUri}&response_type=code`;
 const NAVER_SOCIAL_AUTH_URL = `https://nid.naver.com/oauth2.0/authorize?client_id=${NAVER_CLIENT_ID}&redirect_uri=${naverRedirectUri}&response_type=code`;
