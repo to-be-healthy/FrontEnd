@@ -102,7 +102,10 @@ interface SocialSignInRequest {
   state: string;
   redirectUrl?: string;
   id_token?: string;
-  user?: string;
+  user?: {
+    name: { firstName: string; lastName: string };
+    email: string;
+  };
 }
 
 export const useSocialSignInMutation = () => {
