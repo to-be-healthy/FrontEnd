@@ -3,19 +3,27 @@
 import { useRouter } from 'next/navigation';
 
 import { IconBack } from '@/shared/assets';
+import { usePreviousPage } from '@/shared/hooks';
 import { Typography } from '@/shared/mixin';
 import { cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 const PolicyPrivacyPage = () => {
   const router = useRouter();
+  const { hasPreviousPage } = usePreviousPage();
+
+  if (hasPreviousPage === null) {
+    return null;
+  }
 
   return (
     <Layout>
       <Layout.Header>
-        <button onClick={() => router.back()}>
-          <IconBack />
-        </button>
+        {hasPreviousPage && (
+          <button onClick={() => router.back()}>
+            <IconBack />
+          </button>
+        )}
         <h1 className={cn(Typography.HEADING_4_SEMIBOLD, 'layout-header-title')}>
           개인정보 처리방침
         </h1>

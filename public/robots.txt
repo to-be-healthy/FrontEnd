@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /
+
+Allow: /policy/terms
+Allow: /policy/privacy
+Allow: /cs
