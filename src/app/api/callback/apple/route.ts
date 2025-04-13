@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
     const id_token = formData.get('id_token') as string | null;
     const user = formData.get('user') as string | null;
 
-    const baseUrl = new URL('https://main.to-be-healthy.site/');
+    const baseUrl = new URL('https://main.to-be-healthy.shop/');
     const redirectUrl = new URL('/apple/callback', baseUrl.origin);
 
     if (state) redirectUrl.searchParams.set('state', state);

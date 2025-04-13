@@ -60,7 +60,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'cdn.to-be-healthy.site',
+        hostname: 'cdn.to-be-healthy.shop',
         port: '',
         pathname: '/**',
       },
