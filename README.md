@@ -5,7 +5,7 @@
     <p align="center">피트니스 센터, 트레이너와 회원을 위한 일정 관리 앱</p>
     <br />
     <p align="center">
-      <a href="https://main.to-be-healthy.site/">웹 사이트</a>
+      <a href="https://main.to-be-healthy.shop/">웹 사이트</a>
 <!--       .
       <a href="#">App</a> -->
     </p align="center">
@@ -45,11 +45,11 @@
 
 ### Production
 
-[운영 환경](https://main.to-be-healthy.site/)
+[운영 환경](https://main.to-be-healthy.shop/)
 
 ### Development
 
-[개발 환경 데모](https://www.dev.to-be-healthy.site/)
+[개발 환경 데모](https://www.dev.to-be-healthy.shop/)
 
 ### 테스트계정
 
