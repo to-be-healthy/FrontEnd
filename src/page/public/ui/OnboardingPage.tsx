@@ -11,6 +11,8 @@ import { Button } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 import { Layout, RollingBanner } from '@/widget';
 
+import { ComplimentaryButton } from './ComplimentaryButton';
+
 const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
   const router = useRouter();
 
@@ -75,6 +77,7 @@ const SelectLoginMethodPage = ({ memberType }: { memberType: string }) => {
             className={cn(Typography.TITLE_3, 'mt-5 text-gray-500 hover:no-underline')}>
             <Link href={`/sign-in?type=${memberType}`}>아이디 로그인</Link>
           </Button>
+          <ComplimentaryButton memberType={memberType} />
           <Link
             href={'/cs'}
             className={cn(
