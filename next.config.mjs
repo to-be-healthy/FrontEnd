@@ -2,6 +2,7 @@
 import withPWA from 'next-pwa';
 
 const nextConfig = {
+  output: 'standalone',
   reactStrictMode: false,
   async rewrites() {
     return [
