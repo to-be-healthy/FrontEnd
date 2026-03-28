@@ -1,6 +1,9 @@
 import { SocialProvider } from './model/types';
 
-const BASE_REDIRECT_URI = process.env.NEXT_PUBLIC_WEB_URI;
+const BASE_REDIRECT_URI =
+  process.env.NEXT_PUBLIC_WEB_URI ??
+  (typeof window !== 'undefined' ? window.location.origin : undefined) ??
+  '';
 
 const KAKAO_CLIENT_ID = process.env.NEXT_PUBLIC_KAKAO_CLIENT_ID;
 const NAVER_CLIENT_ID = process.env.NEXT_PUBLIC_NAVER_CLIENT_ID;

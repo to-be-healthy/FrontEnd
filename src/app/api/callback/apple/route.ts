@@ -9,8 +9,7 @@ export async function POST(req: NextRequest) {
     const id_token = formData.get('id_token') as string | null;
     const user = formData.get('user') as string | null;
 
-    const baseUrl = new URL('https://main.to-be-healthy.shop/');
-    const redirectUrl = new URL('/apple/callback', baseUrl.origin);
+    const redirectUrl = new URL('/apple/callback', req.nextUrl.origin);
 
     if (state) redirectUrl.searchParams.set('state', state);
     if (code) redirectUrl.searchParams.set('code', code);
@@ -18,9 +17,7 @@ export async function POST(req: NextRequest) {
     if (user) redirectUrl.searchParams.set('user', user);
 
     return NextResponse.redirect(redirectUrl, 302);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('문제가 발생했습니다. 다시 시도해주세요.', error);
-    return NextResponse.redirect('/');
+  } catch {
+    return NextResponse.redirect(new URL('/', req.nextUrl.origin), 302);
   }
 }

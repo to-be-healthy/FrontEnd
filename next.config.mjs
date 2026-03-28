@@ -1,18 +1,20 @@
 /** @type {import('next').NextConfig} */
 import withPWA from 'next-pwa';
 
+const internalApiUrl = process.env.INTERNAL_API_URL ?? process.env.NEXT_PUBLIC_AUTH_URL;
+
 const nextConfig = {
   output: 'standalone',
   reactStrictMode: false,
   async rewrites() {
     return [
       {
-        source: '/api/:path*',
-        destination: `${process.env.NEXT_PUBLIC_AUTH_URL}/:path*`,
-      },
-      {
         source: '/api/callback/apple',
         destination: '/api/callback/apple',
+      },
+      {
+        source: '/api/:path*',
+        destination: `${internalApiUrl}/:path*`,
       },
     ];
   },
