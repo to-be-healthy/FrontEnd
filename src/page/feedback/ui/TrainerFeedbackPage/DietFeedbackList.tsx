@@ -8,7 +8,7 @@ import { MealType, useStudentFeedbackDietListQuery } from '@/entity/diet';
 import { IconNotification } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Card, CardContent } from '@/shared/ui';
-import { cn } from '@/shared/utils';
+import { buildDisplayImageUrl, cn } from '@/shared/utils';
 
 interface NoDietProps {
   index: number;
@@ -104,7 +104,7 @@ const DietFeedbackList = ({ dietDate }: { dietDate: string }) => {
                               {!meal.fast && meal.dietFile?.fileUrl && (
                                 <div className='h-[62px] w-full'>
                                   <img
-                                    src={meal.dietFile.fileUrl}
+                                    src={buildDisplayImageUrl(meal.dietFile.fileUrl)}
                                     alt={`${meal.type} image`}
                                     className='custom-image rounded-md'
                                   />

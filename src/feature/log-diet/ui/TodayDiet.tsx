@@ -29,7 +29,7 @@ import {
   SheetTrigger,
   useToast,
 } from '@/shared/ui';
-import { cn } from '@/shared/utils';
+import { buildDisplayImageUrl, cn } from '@/shared/utils';
 
 interface SelectImageProps {
   type: MealType;
@@ -235,7 +235,11 @@ export const TodayDiet = ({ diet, type }: DietProps) => {
               </div>
             ) : diet?.dietFile?.fileUrl ? (
               <img
-                src={`${diet?.dietFile?.fileUrl}?w=400&h=400&q=90`}
+                src={buildDisplayImageUrl(diet?.dietFile?.fileUrl, {
+                  w: 400,
+                  h: 400,
+                  q: 90,
+                })}
                 alt={`${type} image`}
                 className='custom-image rounded-md'
               />

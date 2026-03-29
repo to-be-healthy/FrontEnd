@@ -28,7 +28,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from '@/shared/ui';
-import { cn } from '@/shared/utils';
+import { buildDisplayImageUrl, cn } from '@/shared/utils';
 import { Layout } from '@/widget';
 
 import { useStudentInfo } from '../../hooks/useStudentInfo';
@@ -371,7 +371,7 @@ const TrainerStudentDetailPage = ({ memberId }: Props) => {
                           {!meal.fast && meal.dietFile?.fileUrl && (
                             <div className='h-[88px] w-full'>
                               <img
-                                src={meal.dietFile.fileUrl}
+                                src={buildDisplayImageUrl(meal.dietFile.fileUrl)}
                                 alt={`${meal.type} image`}
                                 className='custom-image rounded-md'
                               />

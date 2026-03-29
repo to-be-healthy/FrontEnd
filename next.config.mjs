@@ -48,7 +48,15 @@ const nextConfig = {
     return config;
   },
   images: {
+    loader: 'custom',
+    loaderFile: './src/shared/utils/next-image-loader.ts',
     remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'geonganghaejim.site',
+        port: '',
+        pathname: '/**',
+      },
       {
         protocol: 'https',
         hostname: 'healthy-bucket-s3.s3.ap-northeast-2.amazonaws.com',

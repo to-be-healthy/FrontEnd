@@ -5,5 +5,6 @@ export {
   getStartOfWeek,
   timeToDecimal,
 } from './date';
+export { buildDisplayImageUrl, normalizeDisplayFileUrl } from './file-url';
 export { cn, twSelector } from './tw-utils';
 export { withSelector } from './withSelector';

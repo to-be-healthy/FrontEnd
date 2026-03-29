@@ -17,7 +17,7 @@ import {
 } from '@/shared/assets';
 import { Typography } from '@/shared/mixin';
 import { Button, Card, CardContent, CardFooter, CardHeader } from '@/shared/ui';
-import { cn } from '@/shared/utils';
+import { buildDisplayImageUrl, cn } from '@/shared/utils';
 import { Layout, MonthPicker } from '@/widget';
 
 import { useStudentInfo } from '../../manage/hooks/useStudentInfo';
@@ -179,7 +179,13 @@ export const TrainerStudentDietListPage = ({ memberId }: Props) => {
                                   {!meal.fast && meal.dietFile?.fileUrl && (
                                     <div className='h-[88px] w-full'>
                                       <img
-                                        src={`${meal.dietFile.fileUrl}?w=400&q=90`}
+                                        src={buildDisplayImageUrl(
+                                          meal.dietFile.fileUrl,
+                                          {
+                                            w: 400,
+                                            q: 90,
+                                          }
+                                        )}
                                         alt={`${meal.type} image`}
                                         className='custom-image rounded-md'
                                       />
