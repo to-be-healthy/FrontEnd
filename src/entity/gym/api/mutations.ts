@@ -14,7 +14,7 @@ export const useRegisterGymMutation = () => {
     mutationFn: async ({ gymId, memberType, joinCode }) => {
       const payload = memberType === 'TRAINER' ? { joinCode } : undefined;
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/gyms/v1/${gymId}`,
+        `/api/v1/gyms/${gymId}`,
         payload
       );
       return result.data;

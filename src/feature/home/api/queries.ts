@@ -13,7 +13,7 @@ export const useTrainerHomeQuery = () => {
     queryKey: ['TrainerHome'],
     queryFn: async () => {
       const result =
-        await authApi.get<BaseResponse<TrainerHomeInfo>>(`/api/home/v1/trainer`);
+        await authApi.get<BaseResponse<TrainerHomeInfo>>(`/api/v1/home/trainer`);
       return result.data.data;
     },
   });
@@ -58,7 +58,7 @@ export const useStudentHomeDataQuery = () => {
     queryKey: ['StudentHomeData'],
     queryFn: async () => {
       const result =
-        await authApi.get<BaseResponse<HomeDataResponse>>(`/api/home/v1/student`);
+        await authApi.get<BaseResponse<HomeDataResponse>>(`/api/v1/home/student`);
       return result.data.data;
     },
   });

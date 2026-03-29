@@ -14,7 +14,7 @@ export const useMyCourseHistoryQuery = ({ searchDate, size }: MyCourseHistoryReq
     queryKey: ['myCourseHistory', { searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentCourse>>(
-        `/api/members/v1/course?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
+        `/api/v1/members/course?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
       );
       return res.data.data;
     },
@@ -41,7 +41,7 @@ export const useStudentCourseDetailQuery = ({
     queryKey: ['studentCourseHistory', { memberId, searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentCourse>>(
-        `/api/members/v1/${memberId}/course?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
+        `/api/v1/members/${memberId}/course?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
       );
       return res.data.data;
     },

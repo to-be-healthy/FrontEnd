@@ -11,7 +11,7 @@ export const useNotRegisteredStudentsQuery = () => {
     queryKey: ['notRegisteredStudents'],
     queryFn: async () => {
       const result = await authApi.get<BaseResponse<NotRegisteredStudentsList>>(
-        '/api/trainers/v1/unattached-members'
+        '/api/v1/trainers/unattached-members'
       );
       return result.data.data;
     },
@@ -25,7 +25,7 @@ export const useRegisteredStudentsQuery = () => {
     queryKey: ['registeredStudents'],
     queryFn: async () => {
       const result = await authApi.get<BaseResponse<RegisteredStudentsListResponse>>(
-        '/api/trainers/v1/members'
+        '/api/v1/trainers/members'
       );
       return result.data.data;
     },
@@ -37,7 +37,7 @@ export const useStudentDetailQuery = (memberId: number) => {
     queryKey: ['registeredStudent', memberId],
     queryFn: async () => {
       const result = await authApi.get<BaseResponse<StudentDetail>>(
-        `/api/trainers/v1/members/${memberId}`
+        `/api/v1/trainers/members/${memberId}`
       );
       return result.data.data;
     },

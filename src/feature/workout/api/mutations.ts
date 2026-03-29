@@ -10,7 +10,7 @@ export const useCancelLikeMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, number>({
     mutationFn: async (workoutHistoryId) => {
       const result = await authApi.delete<BaseResponse<null>>(
-        `/api/workout-histories/v1/${workoutHistoryId}/like`
+        `/api/v1/workout-histories/${workoutHistoryId}/like`
       );
       return result.data;
     },
@@ -26,7 +26,7 @@ interface CreateExerciseRequest {
 export const useCreateExerciseMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, CreateExerciseRequest>({
     mutationFn: async (payload) => {
-      const result = await authApi.post<BaseResponse<null>>('/api/exercise/v1', payload);
+      const result = await authApi.post<BaseResponse<null>>('/api/v1/exercise', payload);
       return result.data;
     },
   });
@@ -40,7 +40,7 @@ export const useCreateWorkoutCommentMutation = (workoutHistoryId: number) => {
   return useMutation<BaseResponse<boolean>, BaseError, CreateWorkoutCommentRequest>({
     mutationFn: async (payload) => {
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/workout-histories/v1/${workoutHistoryId}/comments`,
+        `/api/v1/workout-histories/${workoutHistoryId}/comments`,
         payload
       );
       return result.data;
@@ -59,7 +59,7 @@ export const useCreateWorkoutMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, CreateWorkoutRequest>({
     mutationFn: async (payload) => {
       const result = await authApi.post<BaseResponse<null>>(
-        '/api/workout-histories/v1',
+        '/api/v1/workout-histories',
         payload
       );
       return result.data;
@@ -71,7 +71,7 @@ export const useDeleteExerciseMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, number>({
     mutationFn: async (exerciseId) => {
       const result = await authApi.delete<BaseResponse<null>>(
-        `/api/exercise/v1/${exerciseId}`
+        `/api/v1/exercise/${exerciseId}`
       );
       return result.data;
     },
@@ -85,7 +85,7 @@ export const useDeleteWorkoutCommentMutation = (workoutHistoryId: number) => {
   return useMutation<BaseResponse<boolean>, BaseError, DeleteWorkoutCommentRequest>({
     mutationFn: async ({ commentId }) => {
       const result = await authApi.delete<BaseResponse<boolean>>(
-        `/api/workout-histories/v1/${workoutHistoryId}/comments/${commentId}`
+        `/api/v1/workout-histories/${workoutHistoryId}/comments/${commentId}`
       );
       return result.data;
     },
@@ -96,7 +96,7 @@ export const useDeleteWorkoutMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, number>({
     mutationFn: async (workoutHistoryId) => {
       const result = await authApi.delete<BaseResponse<null>>(
-        `/api/workout-histories/v1/${workoutHistoryId}`
+        `/api/v1/workout-histories/${workoutHistoryId}`
       );
       return result.data;
     },
@@ -111,7 +111,7 @@ export const useEditWorkoutCommentMutation = (workoutHistoryId: number) => {
   return useMutation<BaseResponse<boolean>, BaseError, EditWorkoutCommentRequest>({
     mutationFn: async ({ commentId, content }) => {
       const result = await authApi.patch<BaseResponse<boolean>>(
-        `/api/workout-histories/v1/${workoutHistoryId}/comments/${commentId}`,
+        `/api/v1/workout-histories/${workoutHistoryId}/comments/${commentId}`,
         { content }
       );
       return result.data;
@@ -131,7 +131,7 @@ export const useEditWorkoutMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, EditWorkoutRequest>({
     mutationFn: async ({ workoutHistoryId, ...payload }) => {
       const result = await authApi.patch<BaseResponse<null>>(
-        `/api/workout-histories/v1/${workoutHistoryId}`,
+        `/api/v1/workout-histories/${workoutHistoryId}`,
         payload
       );
       return result.data;
@@ -143,7 +143,7 @@ export const useLikeMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, number>({
     mutationFn: async (workoutHistoryId) => {
       const result = await authApi.post<BaseResponse<null>>(
-        `/api/workout-histories/v1/${workoutHistoryId}/like`
+        `/api/v1/workout-histories/${workoutHistoryId}/like`
       );
       return result.data;
     },
@@ -162,7 +162,7 @@ export const useUploadImageMutation = () => {
         formData.append('uploadFiles', el);
       });
       const result = await authApi.post<BaseResponse<ImageType[]>>(
-        `/api/workout-histories/v1/file`,
+        `/api/v1/workout-histories/file`,
         formData,
         {
           headers: {

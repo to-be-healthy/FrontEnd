@@ -23,7 +23,7 @@ export const useLessonListQuery = ({
         queryParams.append('lessonDate', lessonDate);
       }
       const result = await authApi.get<BaseResponse<UnwrittenLesson[]>>(
-        `/api/lessonhistory/v1/unwritten?${queryParams.toString()}`
+        `/api/v1/lessonhistory/unwritten?${queryParams.toString()}`
       );
       return result.data.data;
     },
@@ -43,7 +43,7 @@ export const useLogDetailQuery = ({ lessonHistoryId }: StudentLogDetailRequest) 
     queryKey: ['logDetail', lessonHistoryId],
     queryFn: async () => {
       const result = await authApi.get<BaseResponse<LogDetail>>(
-        `/api/lessonhistory/v1/${lessonHistoryId}`
+        `/api/v1/lessonhistory/${lessonHistoryId}`
       );
       return result.data.data;
     },
@@ -67,7 +67,7 @@ export const useStudentLogListQuery = ({ searchDate }: StudentLogListRequest) =>
       if (searchDate) {
         queryParams.append('searchDate', searchDate);
       }
-      const url = `/api/lessonhistory/v1?${queryParams.toString()}`;
+      const url = `/api/v1/lessonhistory?${queryParams.toString()}`;
       const result = await authApi.get<BaseResponse<StudentLogListResponse>>(url);
       return result.data.data;
     },
@@ -95,7 +95,7 @@ export const useTrainerLogListQuery = ({
       if (searchDate) {
         queryParams.append('searchDate', searchDate);
       }
-      const url = `/api/lessonhistory/v1/student/${studentId}?${queryParams.toString()}`;
+      const url = `/api/v1/lessonhistory/student/${studentId}?${queryParams.toString()}`;
       const result = await authApi.get<BaseResponse<TrainerLogListResponse>>(url);
       return result.data.data;
     },

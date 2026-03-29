@@ -20,7 +20,7 @@ export const useCheckTrainerMemberMappingQuery = () => {
     queryKey: ['checkTrainerMemberMapping'],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<MappingResponse>>(
-        `/api/members/v1/trainer-mapping`
+        `/api/v1/members/trainer-mapping`
       );
       return res.data.data;
     },
@@ -32,7 +32,7 @@ export const useGetTrainerClassTimeSettingQuery = () => {
     queryKey: ['TrainerClassTimeSetting'],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<ClassTimeSettingData>>(
-        `/api/schedule/v1/default-lesson-time`
+        `/api/v1/schedule/default-lesson-time`
       );
       if (!res.data.data.lessonStartTime && !res.data.data.lessonEndTime) {
         return CLASS_TIME_DEFAULT;
@@ -53,7 +53,7 @@ export const useScheduleListQuery = (lessonStartDt: string) => {
     queryKey: ['scheduleList', lessonStartDt],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<ScheduleResponse>>(
-        `/api/schedule/v1/student/all?lessonStartDt=${lessonStartDt}&lessonEndDt=${lessonStartDt}`
+        `/api/v1/schedule/student/all?lessonStartDt=${lessonStartDt}&lessonEndDt=${lessonStartDt}`
       );
       return res.data.data;
     },
@@ -75,7 +75,7 @@ export const useStudentCalendarMyReservationListQuery = ({
     queryKey: ['StudentCalendarMyReservationList', lessonStartDt, lessonEndDt],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<CalendarMyReservationResponse>>(
-        `/api/schedule/v1/student/my-reservation?lessonStartDt=${lessonStartDt}&lessonEndDt=${lessonEndDt}`
+        `/api/v1/schedule/student/my-reservation?lessonStartDt=${lessonStartDt}&lessonEndDt=${lessonEndDt}`
       );
       return res.data.data;
     },
@@ -87,7 +87,7 @@ export const useStudentMyLastReservationListQuery = (searchDate: string) => {
     queryKey: ['StudentMyLastReservationList', searchDate],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<MyReservationResponse>>(
-        `/api/schedule/v1/student/my-reservation/old?searchDate=${searchDate}`
+        `/api/v1/schedule/student/my-reservation/old?searchDate=${searchDate}`
       );
       return res.data.data;
     },
@@ -99,7 +99,7 @@ export const useStudentMyReservationListQuery = () => {
     queryKey: ['StudentMyReservationList'],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<MyReservationResponse>>(
-        `/api/schedule/v1/student/my-reservation/new`
+        `/api/v1/schedule/student/my-reservation/new`
       );
       return res.data.data;
     },
@@ -111,7 +111,7 @@ export const useStudentMyWaitingListQuery = () => {
     queryKey: ['StudentMyWaitingList'],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<MyWaitingResponse>>(
-        `/api/schedule/waiting/v1/my-waiting`
+        `/api/v1/schedule/waiting/my-waiting`
       );
       return res.data.data;
     },
@@ -146,7 +146,7 @@ export const useTrainerScheduleQuery = ({
   return useQuery<TrainerScheduleResponse, BaseError>({
     queryKey,
     queryFn: async () => {
-      const url = `/api/schedule/v1/all?${queryParams.toString()}`;
+      const url = `/api/v1/schedule/all?${queryParams.toString()}`;
       const res = await authApi.get<BaseResponse<TrainerScheduleResponse>>(url);
       return res.data.data;
     },
@@ -165,7 +165,7 @@ export const useTrainerStudentLastReservationListQuery = ({
     queryKey: ['TrainerStudentLastReservationList', searchDate, memberId],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<MyReservationResponse>>(
-        `/api/trainers/v1/reservation/old?searchDate=${searchDate}&memberId=${memberId}`
+        `/api/v1/trainers/reservation/old?searchDate=${searchDate}&memberId=${memberId}`
       );
       return res.data.data;
     },
@@ -177,7 +177,7 @@ export const useTrainerStudentReservationListQuery = (memberId: number) => {
     queryKey: ['TrainerStudentReservationList', memberId],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<MyReservationResponse>>(
-        `/api/trainers/v1/reservation/new?memberId=${memberId}`
+        `/api/v1/trainers/reservation/new?memberId=${memberId}`
       );
       return res.data.data;
     },

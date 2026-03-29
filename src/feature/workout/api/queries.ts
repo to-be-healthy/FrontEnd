@@ -22,7 +22,7 @@ export const useWorkoutCategoryListQuery = () => {
     queryKey: ['workoutCategory'],
     queryFn: async () => {
       const result = await authApi.get<BaseResponse<WorkoutCategory[]>>(
-        '/api/exercise/v1/category'
+        '/api/v1/exercise/category'
       );
       return result.data.data;
     },
@@ -46,7 +46,7 @@ export const useWorkoutCommentQuery = ({
     queryKey: ['workoutComment', { workoutHistoryId }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<WorkoutCommentResponse>>(
-        `/api/workout-histories/v1/${workoutHistoryId}/comments?page=${pageParam as number}&size=${size}`
+        `/api/v1/workout-histories/${workoutHistoryId}/comments?page=${pageParam as number}&size=${size}`
       );
       return res.data.data;
     },
@@ -65,7 +65,7 @@ export const useWorkoutDetailQuery = (workoutHistoryId: number) => {
     queryKey: ['workoutDetail', workoutHistoryId],
     queryFn: async () => {
       const result = await authApi.get<BaseResponse<WorkoutDetail>>(
-        `/api/workout-histories/v1/${workoutHistoryId}`
+        `/api/v1/workout-histories/${workoutHistoryId}`
       );
       return result.data.data;
     },
@@ -92,7 +92,7 @@ export const useWorkoutQuery = ({
     queryKey: ['workoutList', { memberId, searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<WorkoutResponse>>(
-        `/api/members/v1/${memberId}/workout-histories?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
+        `/api/v1/members/${memberId}/workout-histories?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
       );
       return res.data.data;
     },
@@ -131,7 +131,7 @@ export const useWorkoutTypeListQuery = ({
         queryParams.append('searchValue', searchValue);
       }
       const res = await authApi.get<BaseResponse<WorkoutTypeListResponse>>(
-        `/api/exercise/v1?${queryParams.toString()}`
+        `/api/v1/exercise?${queryParams.toString()}`
       );
       return res.data.data;
     },
@@ -176,7 +176,7 @@ export const useCommunityQuery = ({
 
       try {
         const res = await authApi.get<BaseResponse<CommunityResponse>>(
-          `/api/community/v1?${queryParams.toString()}`
+          `/api/v1/community?${queryParams.toString()}`
         );
         return res.data.data;
       } catch (error: unknown) {

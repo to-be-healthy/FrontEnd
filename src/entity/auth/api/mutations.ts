@@ -10,7 +10,7 @@ export const useCheckVailableIdMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, string>({
     mutationFn: async (userId) => {
       const result = await api.get<BaseResponse<boolean>>(
-        `/api/auth/v1/validation/user-id?userId=${userId}`
+        `/api/v1/auth/validation/user-id?userId=${userId}`
       );
       return result.data;
     },
@@ -26,7 +26,7 @@ export const useCheckVerificationCodeMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, CheckVerificationCodeRequest>({
     mutationFn: async (payload) => {
       const result = await api.post<BaseResponse<boolean>>(
-        `/api/auth/v1/validation/confirm-email`,
+        `/api/v1/auth/validation/confirm-email`,
         payload
       );
       return result.data;
@@ -37,7 +37,7 @@ export const useCheckVerificationCodeMutation = () => {
 export const useDeleteAccountMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, undefined>({
     mutationFn: async () => {
-      const result = await authApi.post<BaseResponse<boolean>>(`/api/members/v1/delete`);
+      const result = await authApi.post<BaseResponse<boolean>>(`/api/v1/members/delete`);
       return result.data;
     },
   });
@@ -47,7 +47,7 @@ export const useSendVerificationCodeMutation = () => {
   return useMutation<BaseResponse<string>, BaseError, string>({
     mutationFn: async (email) => {
       const result = await api.post<BaseResponse<string>>(
-        '/api/auth/v1/validation/send-email',
+        '/api/v1/auth/validation/send-email',
         {
           email,
         }
@@ -67,7 +67,7 @@ export const useSignInMutation = () => {
   return useMutation<BaseResponse<UserInfo>, BaseError, SignInRequest>({
     mutationFn: async (payload) => {
       const result = await api.post<BaseResponse<UserInfo>>(
-        '/api/auth/v1/login',
+        '/api/v1/auth/login',
         payload
       );
       return result.data;
@@ -87,7 +87,7 @@ export const useSignUpMutation = () => {
   return useMutation<BaseResponse<SignUpResponse>, BaseError, SignUpRequest>({
     mutationFn: async (params) => {
       const result = await api.post<BaseResponse<SignUpResponse>>(
-        `/api/auth/v1/join`,
+        `/api/v1/auth/join`,
         params
       );
       return result.data;
@@ -121,7 +121,7 @@ export const useSocialSignInMutation = () => {
         Object.assign(payload, { redirectUrl: appleRedirectUri });
       }
       const result = await api.post<BaseResponse<UserInfo>>(
-        `/api/auth/v1/access-token/${provider}`,
+        `/api/v1/auth/access-token/${provider}`,
         payload
       );
       return result.data;

@@ -18,7 +18,7 @@ export const useCreateDietCommentMutation = (dietId: number) => {
       }
 
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/diets/v1/${dietId}/comments`,
+        `/api/v1/diets/${dietId}/comments`,
         payload
       );
       return result.data;
@@ -35,7 +35,7 @@ export const useDeleteDietCommentMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, DeleteLogCommentRequest>({
     mutationFn: async ({ commentId, dietId }) => {
       const result = await authApi.delete<BaseResponse<null>>(
-        `/api/diets/v1/${dietId}/comments/${commentId}`
+        `/api/v1/diets/${dietId}/comments/${commentId}`
       );
       return result.data;
     },
@@ -45,7 +45,7 @@ export const useDeleteDietCommentMutation = () => {
 export const useDeleteDietMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, number>({
     mutationFn: async (dietId: number) => {
-      const result = await authApi.delete<BaseResponse<null>>(`/api/diets/v1/${dietId}`);
+      const result = await authApi.delete<BaseResponse<null>>(`/api/v1/diets/${dietId}`);
       return result.data;
     },
   });
@@ -55,7 +55,7 @@ export const useDietCancelLikeMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, number>({
     mutationFn: async (dietId: number) => {
       const result = await authApi.delete<BaseResponse<null>>(
-        `/api/diets/v1/${dietId}/like`
+        `/api/v1/diets/${dietId}/like`
       );
       return result.data;
     },
@@ -66,7 +66,7 @@ export const useDietLikeMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, number>({
     mutationFn: async (dietId: number) => {
       const result = await authApi.post<BaseResponse<null>>(
-        `/api/diets/v1/${dietId}/like`
+        `/api/v1/diets/${dietId}/like`
       );
       return result.data;
     },
@@ -77,7 +77,7 @@ export const useDietShowNoticeMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, string>({
     mutationFn: async (alarmStatus: string) => {
       const result = await authApi.patch<BaseResponse<boolean>>(
-        `/api/members/v1/diet-notice?alarmStatus=${alarmStatus}`
+        `/api/v1/members/diet-notice?alarmStatus=${alarmStatus}`
       );
       return result.data;
     },
@@ -88,7 +88,7 @@ export const useEditDietMutation = (dietId: number) => {
   return useMutation<BaseResponse<HomeDietData>, BaseError, RegisterAndEditDiet>({
     mutationFn: async (params) => {
       const result = await authApi.patch<BaseResponse<HomeDietData>>(
-        `/api/diets/v1/${dietId}`,
+        `/api/v1/diets/${dietId}`,
         params
       );
       return result.data;
@@ -100,7 +100,7 @@ export const useRegisterDietMutation = () => {
   return useMutation<BaseResponse<HomeDietData>, BaseError, RegisterAndEditDiet>({
     mutationFn: async (params) => {
       const result = await authApi.post<BaseResponse<HomeDietData>>(
-        `/api/diets/v1`,
+        `/api/v1/diets`,
         params
       );
       return result.data;
@@ -119,7 +119,7 @@ export const useRegisterHomeDietMutation = () => {
   return useMutation<BaseResponse<HomeDietData>, BaseError, RegisterDietRequest>({
     mutationFn: async (params) => {
       const result = await authApi.post<BaseResponse<HomeDietData>>(
-        `/api/diets/v1/home`,
+        `/api/v1/diets/home`,
         params
       );
       return result.data;

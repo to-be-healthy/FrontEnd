@@ -14,7 +14,7 @@ export const useAddStudentCourseMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, StudentCourseInfo>({
     mutationFn: async ({ courseId, ...payload }) => {
       const result = await authApi.patch<BaseResponse<null>>(
-        `/api/course/v1/${courseId}`,
+        `/api/v1/course/${courseId}`,
         payload
       );
       return result.data;
@@ -31,7 +31,7 @@ export const useRegisterStudentCourseMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, RegisterStudentCourseInfo>({
     mutationFn: async (registerCourseInfo) => {
       const result = await authApi.post<BaseResponse<null>>(
-        `/api/course/v1`,
+        `/api/v1/course`,
         registerCourseInfo
       );
       return result.data;
@@ -43,7 +43,7 @@ export const useDeleteStudentCourseMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, number>({
     mutationFn: async (courseId: number) => {
       const result = await authApi.delete<BaseResponse<null>>(
-        `/api/course/v1/${courseId}`
+        `/api/v1/course/${courseId}`
       );
       return result.data;
     },

@@ -11,7 +11,7 @@ export const useGymListQuery = () => {
   return useQuery<GymListResponse, BaseError>({
     queryKey: ['gymList'],
     queryFn: async () => {
-      const result = await authApi.get<BaseResponse<GymListResponse>>(`/api/gyms/v1`);
+      const result = await authApi.get<BaseResponse<GymListResponse>>(`/api/v1/gyms`);
       return result.data.data;
     },
   });

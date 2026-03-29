@@ -11,7 +11,7 @@ export const useReadAlarmMutation = (notificationId: number) => {
   return useMutation<BaseResponse<AlarmResponse>, BaseError, number>({
     mutationFn: async () => {
       const result = await authApi.patch<BaseResponse<AlarmResponse>>(
-        `/api/notification/v1/${notificationId}`
+        `/api/v1/notification/${notificationId}`
       );
       return result.data;
     },

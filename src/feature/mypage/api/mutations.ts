@@ -12,7 +12,7 @@ export const useChangeEmailMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, ChangeEmailRequest>({
     mutationFn: async (payload) => {
       const result = await authApi.patch<BaseResponse<boolean>>(
-        '/api/members/v1/email',
+        '/api/v1/members/email',
         payload
       );
       return result.data;
@@ -23,7 +23,7 @@ export const useChangeEmailMutation = () => {
 export const useChangeMyNameMutation = () => {
   return useMutation<BaseResponse<string>, BaseError, string>({
     mutationFn: async (name) => {
-      const result = await authApi.patch<BaseResponse<string>>(`/api/members/v1/name`, {
+      const result = await authApi.patch<BaseResponse<string>>(`/api/v1/members/name`, {
         name,
       });
       return result.data;
@@ -40,7 +40,7 @@ export const useChangePasswordMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, ChangePasswordRequest>({
     mutationFn: async (payload) => {
       const result = await authApi.patch<BaseResponse<boolean>>(
-        '/api/members/v1/password',
+        '/api/v1/members/password',
         payload
       );
       return result.data;
@@ -52,7 +52,7 @@ export const useDeleteProfileImageMutation = () => {
   return useMutation<BaseResponse<undefined>, BaseError>({
     mutationFn: async () => {
       const result = await authApi.delete<BaseResponse<undefined>>(
-        `/api/members/v1/profile`
+        `/api/v1/members/profile`
       );
       return result.data;
     },
@@ -62,7 +62,7 @@ export const useDeleteProfileImageMutation = () => {
 export const useLogOutMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, undefined>({
     mutationFn: async () => {
-      const result = await authApi.post<BaseResponse<boolean>>(`/api/members/v1/logout`);
+      const result = await authApi.post<BaseResponse<boolean>>(`/api/v1/members/logout`);
       return result.data;
     },
   });
@@ -87,7 +87,7 @@ export const useSetProfileImageMutation = () => {
       const formData = new FormData();
       formData.append('file', file);
       const result = await authApi.put<BaseResponse<SetProfileImageResponse>>(
-        '/api/members/v1/profile',
+        '/api/v1/members/profile',
         formData,
         {
           headers: {
@@ -104,7 +104,7 @@ export const useVerifyPasswordMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, string>({
     mutationFn: async (password) => {
       const result = await authApi.post<BaseResponse<boolean>>(
-        '/api/members/v1/password',
+        '/api/v1/members/password',
         {
           password,
         }

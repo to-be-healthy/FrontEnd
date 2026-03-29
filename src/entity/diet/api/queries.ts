@@ -19,7 +19,7 @@ export const useDietListQuery = ({ searchDate, size }: DietRequest) => {
     queryKey: ['dietList', { searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<DietResponse>>(
-        `/api/members/v1/me/diets?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
+        `/api/v1/members/me/diets?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
       );
       return res.data.data;
     },
@@ -49,7 +49,7 @@ export const useStudentCalendarMyDietListQuery = ({
     queryKey: ['studentCalendarMyDietList', startDate, endDate],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<CalendarMyDietResponse>>(
-        `/api/diets/v1/upload-date?startDate=${startDate}&endDate=${endDate}`
+        `/api/v1/diets/upload-date?startDate=${startDate}&endDate=${endDate}`
       );
       return res.data.data;
     },
@@ -61,7 +61,7 @@ export const useStudentDietDetailQuery = (dietId: number) => {
     queryKey: ['studentDietDetail', dietId],
     queryFn: async () => {
       const result = await authApi.get<BaseResponse<HomeDietData>>(
-        `/api/diets/v1/${dietId}`
+        `/api/v1/diets/${dietId}`
       );
       return {
         ...result.data.data,
@@ -90,7 +90,7 @@ export const useStudentFeedbackDietListQuery = ({
     queryKey: ['trainerStudentFeedbackDietList', { searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<FeedbackDietResponse>>(
-        `/api/trainers/v1/diets?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
+        `/api/v1/trainers/diets?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
       );
       return res.data.data;
     },
@@ -124,7 +124,7 @@ export const useTrainerStudentDietListQuery = ({
     queryKey: ['trainerStudentdietList', { searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentDietResponse>>(
-        `/api/members/v1/${memberId}/diets?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
+        `/api/v1/members/${memberId}/diets?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
       );
       return res.data.data;
     },

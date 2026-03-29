@@ -12,7 +12,7 @@ export const useCreateLogCommentMutation = (logId: number) => {
   return useMutation<BaseResponse<boolean>, BaseError, CreateLogCommentRequest>({
     mutationFn: async ({ content, images }) => {
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/lessonhistory/v1/${logId}/comment`,
+        `/api/v1/lessonhistory/${logId}/comment`,
         { content, uploadFiles: images }
       );
       return result.data;
@@ -32,7 +32,7 @@ export const useCreateLogMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, CreateLogRequest>({
     mutationFn: async (payload) => {
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/lessonhistory/v1`,
+        `/api/v1/lessonhistory`,
         payload
       );
       return result.data;
@@ -54,7 +54,7 @@ export const useCreateLogReplyMutation = (logId: number) => {
         uploadFiles: images,
       };
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/lessonhistory/v1/${logId}/comment/${commentId}`,
+        `/api/v1/lessonhistory/${logId}/comment/${commentId}`,
         payload
       );
       return result.data;
@@ -70,7 +70,7 @@ export const useDeleteCommentMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, DeleteLogCommentRequest>({
     mutationFn: async ({ id }) => {
       const result = await authApi.delete<BaseResponse<boolean>>(
-        `/api/lessonhistory/v1/comment/${id}`
+        `/api/v1/lessonhistory/comment/${id}`
       );
       return result.data;
     },
@@ -85,7 +85,7 @@ export const useDeleteLogMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, DeleteLogRequest>({
     mutationFn: async ({ logId }) => {
       const result = await authApi.delete<BaseResponse<boolean>>(
-        `/api/lessonhistory/v1/${logId}`
+        `/api/v1/lessonhistory/${logId}`
       );
       return result.data;
     },
@@ -106,7 +106,7 @@ export const useEditLogCommentMutation = () => {
         uploadFiles: images,
       };
       const result = await authApi.patch<BaseResponse<boolean>>(
-        `/api/lessonhistory/v1/comment/${commentId}`,
+        `/api/v1/lessonhistory/comment/${commentId}`,
         payload
       );
       return result.data;
@@ -125,7 +125,7 @@ export const useEditLogMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, EditLogRequest>({
     mutationFn: async ({ logId, ...payload }) => {
       const result = await authApi.patch<BaseResponse<boolean>>(
-        `/api/lessonhistory/v1/${logId}`,
+        `/api/v1/lessonhistory/${logId}`,
         payload
       );
       return result.data;

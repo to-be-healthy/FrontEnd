@@ -14,7 +14,7 @@ export const useDietCommentListQuery = ({ dietId, size }: DietCommentRequest) =>
     queryKey: ['dietCommentList', dietId],
     queryFn: async ({ pageParam }) => {
       const result = await authApi.get<BaseResponse<Comment>>(
-        `/api/diets/v1/${dietId}/comments?page=${pageParam as number}&size=${size}`
+        `/api/v1/diets/${dietId}/comments?page=${pageParam as number}&size=${size}`
       );
       return result.data.data;
     },

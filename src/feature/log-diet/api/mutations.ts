@@ -17,7 +17,7 @@ export const useEditDietCommentMutation = (dietId: number) => {
         content,
       };
       const result = await authApi.patch<BaseResponse<ContentType>>(
-        `/api/diets/v1/${dietId}/comments/${commentId}`,
+        `/api/v1/diets/${dietId}/comments/${commentId}`,
         payload
       );
       return result.data;

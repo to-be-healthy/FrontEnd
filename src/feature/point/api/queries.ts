@@ -14,7 +14,7 @@ export const useMyPointHistoryQuery = ({ searchDate, size }: MyPointHistory) => 
     queryKey: ['myPointHistory', { searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentPoint>>(
-        `/api/members/v1/point?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
+        `/api/v1/members/point?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
       );
       return res.data.data;
     },
@@ -40,7 +40,7 @@ export const useStudentPointHistoryQuery = ({
     queryKey: ['studentPointHistory', { searchDate }],
     queryFn: async ({ pageParam }) => {
       const res = await authApi.get<BaseResponse<StudentPoint>>(
-        `/api/members/v1/${memberId}/point?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
+        `/api/v1/members/${memberId}/point?page=${pageParam as number}&size=${size}&searchDate=${searchDate}`
       );
       return res.data.data;
     },

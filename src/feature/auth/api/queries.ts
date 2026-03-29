@@ -15,7 +15,7 @@ export const useInvitationInfoQuery = (uuid: string) => {
     queryKey: ['invitation', uuid],
     queryFn: async () => {
       const result = await authApi.get<BaseResponse<InvitationResponse>>(
-        `/api/auth/v1/invitation/uuid?uuid=${uuid}`
+        `/api/v1/auth/invitation/uuid?uuid=${uuid}`
       );
       return result.data.data;
     },

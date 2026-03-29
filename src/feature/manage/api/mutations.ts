@@ -13,7 +13,7 @@ export const useEditMemoMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, EditmemoRequest>({
     mutationFn: async ({ studentId, memo }) => {
       const result = await authApi.put<BaseResponse<null>>(
-        `/api/members/v1/${studentId}/memo`,
+        `/api/v1/members/${studentId}/memo`,
         {
           memo,
         }
@@ -32,7 +32,7 @@ export const useEditNicknameMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, EditNicknameRequest>({
     mutationFn: async ({ studentId, nickname }) => {
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/members/v1/nickname/${studentId}`,
+        `/api/v1/members/nickname/${studentId}`,
         { nickname }
       );
       return result.data;
@@ -49,7 +49,7 @@ export const useToggleAlarmStatusMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, ToggleAlarmStatusRequest>({
     mutationFn: async ({ type, status }) => {
       const result = await authApi.patch<BaseResponse<boolean>>(
-        `/api/members/v1/alarm/${type}/${status}`
+        `/api/v1/members/alarm/${type}/${status}`
       );
       return result.data;
     },
@@ -72,7 +72,7 @@ export const useAppendMemberMutation = () => {
   return useMutation<BaseResponse<AppendMemberResponse>, BaseError, AppendMemberRequest>({
     mutationFn: async ({ lessonCnt, memberId }) => {
       const result = await authApi.post<BaseResponse<AppendMemberResponse>>(
-        `/api/trainers/v1/members/${memberId}`,
+        `/api/v1/trainers/members/${memberId}`,
         { lessonCnt }
       );
       return result.data;
@@ -84,7 +84,7 @@ export const useDeleteRefundStudentMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, number>({
     mutationFn: async (memberId: number) => {
       const result = await authApi.delete<BaseResponse<null>>(
-        `/api/trainers/v1/members/${memberId}/refund`
+        `/api/v1/trainers/members/${memberId}/refund`
       );
       return result.data;
     },
@@ -95,7 +95,7 @@ export const useDeleteStudentMutation = () => {
   return useMutation<BaseResponse<null>, BaseError, number>({
     mutationFn: async (memberId: number) => {
       const result = await authApi.delete<BaseResponse<null>>(
-        `/api/trainers/v1/members/${memberId}`
+        `/api/v1/trainers/members/${memberId}`
       );
       return result.data;
     },
@@ -115,7 +115,7 @@ export const useInviteStudentMutation = () => {
   return useMutation<BaseResponse<InviteResponse>, BaseError, InviteForm>({
     mutationFn: async (invitationInfo) => {
       const result = await authApi.post<BaseResponse<InviteResponse>>(
-        '/api/trainers/v1/nonmember',
+        '/api/v1/trainers/nonmember',
         invitationInfo
       );
       return result.data;

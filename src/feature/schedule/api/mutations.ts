@@ -22,7 +22,7 @@ export const useAddScheduleMutation = () => {
   return useMutation<BaseResponse<AddScheduleResponse>, BaseError, AddScheduleRequest>({
     mutationFn: async ({ scheduleId, studentId }) => {
       const result = await authApi.post<BaseResponse<AddScheduleResponse>>(
-        `/api/schedule/v1/${scheduleId}/${studentId}`
+        `/api/v1/schedule/${scheduleId}/${studentId}`
       );
       return result.data;
     },
@@ -33,7 +33,7 @@ export const useShowNoticeMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, string>({
     mutationFn: async (alarmStatus: string) => {
       const result = await authApi.patch<BaseResponse<boolean>>(
-        `/api/members/v1/schedule-notice?alarmStatus=${alarmStatus}`
+        `/api/v1/members/schedule-notice?alarmStatus=${alarmStatus}`
       );
       return result.data;
     },
@@ -52,7 +52,7 @@ export const useStudentCancelReservationScheduleMutation = () => {
   return useMutation<BaseResponse<CancelScheduleData>, BaseError, number>({
     mutationFn: async (scheduleId: number) => {
       const result = await authApi.delete<BaseResponse<CancelScheduleData>>(
-        `/api/schedule/v1/${scheduleId}`
+        `/api/v1/schedule/${scheduleId}`
       );
       return result.data;
     },
@@ -63,7 +63,7 @@ export const useStudentCancelWaitingScheduleMutation = () => {
   return useMutation<BaseResponse<CancelScheduleData>, BaseError, number>({
     mutationFn: async (scheduleId: number) => {
       const result = await authApi.delete<BaseResponse<CancelScheduleData>>(
-        `/api/schedule/waiting/v1/${scheduleId}`
+        `/api/v1/schedule/waiting/${scheduleId}`
       );
       return result.data;
     },
@@ -74,7 +74,7 @@ export const useStudentReservationScheduleMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, number>({
     mutationFn: async (scheduleId: number) => {
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/schedule/v1/${scheduleId}`
+        `/api/v1/schedule/${scheduleId}`
       );
       return result.data;
     },
@@ -85,7 +85,7 @@ export const useStudentWaitingScheduleMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, number>({
     mutationFn: async (scheduleId: number) => {
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/schedule/waiting/v1/${scheduleId}`
+        `/api/v1/schedule/waiting/${scheduleId}`
       );
       return result.data;
     },
@@ -100,7 +100,7 @@ export const useTrainerCancelReservationMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, number>({
     mutationFn: async (scheduleId: number) => {
       const result = await authApi.delete<BaseResponse<boolean>>(
-        `/api/schedule/v1/trainer/${scheduleId}`
+        `/api/v1/schedule/trainer/${scheduleId}`
       );
       return result.data;
     },
@@ -115,7 +115,7 @@ export const useTrainerChangeNoShowMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, number>({
     mutationFn: async (scheduleId: number) => {
       const result = await authApi.delete<BaseResponse<boolean>>(
-        `/api/schedule/v1/no-show/${scheduleId}`
+        `/api/v1/schedule/no-show/${scheduleId}`
       );
       return result.data;
     },
@@ -131,7 +131,7 @@ export const useTrainerChangeReservationMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, TrainerChangeReservation>({
     mutationFn: async ({ status, scheduleIds }: TrainerChangeReservation) => {
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/schedule/v1/trainer/${status}`,
+        `/api/v1/schedule/trainer/${status}`,
         { scheduleIds }
       );
       return result.data;
@@ -147,7 +147,7 @@ export const useTrainerChangeShowMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, number>({
     mutationFn: async (scheduleId: number) => {
       const result = await authApi.post<BaseResponse<boolean>>(
-        `/api/schedule/v1/no-show/${scheduleId}`
+        `/api/v1/schedule/no-show/${scheduleId}`
       );
       return result.data;
     },
@@ -159,7 +159,7 @@ export const useTrainerClassTimeSettingMutation = () => {
     {
       mutationFn: async (data: ClassTimeSettingData) => {
         const result = await authApi.post<BaseResponse<ClassTimeSettingData>>(
-          `/api/schedule/v1/default-lesson-time`,
+          `/api/v1/schedule/default-lesson-time`,
           data
         );
         return result.data;
@@ -177,7 +177,7 @@ export const useTrainerCreateSchedulesMutation = () => {
   return useMutation<BaseResponse<boolean>, BaseError, CreateWeeklySchedulesRequest>({
     mutationFn: async (payload) => {
       const result = await authApi.post<BaseResponse<boolean>>(
-        '/api/schedule/v1',
+        '/api/v1/schedule',
         payload
       );
       return result.data;

@@ -26,7 +26,7 @@ export const useAlarmQuery = ({ type, size }: AlarmRequest) => {
     queryKey: ['alarmList', type],
     queryFn: async ({ pageParam }) => {
       const result = await authApi.get<BaseResponse<AlarmResponse>>(
-        `/api/notification/v1/${type}?page=${pageParam as number}&size=${size}`
+        `/api/v1/notification/${type}?page=${pageParam as number}&size=${size}`
       );
       return result.data.data;
     },
@@ -43,7 +43,7 @@ export const useHomeAlarmQuery = () => {
     queryKey: ['HomeAlarm'],
     queryFn: async () => {
       const res = await authApi.get<BaseResponse<boolean>>(
-        `/api/notification/v1/red-dot`
+        `/api/v1/notification/red-dot`
       );
       return res.data.data;
     },

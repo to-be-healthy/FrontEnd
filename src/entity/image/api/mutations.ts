@@ -14,7 +14,7 @@ export const useCreateS3PresignedUrlMutation = () => {
   return useMutation<BaseResponse<PresignedUrlResponse[]>, BaseError, string[]>({
     mutationFn: async (fileNames) => {
       const result = await authApi.post<BaseResponse<PresignedUrlResponse[]>>(
-        '/api/file/v1',
+        '/api/v1/file',
         {
           fileNames,
         }
@@ -51,7 +51,7 @@ export const useUploadImageMutation = () => {
         formData.append('uploadFiles', el);
       });
       const result = await authApi.post<BaseResponse<ImageType[]>>(
-        `/api/lessonhistory/v1/file`,
+        `/api/v1/lessonhistory/file`,
         formData,
         {
           headers: {

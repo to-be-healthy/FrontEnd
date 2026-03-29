@@ -11,7 +11,7 @@ interface TokenResponse {
 export const useRegisterTokenMutation = () => {
   return useMutation<BaseResponse<TokenResponse>, BaseError, string>({
     mutationFn: async (token: string) => {
-      const result = await authApi.post<BaseResponse<TokenResponse>>(`/api/push/v1`, {
+      const result = await authApi.post<BaseResponse<TokenResponse>>(`/api/v1/push`, {
         token,
       });
       return result.data;
