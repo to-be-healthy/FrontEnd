@@ -5,10 +5,10 @@ import { Typography } from '@/shared/mixin';
 import { Button, useToast } from '@/shared/ui';
 import { cn } from '@/shared/utils';
 
-const EXPERIMENT_TRAINER_USER_ID = 'healthytrainer0';
+const EXPERIMENT_TRAINER_USER_ID = 'healthy-trainer0';
 const EXPERIMENT_TRAINER_PASSWORD = '12345678a';
 
-const EXPERIMENT_STUDENT_USER_ID = 'healthystudent0';
+const EXPERIMENT_STUDENT_USER_ID = 'healthy-student0';
 const EXPERIMENT_STUDENT_PASSWORD = '12345678a';
 
 const ComplimentaryButton = ({ memberType }: { memberType: string }) => {
