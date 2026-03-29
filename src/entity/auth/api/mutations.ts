@@ -61,6 +61,7 @@ interface SignInRequest {
   userId: string;
   password: string;
   memberType: string;
+  complimentaryLogin?: boolean;
 }
 
 export const useSignInMutation = () => {

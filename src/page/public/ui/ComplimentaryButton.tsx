@@ -30,6 +30,7 @@ const ComplimentaryButton = ({ memberType }: { memberType: string }) => {
         userId,
         password,
         memberType: memberType.toUpperCase(),
+        complimentaryLogin: true,
       },
       {
         onSuccess: ({ data }) => {
