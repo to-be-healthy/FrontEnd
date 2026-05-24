@@ -1,4 +1,4 @@
-name: frontend-ci-cd
+name: frontend-ci
 
 on:
   workflow_dispatch:
@@ -15,12 +15,10 @@ permissions:
   contents: read
 
 concurrency:
-  group: frontend-${{ github.ref }}
+  group: frontend-ci-${{ github.ref }}
   cancel-in-progress: true
 
 env:
-  DEPLOY_PATH: /home/ubuntu/workspace/tobehealthy/frontend
-  COMPOSE_PATH: /home/ubuntu/workspace/tobehealthy
   NEXT_PUBLIC_AUTH_URL: http://localhost:8080
   INTERNAL_API_URL: http://localhost:8080
   NEXT_PUBLIC_WEB_URI: http://localhost:3000
@@ -72,66 +70,3 @@ jobs:
 
       - name: Build frontend
         run: npm run build
-
-      - name: Verify container build
-        run: |
-          docker build \
-            --build-arg NEXT_PUBLIC_AUTH_URL="${NEXT_PUBLIC_AUTH_URL}" \
-            --build-arg INTERNAL_API_URL="${INTERNAL_API_URL}" \
-            --build-arg NEXT_PUBLIC_WEB_URI="${NEXT_PUBLIC_WEB_URI}" \
-            --build-arg NEXT_PUBLIC_KAKAO_CLIENT_ID="${NEXT_PUBLIC_KAKAO_CLIENT_ID}" \
-            --build-arg NEXT_PUBLIC_NAVER_CLIENT_ID="${NEXT_PUBLIC_NAVER_CLIENT_ID}" \
-            --build-arg NEXT_PUBLIC_GOOGLE_CLIENT_ID="${NEXT_PUBLIC_GOOGLE_CLIENT_ID}" \
-            --build-arg NEXT_PUBLIC_APPLE_CLIENT_ID="${NEXT_PUBLIC_APPLE_CLIENT_ID}" \
-            --build-arg NEXT_PUBLIC_KAKAO_API_KEY="${NEXT_PUBLIC_KAKAO_API_KEY}" \
-            --build-arg NEXT_PUBLIC_API_MOCKING="${NEXT_PUBLIC_API_MOCKING}" \
-            --build-arg GA_ID="${GA_ID}" \
-            --build-arg VAPIDKEY="${VAPIDKEY}" \
-            -t tobehealthy-frontend-ci .
-
-  deploy:
-    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-    needs: ci
-    runs-on: ubuntu-latest
-    timeout-minutes: 20
-    env:
-      DEPLOY_HOST: ${{ secrets.DEPLOY_HOST }}
-      DEPLOY_PORT: ${{ secrets.DEPLOY_PORT }}
-      DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-      DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Configure SSH
-        run: |
-          set -eu
-          install -m 700 -d ~/.ssh
-          printf '%s\n' "$DEPLOY_SSH_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          PORT="${DEPLOY_PORT:-22}"
-          ssh-keyscan -p "$PORT" -H "$DEPLOY_HOST" >> ~/.ssh/known_hosts
-
-      - name: Sync frontend source
-        run: |
-          set -eu
-          PORT="${DEPLOY_PORT:-22}"
-          rsync -az --delete \
-            --exclude '.git/' \
-            --exclude '.github/' \
-            --exclude '.idea/' \
-            --exclude 'node_modules/' \
-            --exclude '.next/' \
-            --exclude '.env' \
-            --exclude '.env.*' \
-            --exclude '.DS_Store' \
-            -e "ssh -p $PORT" \
-            ./ "${DEPLOY_USER}@${DEPLOY_HOST}:${DEPLOY_PATH}/"
-
-      - name: Deploy frontend
-        run: |
-          set -eu
-          PORT="${DEPLOY_PORT:-22}"
-          ssh -p "$PORT" "${DEPLOY_USER}@${DEPLOY_HOST}" \
-            "set -e; cd '${COMPOSE_PATH}'; docker compose build frontend; docker compose up -d frontend; docker compose ps frontend"
