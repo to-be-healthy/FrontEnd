@@ -1,0 +1,79 @@
+name: build-and-deploy
+on:
+  push:
+    branches: [develop]
+
+permissions:
+  contents: read
+  packages: write
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE: ghcr.io/to-be-healthy/frontend
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.tag.outputs.value }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - id: tag
+        run: echo "value=sha-$(git rev-parse --short=12 HEAD)" >> $GITHUB_OUTPUT
+
+      - uses: docker/setup-buildx-action@v3
+
+      - uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ env.IMAGE }}:${{ steps.tag.outputs.value }}
+            ${{ env.IMAGE }}:latest
+          build-args: |
+            NEXT_PUBLIC_WEB_URI=${{ vars.NEXT_PUBLIC_WEB_URI }}
+            NEXT_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_API_URL }}
+            NEXT_PUBLIC_AUTH_URL=${{ vars.NEXT_PUBLIC_AUTH_URL }}
+            INTERNAL_API_URL=${{ vars.INTERNAL_API_URL }}
+            NEXT_PUBLIC_KAKAO_CLIENT_ID=${{ vars.NEXT_PUBLIC_KAKAO_CLIENT_ID }}
+            NEXT_PUBLIC_NAVER_CLIENT_ID=${{ vars.NEXT_PUBLIC_NAVER_CLIENT_ID }}
+            NEXT_PUBLIC_GOOGLE_CLIENT_ID=${{ vars.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
+            NEXT_PUBLIC_APPLE_CLIENT_ID=${{ vars.NEXT_PUBLIC_APPLE_CLIENT_ID }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  bump-manifest:
+    needs: build-push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: to-be-healthy/k8s-manifests
+          token: ${{ secrets.MANIFEST_REPO_TOKEN }}
+          ref: main
+
+      - uses: imranismail/setup-kustomize@v2
+
+      - name: Bump frontend image tag
+        working-directory: overlays/prod
+        run: |
+          kustomize edit set image ghcr.io/to-be-healthy/frontend=ghcr.io/to-be-healthy/frontend:${{ needs.build-push.outputs.tag }}
+
+      - name: Commit and push
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add overlays/prod/kustomization.yaml
+          if git diff --staged --quiet; then
+            echo "No image change"
+            exit 0
+          fi
+          git commit -m "chore(frontend): bump image to ${{ needs.build-push.outputs.tag }}"
+          git push
