@@ -19,8 +19,8 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  DEPLOY_PATH: /home/ubuntu/tobehealthy/workspace/frontend
-  COMPOSE_PATH: /home/ubuntu/tobehealthy/workspace
+  DEPLOY_PATH: /home/ubuntu/workspace/tobehealthy/frontend
+  COMPOSE_PATH: /home/ubuntu/workspace/tobehealthy
   NEXT_PUBLIC_AUTH_URL: http://localhost:8080
   INTERNAL_API_URL: http://localhost:8080
   NEXT_PUBLIC_WEB_URI: http://localhost:3000
