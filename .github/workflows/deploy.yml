@@ -4,7 +4,7 @@ on:
     branches: [develop]
 
 permissions:
-  contents: read
+  contents: write
   packages: write
 
 env:
@@ -55,14 +55,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          repository: to-be-healthy/k8s-manifests
-          token: ${{ secrets.MANIFEST_REPO_TOKEN }}
-          ref: main
+          ref: develop
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: imranismail/setup-kustomize@v2
 
-      - name: Bump frontend image tag
-        working-directory: apps/tobehealthy/overlays/prod
+      - name: Bump image tag
+        working-directory: k8s
         run: |
           kustomize edit set image ghcr.io/to-be-healthy/frontend=ghcr.io/to-be-healthy/frontend:${{ needs.build-push.outputs.tag }}
 
@@ -70,10 +69,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add overlays/prod/kustomization.yaml
+          git add k8s/kustomization.yaml
           if git diff --staged --quiet; then
             echo "No image change"
             exit 0
           fi
-          git commit -m "chore(frontend): bump image to ${{ needs.build-push.outputs.tag }}"
+          git commit -m "chore: bump image to ${{ needs.build-push.outputs.tag }} [skip ci]"
           git push
