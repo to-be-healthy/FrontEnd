@@ -4,12 +4,12 @@ kind: Kustomization
 namespace: tobehealthy
 
 resources:
-  - deployment.yaml
-  - service.yaml
+- deployment.yaml
+- service.yaml
 
 # Image tag updated automatically by CI (.github/workflows/deploy.yml).
 # Do not edit by hand; use `kustomize edit set image`.
 images:
-  - name: ghcr.io/to-be-healthy/frontend
-    newName: ghcr.io/to-be-healthy/frontend
-    newTag: sha-fba4ea736b87
+- name: ghcr.io/to-be-healthy/frontend
+  newName: ghcr.io/to-be-healthy/frontend
+  newTag: sha-d6f76912c2ec
